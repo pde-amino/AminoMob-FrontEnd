@@ -163,7 +163,7 @@ function MyTabs() {
       <Tabs.Screen options={{
         tabBarIcon:({focused, color, size})=><Ionicons name={focused?'home':'home-outline'} size={24} color="grey"/>,
       }}
-      name="Home Screen"
+      name="Home"
       component={HomeScreen}
       />
       <Tabs.Screen options={{
