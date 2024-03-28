@@ -2,48 +2,24 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-// import { Button, Text, View } from "react-native";
-// import { Button, Text, View } from "react-native";
-import {Ionicons} from "react-native-vector-icons";
-import HomeScreen from "../../screen/HomeScreen";
+import { Ionicons } from "react-native-vector-icons";
+import HomeTabs from "./tabs";
 import FavoriteScreen from "../view/screens/home/FavoriteScreen";
+import Poli2 from "../view/screens/poli/Poli2";
+// import Poli1 from "../view/screens/poli/poli1";
 
-  const Stack= createNativeStackNavigator();
-  const Tabs=createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-  // function FavoriteScreen() {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <Text>Thiss Favorite Screen !!!</Text>
-  //     </View>
-  //   );
-  // }
-  // function HomeScreen({navigation}) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <Text>Thiss Home Screen !!!</Text>
-  //       <Button 
-  //       onPress={()=>navigation.navigate("Favorite")}
-  //       title="Gerser ke Favorite.?"
-  //       />
-  //     </View>
-  //   );
-  // }
+export default function Routes() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Main" component={HomeTabs} />
 
-  export default function Routes(){
-    return(
-        <NavigationContainer>
-            <Stack.Navigator>
-        <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        />
-        <Stack.Screen 
-        name="Favorite"
-        component={FavoriteScreen}
-        
-        />
-        </Stack.Navigator>
-        </NavigationContainer>
-    )
-  }
+        <Stack.Screen name="Favorites" component={FavoriteScreen} />
+        <Stack.Screen name="Poli2" component={Poli2} />
+        {/* <Stack.Screen name="Poli1" component={Poli1} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
