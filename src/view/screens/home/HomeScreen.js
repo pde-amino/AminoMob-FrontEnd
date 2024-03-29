@@ -45,6 +45,12 @@ const Menus = [
     to: "Poli1",
     color: "green",
   },
+  {
+    icon: "book-outline",
+    title: "Information",
+    to: "Portal Informasi",
+    color: "green",
+  },
 ];
 
 export default function HomeScreen() {
