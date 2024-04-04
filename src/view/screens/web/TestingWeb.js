@@ -6,7 +6,7 @@ const TestingWeb = () => {
   return (
     <WebView
       style={styles.container}
-      source={{ uri: "https://github.com/rajutankoding" }}
+      source={{ uri: "https://tv.lk21official.mom/" }}
     />
   );
 };

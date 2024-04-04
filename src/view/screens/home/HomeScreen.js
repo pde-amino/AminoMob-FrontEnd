@@ -51,6 +51,13 @@ const Menus = [
     // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
     color: "blue",
   },
+  {
+    icon: "person-outline",
+    title: "Login",
+    to: "Login Screen",
+    // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+    color: "blue",
+  },
 ];
 
 const HomeScreen = () => {
