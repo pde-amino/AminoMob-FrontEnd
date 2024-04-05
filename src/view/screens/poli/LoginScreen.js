@@ -1,12 +1,19 @@
 import React, {useState} from 'react'
 import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import ButtonPrimary from '../../../components/ButtonPrimary'
-import ButtonSecondary from '../../../components/ButtonSecondary'
+import HomeScreen from '../home/HomeScreen'
+import { Ionicons } from "react-native-vector-icons";
 
 const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigation = useNavigation();
+  const keRegist = () => {
+    navigation.navigate(HomeScreen);
+  };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -30,39 +37,45 @@ const LoginScreen = () => {
               <View>
                 <TextInput 
                   style={styles.inputan} 
-                  selectionColor={'red'} 
+                  selectionColor={'blue'} 
                   placeholder='Email'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
                   keyboardType='email-address' 
                 />
               </View>
-              <View>
+              <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <TextInput 
                   style={styles.inputan} 
-                  selectionColor={'red'} 
+                  selectionColor={'blue'} 
                   placeholder='Password'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
                   secureTextEntry={!showPassword}
-                  keyboardType='password' 
+                  value={password}
+                  onChangeText={setPassword}
+                  // keyboardType='password' 
                 />
+                  <View style={{ position: 'absolute', right: 10 }}>
+                    <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
+                      <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24}/>
+                    </TouchableOpacity>
+                  </View> 
               </View>
-              <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
-                <Text>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
-              </TouchableOpacity>
+              {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
+                <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
+                <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
+              </TouchableOpacity> */}
 
-              <View style={{ marginBottom: 8 }} >
+              <View style={{ marginBottom: 8, marginTop: 8 }} >
                 <ButtonPrimary title='Masuk'/>  
               </View>
               
-              <View>
-                <Text>Belum Punya akun?
-                  <TouchableOpacity>
-                  <Text style={{color:'blue', textDecorationLine:'underline'}}> Daftar</Text>
+              <View style={{ flexDirection: 'row'}}>
+                <Text>Belum Punya akun?</Text>
+                <TouchableOpacity>
+                  <Text style={{color:'blue', textDecorationLine:'underline' }} onPress={keRegist}> Daftar Sekarang</Text>
                   </TouchableOpacity>
-                </Text>
-                
               </View>
             </View>  
           </KeyboardAvoidingView>
@@ -72,7 +85,6 @@ const LoginScreen = () => {
     )
       
   }
-
 
 
 const styles = StyleSheet.create({
@@ -98,7 +110,7 @@ const styles = StyleSheet.create({
       borderRadius: 8
     },
     showHideButton: {
-      padding: 5,
+      padding: 10,
     },
     tombol: {
       marginTop: 10,
