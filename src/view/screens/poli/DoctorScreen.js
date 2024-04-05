@@ -6,6 +6,15 @@ import { Text, View } from "react-native";
 const doctorsData = {
   1: [
     {
+      kd_dokter: "D0000020",
+      nm_dokter: "dr. A. SRI WOROASIH, Sp.KJ.",
+      hari_kerja: "RABU",
+      jam_mulai: "07:00:01",
+      jam_selesai: "14:00:00",
+      kd_poli: "9107",
+      nm_poli: "POLI JIWA PSIKIATRI DEWASA",
+      kuota: "70",
+
       id: 1,
       name: "Dr. San France",
       specialization: "Pediatrician",
