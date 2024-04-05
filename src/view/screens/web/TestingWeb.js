@@ -1,21 +1,32 @@
+import React, { useState } from "react";
+import { ScrollView, RefreshControl } from "react-native";
 import { WebView } from "react-native-webview";
-import Constants from "expo-constants";
-import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 
-const TestingWeb = () => {
+const { height } = Dimensions.get("window");
+
+const WebViewScreen = () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // Logika refresh data di sini
+    setRefreshing(false);
+  };
+
   return (
+    // <ScrollView
+    //   refreshControl={
+    //     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    //   }>
     <WebView
-      style={styles.container}
-      source={{ uri: "https://tv.lk21official.mom/" }}
+      style={{ height }}
+      source={{ uri: "http://192.168.5.5:8080" }}
+      // Anda juga dapat menambahkan properti lain untuk WebView di sini
+      // Contoh: onLoadStart, onLoadEnd, onError, dll.
     />
+    // </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
-});
-
-export default TestingWeb;
+export default WebViewScreen;
