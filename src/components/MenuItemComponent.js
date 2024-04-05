@@ -10,7 +10,7 @@ const MenuItemComponent = ({ onPress, icon, title, colorIcon }) => (
       icon={({ color, size }) => (
         <View style={{ alignItems: "center", justifyContent: "center" }}>
           <Ionicons name={icon} size={size} color={colorIcon} />
-          <Text style={{ fontSize: 12 }}>{title}</Text>
+          <Text style={{ fontSize: 15, marginTop: 10 }}>{title}</Text>
         </View>
       )}
       style={{

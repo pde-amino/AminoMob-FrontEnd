@@ -8,6 +8,7 @@ import PortalInformation from "../view/screens/poli/PortalInformasi";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
+import LoginScreen from "../view/screens/poli/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +16,7 @@ const Stack = createNativeStackNavigator();
 export default function Routes() {
   return (
     <NavigationContainer>
+      <Stack.Screen name="Amino Care" component={HomeTabs} />
       <Stack.Navigator
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
@@ -26,6 +28,11 @@ export default function Routes() {
         <Stack.Screen name="Klinik Umum" component={KlinikUmum} />
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login Screen"
+          component={LoginScreen}
+        />
         <Stack.Screen name="Poli Information" component={PoliInformation} />
         {/* <Stack.Screen name="Poli1" component={Poli1} /> */}
       </Stack.Navigator>
