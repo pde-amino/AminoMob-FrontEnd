@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import LoginScreen from "../view/screens/auth/LoginScreen";
+import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -162,7 +164,8 @@ export default function HomeTabs() {
       }}>
       <Tabs.Screen
         options={{
-          headerShown: true,
+          // headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -172,7 +175,8 @@ export default function HomeTabs() {
           ),
         }}
         name="HomeScreen"
-        component={HomeScreen}
+        // component={HomeScreen}
+        component={OnboardingScreen}
       />
       <Tabs.Screen
         options={{
@@ -185,7 +189,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Dashboard"
-        component={TestingWeb}
+        component={LoginScreen}
       />
       <Tabs.Screen
         options={{

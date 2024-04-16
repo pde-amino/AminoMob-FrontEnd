@@ -8,14 +8,16 @@ import PortalInformation from "../view/screens/poli/PortalInformasi";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
-import LoginScreen from "../view/screens/poli/LoginScreen";
+import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
+import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
     <NavigationContainer>
+      <Stack.Screen name="Onboard" component={OnboardingScreen} />
       <Stack.Screen name="Amino Care" component={HomeTabs} />
       <Stack.Navigator
         screenOptions={{

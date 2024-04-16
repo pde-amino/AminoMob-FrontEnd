@@ -21,7 +21,7 @@ const LoginScreen = () => {
     return (
       <View style={styles.container}>
         <ScrollView
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps='handled'
           contentContainerStyle={{
             flex: 1,
             justifyContent: 'center',
@@ -38,7 +38,7 @@ const LoginScreen = () => {
                 <TextInput 
                   style={styles.inputan} 
                   selectionColor={'blue'} 
-                  placeholder='Email'
+                  placeholder='No. Handphone/ No. RM'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
                   keyboardType='email-address' 
@@ -56,22 +56,25 @@ const LoginScreen = () => {
                   onChangeText={setPassword}
                   // keyboardType='password' 
                 />
+
+                {/* icon mata */}
                   <View style={{ position: 'absolute', right: 10 }}>
                     <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
                       <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24}/>
                     </TouchableOpacity>
                   </View> 
               </View>
+
               {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
                 <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
                 <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
               </TouchableOpacity> */}
 
-              <View style={{ marginBottom: 8, marginTop: 8 }} >
+              <View style={{ marginBottom: 8, marginTop: 8, alignItems: 'center',}} >
                 <ButtonPrimary title='Masuk'/>  
               </View>
               
-              <View style={{ flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row', }}>
                 <Text>Belum Punya akun?</Text>
                 <TouchableOpacity>
                   <Text style={{color:'blue', textDecorationLine:'underline' }} onPress={keRegist}> Daftar Sekarang</Text>
