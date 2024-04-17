@@ -179,8 +179,8 @@ export default function HomeTabs() {
           ),
         }}
         name="HomeScreen"
-        // component={HomeScreen}
-        component={OnboardingScreen}
+        component={HomeScreen}
+        // component={OnboardingScreen}
       />
       <Tabs.Screen
         options={{

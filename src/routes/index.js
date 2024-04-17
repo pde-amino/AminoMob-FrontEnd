@@ -19,6 +19,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Onboarding"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
         }}>
