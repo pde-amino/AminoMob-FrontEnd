@@ -8,21 +8,23 @@ import PortalInformation from "../view/screens/poli/PortalInformasi";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
-import LoginScreen from "../view/screens/poli/LoginScreen";
+import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
+<<<<<<< HEAD
 import { Regist } from "../view/screens/registation/Regist";
+=======
+import OnboardingScreen from "../view/screens/home/OnboardingScreen";
+>>>>>>> 323a6213018fcfcdd20348d4849b266d266950e4
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Screen name="Amino Care" component={HomeTabs} />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false, // Menyembunyikan header secara default
-        }}>
+      <Stack.Navigator screenOptions={{headerShown: false // Menyembunyikan header secara default
+           }}>
         <Stack.Screen name="Amino Care" component={HomeTabs} />
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
         <Stack.Screen name="Portal Informasi" component={PortalInformation} />
         <Stack.Screen name="Poli2" component={Poli2} />

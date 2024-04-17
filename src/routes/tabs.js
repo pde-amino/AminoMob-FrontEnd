@@ -18,6 +18,8 @@ import TestingWeb from "../view/screens/web/TestingWeb";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import { IconButton, MD3Colors } from "react-native-paper";
+import LoginScreen from "../view/screens/auth/LoginScreen";
+import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -177,7 +179,8 @@ export default function HomeTabs() {
           ),
         }}
         name="HomeScreen"
-        component={HomeScreen}
+        // component={HomeScreen}
+        component={OnboardingScreen}
       />
       <Tabs.Screen
         options={{
@@ -190,7 +193,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Dashboard"
-        component={TestingWeb}
+        component={LoginScreen}
       />
       <Tabs.Screen
         options={{
