@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 
 const ButtonPrimary = ({title, disabled}) => (
   <Button 
-    buttonColor='#cc338b'
+    buttonColor='#0A78E2'
     mode="contained" 
     labelStyle={styles.labelStyle}
     style={[styles.buttonStyle, disabled && styles.disabledButton]}

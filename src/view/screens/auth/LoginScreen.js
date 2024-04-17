@@ -6,6 +6,9 @@ import ButtonPrimary from '../../../components/ButtonPrimary'
 import HomeScreen from '../home/HomeScreen'
 import { Ionicons } from "react-native-vector-icons";
 
+
+const WARNA = {primary: '#0A78E2', white: '#fff'}
+
 const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +37,7 @@ const LoginScreen = () => {
 
   const isDisabled = !password || !!passwordError;
 
+
     return (
       <View style={styles.container}>
         <ScrollView
@@ -46,8 +50,8 @@ const LoginScreen = () => {
 
           <KeyboardAvoidingView enabled>
             <View>
-              <View >
-                <Text style={styles.judul}>Login</Text>
+              <View style={{alignItems: 'center'}}>
+                <Text style={styles.judul}>Masuk</Text>
               </View>
 
               <View>
@@ -96,7 +100,7 @@ const LoginScreen = () => {
               <View style={{ flexDirection: 'row', }}>
                 <Text>Belum Punya akun?</Text>
                 <TouchableOpacity>
-                  <Text style={{color:'blue', textDecorationLine:'underline' }} onPress={keRegist}> Daftar Sekarang</Text>
+                  <Text style={{color: WARNA.primary, textDecorationLine:'underline' }} onPress={keRegist}> Daftar Sekarang</Text>
                   </TouchableOpacity>
               </View>
             </View>  
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     judul: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'navy',
+        color: WARNA.primary,
         marginBottom: 10
     },
     inputan: {
@@ -136,11 +140,10 @@ const styles = StyleSheet.create({
     },
     tombol: {
       marginTop: 10,
-      ackgroundColor: '#007bff',
+      backgroundColor: '#007bff',
       paddingVertical: 12,
       paddingHorizontal: 10,
       borderRadius: 8,
-      width: '100%',
       alignItems: 'center',
     },
     errorText: {

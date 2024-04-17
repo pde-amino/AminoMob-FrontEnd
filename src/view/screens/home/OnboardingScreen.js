@@ -4,27 +4,29 @@ import { SafeAreaView, StyleSheet, Dimensions,
     TouchableOpacity} from 'react-native'
 import ButtonPrimary from '../../../components/ButtonPrimary'
 import ButtonSecondary from '../../../components/ButtonSecondary'
+import HomeScreen from './HomeScreen'
+import { useNavigation } from '@react-navigation/native'
 
 const {width, height} = Dimensions.get('window')
 
-const WARNA = {primary: '#cc338b', white: '#fff', red: '#FF0000'}
+const WARNA = {primary: '#0A78E2', white: '#fff'}
 
 const slides = [
     {
         id: '1',
-        image: require('../../../../assets/Frame 13.png'),
+        image: require('../../../../assets/onboard1.png'),
         title: 'Selamat Datang di Amino Apps',
         subtitle: 'Satu aplikasi untuk semua keperluan di Amino Hospital'
     },
     {
         id: '2',
-        image: require('../../../../assets/Frame 14.png'),
+        image: require('../../../../assets/onboard2.png'),
         title: 'Pusat Kesehatan Jiwa di Semarang',
-        subtitle: 'Ini subtitle kedua'
+        subtitle: 'Pasien'
     },
     {
         id: '3',
-        image: require('../../../../assets/Frame 13.png'),
+        image: require('../../../../assets/onboard3.png'),
         title: 'Buat Akun Sekarang',
         subtitle: 'Ini subtitle kedua'
     },
@@ -43,7 +45,7 @@ const Slide = ({item}) => {
 const OnboardingScreen = ({navigation}) => {
     const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
     const ref = React.useRef(null)
-
+    
     
     const Footer = () => {
     return (
@@ -71,19 +73,31 @@ const OnboardingScreen = ({navigation}) => {
 
             {/* button next dan skip */}
             <View style={{marginBottom: 20}}>
-                <View style={{flexDirection: 'row'}}>
+                {
+                    currentSlideIndex == slides.length - 1 ? 
+                    <View style={{height: 48}}>
+                    <TouchableOpacity style={[styles.btn]} 
+                    onPress={() => navigation.navigate('HomeScreen')}>
+                        <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                        MULAI
+                        </Text>
+                    </TouchableOpacity>
+                </View> 
+                 : 
+                (<View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style={[styles.btn, {
                         backgroundColor: 'transparent', 
                         borderWidth: 1, 
                         borderColor: WARNA.white}
                     ]} onPress={skip}>
-                        <Text style={{fontWeight: 'bold', fontSize: 16, color: WARNA.white}}>SKIP</Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 16, color: WARNA.white}}>LEWATI</Text>
                     </TouchableOpacity>
                     <View style={{width: 16}}/>
                     <TouchableOpacity style={[styles.btn]} onPress={nextSlide}>
-                        <Text style={{fontWeight: 'bold', fontSize: 16}}>NEXT</Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 16}}>LANJUT</Text>
                     </TouchableOpacity>
                 </View>
+                )}
             </View>
         </View>
     )
@@ -148,7 +162,7 @@ const styles = StyleSheet.create({
     indicator: {
         height: 3,
         width: 8,
-        backgroundColor: 'grey',
+        backgroundColor: '#ADADAD',
         marginHorizontal: 4,
         borderRadius: 2,
         marginTop: 12,
