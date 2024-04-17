@@ -164,8 +164,8 @@ export default function HomeTabs() {
       }}>
       <Tabs.Screen
         options={{
-          // headerShown: true,
-          headerShown: false,
+          headerShown: true,
+          // headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -175,8 +175,8 @@ export default function HomeTabs() {
           ),
         }}
         name="HomeScreen"
-        // component={HomeScreen}
-        component={OnboardingScreen}
+        component={HomeScreen}
+        // component={OnboardingScreen}
       />
       <Tabs.Screen
         options={{
