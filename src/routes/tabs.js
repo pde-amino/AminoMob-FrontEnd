@@ -16,6 +16,8 @@ import {
 } from "react-native";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import KlinikUmum from "../view/screens/poli/KlinikUmum";
+import { IconButton, MD3Colors } from "react-native-paper";
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -163,6 +165,9 @@ export default function HomeTabs() {
       <Tabs.Screen
         options={{
           headerShown: true,
+          headerRight: () => (
+            <Ionicons name={"notifications-outline"} size={24} color="grey" />
+          ),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -212,7 +217,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Regist"
-        component={RegistrationScreen}
+        component={KlinikUmum}
       />
     </Tabs.Navigator>
   );

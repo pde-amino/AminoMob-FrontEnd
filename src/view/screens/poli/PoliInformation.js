@@ -9,7 +9,8 @@ const doctorsData = [
   { name: "Dr. Jane Smith", specialization: "Dermatologist" },
 ];
 
-export default function PoliInformation() {
+export default function PoliInformation({ route }) {
+  const { clinicId, nameClinic } = route.params;
   return (
     <View style={{ marginTop: 20 }}>
       <FlatList
@@ -17,7 +18,7 @@ export default function PoliInformation() {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <CardDoctorInformationComponent
-            doctorName={item.name}
+            doctorName={clinicId}
             doctorSpecialty={item.specialization}
           />
         )}

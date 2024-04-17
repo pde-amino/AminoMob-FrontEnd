@@ -10,6 +10,7 @@ import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import LoginScreen from "../view/screens/poli/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
+import { Regist } from "../view/screens/registation/Regist";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function Routes() {
         <Stack.Screen name="Klinik Umum" component={KlinikUmum} />
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
+        <Stack.Screen name="Testing" component={Regist} />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login Screen"

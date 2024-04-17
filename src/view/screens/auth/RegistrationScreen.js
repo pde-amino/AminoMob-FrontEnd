@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 
 const RegistrationScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [registeredData, setRegisteredData] = useState(null);
 
   const handleRegistration = () => {
     // Handle Get Data
     console.log("Name:", name);
     console.log("Email:", email);
     console.log("Password:", password);
+    // Menyimpan data yang diinput pengguna
+    setRegisteredData({ name, email, password });
   };
 
   return (
@@ -41,6 +44,14 @@ const RegistrationScreen = () => {
         style={styles.button}>
         Register
       </Button>
+      {/* Menampilkan data yang diinput pengguna */}
+      {registeredData && (
+        <View style={styles.registeredData}>
+          <Text>Name: {registeredData.name}</Text>
+          <Text>Email: {registeredData.email}</Text>
+          <Text>Password: {registeredData.password}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -59,6 +70,14 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     marginTop: 10,
+  },
+  registeredData: {
+    marginTop: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
   },
 });
 
