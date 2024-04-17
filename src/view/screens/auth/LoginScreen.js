@@ -9,15 +9,31 @@ import { Ionicons } from "react-native-vector-icons";
 const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
   const navigation = useNavigation();
+
   const keRegist = () => {
-    navigation.navigate(HomeScreen);
+    navigation.navigate(HomeScreen); //harus diubah ke halaman pendaftaran
   };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handlePasswordChange = (text) => {
+    // Cek apakah teks password mengandung karakter khusus
+    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
+    if (containsSpecialChar) {
+      setPasswordError('Gak boleh pakai karakter itu');
+    } else {
+      setPasswordError('');
+    }
+    setPassword(text);
+  };
+
+  const isDisabled = !password || !!passwordError;
+
     return (
       <View style={styles.container}>
         <ScrollView
@@ -46,14 +62,15 @@ const LoginScreen = () => {
               </View>
               <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <TextInput 
-                  style={styles.inputan} 
+                  style={[styles.inputan, passwordError && styles.inputError]} 
                   selectionColor={'blue'} 
                   placeholder='Password'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
                   secureTextEntry={!showPassword}
                   value={password}
-                  onChangeText={setPassword}
+                  // onChangeText={setPassword}
+                  onChangeText={handlePasswordChange}
                   // keyboardType='password' 
                 />
 
@@ -65,13 +82,15 @@ const LoginScreen = () => {
                   </View> 
               </View>
 
+              {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+
               {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
                 <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
                 <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
               </TouchableOpacity> */}
 
               <View style={{ marginBottom: 8, marginTop: 8, alignItems: 'center',}} >
-                <ButtonPrimary title='Masuk'/>  
+                <ButtonPrimary title='Masuk' disabled={isDisabled}/>  
               </View>
               
               <View style={{ flexDirection: 'row', }}>
@@ -124,6 +143,16 @@ const styles = StyleSheet.create({
       width: '100%',
       alignItems: 'center',
     },
+    errorText: {
+      color: 'red',
+      fontSize: 12,
+      marginTop: 5,
+      marginBottom: 15,
+      marginLeft: 5,
+    },
+    inputError:{
+      borderColor: 'red',
+    }
 })
 
 export default LoginScreen;

@@ -17,13 +17,10 @@ const Stack = createNativeStackNavigator();
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Screen name="Onboard" component={OnboardingScreen} />
-      <Stack.Screen name="Amino Care" component={HomeTabs} />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false, // Menyembunyikan header secara default
-        }}>
+      <Stack.Navigator screenOptions={{headerShown: false // Menyembunyikan header secara default
+           }}>
         <Stack.Screen name="Amino Care" component={HomeTabs} />
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
         <Stack.Screen name="Portal Informasi" component={PortalInformation} />
         <Stack.Screen name="Poli2" component={Poli2} />
