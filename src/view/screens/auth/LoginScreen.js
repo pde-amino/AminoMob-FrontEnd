@@ -13,6 +13,8 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+  const [unameError, setUnameError] = useState('');
+  const [uname, setUname] = useState('');
 
   const navigation = useNavigation();
 
@@ -35,7 +37,17 @@ const LoginScreen = () => {
     setPassword(text);
   };
 
-  const isDisabled = !password || !!passwordError;
+  const handleUsernameChange = (text) => {
+    const onlyAngka = /^[0-9]+$/.test(text);
+    if (!onlyAngka) {
+      setUnameError('Cuma boleh pakai angka');
+    } else {
+      setUnameError('');
+    }
+    setUname(text);
+  };
+
+  const isDisabled = !password || !!passwordError || !unameError || !uname;
 
 
     return (
@@ -56,14 +68,17 @@ const LoginScreen = () => {
 
               <View>
                 <TextInput 
-                  style={styles.inputan} 
+                  style={[styles.inputan, unameError && styles.inputError]} 
                   selectionColor={'blue'} 
                   placeholder='No. Handphone/ No. RM'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
-                  keyboardType='email-address' 
+                  onChangeText={handleUsernameChange}
                 />
               </View>
+
+              {unameError ? <Text style={styles.errorText}>{unameError}</Text> : null}
+
               <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <TextInput 
                   style={[styles.inputan, passwordError && styles.inputError]} 
@@ -73,7 +88,6 @@ const LoginScreen = () => {
                   autoCapitalize='none'
                   secureTextEntry={!showPassword}
                   value={password}
-                  // onChangeText={setPassword}
                   onChangeText={handlePasswordChange}
                   // keyboardType='password' 
                 />
@@ -87,6 +101,7 @@ const LoginScreen = () => {
               </View>
 
               {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+              
 
               {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
                 <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
@@ -120,10 +135,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     judul: {
-        fontSize: 24,
+        fontSize: 32,
         fontWeight: 'bold',
         color: WARNA.primary,
-        marginBottom: 10
+        marginBottom: 32,
     },
     inputan: {
       height: 48,
@@ -149,8 +164,8 @@ const styles = StyleSheet.create({
     errorText: {
       color: 'red',
       fontSize: 12,
-      marginTop: 5,
-      marginBottom: 15,
+      marginTop: 2,
+      marginBottom: 8,
       marginLeft: 5,
     },
     inputError:{

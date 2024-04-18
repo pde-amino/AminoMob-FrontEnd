@@ -11,9 +11,8 @@ import {
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-import ButtonPrimary from "../../../components/ButtonPrimary";
-import ButtonSecondary from "../../../components/ButtonSecondary";
 import HomeScreen from "./HomeScreen";
+import LoginScreen from "../auth/LoginScreen";
 import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
@@ -31,13 +30,13 @@ const slides = [
     id: "2",
     image: require("../../../../assets/onboard2.png"),
     title: "Pusat Kesehatan Jiwa di Semarang",
-    subtitle: "Pasien",
+    subtitle: "Amino Hospital merupakan rumah sakit jiwa terbesar di Semarang",
   },
   {
     id: "3",
     image: require("../../../../assets/onboard3.png"),
-    title: "Buat Akun Sekarang",
-    subtitle: "Ini subtitle kedua",
+    title: "Buat Akun atau Masuk Sekarang",
+    subtitle: "Untuk menggunakan aplikasi secara penuh silakan Login terlebih dulu",
   },
 ];
 
@@ -90,12 +89,24 @@ const OnboardingScreen = ({ navigation }) => {
         {/* button next dan skip */}
         <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slides.length - 1 ? (
-            <View style={{ height: 48 }}>
-              <TouchableOpacity
-                style={[styles.btn]}
-                onPress={() => navigation.replace("Amino Care")}>
-                <Text style={{ fontWeight: "bold", fontSize: 16 }}>MULAI</Text>
-              </TouchableOpacity>
+            <View>
+                <View style={{ height: 48, marginBottom: 8}}>
+                    <TouchableOpacity
+                    style={[styles.btn]}
+                    onPress={() => navigation.navigate("Login Screen")}>
+                        <Text style={{ fontWeight: "bold", fontSize: 16, color: WARNA.primary }}>MASUK / DAFTAR</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ height: 48 }}>
+                    <TouchableOpacity
+                    style={[styles.btn, {
+                        backgroundColor: "transparent",
+                        }]}
+                    onPress={() => navigation.replace("Amino Care")}>
+                        <Text style={{ fontWeight: "bold", fontSize: 16, color: WARNA.white }}>NANTI</Text>
+                    </TouchableOpacity>
+                </View>
+              
             </View>
           ) : (
             <View style={{ flexDirection: "row" }}>
