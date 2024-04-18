@@ -21,6 +21,8 @@ const LoginScreen = () => {
   const [passwordError, setPasswordError] = useState("");
   const [unameError, setUnameError] = useState("");
   const [uname, setUname] = useState("");
+  const [unameError, setUnameError] = useState("");
+  const [uname, setUname] = useState("");
 
   const navigation = useNavigation();
 
@@ -56,6 +58,17 @@ const LoginScreen = () => {
   };
 
   const isDisabled = !password || !!passwordError || !unameError || !uname;
+  const handleUsernameChange = (text) => {
+    const onlyAngka = /^[0-9]+$/.test(text);
+    if (!onlyAngka) {
+      setUnameError("Cuma boleh pakai angka");
+    } else {
+      setUnameError("");
+    }
+    setUname(text);
+  };
+
+  const isDisabled = !password || !!passwordError || !unameError || !uname;
 
   return (
     <View style={styles.container}>
@@ -75,13 +88,18 @@ const LoginScreen = () => {
             <View>
               <TextInput
                 style={[styles.inputan, unameError && styles.inputError]}
-                selectionColor={WARNA.primary}
+                selectionColor={"blue"}
                 placeholder="No. Handphone/ No. RM"
                 placeholderTextColor={"grey"}
                 autoCapitalize="none"
                 onChangeText={handleUsernameChange}
+                onChangeText={handleUsernameChange}
               />
             </View>
+
+            {unameError ? (
+              <Text style={styles.errorText}>{unameError}</Text>
+            ) : null}
 
             {unameError ? (
               <Text style={styles.errorText}>{unameError}</Text>

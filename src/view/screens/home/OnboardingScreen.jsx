@@ -67,15 +67,13 @@ const OnboardingScreen = ({ navigation }) => {
           height: height * 0.25,
           justifyContent: "space-between",
           paddingHorizontal: 20,
-        }}
-      >
+        }}>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
             marginTop: 20,
-          }}
-        >
+          }}>
           {slides.map((_, index) => (
             <View
               key={index}
@@ -97,15 +95,13 @@ const OnboardingScreen = ({ navigation }) => {
               <View style={{ height: 48, marginBottom: 8 }}>
                 <TouchableOpacity
                   style={[styles.btn]}
-                  onPress={() => navigation.navigate("Login Screen")}
-                >
+                  onPress={() => navigation.navigate("Login Screen")}>
                   <Text
                     style={{
                       fontWeight: "bold",
                       fontSize: 16,
                       color: WARNA.primary,
-                    }}
-                  >
+                    }}>
                     MASUK / DAFTAR
                   </Text>
                 </TouchableOpacity>
@@ -118,15 +114,13 @@ const OnboardingScreen = ({ navigation }) => {
                       backgroundColor: "transparent",
                     },
                   ]}
-                  onPress={() => navigation.replace("Amino Care")}
-                >
+                  onPress={() => navigation.replace("Amino Care")}>
                   <Text
                     style={{
                       fontWeight: "bold",
                       fontSize: 16,
                       color: WARNA.white,
-                    }}
-                  >
+                    }}>
                     NANTI
                   </Text>
                 </TouchableOpacity>
@@ -143,15 +137,13 @@ const OnboardingScreen = ({ navigation }) => {
                     borderColor: WARNA.white,
                   },
                 ]}
-                onPress={skip}
-              >
+                onPress={skip}>
                 <Text
                   style={{
                     fontWeight: "bold",
                     fontSize: 16,
                     color: WARNA.white,
-                  }}
-                >
+                  }}>
                   LEWATI
                 </Text>
               </TouchableOpacity>

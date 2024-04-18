@@ -19,6 +19,7 @@ import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
 import JadwalDokter from "../view/screens/jadwal/JadwalDokter";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
