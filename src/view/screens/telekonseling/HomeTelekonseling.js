@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TestingComponents from "../../../components/TestingComponents";
 
-export default function Index() {
+export default function HomeTelekonseling() {
   return (
     <View
       style={{
@@ -14,7 +14,7 @@ export default function Index() {
         gap: 15,
       }}
     >
-      <TestingComponents titlePage={"Pendaftaran Online"} />
+      <TestingComponents titlePage={"Halaman Telekonseling"} />
     </View>
   );
 }

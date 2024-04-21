@@ -6,6 +6,7 @@ import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
+import MySlider from "../../../components/MySlider";
 
 const HomeScreen = () => {
   const Menus = [
@@ -22,15 +23,15 @@ const HomeScreen = () => {
       icon: "book",
       title: "Pendaftaran Telekonseling",
       desc: "Telekonseling Gratis",
-      to: "Daftar Online",
+      to: "Telekonseling",
       color: "green",
     },
     {
       kd_poli: "3",
       icon: "note",
-      title: "Jadwal Dokte",
+      title: "Jadwal Dokter",
       desc: "Lihat Jadwal Dokter",
-      to: "DoctorScreen",
+      to: "Jadwal Dokter",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
@@ -39,7 +40,7 @@ const HomeScreen = () => {
       icon: "history",
       title: "Riwayat Kunjungan",
       desc: "Riwayat Lengkap  Pemeriksaan Anda",
-      to: "Web View",
+      to: "Riwayat Kunjungan",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
@@ -48,7 +49,7 @@ const HomeScreen = () => {
       icon: "check",
       title: "FAQ",
       desc: "Pertanyaan yang sering muncul",
-      to: "Web View",
+      to: "FAQ",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
@@ -113,6 +114,8 @@ const HomeScreen = () => {
             fontSize: 24,
             textAlign: "left",
             color: "#3c3c3c",
+            marginTop: 40,
+            lineHeight: 36,
           }}
         >
           Hii,
@@ -127,6 +130,8 @@ const HomeScreen = () => {
         >
           Safira Putri
         </Text>
+        {/* <SliderComponent /> */}
+        <MySlider />
       </View>
       <View
         style={{
@@ -136,7 +141,6 @@ const HomeScreen = () => {
           marginTop: 10,
         }}
       >
-        <SliderComponent />
         <FlatList
           contentContainerStyle={{ flexGrow: 1 }}
           // refreshControl={
