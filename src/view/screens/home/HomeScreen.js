@@ -4,68 +4,54 @@ import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
+import CardButtonComponent from "../../../components/CardButtonComponent";
+import SliderComponent from "../../../components/SliderComponent ";
 
 const HomeScreen = () => {
   const Menus = [
     {
-      kd_poli: "2",
-      nm_poli: "Daftar Online",
+      kd_poli: "1",
       icon: "home",
-      title: "Account",
-      to: "Favorites",
+      title: "Daftar Online",
+      desc: "Pendaftaran Poli Klinik",
+      to: "Daftar Online",
       color: "pink",
     },
     {
       kd_poli: "2",
-      nm_poli: "Antrian",
-      icon: "book-outline",
-      title: "Information",
-      to: "Portal Informasi",
+      icon: "book",
+      title: "Pendaftaran Telekonseling",
+      desc: "Telekonseling Gratis",
+      to: "Daftar Online",
       color: "green",
     },
     {
-      kd_poli: "2",
-      nm_poli: "Testing",
-      icon: "leaf-outline",
-      title: "Klinik Umum",
+      kd_poli: "3",
+      icon: "note",
+      title: "Jadwal Dokte",
+      desc: "Lihat Jadwal Dokter",
       to: "DoctorScreen",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
     {
-      kd_poli: "2",
-      nm_poli: "Testing",
-      icon: "leaf-outline",
-      title: "Web View",
+      kd_poli: "4",
+      icon: "history",
+      title: "Riwayat Kunjungan",
+      desc: "Riwayat Lengkap  Pemeriksaan Anda",
       to: "Web View",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
-    // {
-    //   kd_poli: "2",
-    //   nm_poli: "Testing",
-    //   icon: "heart",
-    //   title: "Notifaction",
-    //   to: "Favorites",
-    //   color: "purple",
-    // },
-    // {
-    //   kd_poli: "2",
-    //   nm_poli: "Testing",
-    //   icon: "bonfire-outline",
-    //   title: "Poli 2",
-    //   to: "Poli2",
-    //   color: "red",
-    // },
-    // {
-    //   kd_poli: "2",
-    //   nm_poli: "Testing",
-    //   icon: "leaf-outline",
-    //   title: "Klinik Hijau",
-    //   to: "DoctorScreen",
-    //   params: { clinicId: 2, nameClinic: "Klinik Hijau" },
-    //   color: "green",
-    // },
+    {
+      kd_poli: "5",
+      icon: "check",
+      title: "FAQ",
+      desc: "Pertanyaan yang sering muncul",
+      to: "Web View",
+      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+      color: "blue",
+    },
   ];
 
   const navigation = useNavigation();
@@ -73,84 +59,111 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  const fetchData = () => {
-    setIsLoading(true);
-    fetch("http://192.168.5.5:8080/poliklinik")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === "success") {
-          setPoliklinikData(data.data_poli);
-        } else {
-          console.error("Error fetching data:", data.message);
-          setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-        }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-        setIsLoading(false);
-      });
-  };
+  // const fetchData = () => {
+  //   setIsLoading(true);
+  //   fetch("http://192.168.5.5:8080/poliklinik")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.message === "success") {
+  //         setPoliklinikData(data.data_poli);
+  //       } else {
+  //         console.error("Error fetching data:", data.message);
+  //         setError(true); // Mengatur error menjadi true saat terjadi kesalahan
+  //       }
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //       setError(true); // Mengatur error menjadi true saat terjadi kesalahan
+  //       setIsLoading(false);
+  //     });
+  // };
 
   const handleClinicSelection = (screen, params) => {
     navigation.navigate(screen, params);
   };
 
-  if (isLoading) {
-    return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
-  }
+  // if (isLoading) {
+  //   return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
+  // }
 
-  if (error || poliklinikData.length === 0) {
-    // Menampilkan screen kosong atau error jika ada error atau data kosong
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>
-          {error ? "Error occurred" : "Sepertinya tidak ada sesuatu disini"}
-        </Text>
-        <Button title="Retry" onPress={fetchData}>
-          Coba Lagi
-        </Button>
-      </View>
-    );
-  }
+  // if (error || poliklinikData.length === 0) {
+  //   // Menampilkan screen kosong atau error jika ada error atau data kosong
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <Text>
+  //         {error ? "Error occurred" : "Sepertinya tidak ada sesuatu disini"}
+  //       </Text>
+  //       <Button title="Retry" onPress={fetchData}>
+  //         Coba Lagi
+  //       </Button>
+  //     </View>
+  //   );
+  // }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10,
-      }}>
-      <FlatList
-        contentContainerStyle={{ flexGrow: 1 }}
-        refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
-        }
-        horizontal={false}
-        numColumns={3}
-        data={Menus}
-        renderItem={({ item }) => (
-          <MenuItemComponent
-            onPress={() =>
-              handleClinicSelection("Testing", {
-                clinicId: item.kd_poli,
-                nameClinic: item.nm_poli,
-              })
-            }
-            data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
-            icon={item.icon}
-            title={item.nm_poli}
-            colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli}
-      />
+    <View style={{ flex: 1, marginHorizontal: 24, marginTop: 20 }}>
+      <View>
+        <Text
+          style={{
+            fontSize: 24,
+            textAlign: "left",
+            color: "#3c3c3c",
+          }}
+        >
+          Hii,
+        </Text>
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#576b99",
+            marginBottom: 8,
+          }}
+        >
+          Safira Putri
+        </Text>
+      </View>
+      <View
+        style={{
+          // flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 10,
+        }}
+      >
+        <SliderComponent />
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
+          // refreshControl={
+          //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
+          // }
+          // horizontal={false}
+          // numColumns={3}
+          data={Menus}
+          renderItem={({ item, index }) => (
+            <CardButtonComponent
+              // onPress={() =>
+              //   handleClinicSelection("Testing", {
+              //     clinicId: item.kd_poli,
+              //     nameClinic: item.desc,
+              //   })
+              // }
+              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+              icon={item.icon}
+              title={item.title}
+              description={item.desc}
+              onPress={item.to}
+              colorIcon={item.color}
+            />
+          )}
+          keyExtractor={(item) => item.kd_poli}
+        />
+      </View>
     </View>
   );
 };

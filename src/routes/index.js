@@ -10,8 +10,10 @@ import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
-import { Regist } from "../view/screens/registation/Regist";
+import { Regist } from "../view/screens/registration/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
+import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import Index from "../view/screens/registration/Index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
@@ -36,8 +38,7 @@ export default function Routes() {
           // initialRouteName="Onboarding"
           screenOptions={{
             headerShown: false, // Menyembunyikan header secara default
-          }}
-        >
+          }}>
           {pertamaLaunch && (
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
           )}
