@@ -15,6 +15,10 @@ import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
 import Index from "../view/screens/registration/Index";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
+import JadwalDokter from "../view/screens/jadwal/JadwalDokter";
+import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
+import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
 
 const Stack = createNativeStackNavigator();
 
