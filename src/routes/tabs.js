@@ -166,7 +166,7 @@ export default function HomeTabs() {
       }}>
       <Tabs.Screen
         options={{
-          headerShown: false,
+          // headerShown: true,
           headerRight: () => (
             <Ionicons name={"notifications-outline"} size={24} color="grey" />
           ),
@@ -218,8 +218,8 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="Regist"
-        component={KlinikUmum}
+        name="Pendaftaran"
+        component={RegistrationScreen}
       />
     </Tabs.Navigator>
   );
