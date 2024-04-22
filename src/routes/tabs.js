@@ -163,8 +163,8 @@ export default function HomeTabs() {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
-      }} >
+      }}
+    >
       <Tabs.Screen
         options={{
           // headerShown: true,
