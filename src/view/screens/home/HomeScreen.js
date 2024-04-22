@@ -116,8 +116,7 @@ const HomeScreen = () => {
             color: "#3c3c3c",
             marginTop: 40,
             lineHeight: 36,
-          }}
-        >
+          }}>
           Hii,
         </Text>
         <Text
@@ -126,8 +125,7 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "#576b99",
             marginBottom: 8,
-          }}
-        >
+          }}>
           Safira Putri
         </Text>
         {/* <SliderComponent /> */}
@@ -139,8 +137,7 @@ const HomeScreen = () => {
           justifyContent: "center",
           alignItems: "center",
           marginTop: 10,
-        }}
-      >
+        }}>
         <FlatList
           contentContainerStyle={{ flexGrow: 1 }}
           // refreshControl={
