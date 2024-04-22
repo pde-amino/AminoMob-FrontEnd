@@ -163,10 +163,11 @@ export default function HomeTabs() {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
-          headerShown: true,
+          headerShown: false,
           headerRight: () => (
             <Ionicons name={"notifications-outline"} size={24} color="grey" />
           ),

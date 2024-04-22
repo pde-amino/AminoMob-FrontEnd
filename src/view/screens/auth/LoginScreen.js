@@ -19,7 +19,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const keRegist = () => {
-    navigation.navigate(HomeScreen); //harus diubah ke halaman pendaftaran
+    navigation.navigate('Signup'); //harus diubah ke halaman pendaftaran
   };
 
   const toggleShowPassword = () => {
@@ -69,7 +69,7 @@ const LoginScreen = () => {
               <View>
                 <TextInput 
                   style={[styles.inputan, unameError && styles.inputError]} 
-                  selectionColor={'blue'} 
+                  selectionColor={WARNA.primary} 
                   placeholder='No. Handphone/ No. RM'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
@@ -82,7 +82,7 @@ const LoginScreen = () => {
               <View style={{flexDirection: 'row', alignItems:'center'}}>
                 <TextInput 
                   style={[styles.inputan, passwordError && styles.inputError]} 
-                  selectionColor={'blue'} 
+                  selectionColor={WARNA.primary} 
                   placeholder='Password'
                   placeholderTextColor={'grey'}
                   autoCapitalize='none'
@@ -115,7 +115,8 @@ const LoginScreen = () => {
               <View style={{ flexDirection: 'row', }}>
                 <Text>Belum Punya akun?</Text>
                 <TouchableOpacity>
-                  <Text style={{color: WARNA.primary, textDecorationLine:'underline' }} onPress={keRegist}> Daftar Sekarang</Text>
+                  <Text style={{color: WARNA.primary, textDecorationLine:'underline' }} 
+                  onPress={keRegist}> Daftar Sekarang</Text>
                   </TouchableOpacity>
               </View>
             </View>  
