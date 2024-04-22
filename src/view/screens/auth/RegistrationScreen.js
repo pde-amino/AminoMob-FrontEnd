@@ -1,57 +1,129 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { KeyboardAvoidingView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import ButtonPrimary from "../../../components/ButtonPrimary";
+import HomeScreen from "../home/HomeScreen";
+import { Ionicons } from "react-native-vector-icons";
+
+const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const RegistrationScreen = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [registeredData, setRegisteredData] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
-  const handleRegistration = () => {
-    // Handle Get Data
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Menyimpan data yang diinput pengguna
-    setRegisteredData({ name, email, password });
+  const navigation = useNavigation();
+
+  const keRegist = () => {
+    navigation.navigate(HomeScreen);
   };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handlePasswordChange = (text) => {
+    // Cek apakah teks password mengandung karakter khusus
+    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
+      text
+    );
+    if (containsSpecialChar) {
+      setPasswordError("Gak boleh pakai karakter itu");
+    } else {
+      setPasswordError("");
+    }
+    setPassword(text);
+  };
+
+  const isDisabled = !password || !!passwordError;
 
   return (
     <View style={styles.container}>
-      <TextInput
-        label="Name"
-        value={name}
-        onChangeText={(text) => setName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        label="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button
-        mode="contained"
-        onPress={handleRegistration}
-        style={styles.button}>
-        Register
-      </Button>
-      {/* Menampilkan data yang diinput pengguna */}
-      {registeredData && (
-        <View style={styles.registeredData}>
-          <Text>Name: {registeredData.name}</Text>
-          <Text>Email: {registeredData.email}</Text>
-          <Text>Password: {registeredData.password}</Text>
-        </View>
-      )}
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: "center",
+          alignContent: "center",
+        }}>
+        <KeyboardAvoidingView enabled>
+          <View>
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.judul}>Daftar Akun Amino Mobile</Text>
+            </View>
+
+            <View>
+              <TextInput
+                style={styles.inputan}
+                selectionColor={"blue"}
+                placeholder="No. Handphone/ No. RM"
+                placeholderTextColor={"grey"}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TextInput
+                style={[styles.inputan, passwordError && styles.inputError]}
+                selectionColor={"blue"}
+                placeholder="Password"
+                placeholderTextColor={"grey"}
+                autoCapitalize="none"
+                secureTextEntry={!showPassword}
+                value={password}
+                // onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
+                // keyboardType='password'
+              />
+
+              {/* icon mata */}
+              <View style={{ position: "absolute", right: 10 }}>
+                <TouchableOpacity
+                  style={styles.showHideButton}
+                  onPress={toggleShowPassword}>
+                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {passwordError ? (
+              <Text style={styles.errorText}>{passwordError}</Text>
+            ) : null}
+
+            {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
+                <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
+                <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
+              </TouchableOpacity> */}
+
+            <View
+              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
+              <ButtonPrimary title="Masuk" disabled={isDisabled} />
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text>Sudah Punya akun?</Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    color: WARNA.primary,
+                    textDecorationLine: "underline",
+                  }}
+                  onPress={() => navigation.navigate("Login Screen")}>
+                  Masuk disini
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 };
@@ -61,23 +133,43 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
   },
-  input: {
+  judul: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: WARNA.primary,
     marginBottom: 10,
-    width: "100%",
   },
-  button: {
-    width: "100%",
-    marginTop: 10,
-  },
-  registeredData: {
-    marginTop: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+  inputan: {
+    height: 48,
+    width: 350,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+    padding: 8,
+    margin: 4,
+    paddingHorizontal: 10,
+    backgroundColor: "white",
+    borderRadius: 8,
+  },
+  showHideButton: {
+    padding: 10,
+  },
+  tombol: {
+    marginTop: 10,
+    backgroundColor: "#007bff",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 5,
+    marginBottom: 15,
+    marginLeft: 5,
+  },
+  inputError: {
+    borderColor: "red",
   },
 });
 

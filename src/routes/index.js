@@ -10,8 +10,15 @@ import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
-import { Regist } from "../view/screens/registation/Regist";
+import { Regist } from "../view/screens/registration/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
+import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import Index from "../view/screens/registration/Index";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
+import JadwalDokter from "../view/screens/jadwal/JadwalDokter";
+import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
+import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +36,15 @@ const Stack = createNativeStackNavigator();
 // }
 // }, []);
 
+  return (
+    pertamaLaunch !== null && (
+      <NavigationContainer>
+        <Stack.Navigator
+          // initialRouteName="Onboarding"
+          screenOptions={{
+            headerShown: false, // Menyembunyikan header secara default
+          }}>
+          {pertamaLaunch && (
 return (
   // pertamaLaunch !== null && (
   <NavigationContainer>
