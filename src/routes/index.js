@@ -36,15 +36,6 @@ const Stack = createNativeStackNavigator();
 // }
 // }, []);
 
-  return (
-    pertamaLaunch !== null && (
-      <NavigationContainer>
-        <Stack.Navigator
-          // initialRouteName="Onboarding"
-          screenOptions={{
-            headerShown: false, // Menyembunyikan header secara default
-          }}>
-          {pertamaLaunch && (
 return (
   // pertamaLaunch !== null && (
   <NavigationContainer>
