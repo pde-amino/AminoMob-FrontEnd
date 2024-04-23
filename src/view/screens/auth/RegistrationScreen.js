@@ -17,8 +17,15 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const RegistrationScreen = () => {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  // const [unameError, setUnameError] = useState("");
+  // const [uname, setUname] = useState("");
+  const [RMError, setRMError] = useState("");
+  const [RM, setRM] = useState("");
+  const [HPError, setHPError] = useState("");
+  const [HP, setHP] = useState("");
 
   const navigation = useNavigation();
 
@@ -43,7 +50,35 @@ const RegistrationScreen = () => {
     setPassword(text);
   };
 
-  const isDisabled = !password || !!passwordError;
+  const handleNoRM = (text) => {
+    const onlyAngka = /^[0-9]+$/.test(text);
+    if (!onlyAngka) {
+      setRMError("Cuma boleh pakai angka");
+    } else {
+      setRMError("");
+    }
+    setRM(text);
+  };
+
+  const handleNoHP = (text) => {
+    const onlyAngka = /^[0-9]+$/.test(text);
+    if (!onlyAngka) {
+      setHPError("Cuma boleh pakai angka");
+    } else {
+      setHPError("");
+    }
+    setHP(text);
+  };
+
+  const isDisabled =
+    !password ||
+    !passwordError ||
+    !unameError ||
+    !uname ||
+    !RMError ||
+    !RM ||
+    !HPError ||
+    !HP;
 
   return (
     <View style={styles.container}>
@@ -53,23 +88,45 @@ const RegistrationScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}>
+        }}
+      >
         <KeyboardAvoidingView enabled>
           <View>
             <View style={{ alignItems: "center" }}>
-              <Text style={styles.judul}>Daftar Akun Amino Mobile</Text>
+              <Text style={styles.judul}>Daftar Akun</Text>
             </View>
 
+            {/* inputan no rm */}
             <View>
               <TextInput
-                style={styles.inputan}
+                style={[styles.inputan, RMError && styles.inputError]}
                 selectionColor={"blue"}
-                placeholder="No. Handphone/ No. RM"
+                placeholder="No. RM"
                 placeholderTextColor={"grey"}
                 autoCapitalize="none"
                 keyboardType="email-address"
+                onChangeText={handleNoRM}
               />
             </View>
+
+            {RMError ? <Text style={styles.errorText}>{RMError}</Text> : null}
+
+            {/* inputan no hp */}
+            <View>
+              <TextInput
+                style={[styles.inputan, HPError && styles.inputError]}
+                selectionColor={"blue"}
+                placeholder="No. Handphone"
+                placeholderTextColor={"grey"}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onChangeText={handleNoHP}
+              />
+            </View>
+
+            {HPError ? <Text style={styles.errorText}>{HPError}</Text> : null}
+
+            {/* inputan password */}
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <TextInput
                 style={[styles.inputan, passwordError && styles.inputError]}
@@ -79,7 +136,6 @@ const RegistrationScreen = () => {
                 autoCapitalize="none"
                 secureTextEntry={!showPassword}
                 value={password}
-                // onChangeText={setPassword}
                 onChangeText={handlePasswordChange}
                 // keyboardType='password'
               />
@@ -88,7 +144,32 @@ const RegistrationScreen = () => {
               <View style={{ position: "absolute", right: 10 }}>
                 <TouchableOpacity
                   style={styles.showHideButton}
-                  onPress={toggleShowPassword}>
+                  onPress={toggleShowPassword}
+                >
+                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            {/* inputan confirm password */}
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TextInput
+                style={[styles.inputan, passwordError && styles.inputError]}
+                selectionColor={"blue"}
+                placeholder="Konfirmasi Password"
+                placeholderTextColor={"grey"}
+                autoCapitalize="none"
+                secureTextEntry={!showPassword}
+                value={confirmPassword}
+                onChangeText={handlePasswordChange}
+                // keyboardType='password'
+              />
+
+              {/* icon mata */}
+              <View style={{ position: "absolute", right: 10 }}>
+                <TouchableOpacity
+                  style={styles.showHideButton}
+                  onPress={toggleShowPassword}
+                >
                   <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
                 </TouchableOpacity>
               </View>
@@ -104,8 +185,9 @@ const RegistrationScreen = () => {
               </TouchableOpacity> */}
 
             <View
-              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
-              <ButtonPrimary title="Masuk" disabled={isDisabled} />
+              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}
+            >
+              <ButtonPrimary title="Daftar" disabled={isDisabled} />
             </View>
 
             <View style={{ flexDirection: "row" }}>
@@ -116,7 +198,8 @@ const RegistrationScreen = () => {
                     color: WARNA.primary,
                     textDecorationLine: "underline",
                   }}
-                  onPress={() => navigation.navigate("Login Screen")}>
+                  onPress={() => navigation.navigate("Login Screen")}
+                >
                   Masuk disini
                 </Text>
               </TouchableOpacity>
@@ -164,8 +247,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 12,
-    marginTop: 5,
-    marginBottom: 15,
+    marginBottom: 8,
     marginLeft: 5,
   },
   inputError: {
