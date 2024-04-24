@@ -11,7 +11,8 @@ const ButtonPrimary = ({ title, disabled }) => (
     labelStyle={styles.labelStyle}
     style={[styles.buttonStyle, disabled && styles.disabledButton]}
     onPress={() => console.log("Pressed")}
-    disabled={disabled}>
+    disabled={disabled}
+  >
     {title}
   </Button>
 );
