@@ -47,19 +47,16 @@ const LoginScreen = () => {
     setPassword(text);
   };
 
+  const isDisabled = !password || !!passwordError || !unameError || !uname;
   const handleUsernameChange = (text) => {
     const onlyAngka = /^[0-9]+$/.test(text);
     if (!onlyAngka) {
       setUnameError("Cuma boleh pakai angka");
-    } else if (text.length < 8) {
-      setUnameError("Periksa lagi jumlah angka");
     } else {
       setUnameError("");
     }
     setUname(text);
   };
-
-  const isDisabled = !password || !!passwordError || !unameError || !uname;
 
   return (
     <View style={styles.container}>

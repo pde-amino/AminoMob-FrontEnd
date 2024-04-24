@@ -7,6 +7,7 @@ import { Button } from "react-native-paper";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
+import { ScrollView } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 
 const { lebar, tinggi } = Dimensions.get("window");
@@ -32,7 +33,7 @@ const HomeScreen = () => {
     {
       kd_poli: "3",
       icon: "note",
-      title: "Jadwal Dokter",
+      title: "Informasi Umum",
       desc: "Lihat Jadwal Dokter",
       to: "Jadwal Dokter",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -153,6 +154,8 @@ const HomeScreen = () => {
         </Text>
 
         {/* <SliderComponent /> */}
+      </View>
+      <ScrollView>
         <MySlider />
 
         <View
@@ -160,7 +163,7 @@ const HomeScreen = () => {
             // flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            marginTop: 12,
+            marginTop: 10,
           }}
         >
           <FlatList
@@ -179,7 +182,6 @@ const HomeScreen = () => {
                 //     nameClinic: item.desc,
                 //   })
                 // }
-
                 data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
                 icon={item.icon}
                 title={item.title}
@@ -191,7 +193,7 @@ const HomeScreen = () => {
             keyExtractor={(item) => item.kd_poli}
           />
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

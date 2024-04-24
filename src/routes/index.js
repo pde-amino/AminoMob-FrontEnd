@@ -10,14 +10,14 @@ import DoctorScreen from "../view/screens/poli/DoctorScreen";
 import TestingWeb from "../view/screens/web/TestingWeb";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
+import { Regist } from "../view/screens/pendaftaran/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
-import Index from "../view/screens/pendaftaran/Index";
 import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
-import JadwalDokter from "../view/screens/jadwal/JadwalDokter";
+import JadwalDokter from "../view/screens/informasi/JadwalDokter";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
-import { Regist } from "../view/screens/pendaftaran/Regist";
+import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +28,7 @@ export default function Routes() {
         // initialRouteName="Onboarding"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Amino Care" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -44,7 +43,7 @@ export default function Routes() {
         <Stack.Group>
           <Stack.Screen
             name="Daftar Online"
-            component={Index}
+            component={Pendaftaran}
             options={{
               title: "Masuk",
             }}
