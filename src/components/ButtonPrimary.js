@@ -1,6 +1,8 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-paper";
+
+const { height, width } = Dimensions.get("window");
 
 const ButtonPrimary = ({ title, disabled }) => (
   <Button
@@ -20,8 +22,8 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     borderRadius: 10,
-    height: 42,
-    width: 350,
+    height: 44,
+    width: width * 0.9,
   },
   disabledButton: {
     opacity: 1,

@@ -108,14 +108,19 @@ const HomeScreenOld = () => {
   // }
 
   return (
-    <View style={{ flex: 1, marginHorizontal: 24, marginTop: 20 }}>
-      <View>
+    <View
+      style={[
+        GlobalStyles.Main,
+        (flex = 1),
+        (marginHorizontal = 24),
+        (marginTop = 20),
+      ]}>
+      <View style={GlobalStyles.safeAreaStyle}>
         <Text
           style={{
             fontSize: 24,
             textAlign: "left",
             color: "#3c3c3c",
-            marginTop: 40,
             lineHeight: 36,
           }}>
           Hii,
@@ -129,6 +134,7 @@ const HomeScreenOld = () => {
           }}>
           Safira Putri
         </Text>
+
         {/* <SliderComponent /> */}
       </View>
       <ScrollView>
