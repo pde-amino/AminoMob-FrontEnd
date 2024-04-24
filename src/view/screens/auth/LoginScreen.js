@@ -12,6 +12,7 @@ import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import { Ionicons } from "react-native-vector-icons";
+import Inputan from "../../../components/Inputan";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 const { height, width } = Dimensions.get("window");
@@ -77,6 +78,11 @@ const LoginScreen = () => {
             </View>
 
             <View>
+              <Inputan
+                label={"No.HP/No.RM"}
+                placeholder={"Sembnaranga"}
+                onChangeText={handleUsernameChange}
+              />
               <TextInput
                 style={[styles.inputan, unameError && styles.inputError]}
                 selectionColor={"blue"}
