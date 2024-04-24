@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 8,
     width: 370,
-    elevation: 1,
+    elevation: 2,
   },
   iconContainer: {
     marginRight: 16,
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     color: WARNA.primary,
     fontWeight: "bold",
   },
   description: {
-    fontSize: 12,
+    fontSize: 14,
     color: "grey",
   },
 });

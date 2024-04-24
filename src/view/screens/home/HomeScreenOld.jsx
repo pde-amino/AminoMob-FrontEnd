@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl } from "react-native";
+import { View, FlatList, Text, RefreshControl, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
@@ -118,7 +118,7 @@ const HomeScreenOld = () => {
       <View style={GlobalStyles.safeAreaStyle}>
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 20,
             textAlign: "left",
             color: "#3c3c3c",
             lineHeight: 36,
@@ -127,9 +127,9 @@ const HomeScreenOld = () => {
         </Text>
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: "bold",
-            color: "#576b99",
+            color: "white",
             marginBottom: 8,
           }}>
           Safira Putri
