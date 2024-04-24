@@ -7,6 +7,7 @@ import { Button } from "react-native-paper";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
+import { ScrollView } from "react-native";
 
 const HomeScreen = () => {
   const Menus = [
@@ -29,7 +30,7 @@ const HomeScreen = () => {
     {
       kd_poli: "3",
       icon: "note",
-      title: "Jadwal Dokter",
+      title: "Informasi Umum",
       desc: "Lihat Jadwal Dokter",
       to: "Jadwal Dokter",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -129,42 +130,45 @@ const HomeScreen = () => {
           Safira Putri
         </Text>
         {/* <SliderComponent /> */}
+      </View>
+      <ScrollView>
         <MySlider />
-      </View>
-      <View
-        style={{
-          // flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 10,
-        }}>
-        <FlatList
-          contentContainerStyle={{ flexGrow: 1 }}
-          // refreshControl={
-          //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
-          // }
-          // horizontal={false}
-          // numColumns={3}
-          data={Menus}
-          renderItem={({ item, index }) => (
-            <CardButtonComponent
-              // onPress={() =>
-              //   handleClinicSelection("Testing", {
-              //     clinicId: item.kd_poli,
-              //     nameClinic: item.desc,
-              //   })
-              // }
-              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-              icon={item.icon}
-              title={item.title}
-              description={item.desc}
-              onPress={item.to}
-              colorIcon={item.color}
-            />
-          )}
-          keyExtractor={(item) => item.kd_poli}
-        />
-      </View>
+
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 10,
+          }}>
+          <FlatList
+            contentContainerStyle={{ flexGrow: 1 }}
+            // refreshControl={
+            //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
+            // }
+            // horizontal={false}
+            // numColumns={3}
+            data={Menus}
+            renderItem={({ item, index }) => (
+              <CardButtonComponent
+                // onPress={() =>
+                //   handleClinicSelection("Testing", {
+                //     clinicId: item.kd_poli,
+                //     nameClinic: item.desc,
+                //   })
+                // }
+                data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+                icon={item.icon}
+                title={item.title}
+                description={item.desc}
+                onPress={item.to}
+                colorIcon={item.color}
+              />
+            )}
+            keyExtractor={(item) => item.kd_poli}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };

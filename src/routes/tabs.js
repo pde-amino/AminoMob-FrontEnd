@@ -20,6 +20,7 @@ import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import { IconButton, MD3Colors } from "react-native-paper";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
+import ProfileScreen from "../view/screens/auth/ProfileScreen";
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -163,8 +164,13 @@ export default function HomeTabs() {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          // height: 60,
+          // borderTopWidth: 0,
+          // elevation: 0,
+          // backgroundColor: "#0A78E2",
+        },
       }}>
-      }} >
       <Tabs.Screen
         options={{
           // headerShown: true,
@@ -197,19 +203,6 @@ export default function HomeTabs() {
       />
       <Tabs.Screen
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "book" : "book-outline"}
-              size={24}
-              color="grey"
-            />
-          ),
-        }}
-        name="Data"
-        component={YourScreenName}
-      />
-      <Tabs.Screen
-        options={{
           headerShown: true,
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
@@ -221,6 +214,19 @@ export default function HomeTabs() {
         }}
         name="Pendaftaran"
         component={RegistrationScreen}
+      />
+      <Tabs.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "apps" : "apps-outline"}
+              size={24}
+              color="grey"
+            />
+          ),
+        }}
+        name="Profile"
+        component={ProfileScreen}
       />
     </Tabs.Navigator>
   );
