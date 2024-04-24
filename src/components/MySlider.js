@@ -13,13 +13,16 @@ import { Ionicons } from "react-native-vector-icons";
 import { TextInput } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
+const width = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   mainContent: {
     // flex: 1,
     // padding: 10,
     // padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    paddingTop: StatusBar.currentHeight,
-    gap: 10,
+    // paddingTop: StatusBar.currentHeight,
+    gap: 0,
+    // backgroundColor: "black",
   },
   //   srcContainer: {
   //     margin: 15,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   imageCarousel: {
-    width: "100%",
+    width: width,
     height: "100%",
     borderRadius: 10,
   },

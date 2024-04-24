@@ -9,10 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-community/slider": "^4.5.2",
-    "@react-native-picker/picker": "^2.7.2",
+    "@react-native-community/slider": "4.4.2",
+    "@react-native-picker/picker": "2.4.10",
     "@react-navigation/stack": "^6.3.29",
     "@types/react": "~18.2.45",
     "@rneui/base": "^4.0.0-rc.7",

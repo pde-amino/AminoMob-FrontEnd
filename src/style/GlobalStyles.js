@@ -1,13 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
 
+const WARNA = { primary: "#0A78E2", white: "#fff" };
+
 export default GlobalStyles = StyleSheet.create({
   App: {
     backgroundColor: "#1a4846",
     padding: 20,
   },
   Main: {
-    backgroundColor: "#e6dfcf",
+    backgroundColor: WARNA.primary,
     // padding: 20,
     justifyContent: "center",
     // alignItems: "center",
@@ -21,8 +23,10 @@ export default GlobalStyles = StyleSheet.create({
   },
   safeAreaStyle: {
     flex: 1,
+    marginTop: 40,
     // Menghindari statusbar android
     padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    position: "relative",
   },
 
   textCenter: {

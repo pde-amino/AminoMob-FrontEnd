@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl } from "react-native";
+import { View, FlatList, Text, RefreshControl, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
@@ -9,6 +9,8 @@ import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import { ScrollView } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
+
+const { lebar, tinggi } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const Menus = [
@@ -114,25 +116,40 @@ const HomeScreen = () => {
         GlobalStyles.Main,
         (flex = 1),
         (marginHorizontal = 24),
-        (marginTop = 20),
-      ]}>
+        (marginTop = 100),
+      ]}
+    >
+      <View
+        style={{
+          backgroundColor: "white",
+          width: lebar,
+          height: 650,
+          position: "absolute",
+          top: 200,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+      />
       <View style={GlobalStyles.safeAreaStyle}>
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 20,
             textAlign: "left",
-            color: "#3c3c3c",
-            lineHeight: 36,
-          }}>
+            color: "white",
+            // lineHeight: 36,
+          }}
+        >
           Hii,
         </Text>
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: "bold",
-            color: "#576b99",
+            color: "white",
             marginBottom: 8,
-          }}>
+          }}
+        >
           Safira Putri
         </Text>
 
@@ -147,7 +164,8 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}>
+          }}
+        >
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
             // refreshControl={
