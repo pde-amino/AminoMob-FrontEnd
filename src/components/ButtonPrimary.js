@@ -1,16 +1,9 @@
 import * as React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-paper";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
 
-const ButtonPrimary = ({ title, disabled }) => (
-  <Button
-    buttonColor="#0A78E2"
-    mode="contained"
 const ButtonPrimary = ({ title, disabled }) => (
   <Button
     buttonColor="#0A78E2"
@@ -35,7 +28,6 @@ const styles = StyleSheet.create({
   disabledButton: {
     opacity: 1,
   },
-});
   labelStyle: {
     fontSize: 16,
   },

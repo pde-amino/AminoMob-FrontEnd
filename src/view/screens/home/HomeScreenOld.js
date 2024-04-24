@@ -5,7 +5,7 @@ import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
 
-const HomeScreen = () => {
+const HomeScreenOld = () => {
   const Menus = [
     {
       kd_poli: "2",
@@ -155,4 +155,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default HomeScreenOld;

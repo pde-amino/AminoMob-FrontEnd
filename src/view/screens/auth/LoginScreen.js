@@ -65,8 +65,7 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}
-      >
+        }}>
         <KeyboardAvoidingView enabled>
           <View>
             <View style={{ alignItems: "center" }}>
@@ -104,8 +103,7 @@ const LoginScreen = () => {
               <View style={{ position: "absolute", right: 10 }}>
                 <TouchableOpacity
                   style={styles.showHideButton}
-                  onPress={toggleShowPassword}
-                >
+                  onPress={toggleShowPassword}>
                   <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
                 </TouchableOpacity>
               </View>
@@ -121,8 +119,7 @@ const LoginScreen = () => {
               </TouchableOpacity> */}
 
             <View
-              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}
-            >
+              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
               <ButtonPrimary title="Masuk" disabled={isDisabled} />
             </View>
 
@@ -135,8 +132,7 @@ const LoginScreen = () => {
                     textDecorationLine: "underline",
                     marginLeft: 3,
                   }}
-                  onPress={keRegist}
-                >
+                  onPress={keRegist}>
                   Daftar Akun Sekarang
                 </Text>
               </TouchableOpacity>
