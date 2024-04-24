@@ -4,13 +4,12 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import HomeScreen from "../home/HomeScreen";
 import { Ionicons } from "react-native-vector-icons";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -25,7 +24,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const keRegist = () => {
-    navigation.navigate("Signup"); //harus diubah ke halaman pendaftaran
+    navigation.navigate("Pendaftaran"); //harus diubah ke halaman pendaftaran
   };
 
   const toggleShowPassword = () => {
@@ -64,7 +63,8 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}>
+        }}
+      >
         <KeyboardAvoidingView enabled>
           <View>
             <View style={{ alignItems: "center" }}>
@@ -81,11 +81,6 @@ const LoginScreen = () => {
                 onChangeText={handleUsernameChange}
               />
             </View>
-
-            {unameError ? (
-              <Text style={styles.errorText}>{unameError}</Text>
-            ) : null}
-
             {unameError ? (
               <Text style={styles.errorText}>{unameError}</Text>
             ) : null}
@@ -107,7 +102,8 @@ const LoginScreen = () => {
               <View style={{ position: "absolute", right: 10 }}>
                 <TouchableOpacity
                   style={styles.showHideButton}
-                  onPress={toggleShowPassword}>
+                  onPress={toggleShowPassword}
+                >
                   <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
                 </TouchableOpacity>
               </View>
@@ -123,7 +119,8 @@ const LoginScreen = () => {
               </TouchableOpacity> */}
 
             <View
-              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
+              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}
+            >
               <ButtonPrimary title="Masuk" disabled={isDisabled} />
             </View>
 
@@ -134,10 +131,11 @@ const LoginScreen = () => {
                   style={{
                     color: WARNA.primary,
                     textDecorationLine: "underline",
+                    marginLeft: 3,
                   }}
-                  onPress={keRegist}>
-                  {" "}
-                  Daftar Sekarang
+                  onPress={keRegist}
+                >
+                  Daftar Akun Sekarang
                 </Text>
               </TouchableOpacity>
             </View>
@@ -161,7 +159,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   inputan: {
-    height: 48,
+    height: 40,
     width: 350,
     borderWidth: 1,
     padding: 8,
