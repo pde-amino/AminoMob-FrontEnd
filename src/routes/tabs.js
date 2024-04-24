@@ -21,6 +21,7 @@ import { IconButton, MD3Colors } from "react-native-paper";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
+import TestingScreen from "../view/screens/home/TestingScreen";
 
 const InputForm = () => {
   const [formData, setFormData] = useState({
@@ -226,7 +227,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Profile"
-        component={ProfileScreen}
+        component={TestingScreen}
       />
     </Tabs.Navigator>
   );
