@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,13 +16,15 @@ import { Ionicons } from "react-native-vector-icons";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
+const { height, width } = Dimensions.get("window");
+
 const RegistrationScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  // const [unameError, setUnameError] = useState("");
-  // const [uname, setUname] = useState("");
+  const [showConfPassword, setShowConfPassword] = useState(false);
+  const [confPasswordError, setConfPasswordError] = useState("");
   const [RMError, setRMError] = useState("");
   const [RM, setRM] = useState("");
   const [HPError, setHPError] = useState("");
@@ -37,23 +40,44 @@ const RegistrationScreen = () => {
     setShowPassword(!showPassword);
   };
 
+  const toggleShowConfPassword = () => {
+    setShowConfPassword(!showConfPassword);
+  };
+
   const handlePasswordChange = (text) => {
     // Cek apakah teks password mengandung karakter khusus
-    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
-      text
-    );
-    if (containsSpecialChar) {
-      setPasswordError("Gak boleh pakai karakter itu");
+    const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
+    const adaUppercase = /[A-Z]/.test(text);
+
+    if (adaSpecialChar) {
+      setPasswordError("Karakter yang diperbolehkan adalah A-Z, a-z, ");
+    } else if (!adaUppercase) {
+      setPasswordError("Password harus terdapat minimal satu huruf kapital");
     } else {
       setPasswordError("");
     }
     setPassword(text);
   };
 
+  const handleConfPasswordChange = (text) => {
+    // Cek apakah teks password mengandung karakter khusus
+    // const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
+    // const adaUppercase = /[A-Z]/.test(text);
+
+    if (text !== password) {
+      setConfPasswordError("idak cocok dengan password");
+    } else {
+      setConfPasswordError("");
+    }
+    setConfPassword(text);
+  };
+
   const handleNoRM = (text) => {
     const onlyAngka = /^[0-9]+$/.test(text);
     if (!onlyAngka) {
       setRMError("Cuma boleh pakai angka");
+    } else if (text.length < 8) {
+      setRMError("Angka yang dimasukkan tidak memenuhi jumlah minimal");
     } else {
       setRMError("");
     }
@@ -64,6 +88,8 @@ const RegistrationScreen = () => {
     const onlyAngka = /^[0-9]+$/.test(text);
     if (!onlyAngka) {
       setHPError("Cuma boleh pakai angka");
+    } else if (text.length < 11) {
+      setHPError("Angka yang dimasukkan tidak memenuhi jumlah minimal");
     } else {
       setHPError("");
     }
@@ -71,14 +97,14 @@ const RegistrationScreen = () => {
   };
 
   const isDisabled =
-    !password ||
-    !passwordError ||
-    !unameError ||
-    !uname ||
-    !RMError ||
-    !RM ||
-    !HPError ||
-    !HP;
+    // !password ||
+    passwordError ||
+    // !confirmPassword ||
+    confPasswordError ||
+    RMError ||
+    // !RM ||
+    HPError;
+  // !HP;
 
   return (
     <View style={styles.container}>
@@ -140,31 +166,6 @@ const RegistrationScreen = () => {
                 // keyboardType='password'
               />
 
-              {/* icon mata */}
-              <View style={{ position: "absolute", right: 10 }}>
-                <TouchableOpacity
-                  style={styles.showHideButton}
-                  onPress={toggleShowPassword}
-                >
-                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            {/* inputan confirm password */}
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput
-                style={[styles.inputan, passwordError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="Konfirmasi Password"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                secureTextEntry={!showPassword}
-                value={confirmPassword}
-                onChangeText={handlePasswordChange}
-                // keyboardType='password'
-              />
-
-              {/* icon mata */}
               <View style={{ position: "absolute", right: 10 }}>
                 <TouchableOpacity
                   style={styles.showHideButton}
@@ -179,11 +180,37 @@ const RegistrationScreen = () => {
               <Text style={styles.errorText}>{passwordError}</Text>
             ) : null}
 
-            {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
-                <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
-                <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
-              </TouchableOpacity> */}
+            {/* inputan confirm password */}
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TextInput
+                style={[styles.inputan, confPasswordError && styles.inputError]}
+                selectionColor={"blue"}
+                placeholder="Konfirmasi Password"
+                placeholderTextColor={"grey"}
+                autoCapitalize="none"
+                secureTextEntry={!showConfPassword}
+                value={confirmPassword}
+                onChangeText={handleConfPasswordChange}
+              />
 
+              <View style={{ position: "absolute", right: 10 }}>
+                <TouchableOpacity
+                  style={styles.showHideButton}
+                  onPress={toggleShowConfPassword}
+                >
+                  <Ionicons
+                    name={showConfPassword ? "eye-off" : "eye"}
+                    size={24}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {confPasswordError ? (
+              <Text style={styles.errorText}>{confPasswordError}</Text>
+            ) : null}
+
+            {/* Button daftar */}
             <View
               style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}
             >
@@ -225,7 +252,7 @@ const styles = StyleSheet.create({
   },
   inputan: {
     height: 48,
-    width: 350,
+    width: width * 0.9,
     borderWidth: 1,
     padding: 8,
     margin: 4,

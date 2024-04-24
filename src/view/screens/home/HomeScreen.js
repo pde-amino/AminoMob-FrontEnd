@@ -8,6 +8,7 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import { ScrollView } from "react-native";
+import GlobalStyles from "../../../style/GlobalStyles";
 
 const HomeScreen = () => {
   const Menus = [
@@ -108,14 +109,19 @@ const HomeScreen = () => {
   // }
 
   return (
-    <View style={{ flex: 1, marginHorizontal: 24, marginTop: 20 }}>
-      <View>
+    <View
+      style={[
+        GlobalStyles.Main,
+        (flex = 1),
+        (marginHorizontal = 24),
+        (marginTop = 20),
+      ]}>
+      <View style={GlobalStyles.safeAreaStyle}>
         <Text
           style={{
             fontSize: 24,
             textAlign: "left",
             color: "#3c3c3c",
-            marginTop: 40,
             lineHeight: 36,
           }}>
           Hii,
@@ -129,6 +135,7 @@ const HomeScreen = () => {
           }}>
           Safira Putri
         </Text>
+
         {/* <SliderComponent /> */}
       </View>
       <ScrollView>
