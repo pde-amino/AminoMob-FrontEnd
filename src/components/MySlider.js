@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   StyleSheet,
   StatusBar,
+  Dimensions,
 } from "react-native";
 import React from "react";
 import { Button, IconButton } from "react-native-paper";
@@ -75,16 +76,22 @@ export default function MySlider() {
     },
   ];
   const { width } = useWindowDimensions(); //Agae dinamis sesuai perangkat
+
   return (
     <View style={styles.mainContent}>
       <View style={{ alignItems: "center" }}>
         <Carousel
-          loop={false}
+          // loop
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.95,
+            parallaxScrollingOffset: 100,
+          }}
           width={width - 70}
           height={180}
-          autoPlay={false}
+          // autoPlay={true}
           data={dataCarousel}
-          scrollAnimationDuration={1000}
+          scrollAnimationDuration={3000}
           onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({ item }) => (
             <Image

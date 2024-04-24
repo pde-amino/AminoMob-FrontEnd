@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
+const WARNA = { primary: "#0A78E2", white: "#fff" };
 const CardButtonComponent = ({ icon, title, description, onPress }) => {
   const navigation = useNavigation();
   return (
@@ -16,7 +17,7 @@ const CardButtonComponent = ({ icon, title, description, onPress }) => {
       }
     >
       <View style={styles.iconContainer}>
-        <MaterialIcons name={icon} size={24} color="white" />
+        <MaterialIcons name={icon} size={24} color={WARNA.primary} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -30,11 +31,12 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#6200ea",
-    padding: 16,
-    borderRadius: 8,
-    marginVertical: 8,
-    width: 350,
+    backgroundColor: "white",
+    padding: 12,
+    borderRadius: 10,
+    marginTop: 8,
+    width: 370,
+    elevation: 1,
   },
   iconContainer: {
     marginRight: 16,
@@ -44,12 +46,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: "white",
+    color: WARNA.primary,
     fontWeight: "bold",
   },
   description: {
-    fontSize: 14,
-    color: "white",
+    fontSize: 12,
+    color: "grey",
   },
 });
 

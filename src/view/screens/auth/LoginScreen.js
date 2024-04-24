@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +14,7 @@ import ButtonPrimary from "../../../components/ButtonPrimary";
 import { Ionicons } from "react-native-vector-icons";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
+const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
   const [password, setPassword] = useState("");
