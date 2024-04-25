@@ -14,10 +14,10 @@ import { Regist } from "../view/screens/pendaftaran/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
 import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
-import JadwalDokter from "../view/screens/informasi/JadwalDokter";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
 import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
+import InformasiUmum from "../view/screens/informasi/InformasiUmum";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,8 +56,8 @@ export default function Routes() {
             }}
           />
           <Stack.Screen
-            name="Jadwal Dokter"
-            component={JadwalDokter}
+            name="Informasi Umum"
+            component={InformasiUmum}
             options={{
               title: "Masuk",
             }}

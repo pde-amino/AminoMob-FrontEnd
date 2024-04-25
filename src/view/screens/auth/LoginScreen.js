@@ -5,57 +5,68 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   Dimensions,
 } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { Ionicons } from "react-native-vector-icons";
-import Inputan from "../../../components/Inputan";
+import TextInputIconComponent from "../../../components/TextInputIconComponent";
+import { Button } from "react-native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
+  // State untuk menyimpan input pengguna
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [unameError, setUnameError] = useState("");
-  const [uname, setUname] = useState("");
+  const [error, setError] = useState("");
 
   const navigation = useNavigation();
 
-  const keRegist = () => {
-    navigation.navigate("Pendaftaran"); //harus diubah ke halaman pendaftaran
+  const handleEmailChange = (input) => {
+    setEmail(input);
+    // Periksa apakah input email valid, tambahkan validasi jika diperlukan
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+  const handleUsernameChange = (input) => {
+    setUsername(input);
+    // Validasi untuk username hanya berisi angka
+    const onlyNumbers = /^[0-9]+$/.test(input);
+    if (!onlyNumbers) {
+      setUsernameError("Cuma boleh pakai angka");
+    } else {
+      setUsernameError("");
+    }
   };
 
-  const handlePasswordChange = (text) => {
-    // Cek apakah teks password mengandung karakter khusus
+  const handlePasswordChange = (input) => {
+    setPassword(input);
+    // Validasi untuk password tidak boleh mengandung karakter khusus
     const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
-      text
+      input
     );
     if (containsSpecialChar) {
-      setPasswordError("Gak boleh pakai karakter itu");
+      setPasswordError("Tidak boleh menggunakan karakter khusus");
     } else {
       setPasswordError("");
     }
-    setPassword(text);
   };
 
-  const isDisabled = !password || !!passwordError || !unameError || !uname;
-  const handleUsernameChange = (text) => {
-    const onlyAngka = /^[0-9]+$/.test(text);
-    if (!onlyAngka) {
-      setUnameError("Cuma boleh pakai angka");
-    } else {
-      setUnameError("");
-    }
-    setUname(text);
+  const handleSubmit = () => {
+    // Cetak data yang dikumpulkan di console
+    console.log("Email:", email);
+    console.log("Username:", username);
+    console.log("Password:", password);
+
+    // Lakukan sesuatu dengan data, misalnya menyimpan ke backend
+  };
+
+  const keRegist = () => {
+    navigation.navigate("Pendaftaran");
   };
 
   return (
@@ -67,84 +78,55 @@ const LoginScreen = () => {
           justifyContent: "center",
           alignContent: "center",
         }}>
-        <KeyboardAvoidingView enabled>
-          <View>
-            <View style={{ alignItems: "center" }}>
-              <Text style={styles.judul}>Masuk</Text>
-            </View>
-
-            <View>
-              <Inputan
-                label={"No.HP/No.RM"}
-                placeholder={"Sembnaranga"}
-                onChangeText={handleUsernameChange}
-              />
-              <TextInput
-                style={[styles.inputan, unameError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="No. Handphone/ No. RM"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                onChangeText={handleUsernameChange}
-              />
-            </View>
-            {unameError ? (
-              <Text style={styles.errorText}>{unameError}</Text>
-            ) : null}
-
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput
-                style={[styles.inputan, passwordError && styles.inputError]}
-                selectionColor={WARNA.primary}
-                placeholder="Password"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={handlePasswordChange}
-                // keyboardType='password'
-              />
-
-              {/* icon mata */}
-              <View style={{ position: "absolute", right: 10 }}>
-                <TouchableOpacity
-                  style={styles.showHideButton}
-                  onPress={toggleShowPassword}>
-                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {passwordError ? (
-              <Text style={styles.errorText}>{passwordError}</Text>
-            ) : null}
-
-            {/* <TouchableOpacity style={styles.showHideButton} onPress={toggleShowPassword}>
-                <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24}/>
-                <Text style={{ textAlign: 'right' }}>{showPassword ? 'Hide Password' : 'Show Password'}</Text>
-              </TouchableOpacity> */}
-
-            <View
-              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
-              <ButtonPrimary title="Masuk" disabled={isDisabled} />
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>Belum Punya akun?</Text>
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    color: WARNA.primary,
-                    textDecorationLine: "underline",
-                    marginLeft: 3,
-                  }}
-                  onPress={keRegist}>
-                  Daftar Akun Sekarang
-                </Text>
-              </TouchableOpacity>
-            </View>
+        <View style={{ gap: 15 }}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.judul}>Masuk</Text>
           </View>
-        </KeyboardAvoidingView>
+
+          <TextInputIconComponent
+            label={"Email"}
+            placeholder={"Masukkan Email Anda"}
+            value={email}
+            onChangeText={handleEmailChange}
+          />
+
+          <TextInputIconComponent
+            label={"Nomor RM/NIK/HP"}
+            placeholder={"No. HP/Rekam Medis/NIK"}
+            value={username}
+            type={username}
+            onChangeText={handleUsernameChange}
+          />
+
+          <TextInputIconComponent
+            label={"Password"}
+            placeholder={"Masukkan Password di sini"}
+            password={true}
+            value={password}
+            onChangeText={handlePasswordChange}
+          />
+
+          <ButtonPrimary
+            title="Masuk"
+            disabled={!!emailError || !!usernameError || !!passwordError}
+            onPress={handleSubmit}
+          />
+          <Button title="Submit" onPress={handleSubmit} />
+
+          <View style={{ flexDirection: "row" }}>
+            <Text>Belum punya akun?</Text>
+            <TouchableOpacity onPress={keRegist}>
+              <Text
+                style={{
+                  color: WARNA.primary,
+                  textDecorationLine: "underline",
+                  marginLeft: 3,
+                }}>
+                Daftar Akun Sekarang
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -161,37 +143,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: WARNA.primary,
     marginBottom: 32,
-  },
-  inputan: {
-    height: 40,
-    width: 350,
-    borderWidth: 1,
-    padding: 8,
-    margin: 4,
-    paddingHorizontal: 10,
-    backgroundColor: "white",
-    borderRadius: 8,
-  },
-  showHideButton: {
-    padding: 10,
-  },
-  tombol: {
-    marginTop: 10,
-    backgroundColor: "#007bff",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 12,
-    marginTop: 2,
-    marginBottom: 8,
-    marginLeft: 5,
-  },
-  inputError: {
-    borderColor: "red",
   },
 });
 
