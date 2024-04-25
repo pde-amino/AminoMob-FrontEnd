@@ -171,7 +171,8 @@ export default function HomeTabs() {
           // elevation: 0,
           // backgroundColor: "#0A78E2",
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
           // headerShown: true,
@@ -214,7 +215,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Pendaftaran"
-        component={RegistrationScreen}
+        component={OnboardingScreen}
       />
       <Tabs.Screen
         options={{

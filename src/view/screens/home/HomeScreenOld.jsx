@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  RefreshControl,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
