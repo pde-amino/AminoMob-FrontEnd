@@ -41,7 +41,7 @@ const HomeScreen = () => {
       icon: "note",
       title: "Informasi Umum",
       desc: "Lihat Jadwal Dokter",
-      to: "Jadwal Dokter",
+      to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
@@ -137,13 +137,14 @@ const HomeScreen = () => {
           right: 0,
         }}
       />
-      <View style={(GlobalStyles.safeAreaStyle, (marginBottom = 20))}>
+      <View>
         <Text
           style={{
             fontSize: 20,
             textAlign: "left",
             color: "white",
             lineHeight: 36,
+            marginTop: 40,
           }}
         >
           Hii,
@@ -158,8 +159,6 @@ const HomeScreen = () => {
         >
           Safira Putri
         </Text>
-
-        {/* <SliderComponent /> */}
       </View>
       <ScrollView>
         <MySlider />
