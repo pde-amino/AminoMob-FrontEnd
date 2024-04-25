@@ -6,21 +6,21 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const { width, height } = Dimensions.get("window");
 
-const TextInputComponent = ({ label, placeholder, type, onChangeText }) => {
+const TextInputComponent = ({ label, placeholder, jenis, onChangeText }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
-  // Handle change for username and password based on type
+  // Handle change for username and password based on jenis
   const handleChange = (input) => {
     setText(input);
-    if (type === "username") {
+    if (jenis === "username") {
       const onlyNumbers = /^[0-9]+$/.test(input);
       if (!onlyNumbers) {
         setError("Mohon gunakan angka saja");
       } else {
         setError("");
       }
-    } else if (type === "password") {
+    } else if (jenis === "password") {
       const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
         input
       );
@@ -50,10 +50,11 @@ const TextInputComponent = ({ label, placeholder, type, onChangeText }) => {
         label={label}
         placeholder={placeholder}
         value={text}
-        onChangeText={handleChange}
+        jenis={jenis}
+        onChangeText={handleChange(jenis)}
       />
       {error && (
-        <HelperText type="error" visible={!!error}>
+        <HelperText jenis="error" visible={!!error}>
           {error}
         </HelperText>
       )}
