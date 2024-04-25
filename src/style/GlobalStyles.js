@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
 
-const WARNA = { primary: "#0A78E2", white: "#fff" };
+const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
 export default GlobalStyles = StyleSheet.create({
   App: {
