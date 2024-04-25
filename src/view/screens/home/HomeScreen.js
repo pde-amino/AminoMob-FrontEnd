@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  RefreshControl,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
@@ -7,7 +14,6 @@ import { Button } from "react-native-paper";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
-import { ScrollView } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 
 const { lebar, tinggi } = Dimensions.get("window");
@@ -117,7 +123,8 @@ const HomeScreen = () => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 100),
-      ]}>
+      ]}
+    >
       <View
         style={{
           backgroundColor: "white",
@@ -138,7 +145,8 @@ const HomeScreen = () => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}>
+          }}
+        >
           Hii,
         </Text>
         <Text
@@ -147,7 +155,8 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}>
+          }}
+        >
           Safira Putri
         </Text>
       </View>
@@ -160,7 +169,8 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}>
+          }}
+        >
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
             // refreshControl={

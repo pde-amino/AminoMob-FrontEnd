@@ -105,8 +105,8 @@ export default function MySlider() {
             parallaxScrollingScale: 0.95,
             parallaxScrollingOffset: 100,
           }}
-          width={width - 70}
-          height={180}
+          width={360}
+          height={200}
           // autoPlay={true}
           data={dataCarousel}
           scrollAnimationDuration={3000}

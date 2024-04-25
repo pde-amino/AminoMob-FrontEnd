@@ -77,7 +77,8 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}>
+        }}
+      >
         <View style={{ gap: 15 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.judul}>Masuk</Text>
@@ -92,15 +93,15 @@ const LoginScreen = () => {
 
           <TextInputIconComponent
             label={"Nomor RM/NIK/HP"}
-            placeholder={"No. HP/Rekam Medis/NIK"}
+            placeholder={"Cukup salah satu"}
             value={username}
-            type={username}
+            type={"username"}
             onChangeText={handleUsernameChange}
           />
 
           <TextInputIconComponent
-            label={"Password"}
-            placeholder={"Masukkan Password di sini"}
+            label={"Kata Sandi"}
+            placeholder={"Masukkan kata sandi  di sini"}
             password={true}
             value={password}
             onChangeText={handlePasswordChange}
@@ -111,7 +112,7 @@ const LoginScreen = () => {
             disabled={!!emailError || !!usernameError || !!passwordError}
             onPress={handleSubmit}
           />
-          <Button title="Submit" onPress={handleSubmit} />
+          {/* <Button title="Submit" onPress={handleSubmit} /> */}
 
           <View style={{ flexDirection: "row" }}>
             <Text>Belum punya akun?</Text>
@@ -121,7 +122,8 @@ const LoginScreen = () => {
                   color: WARNA.primary,
                   textDecorationLine: "underline",
                   marginLeft: 3,
-                }}>
+                }}
+              >
                 Daftar Akun Sekarang
               </Text>
             </TouchableOpacity>
