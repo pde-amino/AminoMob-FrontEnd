@@ -6,18 +6,24 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
   message,
-  confirmButtonText = "Confirm",
-  cancelButtonText = "Cancel",
+  submessage,
+  confirmButtonText,
+  cancelButtonText,
 }) => {
   return (
     <Modal transparent visible={visible} onRequestClose={onCancel}>
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
-          <Text style={styles.message}>{message}</Text>
+          <Text style={styles.title}>{message}</Text>
+          <Text style={styles.subtitle}>{submessage}</Text>
 
           {/* Tombol konfirmasi */}
           <View style={styles.buttonContainer}>
-            <Button title={confirmButtonText} onPress={onConfirm} />
+            <Button
+              style={styles.btnYes}
+              title={confirmButtonText}
+              onPress={onConfirm}
+            />
             <Button title={cancelButtonText} onPress={onCancel} />
           </View>
         </View>
@@ -34,18 +40,29 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContainer: {
+    width: "80%",
+    height: 400,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 8,
     elevation: 5,
   },
-  message: {
-    fontSize: 16,
+  title: {
+    fontSize: 18,
     marginBottom: 20,
   },
+  subtitle: {
+    fontSize: 14,
+    marginBottom: 8,
+  },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    // justifyContent: "space-between",
+  },
+  btnYes: {
+    width: "50%",
+    marginBottom: 8,
+    borderRadius: 10,
   },
 });
 

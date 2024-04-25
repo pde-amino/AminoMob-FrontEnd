@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  RefreshControl,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
@@ -7,7 +14,6 @@ import { Button } from "react-native-paper";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
-import { ScrollView } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 
 const { lebar, tinggi } = Dimensions.get("window");
@@ -131,13 +137,13 @@ const HomeScreen = () => {
           right: 0,
         }}
       />
-      <View style={GlobalStyles.safeAreaStyle}>
+      <View style={(GlobalStyles.safeAreaStyle, (marginBottom = 20))}>
         <Text
           style={{
             fontSize: 20,
             textAlign: "left",
             color: "white",
-            // lineHeight: 36,
+            lineHeight: 36,
           }}
         >
           Hii,
