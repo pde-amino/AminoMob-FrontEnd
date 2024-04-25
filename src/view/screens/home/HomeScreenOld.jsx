@@ -26,6 +26,7 @@ const HomeScreenOld = () => {
       desc: "Pendaftaran Poli Klinik",
       to: "Daftar Online",
       color: "pink",
+      kondisi: true,
     },
     {
       kd_poli: "2",
@@ -68,6 +69,18 @@ const HomeScreenOld = () => {
   const [poliklinikData, setPoliklinikData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handleConfirm = () => {
+    // Lakukan aksi konfirmasi di sini
+    setModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Lakukan aksi pembatalan di sini
+    setModalVisible(false);
+  };
 
   // useEffect(() => {
   //   fetchData();
