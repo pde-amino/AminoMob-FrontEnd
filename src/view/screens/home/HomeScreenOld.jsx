@@ -39,7 +39,7 @@ const HomeScreenOld = () => {
       icon: "note",
       title: "Informasi Umum",
       desc: "Lihat Jadwal Dokter",
-      to: "Jadwal Dokter",
+      to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
@@ -141,8 +141,6 @@ const HomeScreenOld = () => {
           }}>
           Safira Putri
         </Text>
-
-        {/* <SliderComponent /> */}
       </View>
       <ScrollView>
         <MySlider />
