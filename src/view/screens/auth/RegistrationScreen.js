@@ -13,6 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import HomeScreen from "../home/HomeScreen";
 import { Ionicons } from "react-native-vector-icons";
+import TextInputComponent from "../../../components/TextInputComponent";
+import TextInputIconComponent from "../../../components/TextInputIconComponent";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -114,125 +116,122 @@ const RegistrationScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}
-      >
-        <KeyboardAvoidingView enabled>
+        }}>
+        <View>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.judul}>Daftar Akun</Text>
+          </View>
+
+          {/* inputan no rm */}
           <View>
-            <View style={{ alignItems: "center" }}>
-              <Text style={styles.judul}>Daftar Akun</Text>
-            </View>
+            <TextInput
+              style={[styles.inputan, RMError && styles.inputError]}
+              selectionColor={"blue"}
+              placeholder="No. RM"
+              placeholderTextColor={"grey"}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              onChangeText={handleNoRM}
+            />
+            <TextInputIconComponent
+              label={"No RM/HP/NIK"}
+              placeholder={"Masukan Rekam Medis Anda"}
+              type={"username"}
+            />
+          </View>
 
-            {/* inputan no rm */}
-            <View>
-              <TextInput
-                style={[styles.inputan, RMError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="No. RM"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={handleNoRM}
-              />
-            </View>
+          {RMError ? <Text style={styles.errorText}>{RMError}</Text> : null}
 
-            {RMError ? <Text style={styles.errorText}>{RMError}</Text> : null}
+          {/* inputan no hp */}
+          <View>
+            <TextInput
+              style={[styles.inputan, HPError && styles.inputError]}
+              selectionColor={"blue"}
+              placeholder="No. Handphone"
+              placeholderTextColor={"grey"}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              onChangeText={handleNoHP}
+            />
+          </View>
 
-            {/* inputan no hp */}
-            <View>
-              <TextInput
-                style={[styles.inputan, HPError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="No. Handphone"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                onChangeText={handleNoHP}
-              />
-            </View>
+          {HPError ? <Text style={styles.errorText}>{HPError}</Text> : null}
 
-            {HPError ? <Text style={styles.errorText}>{HPError}</Text> : null}
+          {/* inputan password */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TextInput
+              style={[styles.inputan, passwordError && styles.inputError]}
+              selectionColor={"blue"}
+              placeholder="Password"
+              placeholderTextColor={"grey"}
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={handlePasswordChange}
+              // keyboardType='password'
+            />
 
-            {/* inputan password */}
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput
-                style={[styles.inputan, passwordError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="Password"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={handlePasswordChange}
-                // keyboardType='password'
-              />
-
-              <View style={{ position: "absolute", right: 10 }}>
-                <TouchableOpacity
-                  style={styles.showHideButton}
-                  onPress={toggleShowPassword}
-                >
-                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {passwordError ? (
-              <Text style={styles.errorText}>{passwordError}</Text>
-            ) : null}
-
-            {/* inputan confirm password */}
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TextInput
-                style={[styles.inputan, confPasswordError && styles.inputError]}
-                selectionColor={"blue"}
-                placeholder="Konfirmasi Password"
-                placeholderTextColor={"grey"}
-                autoCapitalize="none"
-                secureTextEntry={!showConfPassword}
-                value={confirmPassword}
-                onChangeText={handleConfPasswordChange}
-              />
-
-              <View style={{ position: "absolute", right: 10 }}>
-                <TouchableOpacity
-                  style={styles.showHideButton}
-                  onPress={toggleShowConfPassword}
-                >
-                  <Ionicons
-                    name={showConfPassword ? "eye-off" : "eye"}
-                    size={24}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {confPasswordError ? (
-              <Text style={styles.errorText}>{confPasswordError}</Text>
-            ) : null}
-
-            {/* Button daftar */}
-            <View
-              style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}
-            >
-              <ButtonPrimary title="Daftar" disabled={isDisabled} />
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>Sudah Punya akun?</Text>
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    color: WARNA.primary,
-                    textDecorationLine: "underline",
-                  }}
-                  onPress={() => navigation.navigate("Login Screen")}
-                >
-                  Masuk disini
-                </Text>
+            <View style={{ position: "absolute", right: 10 }}>
+              <TouchableOpacity
+                style={styles.showHideButton}
+                onPress={toggleShowPassword}>
+                <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} />
               </TouchableOpacity>
             </View>
           </View>
-        </KeyboardAvoidingView>
+
+          {passwordError ? (
+            <Text style={styles.errorText}>{passwordError}</Text>
+          ) : null}
+
+          {/* inputan confirm password */}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TextInput
+              style={[styles.inputan, confPasswordError && styles.inputError]}
+              selectionColor={"blue"}
+              placeholder="Konfirmasi Password"
+              placeholderTextColor={"grey"}
+              autoCapitalize="none"
+              secureTextEntry={!showConfPassword}
+              value={confirmPassword}
+              onChangeText={handleConfPasswordChange}
+            />
+
+            <View style={{ position: "absolute", right: 10 }}>
+              <TouchableOpacity
+                style={styles.showHideButton}
+                onPress={toggleShowConfPassword}>
+                <Ionicons
+                  name={showConfPassword ? "eye-off" : "eye"}
+                  size={24}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {confPasswordError ? (
+            <Text style={styles.errorText}>{confPasswordError}</Text>
+          ) : null}
+
+          {/* Button daftar */}
+          <View style={{ marginBottom: 8, marginTop: 8, alignItems: "center" }}>
+            <ButtonPrimary title="Daftar" disabled={isDisabled} />
+          </View>
+
+          <View style={{ flexDirection: "row" }}>
+            <Text>Sudah Punya akun?</Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: WARNA.primary,
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => navigation.navigate("Login Screen")}>
+                Masuk disini
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
