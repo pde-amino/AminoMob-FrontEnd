@@ -15,6 +15,7 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 const { lebar, tinggi } = Dimensions.get("window");
 
@@ -27,6 +28,7 @@ const HomeScreen = () => {
       desc: "Pendaftaran Poli Klinik",
       to: "Daftar Online",
       color: "pink",
+      kondisi: true,
     },
     {
       kd_poli: "2",
@@ -69,6 +71,18 @@ const HomeScreen = () => {
   const [poliklinikData, setPoliklinikData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handleConfirm = () => {
+    // Lakukan aksi konfirmasi di sini
+    setModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Lakukan aksi pembatalan di sini
+    setModalVisible(false);
+  };
 
   // useEffect(() => {
   //   fetchData();
@@ -123,8 +137,7 @@ const HomeScreen = () => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 100),
-      ]}
-    >
+      ]}>
       <View
         style={{
           backgroundColor: "white",
@@ -145,8 +158,7 @@ const HomeScreen = () => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}
-        >
+          }}>
           Hii,
         </Text>
         <Text
@@ -155,8 +167,7 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}
-        >
+          }}>
           Safira Putri
         </Text>
       </View>
@@ -169,8 +180,22 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}
-        >
+          }}>
+          <View>
+            <Button
+              title="Tampilkan Modal"
+              onPress={() => setModalVisible(true)}
+            />
+
+            <ConfirmModal
+              visible={isModalVisible}
+              onConfirm={handleConfirm}
+              onCancel={handleCancel}
+              message="Apakah Anda yakin ingin melanjutkan?"
+              confirmButtonText="Ya"
+              cancelButtonText="Tidak"
+            />
+          </View>
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
             // refreshControl={
@@ -191,7 +216,7 @@ const HomeScreen = () => {
                 icon={item.icon}
                 title={item.title}
                 description={item.desc}
-                onPress={item.to}
+                onPress={item.kondisi ? () => setModalVisible(true) : item.to}
                 colorIcon={item.color}
               />
             )}

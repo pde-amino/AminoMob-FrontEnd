@@ -11,28 +11,9 @@ import { Modal, Portal } from "react-native-paper";
 import ModalComponent from "../../../components/ModalComponent";
 import ConfirmModal from "../../../components/ConfirmModal";
 
-// const ModalComponent = ({
-//   visible,
-//   onDismiss,
-//   contentContainerStyle,
-//   children,
-// }) => {
-//   return (
-//     <Portal>
-//       <Modal
-//         visible={visible}
-//         onDismiss={onDismiss}
-//         contentContainerStyle={contentContainerStyle}>
-//         {children}
-//       </Modal>
-//     </Portal>
-//   );
-// };
-
 export const Pendaftaran = ({ navigation }) => {
-  //   const [modalVisible, setModalVisible] = useState(false);
-
   const [isModalVisible, setModalVisible] = useState(false);
+
   const handleConfirm = () => {
     // Lakukan aksi konfirmasi di sini
     setModalVisible(false);
@@ -55,13 +36,21 @@ export const Pendaftaran = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginTop: 30 }}>
       <View style={styles.container}>
         <Text style={styles.title}>Pendaftaran Poli</Text>
-        <ConfirmModal
-          visible={isModalVisible}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-          message="Apakah Anda yakin?"
-        />
-        <Button title="Buka Modal" onPress={() => setModalVisible(true)} />
+        <View>
+          <Button
+            title="Tampilkan Modal"
+            onPress={() => setModalVisible(true)}
+          />
+
+          <ConfirmModal
+            visible={isModalVisible}
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+            message="Apakah Anda yakin ingin melanjutkan?"
+            confirmButtonText="Ya"
+            cancelButtonText="Tidak"
+          />
+        </View>
         <Button
           title="Daftarkan Untuk Orang Lain"
           onPress={() => navigation.navigate("Login")}

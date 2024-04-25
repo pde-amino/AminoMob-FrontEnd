@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, View, Text, Button, StyleSheet } from "react-native";
 
 const ConfirmModal = ({
@@ -15,15 +15,11 @@ const ConfirmModal = ({
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>{message}</Text>
-          <Text style={styles.subtitle}>{submessage}</Text>
+          {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
 
           {/* Tombol konfirmasi */}
           <View style={styles.buttonContainer}>
-            <Button
-              style={styles.btnYes}
-              title={confirmButtonText}
-              onPress={onConfirm}
-            />
+            <Button title={confirmButtonText} onPress={onConfirm} />
             <Button title={cancelButtonText} onPress={onCancel} />
           </View>
         </View>
@@ -41,7 +37,6 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    height: 400,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 8,
@@ -49,20 +44,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 10,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 14,
-    marginBottom: 8,
+    marginBottom: 20,
+    textAlign: "center",
   },
   buttonContainer: {
-    flexDirection: "column",
-    // justifyContent: "space-between",
-  },
-  btnYes: {
-    width: "50%",
-    marginBottom: 8,
-    borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 20,
   },
 });
 
