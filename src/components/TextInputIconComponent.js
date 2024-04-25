@@ -36,14 +36,16 @@ const TextInputIconComponent = ({
   // State untuk melacak apakah teks password disembunyikan atau ditampilkan
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
+  // Fungsi untuk menangani perubahan input teks
   const handleChange = (input) => {
+    // Atur state teks lokal
     setText(input);
 
-    // Lakukan validasi berdasarkan tipe
+    // Validasi input berdasarkan tipe
     const validationError = validateInput(input, type);
     setError(validationError);
 
-    // Panggil fungsi onChangeText dari properti
+    // Panggil fungsi onChangeText dari properti jika ada
     if (onChangeText) {
       onChangeText(input);
     }
@@ -65,7 +67,6 @@ const TextInputIconComponent = ({
         underlineColor={WARNA.primary}
         activeUnderlineColor={WARNA.primary}
         label={label}
-        type={type}
         placeholder={placeholder}
         value={text}
         onChangeText={handleChange}
