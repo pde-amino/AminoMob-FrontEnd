@@ -59,7 +59,7 @@ const TextInputIconComponent = ({
   return (
     <View>
       <TextInput
-        style={{ backgroundColor: "white", width: width * 0.85 }}
+        style={{ backgroundColor: "white", width: width * 0.9 }}
         mode="flat"
         selectionColor={WARNA.primary}
         outlineColor={WARNA.primary}
