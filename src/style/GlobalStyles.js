@@ -9,7 +9,7 @@ export default GlobalStyles = StyleSheet.create({
     padding: 20,
   },
   Main: {
-    backgroundColor: "#e6dfcf",
+    backgroundColor: WARNA.primary,
     // padding: 20,
     justifyContent: "center",
     // alignItems: "center",
