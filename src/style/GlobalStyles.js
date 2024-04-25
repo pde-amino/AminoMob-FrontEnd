@@ -9,7 +9,7 @@ export default GlobalStyles = StyleSheet.create({
     padding: 20,
   },
   Main: {
-    backgroundColor: WARNA.primary,
+    backgroundColor: "#e6dfcf",
     // padding: 20,
     justifyContent: "center",
     // alignItems: "center",
@@ -19,14 +19,17 @@ export default GlobalStyles = StyleSheet.create({
     gap: 20,
   },
   Content: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    // backgroundColor: "#e6dfcf",
+    alignItems: "center",
     color: "#1a4846",
   },
   safeAreaStyle: {
     flex: 1,
-    marginTop: 40,
     // Menghindari statusbar android
     padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    position: "relative",
   },
 
   textCenter: {
