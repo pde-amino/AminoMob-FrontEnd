@@ -10,10 +10,12 @@ export default GlobalStyles = StyleSheet.create({
   },
   Main: {
     backgroundColor: WARNA.primary,
-    // padding: 20,
     justifyContent: "center",
-    // alignItems: "center",
-    // textAlign: "center",
+    flex: 1,
+  },
+  Home: {
+    backgroundColor: WARNA.primary,
+    justifyContent: "center",
     padding: 20,
     flex: 1,
     gap: 20,
