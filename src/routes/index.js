@@ -12,7 +12,7 @@ import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
 import { Regist } from "../view/screens/pendaftaran/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
-import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import RegistrationScreen from "../view/screens/auth/SignupScreenBaru";
 import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";

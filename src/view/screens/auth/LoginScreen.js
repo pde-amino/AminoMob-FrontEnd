@@ -19,26 +19,17 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 // const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const [isDialogVisible, setDialogVisible] = useState(false);
-
-  const bukaDialog = () => setDialogVisible(true);
-
   const [status, setStatus] = React.useState(false);
 
   const handleConfirm = () => {
     // Lakukan aksi konfirmasi di sini
     navigation.navigate("Pendaftaran");
     setStatus(false);
-    // setDialogVisible(false);
-    // setDialogVisible(false);
   };
 
   const handleCancel = () => {
     // Lakukan aksi pembatalan di sini
-    setModalVisible(false);
-    setDialogVisible(false);
+    setStatus(false);
   };
 
   // State untuk menyimpan input pengguna
@@ -135,11 +126,7 @@ const LoginScreen = () => {
 
         <View style={{ flexDirection: "row" }}>
           <Text>Belum punya akun?</Text>
-          <TouchableOpacity
-            // onPress={keRegist}
-            // onPress={bukaDialog}
-            onPress={() => setStatus(true)}
-          >
+          <TouchableOpacity onPress={() => setStatus(true)}>
             <Text
               style={{
                 color: WARNA.primary,
@@ -150,23 +137,6 @@ const LoginScreen = () => {
               Daftar Akun Sekarang
             </Text>
           </TouchableOpacity>
-
-          {/* <DialogComponent
-            visible={isDialogVisible}
-            title="Apakah sudah pernah periksa sebelumnya?"
-            body="Pilih sudah jika sudah pernah periksa dan punya No. RM di RSJD Amino"
-            Cancel="Belum"
-            Ok="Sudah"
-            onPressCancel={handleCancel}
-            onPressOK={handleConfirm}
-          /> */}
-          {/* <ConfirmModal
-            visible={isModalVisible}
-            message="Apakah anda sudah punya akun?"
-            submessage="pilih sudah jika sudah"
-            confirmButtonText="Sudah"
-            cancelButtonText="Belum"
-          /> */}
         </View>
       </ScrollView>
       {status && (
