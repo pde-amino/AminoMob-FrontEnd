@@ -16,7 +16,7 @@ const ConfirmModal = ({
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
           <Text style={styles.title}>{message}</Text>
-          <Text style={styles.subtitle}>{submessage}</Text>
+          {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
 
           {/* Tombol konfirmasi */}
           <View>
@@ -50,11 +50,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 10,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 14,
-    marginBottom: 8,
+    marginBottom: 20,
+    textAlign: "center",
   },
   // buttonContainer: {
   //   flexDirection: "column",

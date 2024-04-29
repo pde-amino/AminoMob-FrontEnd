@@ -29,6 +29,7 @@ const HomeScreen = () => {
       desc: "Pendaftaran Poli Klinik",
       to: "Daftar Online",
       color: "pink",
+      kondisi: true,
     },
     {
       kd_poli: "2",
@@ -71,6 +72,18 @@ const HomeScreen = () => {
   const [poliklinikData, setPoliklinikData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handleConfirm = () => {
+    // Lakukan aksi konfirmasi di sini
+    setModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Lakukan aksi pembatalan di sini
+    setModalVisible(false);
+  };
 
   // useEffect(() => {
   //   fetchData();
@@ -173,6 +186,21 @@ const HomeScreen = () => {
             marginTop: 10,
           }}
         >
+          <View>
+            <Button
+              title="Tampilkan Modal"
+              onPress={() => setModalVisible(true)}
+            />
+
+            <ConfirmModal
+              visible={isModalVisible}
+              onConfirm={handleConfirm}
+              onCancel={handleCancel}
+              message="Apakah Anda yakin ingin melanjutkan?"
+              confirmButtonText="Ya"
+              cancelButtonText="Tidak"
+            />
+          </View>
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
             // refreshControl={

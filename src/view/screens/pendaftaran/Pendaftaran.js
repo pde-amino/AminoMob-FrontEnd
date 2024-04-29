@@ -11,28 +11,9 @@ import { Modal, Portal } from "react-native-paper";
 import ModalComponent from "../../../components/ModalComponent";
 import ConfirmModal from "../../../components/ConfirmModal";
 
-// const ModalComponent = ({
-//   visible,
-//   onDismiss,
-//   contentContainerStyle,
-//   children,
-// }) => {
-//   return (
-//     <Portal>
-//       <Modal
-//         visible={visible}
-//         onDismiss={onDismiss}
-//         contentContainerStyle={contentContainerStyle}>
-//         {children}
-//       </Modal>
-//     </Portal>
-//   );
-// };
-
 export const Pendaftaran = ({ navigation }) => {
-  //   const [modalVisible, setModalVisible] = useState(false);
-
   const [isModalVisible, setModalVisible] = useState(false);
+
   const handleConfirm = () => {
     // Lakukan aksi konfirmasi di sini
     setModalVisible(false);
