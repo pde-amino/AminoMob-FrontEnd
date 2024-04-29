@@ -30,8 +30,8 @@ const LoginScreen = () => {
   const handleConfirm = () => {
     // Lakukan aksi konfirmasi di sini
     navigation.navigate("Pendaftaran");
-    setDialogVisible(false);
-
+    setStatus(false);
+    // setDialogVisible(false);
     // setDialogVisible(false);
   };
 
@@ -151,7 +151,7 @@ const LoginScreen = () => {
             </Text>
           </TouchableOpacity>
 
-          <DialogComponent
+          {/* <DialogComponent
             visible={isDialogVisible}
             title="Apakah sudah pernah periksa sebelumnya?"
             body="Pilih sudah jika sudah pernah periksa dan punya No. RM di RSJD Amino"
@@ -159,7 +159,7 @@ const LoginScreen = () => {
             Ok="Sudah"
             onPressCancel={handleCancel}
             onPressOK={handleConfirm}
-          />
+          /> */}
           {/* <ConfirmModal
             visible={isModalVisible}
             message="Apakah anda sudah punya akun?"
@@ -173,10 +173,12 @@ const LoginScreen = () => {
         <BottomSheet
           setStatus={setStatus}
           ukuranModal={{ width: "100%", height: "25%" }}
-          judul="Apakah pernah periksa sebelumnya?"
+          judul="Anda pernah periksa sebelumnya?"
           subjudul="Pilih Sudah jika pernah periksa dan punya No.RM di RSJD Amino"
           buttonKanan="Sudah"
           buttonKiri="Belum"
+          pressKanan={handleConfirm}
+          pressKiri={handleCancel}
         />
       )}
     </View>
