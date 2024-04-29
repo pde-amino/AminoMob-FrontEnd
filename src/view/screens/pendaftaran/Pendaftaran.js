@@ -35,22 +35,14 @@ export const Pendaftaran = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginTop: 30 }}>
       <View style={styles.container}>
-        <Text style={styles.title}>Pendaftaran Poli</Text>
-        <View>
-          <Button
-            title="Tampilkan Modal"
-            onPress={() => setModalVisible(true)}
-          />
-
-          <ConfirmModal
-            visible={isModalVisible}
-            onConfirm={handleConfirm}
-            onCancel={handleCancel}
-            message="Apakah Anda yakin ingin melanjutkan?"
-            confirmButtonText="Ya"
-            cancelButtonText="Tidak"
-          />
-        </View>
+        <Text style={styles.judul}>Pendaftaran Poli</Text>
+        <ConfirmModal
+          visible={isModalVisible}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          message="Apakah Anda yakin?"
+        />
+        <Button title="modal" onPress={() => setModalVisible(true)} />
         <Button
           title="Daftarkan Untuk Orang Lain"
           onPress={() => navigation.navigate("Login")}
@@ -85,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: {
+  judul: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,

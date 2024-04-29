@@ -1,9 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
+
 const CardButtonComponent = ({ icon, title, description, onPress }) => {
   const navigation = useNavigation();
   return (
@@ -35,7 +42,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 8,
     width: 370,
-    elevation: 2,
+    elevation: 5,
+    shadowColor: WARNA.primary,
   },
   iconContainer: {
     marginRight: 16,

@@ -1,5 +1,6 @@
-import React from "react";
-import { Modal, View, Text, Button, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Modal, View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
 
 const ConfirmModal = ({
   visible,
@@ -18,9 +19,13 @@ const ConfirmModal = ({
           {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
 
           {/* Tombol konfirmasi */}
-          <View style={styles.buttonContainer}>
-            <Button title={confirmButtonText} onPress={onConfirm} />
-            <Button title={cancelButtonText} onPress={onCancel} />
+          <View>
+            <Button mode="contained" style={styles.btnYes} onPress={onConfirm}>
+              {confirmButtonText}
+            </Button>
+            <Button mode="outlined" style={styles.btnYes} onPress={onCancel}>
+              {cancelButtonText}
+            </Button>
           </View>
         </View>
       </View>
@@ -37,6 +42,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
+    height: 300,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 8,
@@ -52,10 +58,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 20,
+  // buttonContainer: {
+  //   flexDirection: "column",
+  //   // justifyContent: "space-between",
+  // },
+  btnYes: {
+    width: 45,
+    marginBottom: 8,
+    borderRadius: 10,
   },
 });
 
