@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -15,8 +16,9 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
+import BottomSheet from "../../../components/BottomSheet";
 
-const { lebar, tinggi } = Dimensions.get("window");
+const { lebar } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const Menus = [
@@ -122,7 +124,7 @@ const HomeScreen = () => {
         GlobalStyles.Main,
         (flex = 1),
         (marginHorizontal = 24),
-        (marginTop = 100),
+        (marginTop = 40),
       ]}
     >
       <View
@@ -192,7 +194,7 @@ const HomeScreen = () => {
                 title={item.title}
                 description={item.desc}
                 onPress={item.to}
-                colorIcon={item.color}
+                // colorIcon={item.color}
               />
             )}
             keyExtractor={(item) => item.kd_poli}

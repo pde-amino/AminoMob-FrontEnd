@@ -11,26 +11,51 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import { Button } from "react-native";
+import ConfirmModal from "../../../components/ConfirmModal";
+import DialogComponent from "../../../components/DialogComponent";
+import BottomSheet from "../../../components/BottomSheet";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
-const { height, width } = Dimensions.get("window");
+// const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const [isDialogVisible, setDialogVisible] = useState(false);
+
+  const bukaDialog = () => setDialogVisible(true);
+
+  const [status, setStatus] = React.useState(false);
+
+  const handleConfirm = () => {
+    // Lakukan aksi konfirmasi di sini
+    navigation.navigate("Pendaftaran");
+    setDialogVisible(false);
+
+    // setDialogVisible(false);
+  };
+
+  const handleCancel = () => {
+    // Lakukan aksi pembatalan di sini
+    setModalVisible(false);
+    setDialogVisible(false);
+  };
+
   // State untuk menyimpan input pengguna
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
+  // const [emailError, setEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   const navigation = useNavigation();
 
-  const handleEmailChange = (input) => {
-    setEmail(input);
-    // Periksa apakah input email valid, tambahkan validasi jika diperlukan
-  };
+  // const handleEmailChange = (input) => {
+  //   setEmail(input);
+  //   // Periksa apakah input email valid, tambahkan validasi jika diperlukan
+  // };
 
   const handleUsernameChange = (input) => {
     setUsername(input);
@@ -79,57 +104,81 @@ const LoginScreen = () => {
           alignContent: "center",
         }}
       >
-        <View style={{ gap: 15 }}>
+        <View style={{ gap: 8, marginBottom: 12 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.judul}>Masuk</Text>
           </View>
 
           <TextInputIconComponent
-            label={"Email"}
-            placeholder={"Masukkan Email Anda"}
-            value={email}
-            onChangeText={handleEmailChange}
-          />
-
-          <TextInputIconComponent
-            label={"Nomor RM/NIK/HP"}
-            placeholder={"Cukup salah satu"}
+            label="Nomor RM/NIK/HP"
+            placeholder="Cukup salah satu"
             value={username}
             type={"username"}
             onChangeText={handleUsernameChange}
           />
 
           <TextInputIconComponent
-            label={"Kata Sandi"}
-            placeholder={"Masukkan kata sandi  di sini"}
+            label="Kata Sandi"
+            placeholder="Masukkan kata sandi  di sini"
             password={true}
             value={password}
             onChangeText={handlePasswordChange}
           />
+        </View>
 
-          <ButtonPrimary
-            title="Masuk"
-            disabled={!!emailError || !!usernameError || !!passwordError}
-            onPress={handleSubmit}
+        <ButtonPrimary
+          title="Masuk"
+          disabled={!!usernameError || !!passwordError}
+          onPress={handleSubmit}
+        />
+        {/* <Button title="Submit" onPress={handleSubmit} /> */}
+
+        <View style={{ flexDirection: "row" }}>
+          <Text>Belum punya akun?</Text>
+          <TouchableOpacity
+            // onPress={keRegist}
+            // onPress={bukaDialog}
+            onPress={() => setStatus(true)}
+          >
+            <Text
+              style={{
+                color: WARNA.primary,
+                textDecorationLine: "underline",
+                marginLeft: 3,
+              }}
+            >
+              Daftar Akun Sekarang
+            </Text>
+          </TouchableOpacity>
+
+          <DialogComponent
+            visible={isDialogVisible}
+            title="Apakah sudah pernah periksa sebelumnya?"
+            body="Pilih sudah jika sudah pernah periksa dan punya No. RM di RSJD Amino"
+            Cancel="Belum"
+            Ok="Sudah"
+            onPressCancel={handleCancel}
+            onPressOK={handleConfirm}
           />
-          {/* <Button title="Submit" onPress={handleSubmit} /> */}
-
-          <View style={{ flexDirection: "row" }}>
-            <Text>Belum punya akun?</Text>
-            <TouchableOpacity onPress={keRegist}>
-              <Text
-                style={{
-                  color: WARNA.primary,
-                  textDecorationLine: "underline",
-                  marginLeft: 3,
-                }}
-              >
-                Daftar Akun Sekarang
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {/* <ConfirmModal
+            visible={isModalVisible}
+            message="Apakah anda sudah punya akun?"
+            submessage="pilih sudah jika sudah"
+            confirmButtonText="Sudah"
+            cancelButtonText="Belum"
+          /> */}
         </View>
       </ScrollView>
+      {status && (
+        <BottomSheet
+          setStatus={setStatus}
+          ukuranModal={{ width: "100%", height: "25%" }}
+          judul="Apakah pernah periksa sebelumnya?"
+          subjudul="Pilih Sudah jika pernah periksa dan punya No.RM di RSJD Amino"
+          buttonKanan="Sudah"
+          buttonKiri="Belum"
+        />
+      )}
     </View>
   );
 };
