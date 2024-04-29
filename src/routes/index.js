@@ -18,6 +18,7 @@ import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
 import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 import InformasiUmum from "../view/screens/informasi/InformasiUmum";
+import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +29,7 @@ export default function Routes() {
         // initialRouteName="Onboarding"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Amino Care" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -47,6 +47,13 @@ export default function Routes() {
             component={Pendaftaran}
             options={{
               title: "Masuk",
+            }}
+          />
+          <Stack.Screen
+            name="Informasi Rumah Sakit"
+            component={InformasiRumahSakit}
+            options={{
+              title: "Informasi RS",
             }}
           />
           <Stack.Screen

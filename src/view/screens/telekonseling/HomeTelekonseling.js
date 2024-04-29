@@ -12,8 +12,7 @@ export default function HomeTelekonseling() {
         alignContent: "center",
         justifyContent: "center",
         gap: 15,
-      }}
-    >
+      }}>
       <TestingComponents titlePage={"Halaman Telekonseling"} />
     </View>
   );
