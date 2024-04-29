@@ -39,7 +39,7 @@ const HomeScreenOld = () => {
     {
       kd_poli: "3",
       icon: "note",
-      title: "Informasi Layanan Rumah Sakit",
+      title: "Layanan Rumah Sakit",
       desc: "Lihat Jadwal Dokter",
       to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -72,61 +72,19 @@ const HomeScreenOld = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const handleConfirm = () => {
-    // Lakukan aksi konfirmasi di sini
-    setModalVisible(false);
+  const diriSendiri = () => {
+    navigation.navigate("Daftar Online");
+    setKondisi(false);
   };
 
-  const handleCancel = () => {
-    // Lakukan aksi pembatalan di sini
-    setModalVisible(false);
+  const orangLain = () => {
+    navigation.navigate("Daftar Online");
+    setKondisi(false);
   };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // const fetchData = () => {
-  //   setIsLoading(true);
-  //   fetch("http://192.168.5.5:8080/poliklinik")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message === "success") {
-  //         setPoliklinikData(data.data_poli);
-  //       } else {
-  //         console.error("Error fetching data:", data.message);
-  //         setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       }
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       setIsLoading(false);
-  //     });
-  // };
 
   const handleClinicSelection = (screen, params) => {
     navigation.navigate(screen, params);
   };
-
-  // if (isLoading) {
-  //   return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
-  // }
-
-  // if (error || poliklinikData.length === 0) {
-  //   // Menampilkan screen kosong atau error jika ada error atau data kosong
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <Text>
-  //         {error ? "Error occurred" : "Sepertinya tidak ada sesuatu disini"}
-  //       </Text>
-  //       <Button title="Retry" onPress={fetchData}>
-  //         Coba Lagi
-  //       </Button>
-  //     </View>
-  //   );
-  // }
 
   const handleKondisi = (item) => {
     if (item.kondisi) {
@@ -137,6 +95,8 @@ const HomeScreenOld = () => {
       navigation.navigate(item.to);
     }
   };
+
+  const [kondisi, setKondisi] = React.useState(false);
 
   return (
     <View
@@ -204,6 +164,18 @@ const HomeScreenOld = () => {
           />
         </View>
       </ScrollView>
+      {kondisi && (
+        <BottomSheet
+          setStatus={setKondisi}
+          ukuranModal={{ width: "100%", height: "25%" }}
+          judul="Untuk siap Anda akan Mendaftar ?"
+          subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
+          buttonKiri="Diri Sendiri"
+          buttonKanan="Orang Lain"
+          pressKanan={orangLain}
+          pressKiri={diriSendiri}
+        />
+      )}
     </View>
   );
 };
