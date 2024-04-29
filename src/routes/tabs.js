@@ -15,7 +15,7 @@ import {
   ScrollView,
 } from "react-native";
 import TestingWeb from "../view/screens/web/TestingWeb";
-import RegistrationScreen from "../view/screens/auth/RegistrationScreen";
+import RegistrationScreen from "../view/screens/auth/SignupScreenBaru";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import { IconButton, MD3Colors } from "react-native-paper";
 import LoginScreen from "../view/screens/auth/LoginScreen";

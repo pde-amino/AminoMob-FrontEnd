@@ -120,12 +120,6 @@ const RegistrationScreen = () => {
         {/* inputan no rm */}
         <View style={{ gap: 8 }}>
           <TextInputIconComponent
-            label={"No RM/HP/NIK"}
-            placeholder={"Masukan Rekam Medis Anda"}
-            type={"username"}
-          />
-
-          <TextInputIconComponent
             label={"No Handphone"}
             placeholder={"Masukan No HP Anda"}
             type={"username"}
@@ -155,7 +149,8 @@ const RegistrationScreen = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
               }}
-              onPress={() => navigation.navigate("Login Screen")}>
+              onPress={() => navigation.navigate("Login Screen")}
+            >
               Masuk disini
             </Text>
           </TouchableOpacity>
@@ -173,10 +168,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   judul: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "bold",
     color: WARNA.primary,
-    marginBottom: 10,
+    marginBottom: 32,
   },
   inputan: {
     height: 48,
