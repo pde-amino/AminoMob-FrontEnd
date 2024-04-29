@@ -1,10 +1,11 @@
+import { color } from "@rneui/base";
 import React, { useState } from "react";
 import { Dimensions, View } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 
-const WARNA = { primary: "#0A78E2", white: "#fff" };
+const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const validateInput = (input, type) => {
   // Fungsi untuk memvalidasi input berdasarkan tipe
@@ -69,6 +70,7 @@ const TextInputIconComponent = ({
         label={label}
         placeholder={placeholder}
         value={text}
+        // error={handleChange}
         onChangeText={handleChange}
         secureTextEntry={password ? secureTextEntry : false}
         right={
@@ -82,7 +84,13 @@ const TextInputIconComponent = ({
       />
 
       {error && (
-        <HelperText type="error" visible={!!error}>
+        <HelperText
+          outlineColor={WARNA.red}
+          activeUnderlineColor={WARNA.red}
+          style={{ color: WARNA.red }}
+          type="error"
+          visible={!!error}
+        >
           {error}
         </HelperText>
       )}

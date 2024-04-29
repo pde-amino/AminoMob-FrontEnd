@@ -58,17 +58,6 @@ const Slide = ({ item }) => {
 const OnboardingScreen = ({ navigation }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef(null);
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const handleConfirm = () => {
-    // Lakukan aksi konfirmasi di sini
-    setModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    // Lakukan aksi pembatalan di sini
-    setModalVisible(false);
-  };
 
   const Footer = () => {
     return (

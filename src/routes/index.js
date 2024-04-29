@@ -44,6 +44,7 @@ export default function Routes() {
         <Stack.Group>
           <Stack.Screen
             name="Daftar Online"
+            screenOptions={{ headerShown: true }}
             component={Pendaftaran}
             options={{
               title: "Masuk",

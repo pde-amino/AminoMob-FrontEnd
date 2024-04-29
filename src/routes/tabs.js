@@ -23,141 +23,141 @@ import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import TestingScreen from "../view/screens/home/TestingScreen";
 
-const InputForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    // tambahkan properti lain sesuai kebutuhan
-  });
+// const InputForm = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     description: "",
+//     // tambahkan properti lain sesuai kebutuhan
+//   });
 
-  const handleChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
-  };
+//   const handleChange = (key, value) => {
+//     setFormData({ ...formData, [key]: value });
+//   };
 
-  const handleSubmit = () => {
-    // Kirim data formData ke API menggunakan fetch atau library lainnya
-    fetch("http://192.168.5.3:3000/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to submit form");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Tanggapi respon dari API jika diperlukan
-        console.log("Form submitted successfully:", data);
-        Alert.alert("Success", "Form submitted successfully");
-        // Bersihkan form setelah pengiriman berhasil
-        setFormData({
-          name: "",
-          description: "",
-          // reset properti lainnya jika perlu
-        });
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        Alert.alert("Error", "Failed to submit form");
-      });
-  };
+// const handleSubmit = () => {
+//   // Kirim data formData ke API menggunakan fetch atau library lainnya
+//   fetch("http://192.168.5.3:3000/products", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(formData),
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error("Failed to submit form");
+//       }
+//       return response.json();
+//     })
+//     .then((data) => {
+//       // Tanggapi respon dari API jika diperlukan
+//       console.log("Form submitted successfully:", data);
+//       Alert.alert("Success", "Form submitted successfully");
+//       // Bersihkan form setelah pengiriman berhasil
+//       setFormData({
+//         name: "",
+//         description: "",
+//         // reset properti lainnya jika perlu
+//       });
+//     })
+//     .catch((error) => {
+//       console.error("Error submitting form:", error);
+//       Alert.alert("Error", "Failed to submit form");
+//     });
+// };
 
-  return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <TextInput
-        placeholder="Name"
-        value={formData.name}
-        onChangeText={(text) => handleChange("name", text)}
-        style={{ marginBottom: 10, borderBottomWidth: 1, paddingVertical: 5 }}
-      />
-      <TextInput
-        placeholder="Description"
-        value={formData.description}
-        onChangeText={(text) => handleChange("description", text)}
-        style={{ marginBottom: 10, borderBottomWidth: 1, paddingVertical: 5 }}
-      />
-      {/* Tambahkan TextInput lainnya sesuai kebutuhan */}
-      <Button title="Submit" onPress={handleSubmit} />
-    </View>
-  );
-};
+// return (
+//   <View style={{ flex: 1, padding: 20 }}>
+//     <TextInput
+//       placeholder="Name"
+//       value={formData.name}
+//       onChangeText={(text) => handleChange("name", text)}
+//       style={{ marginBottom: 10, borderBottomWidth: 1, paddingVertical: 5 }}
+//     />
+//     <TextInput
+//       placeholder="Description"
+//       value={formData.description}
+//       onChangeText={(text) => handleChange("description", text)}
+//       style={{ marginBottom: 10, borderBottomWidth: 1, paddingVertical: 5 }}
+//     />
+//     {/* Tambahkan TextInput lainnya sesuai kebutuhan */}
+//     <Button title="Submit" onPress={handleSubmit} />
+//   </View>
+// );
+// };
 
-const YourScreenName = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+// const YourScreenName = () => {
+//   const [data, setData] = useState([]);
+//   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("http://192.168.5.3:3000/products") // Ganti URL dengan URL API Anda
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setData(json);
-        setLoading(false);
-        console.log("API access successful"); // Log jika akses ke API berhasil
-      })
-      .catch((error) => {
-        console.error("Error accessing API:", error); // Log jika terjadi error saat akses ke API
-        setLoading(false);
-      });
-  }, []);
+//   useEffect(() => {
+//     fetch("http://192.168.5.3:3000/products") // Ganti URL dengan URL API Anda
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Network response was not ok");
+//         }
+//         return response.json();
+//       })
+//       .then((json) => {
+//         setData(json);
+//         setLoading(false);
+//         console.log("API access successful"); // Log jika akses ke API berhasil
+//       })
+//       .catch((error) => {
+//         console.error("Error accessing API:", error); // Log jika terjadi error saat akses ke API
+//         setLoading(false);
+//       });
+//   }, []);
 
-  const handleDelete = (id) => {
-    fetch(`http://192.168.5.3:3000/products/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to delete data");
-        }
-        return response.json(); // Ubah ke response.json() agar Anda bisa mendapatkan data yang diperbarui setelah penghapusan
-      })
-      .then((data) => {
-        console.log("Data deleted successfully:", data);
-        Alert.alert("Success", "Data deleted successfully");
-        // Refresh data setelah penghapusan berhasil
-        setData((prevData) => prevData.filter((item) => item.id !== id));
-      })
-      .catch((error) => {
-        console.error("Error deleting data:", error);
-        Alert.alert("Error", "Failed to delete data");
-      });
-  };
+//   const handleDelete = (id) => {
+//     fetch(`http://192.168.5.3:3000/products/${id}`, {
+//       method: "DELETE",
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Failed to delete data");
+//         }
+//         return response.json(); // Ubah ke response.json() agar Anda bisa mendapatkan data yang diperbarui setelah penghapusan
+//       })
+//       .then((data) => {
+//         console.log("Data deleted successfully:", data);
+//         Alert.alert("Success", "Data deleted successfully");
+//         // Refresh data setelah penghapusan berhasil
+//         setData((prevData) => prevData.filter((item) => item.id !== id));
+//       })
+//       .catch((error) => {
+//         console.error("Error deleting data:", error);
+//         Alert.alert("Error", "Failed to delete data");
+//       });
+//   };
 
-  return (
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={data}
-          keyExtractor={({ id }) => id.toString()}
-          renderItem={({ item }) => (
-            <View style={{ marginBottom: 10 }}>
-              <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
-              <Text>{item.description}</Text>
-              <Text>
-                Created At: {new Date(item.createdAt).toLocaleDateString()}
-              </Text>
-              <Text>
-                Updated At: {new Date(item.updatedAt).toLocaleDateString()}
-              </Text>
-              <Button title="Delete" onPress={() => handleDelete(item.id)} />
-              <Button title="Edit" onPress={() => handleEdit(item.id)} />
-            </View>
-          )}
-        />
-      )}
-    </View>
-  );
-};
+//   return (
+//     <View style={{ flex: 1, padding: 24 }}>
+//       {isLoading ? (
+//         <ActivityIndicator />
+//       ) : (
+//         <FlatList
+//           data={data}
+//           keyExtractor={({ id }) => id.toString()}
+//           renderItem={({ item }) => (
+//             <View style={{ marginBottom: 10 }}>
+//               <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
+//               <Text>{item.description}</Text>
+//               <Text>
+//                 Created At: {new Date(item.createdAt).toLocaleDateString()}
+//               </Text>
+//               <Text>
+//                 Updated At: {new Date(item.updatedAt).toLocaleDateString()}
+//               </Text>
+//               <Button title="Delete" onPress={() => handleDelete(item.id)} />
+//               <Button title="Edit" onPress={() => handleEdit(item.id)} />
+//             </View>
+//           )}
+//         />
+//       )}
+//     </View>
+//   );
+// };
 
 const Tabs = createBottomTabNavigator();
 export default function HomeTabs() {
@@ -166,9 +166,9 @@ export default function HomeTabs() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          // height: 60,
-          // borderTopWidth: 0,
-          // elevation: 0,
+          height: 60,
+          borderTopWidth: 1,
+          elevation: 2,
           // backgroundColor: "#0A78E2",
         },
       }}
@@ -215,7 +215,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Pendaftaran"
-        component={OnboardingScreen}
+        component={RegistrationScreen}
       />
       <Tabs.Screen
         options={{

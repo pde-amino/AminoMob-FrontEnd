@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -173,7 +174,7 @@ const HomeScreenOld = () => {
                 title={item.title}
                 description={item.desc}
                 onPress={item.to}
-                colorIcon={item.color}
+                // colorIcon={item.color}
               />
             )}
             keyExtractor={(item) => item.kd_poli}

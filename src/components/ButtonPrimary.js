@@ -11,19 +11,19 @@ const ButtonPrimary = ({ title, disabled }) => (
     labelStyle={styles.labelStyle}
     style={[styles.buttonStyle, disabled && styles.disabledButton]}
     onPress={() => console.log("Pressed")}
-    disabled={disabled}
-  >
+    disabled={disabled}>
     {title}
   </Button>
 );
 
 const styles = StyleSheet.create({
   labelStyle: {
-    fontSize: 16,
+    fontSize: 18,
   },
   buttonStyle: {
+    justifyContent: "center",
     borderRadius: 10,
-    height: 44,
+    height: 48,
     width: width * 0.9,
   },
   disabledButton: {
