@@ -19,50 +19,50 @@ import { ScrollView } from "react-native";
 
 const HomeScreenOld = () => {
   const Menus = [
-    {
-      kd_poli: "1",
-      icon: "home",
-      title: "Daftar Online",
-      desc: "Pendaftaran Poli Klinik",
-      to: "Daftar Online",
-      color: "pink",
-      kondisi: true,
-    },
+    // {
+    //   kd_poli: "1",
+    //   icon: "home",
+    //   title: "Daftar Online",
+    //   desc: "Pendaftaran Poli Klinik",
+    //   to: "Daftar Online",
+    //   color: "pink",
+    //   kondisi: false,
+    // },
     {
       kd_poli: "2",
       icon: "book",
-      title: "Pendaftaran Telekonseling",
+      title: "Informasi Rumah Sakit",
       desc: "Telekonseling Gratis",
-      to: "Telekonseling",
+      to: "Informasi Rumah Sakit",
       color: "green",
     },
     {
       kd_poli: "3",
       icon: "note",
-      title: "Informasi Umum",
+      title: "Informasi Layanan Rumah Sakit",
       desc: "Lihat Jadwal Dokter",
       to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
-    {
-      kd_poli: "4",
-      icon: "history",
-      title: "Riwayat Kunjungan",
-      desc: "Riwayat Lengkap  Pemeriksaan Anda",
-      to: "Riwayat Kunjungan",
-      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "blue",
-    },
-    {
-      kd_poli: "5",
-      icon: "check",
-      title: "FAQ",
-      desc: "Pertanyaan yang sering muncul",
-      to: "FAQ",
-      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "blue",
-    },
+    // {
+    //   kd_poli: "4",
+    //   icon: "history",
+    //   title: "Riwayat Kunjungan",
+    //   desc: "Riwayat Lengkap  Pemeriksaan Anda",
+    //   to: "Riwayat Kunjungan",
+    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+    //   color: "blue",
+    // },
+    // {
+    //   kd_poli: "5",
+    //   icon: "check",
+    //   title: "FAQ",
+    //   desc: "Pertanyaan yang sering muncul",
+    //   to: "FAQ",
+    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+    //   color: "blue",
+    // },
   ];
 
   const navigation = useNavigation();
@@ -127,6 +127,16 @@ const HomeScreenOld = () => {
   //     </View>
   //   );
   // }
+
+  const handleKondisi = (item) => {
+    if (item.kondisi) {
+      // Lakukan sesuatu jika kondisi terpenuhi
+      setModalVisible(true);
+    } else {
+      // Navigasi ke screen lain berdasarkan nilai 'to' dari item
+      navigation.navigate(item.to);
+    }
+  };
 
   return (
     <View
