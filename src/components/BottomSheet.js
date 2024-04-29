@@ -18,6 +18,8 @@ const BottomSheet = ({
   buttonKiri,
   buttonKanan,
   ukuranModal,
+  pressKanan,
+  pressKiri,
 }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
 
@@ -69,7 +71,7 @@ const BottomSheet = ({
               gap: 8,
             }}
           >
-            <TouchableOpacity style={styles.btnKiri}>
+            <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
               <Text
                 style={{
                   fontSize: 16,
@@ -81,7 +83,7 @@ const BottomSheet = ({
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btnKanan}>
+            <TouchableOpacity style={styles.btnKanan} onPress={pressKanan}>
               <Text
                 style={{ fontSize: 16, fontWeight: "bold", color: WARNA.white }}
               >
