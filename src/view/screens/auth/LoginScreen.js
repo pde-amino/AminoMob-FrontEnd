@@ -14,6 +14,8 @@ import { Button } from "react-native";
 import ConfirmModal from "../../../components/ConfirmModal";
 import DialogComponent from "../../../components/DialogComponent";
 import BottomSheet from "../../../components/BottomSheet";
+import DropdownComponent from "../../../components/DropdownComponent";
+import DropdownTesting from "../../../components/DropdownTesting";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 // const { height, width } = Dimensions.get("window");
@@ -21,14 +23,15 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 const LoginScreen = () => {
   const [status, setStatus] = React.useState(false);
 
-  const handleConfirm = () => {
+  const handlePasienLama = () => {
     // Lakukan aksi konfirmasi di sini
-    navigation.navigate("Pendaftaran");
+    navigation.navigate("Signup Lama");
     setStatus(false);
   };
 
-  const handleCancel = () => {
+  const handlePasienBaru = () => {
     // Lakukan aksi pembatalan di sini
+    navigation.navigate("Signup Baru");
     setStatus(false);
   };
 
@@ -42,11 +45,6 @@ const LoginScreen = () => {
   // const [error, setError] = useState("");
 
   const navigation = useNavigation();
-
-  // const handleEmailChange = (input) => {
-  //   setEmail(input);
-  //   // Periksa apakah input email valid, tambahkan validasi jika diperlukan
-  // };
 
   const handleUsernameChange = (input) => {
     setUsername(input);
@@ -74,15 +72,11 @@ const LoginScreen = () => {
 
   const handleSubmit = () => {
     // Cetak data yang dikumpulkan di console
-    console.log("Email:", email);
+    // console.log("Email:", email);
     console.log("Username:", username);
     console.log("Password:", password);
 
     // Lakukan sesuatu dengan data, misalnya menyimpan ke backend
-  };
-
-  const keRegist = () => {
-    navigation.navigate("Pendaftaran");
   };
 
   return (
@@ -102,7 +96,7 @@ const LoginScreen = () => {
 
           <TextInputIconComponent
             label="Nomor RM/NIK/HP"
-            placeholder="Cukup salah satu"
+            placeholder="Masukkan salah satu"
             value={username}
             type={"username"}
             onChangeText={handleUsernameChange}
@@ -122,7 +116,6 @@ const LoginScreen = () => {
           disabled={!!usernameError || !!passwordError}
           onPress={handleSubmit}
         />
-        {/* <Button title="Submit" onPress={handleSubmit} /> */}
 
         <View style={{ flexDirection: "row" }}>
           <Text>Belum punya akun?</Text>
@@ -147,8 +140,8 @@ const LoginScreen = () => {
           subjudul="Pilih Sudah jika pernah periksa dan punya No.RM di RSJD Amino"
           buttonKanan="Sudah"
           buttonKiri="Belum"
-          pressKanan={handleConfirm}
-          pressKiri={handleCancel}
+          pressKanan={handlePasienLama}
+          pressKiri={handlePasienBaru}
         />
       )}
     </View>

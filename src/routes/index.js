@@ -12,7 +12,8 @@ import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
 import { Regist } from "../view/screens/pendaftaran/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
-import RegistrationScreen from "../view/screens/auth/SignupScreenBaru";
+import SignupScreenBaru from "../view/screens/auth/SignupScreenBaru";
+import SignupScreenLama from "../view/screens/auth/SignupScreenLama";
 import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
@@ -29,7 +30,8 @@ export default function Routes() {
         // initialRouteName="Onboarding"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Amino Care" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -38,7 +40,8 @@ export default function Routes() {
         <Stack.Screen name="Klinik Umum" component={KlinikUmum} />
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
-        <Stack.Screen name="Pendaftaran" component={RegistrationScreen} />
+        <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
+        <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
         <Stack.Screen name="Testing" component={Regist} />
         {/* Niat */}
         <Stack.Group>
