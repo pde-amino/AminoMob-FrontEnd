@@ -21,7 +21,7 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const { height, width } = Dimensions.get("window");
 
-const RegistrationScreen = () => {
+const SignupScreenLama = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,23 +39,21 @@ const RegistrationScreen = () => {
     navigation.navigate(HomeScreen);
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const toggleShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
-  const toggleShowConfPassword = () => {
-    setShowConfPassword(!showConfPassword);
-  };
+  // const toggleShowConfPassword = () => {
+  //   setShowConfPassword(!showConfPassword);
+  // };
 
   const handlePasswordChange = (text) => {
     // Cek apakah teks password mengandung karakter khusus
     const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
-    const adaUppercase = /[A-Z]/.test(text);
+    // const adaUppercase = /[A-Z]/.test(text);
 
     if (adaSpecialChar) {
       setPasswordError("Karakter yang diperbolehkan adalah A-Z, a-z, ");
-    } else if (!adaUppercase) {
-      setPasswordError("Password harus terdapat minimal satu huruf kapital");
     } else {
       setPasswordError("");
     }
@@ -63,10 +61,7 @@ const RegistrationScreen = () => {
   };
 
   const handleConfPasswordChange = (text) => {
-    // Cek apakah teks password mengandung karakter khusus
-    // const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
-    // const adaUppercase = /[A-Z]/.test(text);
-
+    // Cek apakah teks password mengandung karakter khusu
     if (text !== password) {
       setConfPasswordError("idak cocok dengan password");
     } else {
@@ -80,7 +75,7 @@ const RegistrationScreen = () => {
     if (!onlyAngka) {
       setRMError("Cuma boleh pakai angka");
     } else if (text.length < 8) {
-      setRMError("Angka yang dimasukkan tidak memenuhi jumlah minimal");
+      setRMError("Minimal 8 Angka");
     } else {
       setRMError("");
     }
@@ -105,9 +100,9 @@ const RegistrationScreen = () => {
     // !confirmPassword ||
     confPasswordError ||
     RMError ||
-    // !RM ||
-    HPError;
-  // !HP;
+    !RM ||
+    HPError ||
+    !HP;
 
   return (
     <View style={GlobalStyles.Content}>
@@ -117,18 +112,20 @@ const RegistrationScreen = () => {
           <Text style={styles.judul}>Daftar Akun</Text>
         </View>
 
-        {/* inputan no rm */}
         <View style={{ gap: 8 }}>
+          {/* inputan no rm */}
           <TextInputIconComponent
-            label={"No RM/HP/NIK"}
+            label={"No RM"}
             placeholder={"Masukan Rekam Medis Anda"}
             type={"username"}
+            onChangeText={handleNoRM}
           />
 
           <TextInputIconComponent
             label={"No Handphone"}
             placeholder={"Masukan No HP Anda"}
             type={"username"}
+            onChangeText={handleNoHP}
           />
 
           <TextInputIconComponent
@@ -136,6 +133,8 @@ const RegistrationScreen = () => {
             placeholder={"Buat Kata Sandi"}
             type={"password"}
             password={true}
+            value={password}
+            onChangeText={handlePasswordChange}
           />
 
           <TextInputIconComponent
@@ -143,6 +142,7 @@ const RegistrationScreen = () => {
             placeholder={"Masukan kata sandi lagi"}
             type={"password"}
             password={true}
+            onChangeText={handleConfPasswordChange}
           />
           <ButtonPrimary title="Daftar" disabled={isDisabled} />
         </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     color: WARNA.primary,
-    marginBottom: 10,
+    marginBottom: 32,
   },
   inputan: {
     height: 48,
@@ -211,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegistrationScreen;
+export default SignupScreenLama;

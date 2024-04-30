@@ -21,7 +21,7 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const { height, width } = Dimensions.get("window");
 
-const RegistrationScreen = () => {
+const SignupScreenBaru = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -205,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegistrationScreen;
+export default SignupScreenBaru;

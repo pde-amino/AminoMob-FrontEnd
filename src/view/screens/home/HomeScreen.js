@@ -17,6 +17,7 @@ import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
 import BottomSheet from "../../../components/BottomSheet";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 const { lebar } = Dimensions.get("window");
 
@@ -148,7 +149,8 @@ const HomeScreen = () => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 40),
-      ]}>
+      ]}
+    >
       <View
         style={{
           backgroundColor: "white",
@@ -169,7 +171,8 @@ const HomeScreen = () => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}>
+          }}
+        >
           Hii,
         </Text>
         <Text
@@ -178,7 +181,8 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}>
+          }}
+        >
           Safira Putri
         </Text>
       </View>
@@ -191,7 +195,8 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}>
+          }}
+        >
           <View>
             <Button
               title="Tampilkan Modal"
