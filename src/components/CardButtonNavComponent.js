@@ -11,10 +11,17 @@ import { useNavigation } from "@react-navigation/native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
-const CardButtonComponent = ({ icon, title, description, onPress }) => {
+const CardButtonNavComponent = ({ icon, title, description, onPress }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() =>
+        navigation.navigate({
+          name: onPress,
+          params: { dataString: onPress.data },
+        })
+      }>
       <View style={styles.iconContainer}>
         <MaterialIcons name={icon} size={24} color={WARNA.primary} />
       </View>
@@ -55,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardButtonComponent;
+export default CardButtonNavComponent;

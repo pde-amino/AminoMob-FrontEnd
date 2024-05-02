@@ -12,12 +12,13 @@ import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
-import CardButtonComponent from "../../../components/CardButtonComponent";
+import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
 import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
+import CardButtonComponent from "../../../components/CardButtonComponent";
 
 const { lebar } = Dimensions.get("window");
 
@@ -43,7 +44,7 @@ const HomeScreen = () => {
     {
       kd_poli: "3",
       icon: "note",
-      title: "Informasi Layanan Rumah Sakit",
+      title: "Layanan Rumah Sakit",
       desc: "Lihat Jadwal Dokter",
       to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -76,61 +77,19 @@ const HomeScreen = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const handleConfirm = () => {
-    // Lakukan aksi konfirmasi di sini
-    setModalVisible(false);
+  const diriSendiri = () => {
+    navigation.navigate("Daftar Online");
+    setKondisi(false);
   };
 
-  const handleCancel = () => {
-    // Lakukan aksi pembatalan di sini
-    setModalVisible(false);
+  const orangLain = () => {
+    navigation.navigate("Daftar Online");
+    setKondisi(false);
   };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // const fetchData = () => {
-  //   setIsLoading(true);
-  //   fetch("http://192.168.5.5:8080/poliklinik")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message === "success") {
-  //         setPoliklinikData(data.data_poli);
-  //       } else {
-  //         console.error("Error fetching data:", data.message);
-  //         setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       }
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       setIsLoading(false);
-  //     });
-  // };
 
   const handleClinicSelection = (screen, params) => {
     navigation.navigate(screen, params);
   };
-
-  // if (isLoading) {
-  //   return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
-  // }
-
-  // if (error || poliklinikData.length === 0) {
-  //   // Menampilkan screen kosong atau error jika ada error atau data kosong
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <Text>
-  //         {error ? "Error occurred" : "Sepertinya tidak ada sesuatu disini"}
-  //       </Text>
-  //       <Button title="Retry" onPress={fetchData}>
-  //         Coba Lagi
-  //       </Button>
-  //     </View>
-  //   );
-  // }
 
   const handleKondisi = (item) => {
     if (item.kondisi) {
@@ -142,6 +101,8 @@ const HomeScreen = () => {
     }
   };
 
+  const [kondisi, setKondisi] = React.useState(false);
+
   return (
     <View
       style={[
@@ -149,8 +110,7 @@ const HomeScreen = () => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 40),
-      ]}
-    >
+      ]}>
       <View
         style={{
           backgroundColor: "white",
@@ -163,7 +123,7 @@ const HomeScreen = () => {
           right: 0,
         }}
       />
-      <View>
+      <View style={GlobalStyles.Home}>
         <Text
           style={{
             fontSize: 20,
@@ -171,8 +131,7 @@ const HomeScreen = () => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}
-        >
+          }}>
           Hii,
         </Text>
         <Text
@@ -181,8 +140,7 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}
-        >
+          }}>
           Safira Putri
         </Text>
       </View>
@@ -195,23 +153,7 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}
-        >
-          <View>
-            <Button
-              title="Tampilkan Modal"
-              onPress={() => setModalVisible(true)}
-            />
-
-            <ConfirmModal
-              visible={isModalVisible}
-              onConfirm={handleConfirm}
-              onCancel={handleCancel}
-              message="Apakah Anda yakin ingin melanjutkan?"
-              confirmButtonText="Ya"
-              cancelButtonText="Tidak"
-            />
-          </View>
+          }}>
           <CardButtonComponent
             // onPress={() =>
             //   handleClinicSelection("Testing", {
@@ -224,7 +166,7 @@ const HomeScreen = () => {
             icon={"home"}
             title={"Daftar Online Poli Klinik"}
             description={"Pendaftaran Poli Klinik"}
-            onPress={() => setModalVisible(true)}
+            onPress={() => setKondisi(true)}
             colorIcon={"blue"}
           />
           <FlatList
@@ -236,7 +178,7 @@ const HomeScreen = () => {
             // numColumns={3}
             data={Menus}
             renderItem={({ item, index }) => (
-              <CardButtonComponent
+              <CardButtonNavComponent
                 // onPress={() =>
                 //   handleClinicSelection("Testing", {
                 //     clinicId: item.kd_poli,
@@ -255,6 +197,18 @@ const HomeScreen = () => {
           />
         </View>
       </ScrollView>
+      {kondisi && (
+        <BottomSheet
+          setStatus={setKondisi}
+          ukuranModal={{ width: "100%", height: "25%" }}
+          judul="Untuk siap Anda ingin Mendaftar ?"
+          subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
+          buttonKiri="Diri Sendiri"
+          buttonKanan="Orang Lain"
+          pressKanan={orangLain}
+          pressKiri={diriSendiri}
+        />
+      )}
     </View>
   );
 };

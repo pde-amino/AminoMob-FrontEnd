@@ -89,8 +89,7 @@ const TextInputIconComponent = ({
           activeUnderlineColor={WARNA.red}
           style={{ color: WARNA.red }}
           type="error"
-          visible={!!error}
-        >
+          visible={!!error}>
           {error}
         </HelperText>
       )}

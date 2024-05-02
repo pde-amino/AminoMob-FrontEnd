@@ -10,13 +10,14 @@ export default GlobalStyles = StyleSheet.create({
   },
   Main: {
     backgroundColor: WARNA.primary,
-    // padding: 20,
     justifyContent: "center",
-    // alignItems: "center",
-    // textAlign: "center",
+    flex: 1,
+  },
+  Home: {
+    backgroundColor: WARNA.primary,
+    justifyContent: "center",
     padding: 20,
     flex: 1,
-    gap: 20,
   },
   Content: {
     flex: 1,
@@ -25,6 +26,7 @@ export default GlobalStyles = StyleSheet.create({
     // backgroundColor: "#e6dfcf",
     alignItems: "center",
     color: "#1a4846",
+    gap: 20,
   },
   safeAreaStyle: {
     flex: 1,
@@ -36,5 +38,8 @@ export default GlobalStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    alignContent: "center",
+    textAlign: "center",
+    width: "80%",
   },
 });

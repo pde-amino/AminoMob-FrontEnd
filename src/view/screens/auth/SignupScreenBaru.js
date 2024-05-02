@@ -29,9 +29,9 @@ const SignupScreenBaru = () => {
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [confPasswordError, setConfPasswordError] = useState("");
   const [RMError, setRMError] = useState("");
-  const [RM, setRM] = useState("");
+  const [noRm, setNoRM] = useState("");
   const [HPError, setHPError] = useState("");
-  const [HP, setHP] = useState("");
+  const [noTelp, setNoTelp] = useState("");
 
   const navigation = useNavigation();
 
@@ -109,6 +109,42 @@ const SignupScreenBaru = () => {
     HPError;
   // !HP;
 
+  const handleDaftarClick = async () => {
+    const data = {
+      NO_RM: noRm,
+      TELP: noTelp,
+      PASSWD: password,
+      confirm_password: confirmPassword,
+    };
+
+    try {
+      const response = await fetch("http://192.168.5.5:8080/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // Cek apakah respons berhasil (status 2xx)
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Pendaftaran gagal:", errorData);
+        // Tampilkan pesan kesalahan kepada pengguna
+        alert(`Pendaftaran gagal:\n${JSON.stringify(errorData)}`);
+        return;
+      }
+
+      // Jika respons berhasil, parse JSON
+      const result = await response.json();
+      console.log("Pendaftaran berhasil:", result);
+      navigation.navigate("Login Screen");
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+      alert("Terjadi kesalahan saat mencoba mendaftar. Silakan coba lagi.");
+    }
+  };
+
   return (
     <View style={GlobalStyles.Content}>
       {/* <ScrollView> */}
@@ -120,15 +156,26 @@ const SignupScreenBaru = () => {
         {/* inputan no rm */}
         <View style={{ gap: 8 }}>
           <TextInputIconComponent
+            label={"No Rekam Medis"}
+            placeholder={"Masukan No RM Anda"}
+            type={"username"}
+            value={noRm}
+            onChangeText={setNoRM}
+          />
+          <TextInputIconComponent
             label={"No Handphone"}
             placeholder={"Masukan No HP Anda"}
             type={"username"}
+            value={noTelp}
+            onChangeText={setNoTelp}
           />
 
           <TextInputIconComponent
-            label={"Kata Sandi"}
+            label={"Buat Kata Sandi"}
             placeholder={"Buat Kata Sandi"}
             type={"password"}
+            value={password}
+            onChangeText={setPassword}
             password={true}
           />
 
@@ -136,9 +183,15 @@ const SignupScreenBaru = () => {
             label={"Masukan Ulang Kata Sandi"}
             placeholder={"Masukan kata sandi lagi"}
             type={"password"}
+            value={confirmPassword}
+            onChangeText={setConfPassword}
             password={true}
           />
-          <ButtonPrimary title="Daftar" disabled={isDisabled} />
+          <ButtonPrimary
+            title="Daftar"
+            onPress={handleDaftarClick}
+            disabled={isDisabled}
+          />
         </View>
 
         <View style={{ flexDirection: "row" }}>
@@ -149,8 +202,7 @@ const SignupScreenBaru = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
               }}
-              onPress={() => navigation.navigate("Login Screen")}
-            >
+              onPress={() => navigation.navigate("Login Screen")}>
               Masuk disini
             </Text>
           </TouchableOpacity>
