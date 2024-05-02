@@ -4,15 +4,14 @@ import { Button } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
 
-const ButtonPrimary = ({ title, disabled }) => (
+const ButtonPrimary = ({ title, disabled, onPress }) => (
   <Button
     buttonColor="#0A78E2"
     mode="contained"
     labelStyle={styles.labelStyle}
     style={[styles.buttonStyle, disabled && styles.disabledButton]}
-    onPress={() => console.log("Pressed")}
-    disabled={disabled}
-  >
+    onPress={onPress}
+    disabled={disabled}>
     {title}
   </Button>
 );
@@ -24,8 +23,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     justifyContent: "center",
     borderRadius: 10,
-    height: 48,
-    width: width * 0.9,
+    height: 40,
+    // width: width * 0.9,
     marginBottom: 12,
   },
   disabledButton: {

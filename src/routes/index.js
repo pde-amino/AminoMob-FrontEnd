@@ -19,6 +19,8 @@ import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
 import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 import InformasiUmum from "../view/screens/informasi/InformasiUmum";
 import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
+import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
+import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,7 +47,7 @@ export default function Routes() {
           <Stack.Screen
             name="Daftar Online"
             screenOptions={{ headerShown: true }}
-            component={Pendaftaran}
+            component={DiriSendiri}
             options={{
               title: "Masuk",
             }}
@@ -93,6 +95,7 @@ export default function Routes() {
           component={LoginScreen}
         />
         <Stack.Screen name="Poli Information" component={PoliInformation} />
+        <Stack.Screen name="Booking Screen" component={BookingScreen} />
         {/* <Stack.Screen name="Poli1" component={Poli1} /> */}
       </Stack.Navigator>
     </NavigationContainer>
