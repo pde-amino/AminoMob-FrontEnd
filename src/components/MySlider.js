@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   imageCarousel: {
-    width: width,
+    width: "100%",
     height: "100%",
     borderRadius: 10,
   },
