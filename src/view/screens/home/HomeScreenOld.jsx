@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
-import CardButtonComponent from "../../../components/CardButtonComponent";
+import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import { ScrollView } from "react-native";
@@ -145,7 +145,7 @@ const HomeScreenOld = () => {
             // numColumns={3}
             data={Menus}
             renderItem={({ item, index }) => (
-              <CardButtonComponent
+              <CardButtonNavComponent
                 // onPress={() =>
                 //   handleClinicSelection("Testing", {
                 //     clinicId: item.kd_poli,
@@ -168,7 +168,7 @@ const HomeScreenOld = () => {
         <BottomSheet
           setStatus={setKondisi}
           ukuranModal={{ width: "100%", height: "25%" }}
-          judul="Untuk siap Anda akan Mendaftar ?"
+          judul="Untuk siap Anda ingin Mendaftar ?"
           subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
           buttonKiri="Diri Sendiri"
           buttonKanan="Orang Lain"

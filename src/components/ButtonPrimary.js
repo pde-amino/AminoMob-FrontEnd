@@ -4,7 +4,7 @@ import { Button } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
 
-const ButtonPrimary = ({ title, disabled }) => (
+const ButtonPrimary = ({ title, disabled, onPress }) => (
   <Button
     buttonColor="#0A78E2"
     mode="contained"

@@ -71,13 +71,43 @@ const LoginScreen = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Cetak data yang dikumpulkan di console
     // console.log("Email:", email);
     console.log("Username:", username);
     console.log("Password:", password);
 
-    // Lakukan sesuatu dengan data, misalnya menyimpan ke backend
+    const data = {
+      user: username,
+      password: password,
+    };
+
+    try {
+      const response = await fetch("http://192.168.5.5:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // Cek apakah respons berhasil (status 2xx)
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Pendaftaran gagal:", errorData);
+        // Tampilkan pesan kesalahan kepada pengguna
+        alert(`Pendaftaran gagal:\n${JSON.stringify(errorData)}`);
+        return;
+      }
+
+      // Jika respons berhasil, parse JSON
+      const result = await response.json();
+      console.log("Pendaftaran berhasil:", result);
+      navigation.navigate("Login Screen");
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+      alert("Terjadi kesalahan saat mencoba mendaftar. Silakan coba lagi.");
+    }
   };
 
   return (
@@ -88,8 +118,7 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}
-      >
+        }}>
         <View style={{ gap: 8, marginBottom: 12 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.judul}>Masuk</Text>
@@ -100,7 +129,7 @@ const LoginScreen = () => {
             placeholder="Masukkan salah satu"
             value={username}
             type={"username"}
-            onChangeText={handleUsernameChange}
+            onChangeText={setUsername}
           />
 
           <TextInputIconComponent
@@ -108,7 +137,7 @@ const LoginScreen = () => {
             placeholder="Masukkan kata sandi  di sini"
             password={true}
             value={password}
-            onChangeText={handlePasswordChange}
+            onChangeText={setPassword}
           />
         </View>
 
@@ -126,8 +155,7 @@ const LoginScreen = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
                 marginLeft: 3,
-              }}
-            >
+              }}>
               Daftar Akun Sekarang
             </Text>
           </TouchableOpacity>

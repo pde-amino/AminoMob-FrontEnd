@@ -6,10 +6,14 @@ import {
   Button,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import ModalComponent from "../../../components/ModalComponent";
 import ConfirmModal from "../../../components/ConfirmModal";
+import TextInputIconComponent from "../../../components/TextInputIconComponent";
+import ButtonPrimary from "../../../components/ButtonPrimary";
+import GlobalStyles from "../../../style/GlobalStyles";
 
 export const Pendaftaran = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -34,40 +38,50 @@ export const Pendaftaran = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginTop: 30 }}>
-      <View style={styles.container}>
-        <Text style={styles.judul}>Pendaftaran Poli</Text>
-        <ConfirmModal
-          visible={isModalVisible}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-          message="Apakah Anda yakin?"
-        />
-        <Button title="modal" onPress={() => setModalVisible(true)} />
-        <Button
-          title="Daftarkan Untuk Orang Lain"
-          onPress={() => navigation.navigate("Login")}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Nama"
-          value={name}
-          onChangeText={setName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <Button title="Daftar" onPress={handleRegister} />
-      </View>
+      <ScrollView>
+        <View style={GlobalStyles.Content}>
+          <Text style={styles.judul}>Pendaftaran Poli</Text>
+          {/* <View style={GlobalStyles.textCenter}>
+            <Text>Ini adalah data dari Profile Anda</Text>
+            <Text>
+              Jika masih ada kekliruan mohon perbaiki dahulu melalui menu
+              Profile
+            </Text>
+          </View> */}
+          <TextInputIconComponent
+            label={"No Rekam Medis"}
+            placeholder={"Masukan No Rekam Medis Anda"}
+            type={"username"}
+          />
+          <TextInputIconComponent
+            label={"Nama Lengkap"}
+            placeholder={"Masukan Nama Lengkap Anda"}
+            type={"username"}
+          />
+          <TextInputIconComponent
+            label={"Alamat"}
+            placeholder={"Masukan Alamat Lengkap Anda"}
+            type={"username"}
+          />
+          <TextInputIconComponent
+            label={"Jns Kelamin"}
+            placeholder={"Gender"}
+            type={"username"}
+          />
+          <TextInputIconComponent
+            label={"Tgl Lahir"}
+            placeholder={"Masukan Alamat Lengkap Anda"}
+            type={"username"}
+          />
+          <TextInputIconComponent
+            label={"No Handphone"}
+            placeholder={"081222931283"}
+            type={"username"}
+          />
+          <Text>Pastikan data anda sudah benar</Text>
+          <ButtonPrimary title="Selanjutnya -->" onPress={handleRegister} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -80,7 +94,7 @@ const styles = StyleSheet.create({
   judul: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   input: {
     height: 40,
