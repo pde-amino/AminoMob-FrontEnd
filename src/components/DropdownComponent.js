@@ -44,15 +44,15 @@ const DropdownComponent = ({ label, renderedLabel }) => {
         ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        search={false}
-        // inputSearchStyle={styles.inputSearchStyle}
+        search={true}
+        inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data}
         maxHeight={300}
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? "Select item" : "..."}
-        // searchPlaceholder="Search..."
+        searchPlaceholder="Cari..."
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
