@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 
-const DatePicker = (props) => {
+const DatePicker = (mode, onChange) => {
   //   const { defaultDate, onDateChange } = props;
   //   const [date, setDate] = useState(new Date(defaultDate));
-  //   const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
   //   const onChange = (e, selectedDate) => {
   //     setDate(new Date(selectedDate));
@@ -38,13 +38,15 @@ const DatePicker = (props) => {
   return (
     // <RNDateTimePicker display="calendar" mode="date" value={new Date()} />
     <DateTimePicker
-      display={Platform.OS === "android" ? "default" : "default"}
+      //   setVisible={setVisible}
+      //   display="spinner"
+      //   display={Platform.OS === "android" ? "default" : "default"}
       timeZoneOffsetInMinutes={0}
       value={new Date()}
-      mode="date"
-      minimumDate={new Date(1920, 10, 10)}
-      maximumDate={new Date()}
-      //   onChange={Platform.OS === "android" ? onChange : onIOSChange}
+      mode={mode}
+      minimumDate={new Date()}
+      //   maximumDate={new Date()}
+      onChange={onChange}
     />
     // <Pressable
     //   style={styles.box}

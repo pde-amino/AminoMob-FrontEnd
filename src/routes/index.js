@@ -44,7 +44,11 @@ export default function Routes() {
         <Stack.Screen name="Web View" component={TestingWeb} />
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
-        <Stack.Screen name="Testing" component={Regist} />
+        <Stack.Screen
+          screenOptions={{ headerShown: false }}
+          name="Testing"
+          component={Pendaftaran}
+        />
         {/* Niat */}
         <Stack.Group>
           <Stack.Screen

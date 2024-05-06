@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -72,6 +73,7 @@ const LoginScreen = () => {
   };
 
   const handleSubmit = async () => {
+    Linking.openURL("https://api.whatsapp.com/send?phone=6281213536824");
     // Cetak data yang dikumpulkan di console
     // console.log("Email:", email);
     console.log("Username:", username);
@@ -118,7 +120,8 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}>
+        }}
+      >
         <View style={{ gap: 8, marginBottom: 12 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.judul}>Masuk</Text>
@@ -155,7 +158,8 @@ const LoginScreen = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
                 marginLeft: 3,
-              }}>
+              }}
+            >
               Daftar Akun Sekarang
             </Text>
           </TouchableOpacity>

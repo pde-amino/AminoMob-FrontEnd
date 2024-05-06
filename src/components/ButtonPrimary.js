@@ -18,7 +18,7 @@ const ButtonPrimary = ({ title, disabled, onPress }) => (
 
 const styles = StyleSheet.create({
   labelStyle: {
-    fontSize: 18,
+    fontSize: 16,
   },
   buttonStyle: {
     justifyContent: "center",
