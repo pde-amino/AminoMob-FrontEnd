@@ -61,7 +61,7 @@ const TextInputIconComponent = ({
     <View>
       <TextInput
         style={{ backgroundColor: "white", width: width * 0.9 }}
-        mode="flat"
+        mode="outlined"
         selectionColor={WARNA.primary}
         outlineColor={WARNA.primary}
         activeOutlineColor={WARNA.primary}
@@ -89,7 +89,8 @@ const TextInputIconComponent = ({
           activeUnderlineColor={WARNA.red}
           style={{ color: WARNA.red }}
           type="error"
-          visible={!!error}>
+          visible={!!error}
+        >
           {error}
         </HelperText>
       )}

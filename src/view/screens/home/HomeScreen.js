@@ -110,14 +110,15 @@ const HomeScreen = () => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 40),
-      ]}>
+      ]}
+    >
       <View
         style={{
           backgroundColor: "white",
           width: lebar,
           height: 650,
           position: "absolute",
-          top: 200,
+          top: 300,
           left: 0,
           bottom: 0,
           right: 0,
@@ -131,7 +132,8 @@ const HomeScreen = () => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}>
+          }}
+        >
           Hii,
         </Text>
         <Text
@@ -140,7 +142,8 @@ const HomeScreen = () => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}>
+          }}
+        >
           Safira Putri
         </Text>
       </View>
@@ -153,7 +156,8 @@ const HomeScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             marginTop: 10,
-          }}>
+          }}
+        >
           <CardButtonComponent
             // onPress={() =>
             //   handleClinicSelection("Testing", {
