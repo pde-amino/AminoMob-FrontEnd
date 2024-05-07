@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
@@ -22,7 +22,11 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 
 const { lebar } = Dimensions.get("window");
 
-const HomeScreen = () => {
+const HomeScreen = ({ route }) => {
+  // const route = useRoute();
+  // const { data } = route.params;
+  console.log("result", { route });
+  // const { result } = route.params;
   const Menus = [
     // {
     //   kd_poli: "1",
@@ -50,24 +54,24 @@ const HomeScreen = () => {
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
-    // {
-    //   kd_poli: "4",
-    //   icon: "history",
-    //   title: "Riwayat Kunjungan",
-    //   desc: "Riwayat Lengkap  Pemeriksaan Anda",
-    //   to: "Riwayat Kunjungan",
-    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-    //   color: "blue",
-    // },
-    // {
-    //   kd_poli: "5",
-    //   icon: "check",
-    //   title: "FAQ",
-    //   desc: "Pertanyaan yang sering muncul",
-    //   to: "FAQ",
-    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-    //   color: "blue",
-    // },
+    {
+      kd_poli: "4",
+      icon: "history",
+      title: "Riwayat Kunjungan",
+      desc: "Riwayat Lengkap  Pemeriksaan Anda",
+      to: "Riwayat Kunjungan",
+      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+      color: "blue",
+    },
+    {
+      kd_poli: "5",
+      icon: "check",
+      title: "FAQ",
+      desc: "Pertanyaan yang sering muncul",
+      to: "FAQ",
+      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+      color: "blue",
+    },
   ];
 
   const navigation = useNavigation();
@@ -144,63 +148,36 @@ const HomeScreen = () => {
             marginBottom: 8,
           }}
         >
-          Safira Putri
+          Bogeng
         </Text>
       </View>
-      <ScrollView>
-        <MySlider />
-
-        <View
-          style={{
-            // flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 10,
-          }}
-        >
-          <CardButtonComponent
-            // onPress={() =>
-            //   handleClinicSelection("Testing", {
-            //     clinicId: item.kd_poli,
-            //     nameClinic: item.desc,
-            //   })
-            // }
-
-            // data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-            icon={"home"}
-            title={"Daftar Online Poli Klinik"}
-            description={"Pendaftaran Poli Klinik"}
-            onPress={() => setKondisi(true)}
-            colorIcon={"blue"}
+      <FlatList
+        data={Menus}
+        renderItem={({ item }) => (
+          <CardButtonNavComponent
+            data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+            icon={item.icon}
+            title={item.title}
+            description={item.desc}
+            onPress={item.to}
+            colorIcon={item.color}
           />
-          <FlatList
-            contentContainerStyle={{ flexGrow: 1 }}
-            // refreshControl={
-            //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
-            // }
-            // horizontal={false}
-            // numColumns={3}
-            data={Menus}
-            renderItem={({ item, index }) => (
-              <CardButtonNavComponent
-                // onPress={() =>
-                //   handleClinicSelection("Testing", {
-                //     clinicId: item.kd_poli,
-                //     nameClinic: item.desc,
-                //   })
-                // }
-                data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-                icon={item.icon}
-                title={item.title}
-                description={item.desc}
-                onPress={item.to}
-                colorIcon={item.color}
-              />
-            )}
-            keyExtractor={(item) => item.kd_poli}
-          />
-        </View>
-      </ScrollView>
+        )}
+        keyExtractor={(item) => item.kd_poli}
+        ListHeaderComponent={
+          <>
+            <MySlider />
+            <CardButtonComponent
+              icon="home"
+              title="Daftar Online Poli Klinik"
+              description="Pendaftaran Poli Klinik"
+              onPress={() => setKondisi(true)}
+              colorIcon="blue"
+            />
+          </>
+        }
+      />
+
       {kondisi && (
         <BottomSheet
           setStatus={setKondisi}

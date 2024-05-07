@@ -22,18 +22,19 @@ import InformasiUmum from "../view/screens/informasi/InformasiUmum";
 import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
 import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
+import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
         // initialRouteName="Onboarding"
+        initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Amino Care" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -100,6 +101,11 @@ export default function Routes() {
           options={{ headerShown: false }}
           name="Login Screen"
           component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Informasi TT"
+          component={InformasiTempatTidur}
         />
         <Stack.Screen name="Poli Information" component={PoliInformation} />
         <Stack.Screen name="Booking Screen" component={BookingScreen} />

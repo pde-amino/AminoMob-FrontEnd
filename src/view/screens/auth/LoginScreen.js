@@ -93,23 +93,32 @@ const LoginScreen = () => {
         body: JSON.stringify(data),
       });
 
-      // Cek apakah respons berhasil (status 2xx)
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Pendaftaran gagal:", errorData);
-        // Tampilkan pesan kesalahan kepada pengguna
-        alert(`Pendaftaran gagal:\n${JSON.stringify(errorData)}`);
+        console.error("Login gagal:", errorData);
+        alert(`Login gagal:\n${JSON.stringify(errorData)}`);
         return;
       }
 
-      // Jika respons berhasil, parse JSON
       const result = await response.json();
-      console.log("Pendaftaran berhasil:", result);
-      navigation.navigate("Login Screen");
+      console.log("Login berhasil:", result.message);
+      navigation.replace("Amino Care", result.id);
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
-      alert("Terjadi kesalahan saat mencoba mendaftar. Silakan coba lagi.");
+      alert(
+        "Maaf sepertinya sedang ada kendala pada jaringan internet kami. Tunggu sebentar dan coba lagi."
+      );
     }
+  };
+
+  const identitas = async () => {
+    const response = await fetch("http://192.168.5.5:8080/cariId?id=", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   };
 
   const keRegist = () => {
