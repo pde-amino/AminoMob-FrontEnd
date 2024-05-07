@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   FlatList,
@@ -19,10 +19,12 @@ import GlobalStyles from "../../../style/GlobalStyles";
 import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
 import CardButtonComponent from "../../../components/CardButtonComponent";
+import { AuthContex } from "../../../contex/AuthProvider";
 
 const { lebar } = Dimensions.get("window");
 
 const HomeScreen = ({ route }) => {
+  const { data } = useContext(AuthContex);
   // const route = useRoute();
   // const { data } = route.params;
   console.log("result", { route });
@@ -131,14 +133,14 @@ const HomeScreen = ({ route }) => {
       <View style={GlobalStyles.Home}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 15,
             textAlign: "left",
             color: "white",
             lineHeight: 36,
             marginTop: 40,
           }}
         >
-          Hii,
+          Halaman Utama
         </Text>
         <Text
           style={{
@@ -148,7 +150,7 @@ const HomeScreen = ({ route }) => {
             marginBottom: 8,
           }}
         >
-          Bogeng
+          Amino Mobile
         </Text>
       </View>
       <FlatList

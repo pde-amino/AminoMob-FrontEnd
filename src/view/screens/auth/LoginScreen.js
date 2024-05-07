@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   View,
@@ -17,6 +17,8 @@ import DialogComponent from "../../../components/DialogComponent";
 import BottomSheet from "../../../components/BottomSheet";
 import DropdownComponent from "../../../components/DropdownComponent";
 import DropdownTesting from "../../../components/DropdownTesting";
+import { AuthContex } from "../../../contex/AuthProvider";
+import axios from "axios";
 import DatePicker from "../../../components/DatePicker";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -72,6 +74,43 @@ const LoginScreen = () => {
     }
   };
 
+  const { setData } = useContext(AuthContex);
+  const [userInfo, setUserInfo] = useState();
+
+  const login = (username, password) => {
+    axios
+      .post(`http://192.168.5.5:8080/login`, {
+        user: username,
+        password: password,
+      })
+      .then(async (res) => {
+        const userInfo = res.data;
+
+        // Simpan userInfo ke AsyncStorage dan tangani error di sini
+        try {
+          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setUserInfo(userInfo);
+
+          // Periksa status respons
+          if (userInfo.status) {
+            console.log("Login berhasil. Token:", userInfo);
+            // Navigasi ke screen "Amino Care" dan kirim data token dan id
+            setData(userInfo);
+            navigation.replace("Amino Care");
+          } else {
+            // Tangani kesalahan login
+            const errorMessage = userInfo.message || "Kesalahan tidak dikenal";
+            console.log("Login gagal, pesan kesalahan:", errorMessage);
+          }
+        } catch (error) {
+          console.log("Gagal menyimpan userInfo ke AsyncStorage:", error);
+        }
+      })
+      .catch((error) => {
+        console.log("Login Error:", error);
+      });
+  };
+
   const handleSubmit = async () => {
     Linking.openURL("https://api.whatsapp.com/send?phone=6281213536824");
     // Cetak data yang dikumpulkan di console
@@ -100,9 +139,30 @@ const LoginScreen = () => {
         return;
       }
 
+      // switch (result.akun) {
+      //   case "Belum Terverifikasi":
+      //     navigation.replace("Profile Screen");
+      //     break;
+      //   case "Proses Verifikasi":
+      //     navigation.replace("Profile Screen");
+      //     break;
+      //   default:
+      //     navigation.replace("Amino Care");
+      // }
+
       const result = await response.json();
       console.log("Login berhasil:", result.message);
-      navigation.replace("Amino Care", result.id);
+      if (result.akun == "Belum Terverifikasi") {
+        setData(result);
+        navigation.replace("Profile Screen");
+      }
+      if (result.akun == "Proses Verifikasi") {
+        setData(result);
+        navigation.replace("Profile Screen");
+      } else {
+        setData(result);
+        navigation.replace("Amino Care");
+      }
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
       alert(
