@@ -23,6 +23,7 @@ import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
 import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
+import ProfileScreen from "../view/screens/auth/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,14 @@ export default function Routes() {
         <Stack.Screen name="Testing" component={Regist} />
         {/* Niat */}
         <Stack.Group>
+          <Stack.Screen
+            name="Profile Screen"
+            screenOptions={{ headerShown: true }}
+            component={ProfileScreen}
+            options={{
+              title: "Profile",
+            }}
+          />
           <Stack.Screen
             name="Daftar Online"
             screenOptions={{ headerShown: true }}
