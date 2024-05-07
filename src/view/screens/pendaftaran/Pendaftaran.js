@@ -1,40 +1,48 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
-  Button,
   StyleSheet,
   SafeAreaView,
   ScrollView,
   Pressable,
-  Dimensions,
   Platform,
 } from "react-native";
-import { Modal, Portal, Checkbox } from "react-native-paper";
-import ModalComponent from "../../../components/ModalComponent";
-import ConfirmModal from "../../../components/ConfirmModal";
+import { Checkbox } from "react-native-paper";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
-import DatePicker from "../../../components/DatePicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import DropdownComponent from "../../../components/DropdownComponent";
+import HeaderComponent from "../../../components/HeaderComponent";
+import { Dropdown } from "react-native-element-dropdown";
+import { useNavigation } from "@react-navigation/native";
 
-const { lebar } = Dimensions.get("window");
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
+const data = [
+  { label: "Laki-laki", value: "1" },
+  { label: "Perempuan", value: "2" },
+];
 
-export const Pendaftaran = ({ navigation }) => {
-  const [isModalVisible, setModalVisible] = useState(false);
+export const Pendaftaran = () => {
   const [checked, setChecked] = React.useState(false);
-
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [noRM, setnoRM] = useState("");
+  const [nmLengkap, setnmLengkap] = useState("");
+  const [alamat, setAlamat] = useState("");
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
+  const navigation = useNavigation();
+
   const toggleShowDate = () => {
     setShowPicker(!showPicker);
+  };
+
+  const backButton = () => {
+    navigation.navigate("Amino Care");
   };
 
   const onChange = ({ type }, selectedDate) => {
@@ -54,63 +62,71 @@ export const Pendaftaran = ({ navigation }) => {
   //   setShowDate(false);
   // };
 
-  const handleConfirm = () => {
-    // Lakukan aksi konfirmasi di sini
-    setModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    // Lakukan aksi pembatalan di sini
-    setModalVisible(false);
-  };
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const handleRegister = () => {
     // Tambahkan logika pendaftaran di sini
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: 100 }}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <HeaderComponent
+        title="Pendaftaran Poli"
+        icon="arrow-back"
+        onPress={backButton}
+      />
       <ScrollView>
         <View style={GlobalStyles.Content}>
-          <Text style={styles.judul}>Pendaftaran Poli</Text>
-          {/* <View style={GlobalStyles.textCenter}>
-            <Text>Ini adalah data dari Profile Anda</Text>
-            <Text>
-              Jika masih ada kekliruan mohon perbaiki dahulu melalui menu
-              Profile
-            </Text>
-          </View> */}
           <View style={{ gap: 12 }}>
             <TextInputIconComponent
-              style={styles.inputan}
               label={"No Rekam Medis"}
               placeholder={"Masukan No Rekam Medis Anda"}
               type={"username"}
+              value={noRM}
             />
             <TextInputIconComponent
-              style={styles.inputan}
               label={"Nama Lengkap"}
               placeholder={"Masukan Nama Lengkap Anda"}
-              type={"username"}
+              type={"nama"}
+              value={nmLengkap}
             />
             <TextInputIconComponent
-              style={styles.inputan}
               label={"Alamat"}
               placeholder={"Masukan Alamat Lengkap Anda"}
-              type={"username"}
+              // type={"usernamae"}
+              value={alamat}
             />
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  isFocus && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
+                }
+                searchPlaceholder="Search..."
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                  setValue(item.value);
+                  setIsFocus(false);
+                }}
+              />
+            </View>
 
-            <DropdownComponent style={styles.inputan} />
-
-            {/* <TextInputIconComponent
-              label={"Jns Kelamin"}
-              placeholder={"Gender"}
-              type={"username"}
-            /> */}
             <View>
               {showPicker && (
                 <DateTimePicker
@@ -143,33 +159,34 @@ export const Pendaftaran = ({ navigation }) => {
 
             <TextInputIconComponent
               label={"No Handphone"}
-              placeholder={"081222931283"}
+              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
               type={"username"}
             />
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => {
-                setChecked(!checked);
-              }}
-            />
+        </View>
 
-            <Text>Pastikan data anda sudah benar</Text>
-          </View>
+        <Checkbox.Item
+          style={{ flexDirection: "row-reverse", fontSize: 12 }}
+          color={WARNA.primary}
+          label="Pastikan data sudah benar"
+          labelStyle={{ fontSize: 13 }}
+          status={checked ? "checked" : "unchecked"}
+          onPress={() => {
+            setChecked(!checked);
+          }}
+        />
 
-          <View style={{ width: "90%" }}>
-            <ButtonPrimary
-              title="Selanjutnya -->"
-              onPress={handleRegister}
-              disabled={!checked}
-            />
-          </View>
+        <View
+          style={{
+            width: "90%",
+            marginLeft: 20,
+          }}
+        >
+          <ButtonPrimary
+            title="Selanjutnya "
+            onPress={handleRegister}
+            disabled={!checked}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -195,18 +212,58 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   tglPilihan: {
-    height: 48,
+    height: 50,
     borderWidth: 1,
+    borderRadius: 10,
     borderColor: WARNA.primary,
-    justifyContent: "center",
+    // justifyContent: "center",
     width: 370,
     backgroundColor: "white",
     color: "black",
     padding: 14,
-    fontSize: 15,
+    fontSize: 14,
+    // backgroundColor: "red",
   },
   inputan: {
     marginBottom: 16,
     marginTop: 24,
+  },
+  containerDrop: {
+    backgroundColor: "white",
+    // padding: 16,
+  },
+  dropdown: {
+    height: 50,
+    width: 370,
+    borderColor: WARNA.primary,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });

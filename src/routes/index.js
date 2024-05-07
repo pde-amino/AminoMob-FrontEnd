@@ -31,10 +31,11 @@ export default function Routes() {
     <NavigationContainer>
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
         // initialRouteName="Onboarding"
-        initialRouteName="Login Screen"
+        // initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Amino Care" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -46,8 +47,8 @@ export default function Routes() {
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
         <Stack.Screen
-          screenOptions={{ headerShown: false }}
-          name="Testing"
+          screenOptions={{ headerShown: true }}
+          name="Pendaftaran Poli"
           component={Pendaftaran}
         />
         {/* Niat */}
