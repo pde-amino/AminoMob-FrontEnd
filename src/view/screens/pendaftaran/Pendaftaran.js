@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Platform,
+  Text,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
@@ -17,7 +18,12 @@ import HeaderComponent from "../../../components/HeaderComponent";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation } from "@react-navigation/native";
 
-const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
+const WARNA = {
+  primary: "#0A78E2",
+  white: "#fff",
+  red: "#F01F1F",
+  secondary: "#5DA3E7",
+};
 const data = [
   { label: "Laki-laki", value: "1" },
   { label: "Perempuan", value: "2" },
@@ -76,6 +82,15 @@ export const Pendaftaran = () => {
       <ScrollView>
         <View style={GlobalStyles.Content}>
           <View style={{ gap: 12 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                color: WARNA.secondary,
+              }}
+            >
+              Pengisian Data Diri
+            </Text>
             <TextInputIconComponent
               label={"No Rekam Medis"}
               placeholder={"Masukan No Rekam Medis Anda"}
@@ -253,10 +268,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 14,
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 14,
   },
   iconStyle: {
     width: 20,

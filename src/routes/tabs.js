@@ -176,6 +176,10 @@ export default function HomeTabs() {
     >
       <Tabs.Screen
         options={{
+          // headerShown: true,
+          headerRight: () => (
+            <Ionicons name={"notifications-outline"} size={24} color="grey" />
+          ),
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
