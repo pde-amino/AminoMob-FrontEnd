@@ -26,7 +26,8 @@ export default GlobalStyles = StyleSheet.create({
     // backgroundColor: "#e6dfcf",
     alignItems: "center",
     color: "#1a4846",
-    gap: 12,
+    gap: 8,
+    marginTop: 20,
   },
   safeAreaStyle: {
     flex: 1,

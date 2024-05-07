@@ -10,15 +10,16 @@ const { width } = Dimensions.get("window");
 const validateInput = (input, type) => {
   // Fungsi untuk memvalidasi input berdasarkan tipe
   if (type === "username") {
-    // Validasi username hanya berisi angka
     const onlyNumbers = /^[0-9]+$/.test(input);
     return onlyNumbers ? "" : "Mohon gunakan angka saja";
   } else if (type === "password") {
-    // Validasi password tidak boleh mengandung karakter khusus
     const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
       input
     );
     return containsSpecialChar ? "Gak boleh pakai karakter khusus" : "";
+  } else if (type === "nama") {
+    const namaCek = /^[0-9]+$/.test(input);
+    return namaCek ? "Mohon masukkan nama anda" : "";
   }
   // Tidak ada validasi tambahan
   return "";
@@ -60,10 +61,14 @@ const TextInputIconComponent = ({
   return (
     <View>
       <TextInput
-        style={{ backgroundColor: "white", width: width * 0.9 }}
+        style={{
+          backgroundColor: "white",
+          width: width * 0.9,
+        }}
         mode="outlined"
         selectionColor={WARNA.primary}
         outlineColor={WARNA.primary}
+        outlineStyle={{ borderRadius: 10 }}
         activeOutlineColor={WARNA.primary}
         underlineColor={WARNA.primary}
         activeUnderlineColor={WARNA.primary}
