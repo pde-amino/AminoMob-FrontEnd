@@ -56,6 +56,14 @@ export default function Routes() {
         {/* Niat */}
         <Stack.Group>
           <Stack.Screen
+            name="Profile Screen"
+            screenOptions={{ headerShown: true }}
+            component={ProfileScreen}
+            options={{
+              title: "Profile",
+            }}
+          />
+          <Stack.Screen
             name="Daftar Online"
             screenOptions={{ headerShown: true }}
             component={DiriSendiri}
