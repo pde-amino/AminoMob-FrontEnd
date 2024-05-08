@@ -23,7 +23,6 @@ import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
 import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
-import ProfileScreen from "../view/screens/auth/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,22 +46,13 @@ export default function Routes() {
         <Stack.Screen name="Web View" component={TestingWeb} />
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen
-          screenOptions={{ headerShown: true }}
+          screenOptions={{ headerShown: false }}
           name="Pendaftaran Poli"
           component={Pendaftaran}
         />
         {/* Niat */}
         <Stack.Group>
-          <Stack.Screen
-            name="Profile Screen"
-            screenOptions={{ headerShown: true }}
-            component={ProfileScreen}
-            options={{
-              title: "Profile",
-            }}
-          />
           <Stack.Screen
             name="Daftar Online"
             screenOptions={{ headerShown: true }}

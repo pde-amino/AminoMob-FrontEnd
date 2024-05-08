@@ -51,7 +51,7 @@ export const Pendaftaran = () => {
     navigation.navigate("Amino Care");
   };
 
-  const onChange = ({ type }, selectedDate) => {
+  const berubah = ({ type }, selectedDate) => {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
@@ -74,14 +74,9 @@ export const Pendaftaran = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HeaderComponent
-        title="Pendaftaran Poli"
-        icon="arrow-back"
-        onPress={backButton}
-      />
       <ScrollView>
         <View style={GlobalStyles.Content}>
-          <View style={{ gap: 12 }}>
+          <View style={{ gap: 8 }}>
             <Text
               style={{
                 fontSize: 18,
@@ -147,7 +142,7 @@ export const Pendaftaran = () => {
                 <DateTimePicker
                   // display={"spinner"}
                   mode="date"
-                  onChange={onChange}
+                  onChange={berubah}
                   value={date}
                 />
               )}

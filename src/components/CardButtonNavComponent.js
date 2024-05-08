@@ -14,15 +14,7 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 const CardButtonNavComponent = ({ icon, title, description, onPress }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() =>
-        navigation.navigate({
-          name: onPress,
-          params: { dataString: onPress.data },
-        })
-      }
-    >
+    <TouchableOpacity style={styles.button}>
       <View style={styles.iconContainer}>
         <MaterialIcons name={icon} size={24} color={WARNA.primary} />
       </View>
@@ -43,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 8,
     width: 370,
+    // height: 120,
     elevation: 5,
     shadowColor: WARNA.primary,
   },

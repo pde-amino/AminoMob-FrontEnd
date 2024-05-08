@@ -1,7 +1,8 @@
-import { View, Text, TextInput, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, TextInput, ScrollView, StyleSheet } from "react-native";
+import React, { useState } from "react";
 import { Avatar } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
+import TextInputIconComponent from "../../../components/TextInputIconComponent";
 
 export default function ProfileScreen() {
   return (
@@ -11,18 +12,26 @@ export default function ProfileScreen() {
         <View
           style={{
             flex: 1,
-            alignItems: "center",
-            marginTop: 50,
+            // alignItems: "center",
+            margin: 20,
           }}
         >
-          <Avatar.Image
-            size={82}
-            source={require("../../../../assets/favicon.png")}
-          />
-          <Text>Profile Screen</Text>
-          <TextInput />
+          <View style={{ flexDirection: "row" }}>
+            <Avatar.Image
+              size={82}
+              source={require("../../../../assets/favicon.png")}
+            />
+            <View>
+              <Text>Bogeng</Text>
+              <Text></Text>
+            </View>
+
+            {/* <TextInputIconComponent /> */}
+          </View>
         </View>
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({});

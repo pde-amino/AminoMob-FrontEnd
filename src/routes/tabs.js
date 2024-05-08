@@ -221,14 +221,14 @@ export default function HomeTabs() {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name={focused ? "apps" : "apps-outline"}
+              name={focused ? "person" : "person-outline"}
               size={24}
               color="grey"
             />
           ),
         }}
         name="Profile"
-        component={TestingScreen}
+        component={ProfileScreen}
       />
     </Tabs.Navigator>
   );

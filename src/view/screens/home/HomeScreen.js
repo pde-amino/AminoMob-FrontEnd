@@ -140,7 +140,7 @@ const HomeScreen = ({ route }) => {
             marginTop: 40,
           }}
         >
-          Halaman Utama
+          Hii,
         </Text>
         <Text
           style={{
@@ -150,7 +150,7 @@ const HomeScreen = ({ route }) => {
             marginBottom: 8,
           }}
         >
-          Amino Mobile
+          Bogeng
         </Text>
       </View>
       <FlatList
