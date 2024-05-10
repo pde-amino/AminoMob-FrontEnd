@@ -25,9 +25,10 @@ const { lebar } = Dimensions.get("window");
 
 const HomeScreen = ({ route }) => {
   const { data } = useContext(AuthContex);
+  console.log("Ini dari HomeScreen :", data);
   // const route = useRoute();
   // const { data } = route.params;
-  console.log("result", { route });
+  // console.log("result", { route });
   // const { result } = route.params;
   const Menus = [
     // {
@@ -116,8 +117,7 @@ const HomeScreen = ({ route }) => {
         (flex = 1),
         (marginHorizontal = 24),
         (marginTop = 40),
-      ]}
-    >
+      ]}>
       <View
         style={{
           backgroundColor: "white",
@@ -138,8 +138,7 @@ const HomeScreen = ({ route }) => {
             color: "white",
             lineHeight: 36,
             marginTop: 40,
-          }}
-        >
+          }}>
           Halaman Utama
         </Text>
         <Text
@@ -148,8 +147,7 @@ const HomeScreen = ({ route }) => {
             fontWeight: "bold",
             color: "white",
             marginBottom: 8,
-          }}
-        >
+          }}>
           Amino Mobile
         </Text>
       </View>
