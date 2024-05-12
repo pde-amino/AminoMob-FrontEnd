@@ -160,6 +160,11 @@ import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 //   );
 // };
 
+
+// Misal Membuat Kondisi Pisah Menu Internal External
+// jika kondisi admin maka tampilkan jika pubkic hidden
+// mungkin dengan menggunakan fetch api mungkin / dengan kondisi dtatus admin dikeluarkan
+
 const Tabs = createBottomTabNavigator();
 export default function HomeTabs() {
   return (

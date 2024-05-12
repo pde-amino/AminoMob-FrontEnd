@@ -23,7 +23,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 
 const { lebar } = Dimensions.get("window");
 
-const HomeScreen = ({ route }) => {
+const HomeScreen = () => {
   const { data } = useContext(AuthContex);
   console.log("Ini dari HomeScreen :", data);
   // const route = useRoute();
@@ -31,50 +31,50 @@ const HomeScreen = ({ route }) => {
   // console.log("result", { route });
   // const { result } = route.params;
   const Menus = [
-    // {
-    //   kd_poli: "1",
-    //   icon: "home",
-    //   title: "Daftar Online",
-    //   desc: "Pendaftaran Poli Klinik",
-    //   to: "Daftar Online",
-    //   color: "pink",
-    //   kondisi: false,
-    // },
+    {
+      kd_poli: "1",
+      icon: "home",
+      title: "Layanan Rumah Sakit (Non BPJS)",
+      desc: "Pendaftaran layanan kesehatan online maupun offline khusus untuk pasien Tunai (Non BPJS)",
+      to: "LayananNonBPJS",
+      color: "pink",
+      kondisi: false,
+    },
     {
       kd_poli: "2",
       icon: "book",
-      title: "Informasi Rumah Sakit",
-      desc: "Telekonseling Gratis",
+      title: "Layanan Rumah Sakit (Non BPJS)",
+      desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
       to: "Informasi Rumah Sakit",
       color: "green",
     },
     {
       kd_poli: "3",
       icon: "note",
-      title: "Layanan Rumah Sakit",
-      desc: "Lihat Jadwal Dokter",
+      title: "Informasi Umuum Rumah Sakit",
+      desc: "Berbagai Informasi terkini dan terlengkap seputar Amino Hospital",
       to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
-    {
-      kd_poli: "4",
-      icon: "history",
-      title: "Riwayat Kunjungan",
-      desc: "Riwayat Lengkap  Pemeriksaan Anda",
-      to: "Riwayat Kunjungan",
-      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "blue",
-    },
-    {
-      kd_poli: "5",
-      icon: "check",
-      title: "FAQ",
-      desc: "Pertanyaan yang sering muncul",
-      to: "FAQ",
-      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "blue",
-    },
+    // {
+    //   kd_poli: "4",
+    //   icon: "history",
+    //   title: "Riwayat Kunjungan",
+    //   desc: "Riwayat Lengkap  Pemeriksaan Anda",
+    //   to: "Riwayat Kunjungan",
+    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+    //   color: "blue",
+    // },
+    // {
+    //   kd_poli: "5",
+    //   icon: "check",
+    //   title: "FAQ",
+    //   desc: "Pertanyaan yang sering muncul",
+    //   to: "FAQ",
+    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+    //   color: "blue",
+    // },
   ];
 
   const navigation = useNavigation();
@@ -167,18 +167,18 @@ const HomeScreen = ({ route }) => {
         ListHeaderComponent={
           <>
             <MySlider />
-            <CardButtonComponent
+            {/* <CardButtonComponent
               icon="home"
-              title="Daftar Online Poli Klinik"
+              title="Layanan Rumah Sakit (Non BPJS)"
               description="Pendaftaran Poli Klinik"
               onPress={() => setKondisi(true)}
               colorIcon="blue"
-            />
+            /> */}
           </>
         }
       />
 
-      {kondisi && (
+      {/* {kondisi && (
         <BottomSheet
           setStatus={setKondisi}
           ukuranModal={{ width: "100%", height: "25%" }}
@@ -189,7 +189,7 @@ const HomeScreen = ({ route }) => {
           pressKanan={orangLain}
           pressKiri={diriSendiri}
         />
-      )}
+      )} */}
     </View>
   );
 };

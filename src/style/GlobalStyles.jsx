@@ -20,7 +20,7 @@ export default GlobalStyles = StyleSheet.create({
     flex: 1,
   },
   Content: {
-    flex: 1,
+    // flex: 1,
     alignContent: "center",
     justifyContent: "center",
     // backgroundColor: "#e6dfcf",
