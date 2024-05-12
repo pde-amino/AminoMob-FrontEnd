@@ -24,6 +24,7 @@ import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
+import LayananNonBPJS from "../view/screens/layanan/LayananNonBPJS";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,12 +33,12 @@ export default function Routes() {
     <NavigationContainer>
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
         // initialRouteName="Onboarding"
-        // initialRouteName="Login Screen"
+        initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
         }}
       >
-        <Stack.Screen name="Amino Care" component={HomeTabs} />
+        <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
         <Stack.Screen name="Portal Informasi" component={PortalInformation} />
@@ -48,10 +49,16 @@ export default function Routes() {
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        {/* Pendaftaran */}
         <Stack.Screen
           screenOptions={{ headerShown: true }}
           name="Pendaftaran Poli"
           component={Pendaftaran}
+        />
+        <Stack.Screen
+          screenOptions={{ headerShown: true }}
+          name="Dirisendiri"
+          component={DiriSendiri}
         />
         {/* Niat */}
         <Stack.Group>
@@ -108,6 +115,7 @@ export default function Routes() {
           />
         </Stack.Group>
         {/* End Niat */}
+        {/* Public */}
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login Screen"
@@ -117,6 +125,11 @@ export default function Routes() {
           options={{ headerShown: false }}
           name="Informasi TT"
           component={InformasiTempatTidur}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="LayananNonBPJS"
+          component={LayananNonBPJS}
         />
         <Stack.Screen name="Poli Information" component={PoliInformation} />
         <Stack.Screen name="Booking Screen" component={BookingScreen} />

@@ -202,7 +202,8 @@ const SignupScreenBaru = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
               }}
-              onPress={() => navigation.navigate("Login Screen")}>
+              onPress={() => navigation.navigate("Login Screen")}
+            >
               Masuk disini
             </Text>
           </TouchableOpacity>
