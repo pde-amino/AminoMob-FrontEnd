@@ -77,6 +77,10 @@ const LoginScreen = () => {
 
   const { setData } = useContext(AuthContex);
   const [userInfo, setUserInfo] = useState();
+  const loginData = {
+    status: "success",
+    token: "aksdjfhhkjashdfdsbfv",
+  };
 
   const login = (username, password) => {
     axios
@@ -186,6 +190,11 @@ const LoginScreen = () => {
     navigation.navigate("Pendaftaran");
   };
 
+  const sementara = () => {
+    setData(loginData);
+    navigation.replace("Home Screen");
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -221,7 +230,7 @@ const LoginScreen = () => {
         <ButtonPrimary
           title="Masuk"
           disabled={!!usernameError || !!passwordError}
-          onPress={handleSubmit}
+          onPress={sementara}
         />
 
         <View style={{ flexDirection: "row" }}>
