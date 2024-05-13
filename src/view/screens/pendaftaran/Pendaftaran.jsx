@@ -14,7 +14,6 @@ import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import HeaderComponent from "../../../components/HeaderComponent";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation } from "@react-navigation/native";
 

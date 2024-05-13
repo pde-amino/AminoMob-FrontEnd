@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Linking,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
