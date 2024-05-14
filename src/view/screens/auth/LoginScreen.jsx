@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -18,6 +19,7 @@ import DropdownComponent from "../../../components/DropdownComponent";
 import DropdownTesting from "../../../components/DropdownTesting";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
+import DatePicker from "../../../components/DatePicker";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 // const { height, width } = Dimensions.get("window");
@@ -77,6 +79,7 @@ const LoginScreen = () => {
   const loginData = {
     status: "success",
     token: "aksdjfhhkjashdfdsbfv",
+    role: "user",
   };
 
   const login = (username, password) => {
@@ -114,6 +117,7 @@ const LoginScreen = () => {
   };
 
   const handleSubmit = async () => {
+    Linking.openURL("https://api.whatsapp.com/send?phone=6281213536824");
     // Cetak data yang dikumpulkan di console
     // console.log("Email:", email);
     // console.log("Username:", username);

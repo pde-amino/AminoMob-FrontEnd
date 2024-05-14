@@ -118,18 +118,6 @@ const HomeScreen = () => {
         (marginHorizontal = 24),
         (marginTop = 40),
       ]}>
-      <View
-        style={{
-          backgroundColor: "white",
-          width: lebar,
-          height: 650,
-          position: "absolute",
-          top: 300,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
-      />
       <View style={GlobalStyles.Home}>
         <Text
           style={{
@@ -150,33 +138,33 @@ const HomeScreen = () => {
           }}>
           Amino Mobile
         </Text>
-      </View>
-      <FlatList
-        data={Menus}
-        renderItem={({ item }) => (
-          <CardButtonNavComponent
-            data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-            icon={item.icon}
-            title={item.title}
-            description={item.desc}
-            onPress={item.to}
-            colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli}
-        ListHeaderComponent={
-          <>
-            <MySlider />
-            {/* <CardButtonComponent
+        <FlatList
+          data={Menus}
+          renderItem={({ item }) => (
+            <CardButtonNavComponent
+              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+              icon={item.icon}
+              title={item.title}
+              description={item.desc}
+              onPress={item.to}
+              colorIcon={item.color}
+            />
+          )}
+          keyExtractor={(item) => item.kd_poli}
+          ListHeaderComponent={
+            <>
+              <MySlider />
+              {/* <CardButtonComponent
               icon="home"
               title="Layanan Rumah Sakit (Non BPJS)"
               description="Pendaftaran Poli Klinik"
               onPress={() => setKondisi(true)}
               colorIcon="blue"
             /> */}
-          </>
-        }
-      />
+            </>
+          }
+        />
+      </View>
 
       {/* {kondisi && (
         <BottomSheet

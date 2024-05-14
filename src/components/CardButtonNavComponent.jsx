@@ -21,8 +21,7 @@ const CardButtonNavComponent = ({ icon, title, description, onPress }) => {
           name: onPress,
           params: { dataString: onPress.data },
         })
-      }
-    >
+      }>
       <View style={styles.iconContainer}>
         <MaterialIcons name={icon} size={24} color={WARNA.primary} />
       </View>

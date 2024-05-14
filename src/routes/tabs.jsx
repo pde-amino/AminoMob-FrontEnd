@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
+import React, { useContext } from "react";
 import { Ionicons } from "react-native-vector-icons";
 import FavoriteScreen from "../view/screens/home/FavoriteScreen";
 import HomeScreen from "../view/screens/home/HomeScreen";
@@ -23,6 +23,7 @@ import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import TestingScreen from "../view/screens/home/TestingScreen";
 import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
+import { AuthContex } from "../contex/AuthProvider";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -160,13 +161,14 @@ import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 //   );
 // };
 
-
 // Misal Membuat Kondisi Pisah Menu Internal External
 // jika kondisi admin maka tampilkan jika pubkic hidden
 // mungkin dengan menggunakan fetch api mungkin / dengan kondisi dtatus admin dikeluarkan
 
 const Tabs = createBottomTabNavigator();
 export default function HomeTabs() {
+  const { data } = useContext(AuthContex);
+  // console.log("AuthTabs :", data);
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -177,8 +179,7 @@ export default function HomeTabs() {
           elevation: 2,
           // backgroundColor: "#0A78E2",
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           // headerShown: true,
@@ -196,44 +197,60 @@ export default function HomeTabs() {
         name="HomeScreen"
         component={HomeScreen}
       />
+      {data.role === "admin" ? (
+        <Tabs.Screen
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <Ionicons
+                name={focused ? "calendar" : "calendar-outline"}
+                size={24}
+                color="grey"
+              />
+            ),
+          }}
+          name="Daftar Poli"
+          component={LoginScreen}
+        />
+      ) : null}
+
       <Tabs.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name={focused ? "heart" : "heart-outline"}
+              name={focused ? "document-text" : "document-text-outline"}
               size={24}
               color="grey"
             />
           ),
         }}
-        name="Dashboard"
-        component={LoginScreen}
-      />
-      <Tabs.Screen
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "create" : "create-outline"}
-              size={24}
-              color="grey"
-            />
-          ),
-        }}
-        name="Pendaftaran"
+        name="Riwayat"
         component={Pendaftaran}
       />
       <Tabs.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name={focused ? "apps" : "apps-outline"}
+              name={focused ? "call" : "call-outline"}
+              size={24}
+              color="grey"
+            />
+          ),
+        }}
+        name="Bantuan"
+        component={HomeScreen}
+      />
+      <Tabs.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "person" : "person-outline"}
               size={24}
               color="grey"
             />
           ),
         }}
         name="Profile"
-        component={TestingScreen}
+        component={HomeScreen}
       />
     </Tabs.Navigator>
   );
