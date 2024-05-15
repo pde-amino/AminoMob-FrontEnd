@@ -15,7 +15,6 @@ export default function HeaderComponent({ title, icon, onPress }) {
   return (
     <SafeAreaView>
       <Header
-        style={styles.headerContainer}
         containerStyle={{ width: "100%", height: 82 }}
         backgroundColor={WARNA.primary}
         leftComponent={
@@ -30,14 +29,6 @@ export default function HeaderComponent({ title, icon, onPress }) {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffff",
-    marginBottom: 100,
-    width: "100%",
-    paddingVertical: 15,
-  },
   heading: {
     color: "white",
     fontSize: 20,

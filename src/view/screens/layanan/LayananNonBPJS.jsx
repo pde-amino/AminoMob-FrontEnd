@@ -54,11 +54,10 @@ export default function LayananNonBPJS() {
     <View style={GlobalStyles.Content}>
       <View>
         <CardButtonComponent
-          icon="home"
+          imgSource={require("../../../../assets/icon31.png")}
           title="Daftar Online Poli Klinik"
           description="Layanan pendaftaran online poliklinik rawat jalan"
           onPress={() => setKondisi(true)}
-          colorIcon="blue"
         />
         <FlatList
           data={Menus}

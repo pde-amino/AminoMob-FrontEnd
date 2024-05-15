@@ -74,6 +74,7 @@ export const Pendaftaran = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <HeaderComponent title={"Pendaftaran Poli"} icon={"arrow-back"} />
       <ScrollView>
         <View style={GlobalStyles.Content}>
           <View style={{ gap: 8 }}>

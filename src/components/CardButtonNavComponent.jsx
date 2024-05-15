@@ -12,13 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
-const CardButtonNavComponent = ({
-  icon,
-  title,
-  description,
-  onPress,
-  imgSource,
-}) => {
+const CardButtonNavComponent = ({ title, description, onPress, imgSource }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
