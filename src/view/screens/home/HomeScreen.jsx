@@ -32,9 +32,10 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const HomeScreen = () => {
   const { data } = useContext(AuthContex);
+  console.log("Ini dari HomeScreen :", data);
   // const route = useRoute();
   // const { data } = route.params;
-  console.log("result", { data });
+  // console.log("result", { route });
   // const { result } = route.params;
   const Menus = [
     {

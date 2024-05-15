@@ -21,7 +21,15 @@ const CardButtonNavComponent = ({
 }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() =>
+        navigation.navigate({
+          name: onPress,
+          params: { dataString: onPress.data },
+        })
+      }
+    >
       <View style={styles.iconContainer}>
         <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
         {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}

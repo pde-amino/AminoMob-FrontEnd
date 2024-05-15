@@ -80,6 +80,7 @@ const LoginScreen = () => {
   const loginData = {
     status: "success",
     token: "aksdjfhhkjashdfdsbfv",
+    role: "user",
   };
 
   const login = (username, password) => {
@@ -203,8 +204,7 @@ const LoginScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignContent: "center",
-        }}
-      >
+        }}>
         <View style={{ gap: 8, marginBottom: 12 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={styles.judul}>Masuk</Text>
@@ -241,8 +241,7 @@ const LoginScreen = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
                 marginLeft: 3,
-              }}
-            >
+              }}>
               Daftar Akun Sekarang
             </Text>
           </TouchableOpacity>

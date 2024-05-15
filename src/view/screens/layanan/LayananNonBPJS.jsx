@@ -52,31 +52,33 @@ export default function LayananNonBPJS() {
 
   return (
     <View style={GlobalStyles.Content}>
-      <CardButtonComponent
-        icon="home"
-        title="Daftar Online Poli Klinik"
-        description="Layanan pendaftaran online poliklinik rawat jalan"
-        onPress={() => setKondisi(true)}
-        colorIcon="blue"
-      />
-      <FlatList
-        data={Menus}
-        renderItem={({ item }) => (
-          <CardButtonNavComponent
-            data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-            icon={item.icon}
-            title={item.title}
-            description={item.desc}
-            onPress={item.to}
-            colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli}
-      />
+      <View>
+        <CardButtonComponent
+          icon="home"
+          title="Daftar Online Poli Klinik"
+          description="Layanan pendaftaran online poliklinik rawat jalan"
+          onPress={() => setKondisi(true)}
+          colorIcon="blue"
+        />
+        <FlatList
+          data={Menus}
+          renderItem={({ item }) => (
+            <CardButtonNavComponent
+              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+              icon={item.icon}
+              title={item.title}
+              description={item.desc}
+              onPress={item.to}
+              colorIcon={item.color}
+            />
+          )}
+          keyExtractor={(item) => item.kd_poli}
+        />
+      </View>
       {kondisi && (
         <BottomSheet
           setStatus={setKondisi}
-          ukuranModal={{ width: "100%", height: "25%" }}
+          ukuranModal={{ width: "100%", height: "50%" }}
           judul="Untuk siap Anda ingin Mendaftar ?"
           subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
           buttonKiri="Diri Sendiri"
