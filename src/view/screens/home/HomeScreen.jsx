@@ -7,6 +7,10 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  ImageBackground,
+  SafeAreaView,
+  StatusBar,
+  Image,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -20,8 +24,11 @@ import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import { AuthContex } from "../../../contex/AuthProvider";
+import Svg, { Path } from "react-native-svg";
+import BannerComponent from "../../../components/BannerComponent";
 
 const { lebar } = Dimensions.get("window");
+const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const HomeScreen = () => {
   const { data } = useContext(AuthContex);
@@ -32,48 +39,30 @@ const HomeScreen = () => {
   const Menus = [
     {
       kd_poli: "1",
-      icon: "home",
-      title: "Layanan Rumah Sakit (Non BPJS)",
-      desc: "Pendaftaran layanan kesehatan online maupun offline khusus untuk pasien Tunai (Non BPJS)",
+      source: require("../../../../assets/icon31.png"),
+      title: "Layanan RS (Non BPJS)",
+      desc: "Pendaftaran layanan kesehatan khusus untuk pasien Non BPJS",
       to: "LayananNonBPJS",
       color: "pink",
       kondisi: false,
     },
     {
       kd_poli: "2",
-      icon: "book",
-      title: "Layanan Rumah Sakit (Non BPJS)",
+      source: require("../../../../assets/icon32.png"),
+      title: "Layanan RS (BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
       to: "Informasi Rumah Sakit",
       color: "green",
     },
     {
       kd_poli: "3",
-      icon: "note",
-      title: "Informasi Umuum Rumah Sakit",
+      source: require("../../../../assets/icon33.png"),
+      title: "Informasi Umum RS",
       desc: "Berbagai Informasi terkini dan terlengkap seputar Amino Hospital",
-      to: "Informasi Umum",
+      to: "",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       color: "blue",
     },
-    // {
-    //   kd_poli: "4",
-    //   icon: "history",
-    //   title: "Riwayat Kunjungan",
-    //   desc: "Riwayat Lengkap  Pemeriksaan Anda",
-    //   to: "Riwayat Kunjungan",
-    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-    //   color: "blue",
-    // },
-    // {
-    //   kd_poli: "5",
-    //   icon: "check",
-    //   title: "FAQ",
-    //   desc: "Pertanyaan yang sering muncul",
-    //   to: "FAQ",
-    //   // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-    //   color: "blue",
-    // },
   ];
 
   const navigation = useNavigation();
@@ -97,102 +86,104 @@ const HomeScreen = () => {
     navigation.navigate(screen, params);
   };
 
-  const handleKondisi = (item) => {
-    if (item.kondisi) {
-      // Lakukan sesuatu jika kondisi terpenuhi
-      setModalVisible(true);
-    } else {
-      // Navigasi ke screen lain berdasarkan nilai 'to' dari item
-      navigation.navigate(item.to);
-    }
-  };
+  // const handleKondisi = (item) => {
+  //   if (item.kondisi) {
+  //     // Lakukan sesuatu jika kondisi terpenuhi
+  //     setModalVisible(true);
+  //     console.log("Lebar layar:", Dimensions.get("window").width);
+  //   } else {
+  //     // Navigasi ke screen lain berdasarkan nilai 'to' dari item
+  //     navigation.navigate(item.to);
+  //   }
+  // };
 
   const [kondisi, setKondisi] = React.useState(false);
 
   return (
-    <View
-      style={[
-        GlobalStyles.Main,
-        (flex = 1),
-        (marginHorizontal = 24),
-        (marginTop = 40),
-      ]}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor={WARNA.primary} />
       <View
         style={{
-          backgroundColor: "white",
-          width: lebar,
-          height: 650,
-          position: "absolute",
-          top: 300,
-          left: 0,
-          bottom: 0,
-          right: 0,
+          flex: 1,
+          alignItems: "center",
         }}
-      />
-      <View style={GlobalStyles.Home}>
-        <Text
+      >
+        <View
           style={{
-            fontSize: 15,
-            textAlign: "left",
-            color: "white",
-            lineHeight: 36,
-            marginTop: 40,
+            backgroundColor: "#0a78e2",
+            height: 150,
+            position: "absolute",
           }}
         >
-          Hii,
-        </Text>
-        <Text
-          style={{
-            fontSize: 26,
-            fontWeight: "bold",
-            color: "white",
-            marginBottom: 8,
-          }}
-        >
-          Bogeng
-        </Text>
+          <Svg
+            height={380}
+            width={Dimensions.get("screen").width}
+            viewBox="0 0 1440 320"
+          >
+            <Path
+              fill="#0a78e2"
+              fill-opacity="1"
+              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            ></Path>
+          </Svg>
+        </View>
+        <View style={{ marginVertical: 30 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 25,
+            }}
+          >
+            <Image
+              source={require("../../../../assets/logo-app.png")}
+              resizeMode="contain"
+              style={{
+                height: 42,
+                width: 100,
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#DF1448",
+                paddingHorizontal: 12,
+                paddingVertical: 8,
+                borderRadius: 20,
+              }}
+            >
+              <Text
+                style={{ color: WARNA.white, fontSize: 13, fontWeight: "bold" }}
+              >
+                Panggilan Darurat
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <MySlider />
+          <View>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}
+            >
+              Menu
+            </Text>
+            <FlatList
+              data={Menus}
+              renderItem={({ item }) => (
+                <CardButtonNavComponent
+                  data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.desc}
+                  onPress={item.to}
+                  colorIcon={item.color}
+                  imgSource={item.source}
+                />
+              )}
+            />
+          </View>
+        </View>
       </View>
-      <FlatList
-        data={Menus}
-        renderItem={({ item }) => (
-          <CardButtonNavComponent
-            data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-            icon={item.icon}
-            title={item.title}
-            description={item.desc}
-            onPress={item.to}
-            colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli}
-        ListHeaderComponent={
-          <>
-            <MySlider />
-            {/* <CardButtonComponent
-              icon="home"
-              title="Layanan Rumah Sakit (Non BPJS)"
-              description="Pendaftaran Poli Klinik"
-              onPress={() => setKondisi(true)}
-              colorIcon="blue"
-            /> */}
-          </>
-        }
-      />
-
-      {/* {kondisi && (
-        <BottomSheet
-          setStatus={setKondisi}
-          ukuranModal={{ width: "100%", height: "25%" }}
-          judul="Untuk siap Anda ingin Mendaftar ?"
-          subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
-          buttonKiri="Diri Sendiri"
-          buttonKanan="Orang Lain"
-          pressKanan={orangLain}
-          pressKiri={diriSendiri}
-        />
-      )} */}
-    </View>
+    </SafeAreaView>
   );
 };
 

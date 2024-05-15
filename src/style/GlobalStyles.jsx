@@ -14,7 +14,7 @@ export default GlobalStyles = StyleSheet.create({
     flex: 1,
   },
   Home: {
-    backgroundColor: WARNA.primary,
+    backgroundColor: WARNA.white,
     justifyContent: "center",
     padding: 20,
     flex: 1,

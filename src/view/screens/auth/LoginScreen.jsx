@@ -23,7 +23,7 @@ import axios from "axios";
 import DatePicker from "../../../components/DatePicker";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
-// const { height, width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
   const [status, setStatus] = React.useState(false);
