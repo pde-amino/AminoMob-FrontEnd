@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-paper";
+import GenerateQRCode from "../../../contex/GenerateQRCode";
 
 const { height, width } = Dimensions.get("window");
 
@@ -36,6 +37,7 @@ const BookingScreen = ({ navigation }) => {
 
       {/* Keterangan sukses */}
       <Text style={styles.successText}>Booking Berhasil</Text>
+      <GenerateQRCode />
 
       {/* Detail transaksi */}
       <View style={styles.detailsContainer}>
