@@ -91,13 +91,7 @@ export default function Routes() {
               title: "Masuk",
             }}
           />
-          <Stack.Screen
-            name="Informasi Umum"
-            component={InformasiUmum}
-            options={{
-              title: "Masuk",
-            }}
-          />
+
           <Stack.Screen
             name="Riwayat Kunjungan"
             component={RiwayatKunjungan}
@@ -121,8 +115,15 @@ export default function Routes() {
           component={LoginScreen}
         />
         <Stack.Screen
+          name="Informasi Umum"
+          component={InformasiUmum}
+          options={{
+            title: "Masuk",
+          }}
+        />
+        <Stack.Screen
           options={{ headerShown: false }}
-          name="Informasi TT"
+          name="InfoTT"
           component={InformasiTempatTidur}
         />
         <Stack.Screen

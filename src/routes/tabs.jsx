@@ -24,6 +24,8 @@ import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import TestingScreen from "../view/screens/home/TestingScreen";
 import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 import { AuthContex } from "../contex/AuthProvider";
+import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
+import Swafoto from "../contex/SwaFoto";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -237,7 +239,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Bantuan"
-        component={HomeScreen}
+        component={Swafoto}
       />
       <Tabs.Screen
         options={{
@@ -250,7 +252,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Profile"
-        component={HomeScreen}
+        component={ProfileScreen}
       />
     </Tabs.Navigator>
   );

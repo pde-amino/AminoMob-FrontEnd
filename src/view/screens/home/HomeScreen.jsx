@@ -43,7 +43,7 @@ const HomeScreen = () => {
     {
       kd_poli: "2",
       icon: "book",
-      title: "Layanan Rumah Sakit (Non BPJS)",
+      title: "Layanan Rumah Sakit (BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
       to: "Informasi Rumah Sakit",
       color: "green",
@@ -51,7 +51,7 @@ const HomeScreen = () => {
     {
       kd_poli: "3",
       icon: "note",
-      title: "Informasi Umuum Rumah Sakit",
+      title: "Informasi Umum Rumah Sakit",
       desc: "Berbagai Informasi terkini dan terlengkap seputar Amino Hospital",
       to: "Informasi Umum",
       params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
