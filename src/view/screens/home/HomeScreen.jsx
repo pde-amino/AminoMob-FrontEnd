@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   StatusBar,
   Image,
+  Linking,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -87,6 +88,10 @@ const HomeScreen = () => {
     navigation.navigate(screen, params);
   };
 
+  const darurat = () => {
+    Linking.openURL("https://wa.me/6281213536824");
+  };
+
   // const handleKondisi = (item) => {
   //   if (item.kondisi) {
   //     // Lakukan sesuatu jika kondisi terpenuhi
@@ -152,6 +157,7 @@ const HomeScreen = () => {
                 paddingVertical: 8,
                 borderRadius: 20,
               }}
+              onPress={darurat}
             >
               <Text
                 style={{ color: WARNA.white, fontSize: 13, fontWeight: "bold" }}
