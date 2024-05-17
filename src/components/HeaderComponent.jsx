@@ -7,7 +7,7 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import { Header, Icon, HeaderProps } from "@rneui/themed";
+import { Header, Icon } from "@rneui/themed";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -38,10 +38,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginTop: 5,
-  },
-  subheaderText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

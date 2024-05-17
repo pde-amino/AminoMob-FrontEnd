@@ -8,26 +8,34 @@ import {
   Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const CardButtonComponent = ({
-  icon,
+  warna,
   title,
   description,
   onPress,
   imgSource,
 }) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <View style={styles.iconContainer}>
-        <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
-        {/* <MaterialIcons name={icon} size={24} color={WARNA.primary} /> */}
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: warna }]}
+        onPress={onPress}
+      >
+        <View style={styles.iconContainer}>
+          <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
+          {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.description}>{description}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -36,20 +44,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: WARNA.primary,
+    // backgroundColor: WARNA.primary,
     padding: 8,
     borderRadius: 20,
-    height: 100,
     marginTop: 8,
+    height: 100,
     width: Dimensions.get("window").width * 0.9,
     elevation: 2,
   },
   iconContainer: {
-    flex: 1,
+    flex: 2,
     margin: 8,
     height: 70,
     width: 70,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     alignItems: "center",
     flexDirection: "row",
   },
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 4,
     gap: 2,
-    backgroundColor: "purple",
+    // backgroundColor: "purple",
   },
   title: {
     fontSize: 18,

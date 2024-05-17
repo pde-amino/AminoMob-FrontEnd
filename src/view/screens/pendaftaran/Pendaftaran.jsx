@@ -16,7 +16,7 @@ import GlobalStyles from "../../../style/GlobalStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { Dropdown } from "react-native-element-dropdown";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -30,6 +30,9 @@ const data = [
 ];
 
 export const Pendaftaran = () => {
+  const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
+  const { jnsMenu } = route.params;
+
   const [checked, setChecked] = React.useState(false);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -37,6 +40,10 @@ export const Pendaftaran = () => {
   const [noRM, setnoRM] = useState("");
   const [nmLengkap, setnmLengkap] = useState("");
   const [alamat, setAlamat] = useState("");
+  // const poli = jnsMenu.route.params;
+  // console.log(poli);
+
+  // if(jnsMenu.rout.params===)
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -45,10 +52,6 @@ export const Pendaftaran = () => {
 
   const toggleShowDate = () => {
     setShowPicker(!showPicker);
-  };
-
-  const backButton = () => {
-    navigation.navigate("Amino Care");
   };
 
   const berubah = ({ type }, selectedDate) => {
@@ -74,106 +77,198 @@ export const Pendaftaran = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HeaderComponent title={"Pendaftaran Poli"} icon={"arrow-back"} />
+      <HeaderComponent
+        title={"Pendaftaran"}
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
       <ScrollView>
         <View style={GlobalStyles.Content}>
-          <View style={{ gap: 8 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: WARNA.secondary,
-              }}
-            >
-              Pengisian Data Diri
-            </Text>
-            <TextInputIconComponent
-              label={"No Rekam Medis"}
-              placeholder={"Masukan No Rekam Medis Anda"}
-              type={"username"}
-              value={noRM}
-            />
-            <TextInputIconComponent
-              label={"Nama Lengkap"}
-              placeholder={"Masukan Nama Lengkap Anda"}
-              type={"nama"}
-              value={nmLengkap}
-            />
-            <TextInputIconComponent
-              label={"Alamat"}
-              placeholder={"Masukan Alamat Lengkap Anda"}
-              // type={"usernamae"}
-              value={alamat}
-            />
-            <View style={styles.containerDrop}>
-              <Dropdown
-                style={[
-                  styles.dropdown,
-                  isFocus && {
-                    borderColor: WARNA.primary,
-                    backgroundColor: WARNA.white,
-                  },
-                ]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                search={false}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={data}
-                // search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={
-                  !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
-                }
-                searchPlaceholder="Search..."
-                value={value}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                onChange={(item) => {
-                  setValue(item.value);
-                  setIsFocus(false);
-                }}
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: WARNA.secondary,
+            }}
+          >
+            Pengisian Data Diri {jnsMenu}
+          </Text>
+          {jnsMenu === "poli" && (
+            <View style={{ gap: 8 }}>
+              <TextInputIconComponent
+                label={"No Rekam Medis"}
+                placeholder={"Masukan No Rekam Medis Anda"}
+                type={"username"}
+                value={noRM}
+              />
+              <TextInputIconComponent
+                label={"Nama Lengkap"}
+                placeholder={"Masukan Nama Lengkap Anda"}
+                type={"nama"}
+                value={nmLengkap}
+              />
+              <TextInputIconComponent
+                label={"Alamat"}
+                placeholder={"Masukan Alamat Lengkap Anda"}
+                // type={"usernamae"}
+                value={alamat}
+              />
+              <View style={styles.containerDrop}>
+                <Dropdown
+                  style={[
+                    styles.dropdown,
+                    isFocus && {
+                      borderColor: WARNA.primary,
+                      backgroundColor: WARNA.white,
+                    },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  search={false}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={data}
+                  // search
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={
+                    !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
+                  }
+                  searchPlaceholder="Search..."
+                  value={value}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(item) => {
+                    setValue(item.value);
+                    setIsFocus(false);
+                  }}
+                />
+              </View>
+
+              <View>
+                {showPicker && (
+                  <DateTimePicker
+                    // display={"spinner"}
+                    mode="date"
+                    onChange={berubah}
+                    value={date}
+                    minimumDate={new Date(1940, 10, 20)}
+                  />
+                )}
+
+                {!showPicker && (
+                  <Pressable onPress={toggleShowDate}>
+                    <TextInput
+                      style={styles.tglPilihan}
+                      editable={false}
+                      // label={"Tgl Lahir"}
+                      placeholder={"Tanggal Lahir"}
+                      value={
+                        dateOfBirth
+                          ? new Date(dateOfBirth).toISOString().split("T")[0]
+                          : ""
+                      }
+                      onChangeText={setDateOfBirth}
+                      // type={"username"}
+                      // onPress={() => setShowDate(true)}
+                    />
+                  </Pressable>
+                )}
+              </View>
+              <TextInputIconComponent
+                label={"No Handphone"}
+                placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
+                type={"username"}
               />
             </View>
+          )}
 
-            <View>
-              {showPicker && (
-                <DateTimePicker
-                  // display={"spinner"}
-                  mode="date"
-                  onChange={berubah}
-                  value={date}
+          {jnsMenu === "penunjang" && (
+            <View style={{ gap: 8 }}>
+              <TextInputIconComponent
+                label={"No Rekam Medis"}
+                placeholder={"Masukan No Rekam Medis Anda"}
+                type={"username"}
+                value={noRM}
+              />
+              <TextInputIconComponent
+                label={"Nama Lengkap"}
+                placeholder={"Masukan Nama Lengkap Anda"}
+                type={"nama"}
+                value={nmLengkap}
+              />
+              <TextInputIconComponent
+                label={"Alamat"}
+                placeholder={"Masukan Alamat Lengkap Anda"}
+                // type={"usernamae"}
+                value={alamat}
+              />
+              <View style={styles.containerDrop}>
+                <Dropdown
+                  style={[
+                    styles.dropdown,
+                    isFocus && {
+                      borderColor: WARNA.primary,
+                      backgroundColor: WARNA.white,
+                    },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  search={false}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={data}
+                  // search
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={
+                    !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
+                  }
+                  searchPlaceholder="Search..."
+                  value={value}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(item) => {
+                    setValue(item.value);
+                    setIsFocus(false);
+                  }}
                 />
-              )}
+              </View>
 
-              {!showPicker && (
-                <Pressable onPress={toggleShowDate}>
-                  <TextInput
-                    style={styles.tglPilihan}
-                    editable={false}
-                    // label={"Tgl Lahir"}
-                    placeholder={"Tanggal Lahir"}
-                    value={
-                      dateOfBirth
-                        ? new Date(dateOfBirth).toISOString().split("T")[0]
-                        : ""
-                    }
-                    onChangeText={setDateOfBirth}
-                    // type={"username"}
-                    // onPress={() => setShowDate(true)}
+              <View>
+                {showPicker && (
+                  <DateTimePicker
+                    // display={"spinner"}
+                    mode="date"
+                    onChange={berubah}
+                    value={date}
+                    minimumDate={new Date(1940, 10, 20)}
                   />
-                </Pressable>
-              )}
-            </View>
+                )}
 
-            <TextInputIconComponent
-              label={"No Handphone"}
-              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-              type={"username"}
-            />
-          </View>
+                {!showPicker && (
+                  <Pressable onPress={toggleShowDate}>
+                    <TextInput
+                      style={styles.tglPilihan}
+                      editable={false}
+                      // label={"Tgl Lahir"}
+                      placeholder={"Tanggal Lahir"}
+                      value={
+                        dateOfBirth
+                          ? new Date(dateOfBirth).toISOString().split("T")[0]
+                          : ""
+                      }
+                      onChangeText={setDateOfBirth}
+                      // type={"username"}
+                      // onPress={() => setShowDate(true)}
+                    />
+                  </Pressable>
+                )}
+              </View>
+            </View>
+          )}
         </View>
 
         <Checkbox.Item

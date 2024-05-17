@@ -27,7 +27,7 @@ const BottomSheet = ({
     // Will change slide up the bottom sheet
     Animated.timing(slide, {
       toValue: 0,
-      duration: 800,
+      duration: 500,
       useNativeDriver: true,
     }).start();
   };
@@ -36,7 +36,7 @@ const BottomSheet = ({
     // Will slide down the bottom sheet
     Animated.timing(slide, {
       toValue: 300,
-      duration: 800,
+      duration: 500,
       useNativeDriver: true,
     }).start();
   };
@@ -57,7 +57,8 @@ const BottomSheet = ({
     <Pressable onPress={closeModal} style={styles.backdrop}>
       <Pressable style={ukuranModal}>
         <Animated.View
-          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}>
+          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
+        >
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>{judul}</Text>
           <Text style={{ fontSize: 14, color: "grey", marginTop: 12 }}>
             {subjudul}
@@ -68,14 +69,16 @@ const BottomSheet = ({
               flexDirection: "row",
               justifyContent: "center",
               gap: 8,
-            }}>
+            }}
+          >
             <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
               <Text
                 style={{
                   fontSize: 16,
                   fontWeight: "bold",
                   color: WARNA.primary,
-                }}>
+                }}
+              >
                 {buttonKiri}
               </Text>
             </TouchableOpacity>
@@ -86,7 +89,8 @@ const BottomSheet = ({
                   fontSize: 16,
                   fontWeight: "bold",
                   color: WARNA.white,
-                }}>
+                }}
+              >
                 {buttonKanan}
               </Text>
             </TouchableOpacity>

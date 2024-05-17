@@ -28,7 +28,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
 import BannerComponent from "../../../components/BannerComponent";
 
-const { lebar } = Dimensions.get("window");
+// const { lebar } = Dimensions.get("screen");
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const HomeScreen = () => {
@@ -45,7 +45,7 @@ const HomeScreen = () => {
       title: "Layanan RS (Non BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien Non BPJS",
       to: "LayananNonBPJS",
-      color: "pink",
+      warna: WARNA.primary,
       kondisi: false,
     },
     {
@@ -54,16 +54,16 @@ const HomeScreen = () => {
       title: "Layanan RS (BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
       to: "Informasi Rumah Sakit",
-      color: "green",
+      warna: WARNA.primary,
     },
     {
       kd_poli: "3",
       source: require("../../../../assets/icon33.png"),
       title: "Informasi Umum RS",
-      desc: "Berbagai Informasi terkini dan terlengkap seputar Amino Hospital",
+      desc: "Informasi terkini dan terlengkap seputar Amino Hospital",
       to: "",
-      params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "blue",
+      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
+      warna: WARNA.primary,
     },
   ];
 
@@ -108,12 +108,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor={WARNA.primary} />
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-        }}
-      >
+      <View style={{ flex: 1, alignItems: "center" }}>
         <View
           style={{
             backgroundColor: "#0a78e2",
@@ -146,8 +141,8 @@ const HomeScreen = () => {
               source={require("../../../../assets/logo-app.png")}
               resizeMode="contain"
               style={{
-                height: 42,
-                width: 100,
+                height: 40,
+                width: 80,
               }}
             />
             <TouchableOpacity
@@ -184,6 +179,7 @@ const HomeScreen = () => {
                   onPress={item.to}
                   colorIcon={item.color}
                   imgSource={item.source}
+                  warna={item.warna}
                 />
               )}
             />
