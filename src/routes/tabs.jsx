@@ -26,6 +26,7 @@ import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
 import { AuthContex } from "../contex/AuthProvider";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import Swafoto from "../contex/SwaFoto";
+import VerifikasiPage from "../contex/VerifikasiPage";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -181,8 +182,7 @@ export default function HomeTabs() {
           elevation: 2,
           // backgroundColor: "#0A78E2",
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           // headerShown: true,
@@ -240,14 +240,14 @@ export default function HomeTabs() {
           ),
         }}
         name="Bantuan"
-        component={Swafoto}
+        component={VerifikasiPage}
       />
       <Tabs.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
-              name={focused ? "person" : "person-outline"}
+              // name={focused ? "person" : "person-outline"}
               size={24}
               color="grey"
             />

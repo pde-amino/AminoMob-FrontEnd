@@ -1,15 +1,16 @@
+// components/Swafoto.js
 import React, { useState, useEffect, useRef } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Camera } from "expo-camera";
 
-const Swafoto = () => {
+const Swafoto = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const cameraRef = useRef(null);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -17,7 +18,9 @@ const Swafoto = () => {
   const takePicture = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      console.log(photo.uri); // URI gambar yang diambil
+      // Mengirim URI foto ke halaman VerifikasiPage menggunakan fungsi onPhotoCapture yang dilewatkan melalui parameter navigasi
+      route.params.onPhotoCapture(photo.uri);
+      navigation.goBack();
     }
   };
 

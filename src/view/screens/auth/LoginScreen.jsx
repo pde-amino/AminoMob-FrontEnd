@@ -78,8 +78,11 @@ const LoginScreen = () => {
   const { setData } = useContext(AuthContex);
   const [userInfo, setUserInfo] = useState();
   const loginData = {
-    status: "success",
-    token: "aksdjfhhkjashdfdsbfv",
+    status: "Sudah",
+    // status: "Proses",
+    ids: 4,
+    token:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTU5MTUyMDUsImV4cCI6MTcxNjAwMTYwNSwidWlkIjoiNCIsIm5vX3JrbV9tZWRpcyI6bnVsbH0.KRcCvT9tXZsYr0Q-d-ThXq8W5xKcgEFT0v-WiPFILz4",
     role: "user",
   };
 

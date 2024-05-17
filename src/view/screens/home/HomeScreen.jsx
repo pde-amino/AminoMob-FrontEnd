@@ -60,6 +60,7 @@ const HomeScreen = () => {
       kd_poli: "3",
       source: require("../../../../assets/icon33.png"),
       title: "Informasi Umum RS",
+
       desc: "Informasi terkini dan terlengkap seputar Amino Hospital",
       to: "",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -108,24 +109,23 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor={WARNA.primary} />
+
       <View style={{ flex: 1, alignItems: "center" }}>
+
         <View
           style={{
             backgroundColor: "#0a78e2",
             height: 150,
             position: "absolute",
-          }}
-        >
+          }}>
           <Svg
             height={380}
             width={Dimensions.get("screen").width}
-            viewBox="0 0 1440 320"
-          >
+            viewBox="0 0 1440 320">
             <Path
               fill="#0a78e2"
               fill-opacity="1"
-              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-            ></Path>
+              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
           </Svg>
         </View>
         <View style={{ marginVertical: 30 }}>
@@ -135,8 +135,7 @@ const HomeScreen = () => {
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: 25,
-            }}
-          >
+            }}>
             <Image
               source={require("../../../../assets/logo-app.png")}
               resizeMode="contain"
@@ -152,11 +151,13 @@ const HomeScreen = () => {
                 paddingVertical: 8,
                 borderRadius: 20,
               }}
-              onPress={darurat}
-            >
+              onPress={darurat}>
               <Text
-                style={{ color: WARNA.white, fontSize: 13, fontWeight: "bold" }}
-              >
+                style={{
+                  color: WARNA.white,
+                  fontSize: 13,
+                  fontWeight: "bold",
+                }}>
                 Panggilan Darurat
               </Text>
             </TouchableOpacity>
@@ -164,8 +165,7 @@ const HomeScreen = () => {
           <MySlider />
           <View>
             <Text
-              style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}
-            >
+              style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}>
               Menu
             </Text>
             <FlatList
