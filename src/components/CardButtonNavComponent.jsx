@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const CardButtonNavComponent = ({
-  icon,
+  warna,
   title,
   description,
   onPress,
@@ -22,7 +22,7 @@ const CardButtonNavComponent = ({
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      style={styles.button}
+      style={[styles.button, { backgroundColor: warna }]}
       onPress={() =>
         navigation.navigate({
           name: onPress,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: WARNA.primary,
+    // backgroundColor: WARNA.primary,
     padding: 8,
     borderRadius: 20,
     marginTop: 8,

@@ -7,7 +7,7 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import { Header, Icon, HeaderProps } from "@rneui/themed";
+import { Header, Icon } from "@rneui/themed";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -15,7 +15,6 @@ export default function HeaderComponent({ title, icon, onPress }) {
   return (
     <SafeAreaView>
       <Header
-        style={styles.headerContainer}
         containerStyle={{ width: "100%", height: 82 }}
         backgroundColor={WARNA.primary}
         leftComponent={
@@ -30,14 +29,6 @@ export default function HeaderComponent({ title, icon, onPress }) {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffff",
-    marginBottom: 100,
-    width: "100%",
-    paddingVertical: 15,
-  },
   heading: {
     color: "white",
     fontSize: 20,
@@ -47,10 +38,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginTop: 5,
-  },
-  subheaderText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

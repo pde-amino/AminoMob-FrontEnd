@@ -25,9 +25,11 @@ import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import LayananNonBPJS from "../view/screens/layanan/LayananNonBPJS";
+import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 import Swafoto from "../contex/SwaFoto";
 import DisplayPhoto from "../contex/DisplayPhoto";
 import VerifikasiPage from "../contex/VerifikasiPage";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +41,8 @@ export default function Routes() {
         initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -56,6 +59,11 @@ export default function Routes() {
           screenOptions={{ headerShown: true }}
           name="Pendaftaran Poli"
           component={Pendaftaran}
+        />
+        <Stack.Screen
+          screenOptions={{ headerShown: true }}
+          name="Pilih Poli"
+          component={PilihPoli}
         />
         <Stack.Screen
           screenOptions={{ headerShown: true }}
