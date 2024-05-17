@@ -1,6 +1,4 @@
-import * as React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataTable } from "react-native-paper";
 
 const TableListComponent = ({ data }) => {

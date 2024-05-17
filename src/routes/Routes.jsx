@@ -25,6 +25,9 @@ import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import LayananNonBPJS from "../view/screens/layanan/LayananNonBPJS";
+import Swafoto from "../contex/SwaFoto";
+import DisplayPhoto from "../contex/DisplayPhoto";
+import VerifikasiPage from "../contex/VerifikasiPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -107,6 +110,9 @@ export default function Routes() {
             }}
           />
         </Stack.Group>
+        <Stack.Screen name="Swafoto" component={Swafoto} />
+        <Stack.Screen name="DisplayPhoto" component={DisplayPhoto} />
+        <Stack.Screen name="VerifikasiPage" component={VerifikasiPage} />
         {/* End Niat */}
         {/* Public */}
         <Stack.Screen

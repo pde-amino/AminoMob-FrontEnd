@@ -1,14 +1,11 @@
-import { color } from "@rneui/base";
 import React, { useState } from "react";
-import { Dimensions, View } from "react-native";
+import { Alert, Dimensions, View } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
-
 const { width } = Dimensions.get("window");
 
 const validateInput = (input, type) => {
-  // Fungsi untuk memvalidasi input berdasarkan tipe
   if (type === "username") {
     const onlyNumbers = /^[0-9]+$/.test(input);
     return onlyNumbers ? "" : "Mohon gunakan angka saja";
@@ -21,8 +18,16 @@ const validateInput = (input, type) => {
     const namaCek = /^[0-9]+$/.test(input);
     return namaCek ? "Mohon masukkan nama anda" : "";
   }
-  // Tidak ada validasi tambahan
   return "";
+};
+
+const handleTextInputChange = (text) => {
+  // Menampilkan alert saat pengguna memasukkan nilai
+  Alert.alert(
+    "Peringatan",
+    "Data Tidak Dapat Diubah Sebelum Melakukan Verifikasi."
+  );
+  // setInputValue(text);
 };
 
 const TextInputIconComponent = ({
@@ -31,31 +36,52 @@ const TextInputIconComponent = ({
   type,
   onChangeText,
   password,
+  value,
+
+  maskValue, // Prop baru untuk mengontrol masking
 }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [secureTextEntry, setSecureTextEntry] = useState(
+    password ? true : false
+  );
 
-  // State untuk melacak apakah teks password disembunyikan atau ditampilkan
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-
-  // Fungsi untuk menangani perubahan input teks
   const handleChange = (input) => {
-    // Atur state teks lokal
     setText(input);
-
-    // Validasi input berdasarkan tipe
     const validationError = validateInput(input, type);
     setError(validationError);
-
-    // Panggil fungsi onChangeText dari properti jika ada
     if (onChangeText) {
       onChangeText(input);
     }
   };
 
-  // Fungsi untuk mengubah status secureTextEntry ketika ikon dipencet
   const toggleSecureTextEntry = () => {
-    setSecureTextEntry((prevState) => !prevState);
+    if (maskValue) {
+      setSecureTextEntry((prevState) => !prevState);
+    } else {
+      alert("Mohon Lakukan Verifikasi Akun Terlebih Dahulu");
+    }
+  };
+
+  const getDisplayValue = (value) => {
+    if (!maskValue || !value) return value;
+
+    // Memisahkan nilai menjadi array kata-kata
+    const words = value.split(" ");
+
+    // Mengubah setiap kata menjadi tiga karakter pertama
+    const maskedWords = words.map((word) => {
+      // Mengambil tiga karakter pertama dari kata
+      const visiblePart = word.slice(0, 1);
+      // Membuat bagian tersisa menjadi tanda '*'
+      const maskedPart = "*".repeat(word.length - visiblePart.length);
+      return `${visiblePart}${maskedPart}`;
+    });
+
+    // Menggabungkan kembali kata-kata yang telah dimodifikasi
+    const maskedValue = maskedWords.join(" ");
+
+    return maskedValue;
   };
 
   return (
@@ -75,10 +101,9 @@ const TextInputIconComponent = ({
         activeUnderlineColor={WARNA.primary}
         label={label}
         placeholder={placeholder}
-        value={text}
-        // error={handleChange}
-        onChangeText={handleChange}
-        secureTextEntry={password ? secureTextEntry : false}
+        value={getDisplayValue(value)}
+        onChangeText={maskValue ? handleTextInputChange : handleChange}
+        secureTextEntry={secureTextEntry}
         right={
           password ? (
             <TextInput.Icon
@@ -88,15 +113,13 @@ const TextInputIconComponent = ({
           ) : null
         }
       />
-
       {error && (
         <HelperText
           outlineColor={WARNA.red}
           activeUnderlineColor={WARNA.red}
           style={{ color: WARNA.red }}
           type="error"
-          visible={!!error}
-        >
+          visible={!!error}>
           {error}
         </HelperText>
       )}
