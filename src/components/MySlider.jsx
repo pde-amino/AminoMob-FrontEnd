@@ -6,6 +6,9 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
+  Linking,
+  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import React from "react";
 import { Button, IconButton } from "react-native-paper";
@@ -60,39 +63,40 @@ const styles = StyleSheet.create({
   },
 });
 
+const dataCarousel = [
+  {
+    id: 1,
+    image:
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 2,
+    image:
+      "https://images.pexels.com/photos/776087/pexels-photo-776087.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+  },
+  {
+    id: 5,
+    image:
+      "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    id: 5,
+    image:
+      "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+];
+
 export default function MySlider() {
-  const dataCarousel = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.pexels.com/photos/776087/pexels-photo-776087.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 3,
-      image:
-        "https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 4,
-      image:
-        "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 5,
-      image:
-        "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      id: 5,
-      image:
-        "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-  ];
   const { width } = useWindowDimensions(); //Agae dinamis sesuai perangkat
 
   return (
@@ -102,22 +106,30 @@ export default function MySlider() {
           // loop
           mode="parallax"
           modeConfig={{
-            parallaxScrollingScale: 0.95,
+            parallaxScrollingScale: 0.98,
             parallaxScrollingOffset: 100,
           }}
           width={360}
           height={200}
           // autoPlay={true}
           data={dataCarousel}
-          scrollAnimationDuration={3000}
+          scrollAnimationDuration={1000}
           onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({ item }) => (
-            <Image
-              style={styles.imageCarousel}
-              source={{
-                uri: item.image,
-              }}
-            />
+            <Pressable
+              onPress={() =>
+                Linking.openURL(
+                  "https://www.youtube.com/@RSJDDrAminoGondohutomo"
+                )
+              }
+            >
+              <Image
+                style={styles.imageCarousel}
+                source={{
+                  uri: item.image,
+                }}
+              />
+            </Pressable>
           )}
         />
       </View>
