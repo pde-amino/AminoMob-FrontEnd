@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +17,9 @@ import { Ionicons } from "react-native-vector-icons";
 import TextInputComponent from "../../../components/TextInputComponent";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -33,6 +37,53 @@ const SignupScreenBaru = () => {
   const [HPError, setHPError] = useState("");
   const [noTelp, setNoTelp] = useState("");
 
+  const [user, setUser] = useState([]);
+
+  const validatePasswords = () => {
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const simpanData = async () => {
+    validatePasswords();
+    if (passwordError) {
+      Alert.alert("Maaf, mohon pastikan password benar");
+      return;
+    }
+
+    const data = {
+      NO_RM: noRm,
+      telp: noTelp,
+      password: password,
+      confirm_password: confirmPassword,
+    };
+
+    try {
+      const token =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTYxNzAyMTksImV4cCI6MTcxNjI1NjYxOSwidWlkIjoiNCIsIm5vX3JrbV9tZWRpcyI6bnVsbH0.th7rafe55P0xDcpepQoVkJzbqXvrj0Bm_Q0LCY8vyAo";
+      const register = await axios.post(`${BASE_URL}/register`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Assuming the response contains the user data
+      const userData = register.data;
+      await AsyncStorage.setItem("user", JSON.stringify(userData));
+      Alert.alert("Berhasil", "Registrasi berhasil!");
+    } catch (error) {
+      console.log("Error response", error.response);
+      Alert.alert(
+        "Gagal Mendaftar",
+        "Gagal Mendaftar : " + (error.response?.data?.message || error.message)
+      );
+    }
+  };
+
   const navigation = useNavigation();
 
   const keRegist = () => {
@@ -48,12 +99,11 @@ const SignupScreenBaru = () => {
   };
 
   const handlePasswordChange = (text) => {
-    // Cek apakah teks password mengandung karakter khusus
     const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
     const adaUppercase = /[A-Z]/.test(text);
 
     if (adaSpecialChar) {
-      setPasswordError("Karakter yang diperbolehkan adalah A-Z, a-z, ");
+      setPasswordError("Karakter yang diperbolehkan adalah A-Z, a-z, 0-9");
     } else if (!adaUppercase) {
       setPasswordError("Password harus terdapat minimal satu huruf kapital");
     } else {
@@ -63,12 +113,8 @@ const SignupScreenBaru = () => {
   };
 
   const handleConfPasswordChange = (text) => {
-    // Cek apakah teks password mengandung karakter khusus
-    // const adaSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(text);
-    // const adaUppercase = /[A-Z]/.test(text);
-
     if (text !== password) {
-      setConfPasswordError("idak cocok dengan password");
+      setConfPasswordError("Tidak cocok dengan password");
     } else {
       setConfPasswordError("");
     }
@@ -84,7 +130,7 @@ const SignupScreenBaru = () => {
     } else {
       setRMError("");
     }
-    setRM(text);
+    setNoRM(text);
   };
 
   const handleNoHP = (text) => {
@@ -96,100 +142,60 @@ const SignupScreenBaru = () => {
     } else {
       setHPError("");
     }
-    setHP(text);
+    setNoTelp(text);
   };
 
-  const isDisabled =
-    // !password ||
-    passwordError ||
-    // !confirmPassword ||
-    confPasswordError ||
-    RMError ||
-    // !RM ||
-    HPError;
-  // !HP;
-
-  const handleDaftarClick = async () => {
-    const data = {
-      NO_RM: noRm,
-      TELP: noTelp,
-      PASSWD: password,
-      confirm_password: confirmPassword,
-    };
-
-    try {
-      const response = await fetch("http://192.168.5.5:8080/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      // Cek apakah respons berhasil (status 2xx)
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Pendaftaran gagal:", errorData);
-        // Tampilkan pesan kesalahan kepada pengguna
-        alert(`Pendaftaran gagal:\n${JSON.stringify(errorData)}`);
-        return;
-      }
-
-      // Jika respons berhasil, parse JSON
-      const result = await response.json();
-      console.log("Pendaftaran berhasil:", result);
-      navigation.navigate("Login Screen");
-    } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-      alert("Terjadi kesalahan saat mencoba mendaftar. Silakan coba lagi.");
-    }
-  };
+  const isDisabled = passwordError || confPasswordError || RMError || HPError;
 
   return (
     <View style={GlobalStyles.Content}>
-      {/* <ScrollView> */}
       <View>
         <View style={{ alignItems: "center" }}>
           <Text style={styles.judul}>Daftar Akun</Text>
         </View>
 
-        {/* inputan no rm */}
         <View style={{ gap: 8 }}>
           <TextInputIconComponent
             label={"No Rekam Medis"}
             placeholder={"Masukan No RM Anda"}
             type={"username"}
             value={noRm}
-            onChangeText={setNoRM}
+            onChangeText={handleNoRM}
           />
+          {RMError ? <Text style={styles.errorText}>{RMError}</Text> : null}
           <TextInputIconComponent
             label={"No Handphone"}
             placeholder={"Masukan No HP Anda"}
             type={"username"}
             value={noTelp}
-            onChangeText={setNoTelp}
+            onChangeText={handleNoHP}
           />
-
+          {HPError ? <Text style={styles.errorText}>{HPError}</Text> : null}
           <TextInputIconComponent
             label={"Buat Kata Sandi"}
             placeholder={"Buat Kata Sandi"}
             type={"password"}
             value={password}
-            onChangeText={setPassword}
+            onChangeText={handlePasswordChange}
             password={true}
           />
-
+          {passwordError ? (
+            <Text style={styles.errorText}>{passwordError}</Text>
+          ) : null}
           <TextInputIconComponent
             label={"Masukan Ulang Kata Sandi"}
             placeholder={"Masukan kata sandi lagi"}
             type={"password"}
             value={confirmPassword}
-            onChangeText={setConfPassword}
+            onChangeText={handleConfPasswordChange}
             password={true}
           />
+          {confPasswordError ? (
+            <Text style={styles.errorText}>{confPasswordError}</Text>
+          ) : null}
           <ButtonPrimary
             title="Daftar"
-            onPress={handleDaftarClick}
+            onPress={simpanData}
             disabled={isDisabled}
           />
         </View>
@@ -202,14 +208,12 @@ const SignupScreenBaru = () => {
                 color: WARNA.primary,
                 textDecorationLine: "underline",
               }}
-              onPress={() => navigation.navigate("Login Screen")}
-            >
+              onPress={() => navigation.navigate("Login Screen")}>
               Masuk disini
             </Text>
           </TouchableOpacity>
         </View>
       </View>
-      {/* </ScrollView> */}
     </View>
   );
 };
