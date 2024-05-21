@@ -5,8 +5,9 @@ import {
   ScrollView,
   StyleSheet,
   Button,
+  SafeAreaView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
@@ -14,88 +15,119 @@ import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useContext } from "react";
 import { AuthContex } from "../../../contex/AuthProvider";
+import { Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
+import BannerComponent from "../../../components/BannerComponent";
 
 const ProfileScreen = () => {
   const { data } = useContext(AuthContex);
   console.log("inidarihomescreen", data);
-  const [name, setName] = useState("John Doe");
+
+  const navigation = useNavigation();
+
+  const [banner, setBannerVis] = useState(false);
+
+  const [name, setName] = useState("Placentino");
   const [email, setEmail] = useState("johndoe@gmail.com");
   const [RM, setRM] = useState("1234567890");
   const [phone, setPhone] = useState("1234567890");
   const [address, setAddress] = useState("123 Main St, Anytown, CA 12345");
   const [password, setPassword] = useState("1234567890");
   const [confirmPassword, setConfirmPassword] = useState("1234567890");
-  const [avatar, setAvatar] = useState("https://i.pravatar.cc/300");
   const [avatarSource, setAvatarSource] = useState(null);
 
+  useEffect(() => {
+    if (data.status === "Proses") {
+      setBannerVis(true);
+    } else {
+      setBannerVis(false);
+    }
+  }, [data.status]);
+
+  const maskName = (name) => name.replace(/\B\w/g, "●");
+
+  const displayName = data.status === "Sudah" ? name : maskName(name);
+
   return (
-    <View>
-      <HeaderComponent title="Profil" icon="arrow-back" onPress={null} />
+    <SafeAreaView style={GlobalStyles.utama}>
+      <HeaderComponent title="Profil" />
+      {banner && (
+        <BannerComponent
+          visible={banner}
+          content={
+            "Data anda sedang dalam proses verifikasi oleh petugas (maks 24 jam)"
+          }
+          bannerStyle={{
+            backgroundColor: "#FF8310",
+            borderRadius: 20,
+            width: "95%",
+            marginTop: 12,
+          }}
+          textStyle={{ fontWeight: "bold", color: "white" }}
+          colorIcon={"white"}
+        />
+      )}
       <ScrollView>
         <View
           style={{
-            flex: 1,
             alignItems: "center",
-            marginTop: 50,
-          }}>
+            marginTop: 16,
+          }}
+        >
           <Avatar.Image
-            size={82}
-            source={require("../../../../assets/favicon.png")}
+            size={100}
+            source={require("../../../../assets/avatar.png")}
           />
-          <Text>Profile Screen</Text>
-          <TextInput style={{ backgroundColor: "grey", width: 100 }} />
-          <ButtonPrimary title="Next" onPress={null} />
         </View>
-        <View style={GlobalStyles.Content}>
-          <View style={{ gap: 8 }}>
-            <TextInputIconComponent
-              label={"Nama Lengkap"}
-              placeholder={"Nama Lengkap Anda"}
-              type={"nama"}
-              value={name}
-              onChangeText={setName}
-              // password={(data.status = "Success" ? true : false)}
-              maskValue={data.status === "Sudah" ? false : true}
-            />
-            <TextInputIconComponent
-              label={"No Rekam Medis"}
-              placeholder={"Nomor Rekam Medis Anda"}
-              type={"username"}
-              value={RM}
-              onChangeText={setRM}
-              maskValue={data.status === "Sudah" ? false : true}
-            />
-            <TextInputIconComponent
-              label={"Alamat"}
-              placeholder={"Alamat Lengkap Anda"}
-              // type={"usernamae"}
-              value={address}
-              maskValue={data.status === "Sudah" ? false : true}
-            />
-
-            <TextInputIconComponent
-              label={"Nomor Handphone Anda"}
-              placeholder={"Nomor HP yang bisa dihubungi"}
-              type={"username"}
-              value={phone}
-              // {data.status? "disabled" : null}
-              maskValue={data.status === "Sudah" ? false : true}
-            />
+        {data.status === "Sudah" ? (
+          <View style={{ gap: 12 }}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={GlobalStyles.h2}>{name}</Text>
+            </View>
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={GlobalStyles.h4}>Alamat</Text>
+              <Text>{address}</Text>
+            </View>
+            <Divider />
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={GlobalStyles.h4}>Alamat</Text>
+              <Text>{address}</Text>
+            </View>
+            <Divider />
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={GlobalStyles.h4}>Alamat</Text>
+              <Text>{address}</Text>
+            </View>
+            <Divider />
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={GlobalStyles.h4}>Alamat</Text>
+              <Text>{address}</Text>
+            </View>
+            <Divider />
           </View>
-        </View>
+        ) : (
+          <View style={{ gap: 12 }}>
+            <View style={{ alignItems: "center" }}>
+              <Text style={GlobalStyles.h2}>{displayName}</Text>
+            </View>
+          </View>
+        )}
 
         <View style={GlobalStyles.Content}>
           {data.status === "Sudah" ? (
-            <View style={{ flex: 1, justifyContent: "flex-end", gap: 8 }}>
-              <ButtonPrimary title="Selanjutnya " onPress={"#"} />
-              <ButtonPrimary title="Selanjutnya " onPress={"#"} />
-            </View>
+            <ButtonPrimary
+              title="Edit Profil"
+              onPress={() => navigation.navigate("Edit Profil")}
+            />
           ) : (
-            <ButtonPrimary title="Verifikasi Akun " onPress={"#"} />
+            <ButtonPrimary
+              title="Verifikasi Akun"
+              onPress={() => navigation.navigate("VerifikasiPage")}
+            />
           )}
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

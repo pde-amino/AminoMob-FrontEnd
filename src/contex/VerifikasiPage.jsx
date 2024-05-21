@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,6 +13,11 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import { BASE_URL } from "./Config";
 import { AuthContex } from "./AuthProvider";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ButtonPrimary from "../components/ButtonPrimary";
+import HeaderComponent from "../components/HeaderComponent";
+
+const WARNA = { primary: "#0A78E2", secondary: "#5DA3E7", white: "#fff" };
 
 const VerifikasiPage = () => {
   const { data } = useContext(AuthContex);
@@ -20,7 +25,16 @@ const VerifikasiPage = () => {
   const [photoUri2, setPhotoUri2] = useState(null); // State untuk menyimpan URI foto untuk kartu kedua
   const navigation = useNavigation();
 
-  const uploadImage = async () => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setPhotoUri1(null);
+      setPhotoUri2(null);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const uploadImage = async (photoType) => {
     try {
       await ImagePicker.requestCameraPermissionsAsync();
       let result = await ImagePicker.launchCameraAsync({
@@ -31,22 +45,19 @@ const VerifikasiPage = () => {
         quality: 1,
       });
       if (!result.canceled) {
-        await saveImage(result.assets[0].uri);
+        await saveImage(result.assets[0].uri, photoType);
       }
     } catch (error) {
       alert("Sorry Error :" + error.message);
     }
   };
 
-  const saveImage = async (image) => {
+  const saveImage = async (image, photoType) => {
     try {
-      if (!photoUri1) {
+      if (photoType === "ktp") {
         setPhotoUri1(image);
-      } else if (!photoUri2) {
+      } else if (photoType === "swafoto") {
         setPhotoUri2(image);
-      } else {
-        // Tampilkan pesan atau lakukan tindakan lain jika kedua kartu sudah memiliki foto
-        console.log("Kedua kartu sudah memiliki foto.");
       }
     } catch (error) {
       throw error;
@@ -55,7 +66,7 @@ const VerifikasiPage = () => {
 
   const sendImage = async () => {
     if (!photoUri1 || !photoUri2) {
-      Alert.alert("Error", "Please provide both photos before submitting.");
+      Alert.alert("Error", "Mohon ambil foto KTP dan selfie terlebih dahulu");
       return;
     }
 
@@ -97,35 +108,64 @@ const VerifikasiPage = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.cardContainer}>
-        <TouchableOpacity
-          style={[styles.card, photoUri1 && styles.cardWithPhoto]}
-          onPress={uploadImage}>
-          {photoUri1 && (
-            <Image source={{ uri: photoUri1 }} style={styles.previewImage} />
-          )}
-          {!photoUri1 && <Text style={styles.placeholderText}>Kartu 1</Text>}
-          <Text style={styles.buttonText}>Ambil Foto</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <HeaderComponent
+        title={"Verifikasi"}
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
+      <View style={styles.container}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.title}>Ambil foto Kartu KTP</Text>
+          <TouchableOpacity
+            style={[styles.card, photoUri1 && styles.cardWithPhoto]}
+            onPress={() => uploadImage("ktp")}
+          >
+            {photoUri1 && (
+              <Image
+                source={{ uri: photoUri1 }}
+                style={styles.previewImage}
+                // resizeMode="contain"
+              />
+            )}
+            {!photoUri1 && (
+              <Image
+                source={require("../../assets/camera1.png")}
+                style={{
+                  height: 100,
+                  width: 100,
+                }}
+              />
+            )}
+            {/* <Text style={styles.buttonText}>Ambil Foto</Text> */}
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardContainer}>
+          <Text style={styles.title}>Ambil Selfie dengan Kartu KTP</Text>
+          <TouchableOpacity
+            style={[styles.card, photoUri2 && styles.cardWithPhoto]} // Tambahkan style khusus jika ada foto di state
+            onPress={() => uploadImage("swafoto")}
+          >
+            {photoUri2 && (
+              <Image source={{ uri: photoUri2 }} style={styles.previewImage} />
+            )}
+            {!photoUri2 && (
+              <Image
+                source={require("../../assets/camera1.png")}
+                style={{
+                  height: 100,
+                  width: 100,
+                }}
+              />
+            )}
+            {/* <Text style={styles.buttonText}>Ambil Foto</Text> */}
+          </TouchableOpacity>
+        </View>
+        <View style={{ width: screenWidth * 0.9 }}>
+          <ButtonPrimary title="Ajukan Verifikasi" onPress={sendImage} />
+        </View>
       </View>
-      <View style={styles.cardContainer}>
-        <TouchableOpacity
-          style={[styles.card, photoUri2 && styles.cardWithPhoto]} // Tambahkan style khusus jika ada foto di state
-          onPress={uploadImage}>
-          {photoUri2 && (
-            <Image source={{ uri: photoUri2 }} style={styles.previewImage} />
-          )}
-          {!photoUri2 && <Text style={styles.placeholderText}>Kartu 2</Text>}
-          <Text style={styles.buttonText}>Ambil Foto</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TouchableOpacity style={styles.button} onPress={sendImage}>
-          <Text style={styles.buttonText}>Kirim Data</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -134,31 +174,41 @@ const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
   },
   cardContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginBottom: 20,
+    // backgroundColor: "pink",
   },
   card: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    width: screenWidth * 0.9,
+    height: screenWidth * 0.55,
+    borderWidth: 3,
+    borderColor: WARNA.primary,
+    borderRadius: 20,
+    borderStyle: "dashed",
+    backgroundColor: "#D3EAFF",
   },
   cardWithPhoto: {
     borderColor: "green", // Ganti warna border jika ada foto di state
   },
   previewImage: {
-    width: screenWidth - 20, // Lebar mengikuti lebar layar dengan sedikit margin
-    height: ((screenWidth - 20) * 3) / 4, // Sesuaikan tinggi sesuai dengan aspect ratio 4:3
-    marginBottom: 10,
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    // width: screenWidth * 0.9, // Lebar mengikuti lebar layar dengan sedikit margin
+    // height: screenWidth * 0.5, // Sesuaikan tinggi sesuai dengan aspect ratio 4:3
+    // marginBottom: 10,
   },
-  placeholderText: {
-    fontSize: 18,
-    marginBottom: 10,
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 8,
+    color: WARNA.secondary,
   },
   buttonText: {
     fontSize: 16,

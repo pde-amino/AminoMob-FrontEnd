@@ -7,13 +7,11 @@ import {
   StatusBar,
   Dimensions,
   Linking,
-  TouchableOpacity,
-  Pressable,
 } from "react-native";
 import React from "react";
 import { Button, IconButton } from "react-native-paper";
 import { Ionicons } from "react-native-vector-icons";
-import { TextInput } from "react-native-paper";
+import { TextInput, TouchableRipple } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
 const width = Dimensions.get("window");
@@ -116,7 +114,7 @@ export default function MySlider() {
           scrollAnimationDuration={1000}
           onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({ item }) => (
-            <Pressable
+            <TouchableRipple
               onPress={() =>
                 Linking.openURL(
                   "https://www.youtube.com/@RSJDDrAminoGondohutomo"
@@ -129,7 +127,21 @@ export default function MySlider() {
                   uri: item.image,
                 }}
               />
-            </Pressable>
+            </TouchableRipple>
+            // <Pressable
+            //   onPress={() =>
+            //     Linking.openURL(
+            //       "https://www.youtube.com/@RSJDDrAminoGondohutomo"
+            //     )
+            //   }
+            // >
+            //   <Image
+            //     style={styles.imageCarousel}
+            //     source={{
+            //       uri: item.image,
+            //     }}
+            //   />
+            // </Pressable>
           )}
         />
       </View>

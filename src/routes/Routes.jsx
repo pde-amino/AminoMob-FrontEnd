@@ -29,7 +29,7 @@ import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 import Swafoto from "../contex/SwaFoto";
 import DisplayPhoto from "../contex/DisplayPhoto";
 import VerifikasiPage from "../contex/VerifikasiPage";
-
+import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +54,7 @@ export default function Routes() {
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
         {/* Pendaftaran */}
         <Stack.Screen
           screenOptions={{ headerShown: true }}
