@@ -40,10 +40,6 @@ export const Pendaftaran = () => {
   const [noRM, setnoRM] = useState("");
   const [nmLengkap, setnmLengkap] = useState("");
   const [alamat, setAlamat] = useState("");
-  // const poli = jnsMenu.route.params;
-  // console.log(poli);
-
-  // if(jnsMenu.rout.params===)
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);

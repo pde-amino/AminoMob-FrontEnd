@@ -33,6 +33,7 @@ import InformasiDokter from "../view/screens/informasi/InformasiDokter";
 import SearchPoli from "../view/screens/informasi/SearchDokter";
 import SearchPage from "../view/screens/informasi/SearchDokter";
 import SearchDokter from "../view/screens/informasi/SearchDokter";
+import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,7 @@ export default function Routes() {
         <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
         <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
         {/* Pendaftaran */}
         <Stack.Screen
           screenOptions={{ headerShown: true }}

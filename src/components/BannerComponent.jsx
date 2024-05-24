@@ -1,34 +1,34 @@
 import * as React from "react";
-import { Image } from "react-native";
-import { Banner } from "react-native-paper";
+import { Image, Text } from "react-native";
+import { Banner, Icon } from "react-native-paper";
 
-const BannerComponent = ({ visible, pressKiri, pressKanan }) => {
+const BannerComponent = ({
+  visible,
+  pressKiri,
+  pressKanan,
+  content,
+  bannerStyle,
+  textStyle,
+  colorIcon,
+}) => {
   return (
     <Banner
       visible={visible}
-      //   actions={[
-      //     {
-      //       label: "Fix it",
-      //       onPress: { pressKiri },
-      //     },
-      //     {
-      //       label: "Learn more",
-      //       onPress: { pressKanan },
-      //     },
-      //   ]}
-      icon={({ size }) => (
-        <Image
-          source={{
-            uri: "https://avatars3.githubusercontent.com/u/17571969?s=400&v=4",
-          }}
-          style={{
-            width: size,
-            height: size,
-          }}
-        />
-      )}
+      // actions={[
+      //   {
+      //     label: "Fix it",
+      //     onPress: { pressKiri },
+      //   },
+      //   {
+      //     label: "Learn more",
+      //     onPress: { pressKanan },
+      //   },
+      // ]}
+      icon={() => <Icon source="alert-circle" size={32} color={colorIcon} />}
+      elevation={1}
+      contentStyle={bannerStyle}
     >
-      There was a problem processing a transaction on your credit card.
+      <Text style={textStyle}>{content}</Text>
     </Banner>
   );
 };

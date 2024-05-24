@@ -7,7 +7,6 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import BottomSheet from "../../../components/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
-import { SpeedDial } from "@rneui/themed";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -44,6 +43,7 @@ export default function LayananNonBPJS() {
     setBtmTele(false);
     setBtmTerang(false);
   };
+
   const orangLain = () => {
     if (jnsMenu === "poli") {
       console.log(jnsMenu);
@@ -184,25 +184,6 @@ export default function LayananNonBPJS() {
           pressKanan={diriSendiri}
         />
       )}
-      {/* 
-      <SpeedDial
-        isOpen={open}
-        icon={{ name: "edit", color: "#fff" }}
-        openIcon={{ name: "close", color: "#fff" }}
-        onOpen={() => setOpen(!open)}
-        onClose={() => setOpen(!open)}
-      >
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Add"
-          onPress={() => console.log("Add Something")}
-        />
-        <SpeedDial.Action
-          icon={{ name: "delete", color: "#fff" }}
-          title="Delete"
-          onPress={() => console.log("Delete Something")}
-        />
-      </SpeedDial> */}
     </SafeAreaView>
   );
 }
