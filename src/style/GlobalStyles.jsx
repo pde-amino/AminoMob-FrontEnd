@@ -28,6 +28,10 @@ export default GlobalStyles = StyleSheet.create({
     color: "#1a4846",
     gap: 8,
     marginTop: 20,
+    // width:
+    //   Platform.OS === "ios"
+    //     ? "100%" // iOS
+    //     : "100%", // Android
   },
   safeAreaStyle: {
     flex: 1,
@@ -42,5 +46,11 @@ export default GlobalStyles = StyleSheet.create({
     alignContent: "center",
     textAlign: "center",
     width: "80%",
+  },
+
+  subTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#3E3E3E",
   },
 });

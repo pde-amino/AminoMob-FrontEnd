@@ -7,10 +7,11 @@ const TableListComponent = ({ data }) => {
   const [itemsPerPage, setItemsPerPage] = useState(numberOfItemsPerPageList[0]);
   const [items, setItems] = useState([]);
 
+  console.log("ksjdksjdk :", data);
   useEffect(() => {
     // Mapping data dari parent component ke format yang sesuai
     const mappedData = data.map((item, index) => ({
-      key: item.id || index, // Gunakan item.id jika ada, jika tidak gunakan index
+      key: index, // Gunakan item.id jika ada, jika tidak gunakan index
       name: item.nm_bed,
       kosong: item.bed_kosong,
       isi: item.jumlah_bed,

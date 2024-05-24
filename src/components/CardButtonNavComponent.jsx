@@ -28,8 +28,7 @@ const CardButtonNavComponent = ({
           name: onPress,
           params: { dataString: onPress.data },
         })
-      }
-    >
+      }>
       <View style={styles.iconContainer}>
         <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
         {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}

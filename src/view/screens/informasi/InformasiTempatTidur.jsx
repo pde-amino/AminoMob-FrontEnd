@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
 import TableListComponent from "../../../components/TableListComponent";
 import { BASE_URL } from "../../../contex/Config";
+import MenuItemComponent from "../../../components/MenuItemComponent";
+import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
+import CardListComponent from "../../../components/CardListComponent";
+import SearchComponent from "../../../components/SearchComponent";
 
 const InformasiTempatTidur = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/infoTT`);
-        setData(response.data);
+    axios
+      .get(`${BASE_URL}/infoTT`)
+      .then((response) => {
+        const data = response.data.data_bed;
+        setFilteredData(data);
         setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+        setData(data);
+      })
+      .catch((err) => console.log("Error Dari Informasi TT :" + err));
   }, []);
 
   if (loading) {
@@ -40,12 +48,29 @@ const InformasiTempatTidur = () => {
       </View>
     );
   }
-  // console.log("Dari Informasi Tempat Tidur", data);
+  console.log("Dari Informasi Tempat Tidur", filteredData);
+
+  const handleSearch = (filteredData) => {
+    setFilteredData(filteredData);
+  };
   return (
     <View style={GlobalStyles.Content}>
-      <ScrollView>
-        <TableListComponent data={data} />
-      </ScrollView>
+      <SearchComponent
+        platform="android"
+        data={data}
+        onSearch={handleSearch}
+        placeholder={"Cari dengan Nama Dokter / Hari"}
+        filterAttribute={"kelas"}
+      />
+      <Text style={GlobalStyles.subTitle}>
+        Kelas dan Kamar yang tersedia pada RS
+      </Text>
+      <FlatList
+        style={{ width: "100%" }}
+        data={filteredData}
+        keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
+        renderItem={({ item }) => <CardListComponent data={item} />}
+      />
     </View>
   );
 };
