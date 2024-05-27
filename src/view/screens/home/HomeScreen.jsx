@@ -22,7 +22,6 @@ import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
 import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
-import CardButtonComponent from "../../../components/CardButtonComponent";
 import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
 import BannerComponent from "../../../components/BannerComponent";
@@ -60,7 +59,6 @@ const HomeScreen = () => {
       kd_poli: "3",
       source: require("../../../../assets/icon33.png"),
       title: "Informasi Umum RS",
-
       desc: "Informasi terkini dan terlengkap seputar Amino Hospital",
       to: "",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
@@ -74,7 +72,7 @@ const HomeScreen = () => {
   const [error, setError] = useState(false);
 
   const [open, setOpen] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(false);
 
   const handleClinicSelection = (screen, params) => {
     navigation.navigate(screen, params);
@@ -83,6 +81,14 @@ const HomeScreen = () => {
   const darurat = () => {
     Linking.openURL("https://wa.me/6281213536824");
   };
+
+  useEffect(() => {
+    if (data.status === "Belum") {
+      setBannerVisible(true);
+    } else {
+      setBannerVisible(false);
+    }
+  }, [data.status]);
 
   // const handleKondisi = (item) => {
   //   if (item.kondisi) {
@@ -138,32 +144,33 @@ const HomeScreen = () => {
               }}
             />
             <TouchableOpacity
-              style={{
-                backgroundColor: "#DF1448",
-                paddingHorizontal: 12,
-                paddingVertical: 8,
-                borderRadius: 20,
-              }}
+              style={GlobalStyles.btnRedSmall}
               onPress={darurat}
             >
-              <Text
-                style={{
-                  color: WARNA.white,
-                  fontSize: 13,
-                  fontWeight: "bold",
-                }}
-              >
+              <Text style={GlobalStyles.textButtonSmall}>
                 Panggilan Darurat
               </Text>
             </TouchableOpacity>
           </View>
+
+          <BannerComponent
+            visible={bannerVisible}
+            content={
+              "Lakukan verifikasi data di halaman profil untuk melakukan pendaftaran Poliklinik"
+            }
+            bannerStyle={{
+              backgroundColor: "red",
+              borderRadius: 20,
+              marginBottom: 12,
+            }}
+            textStyle={{ fontWeight: "bold", color: "white" }}
+            colorIcon={"white"}
+          />
+
           <MySlider />
-          <View>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}
-            >
-              Menu
-            </Text>
+
+          <View style={{ marginTop: 16 }}>
+            <Text style={GlobalStyles.h3}>Menu</Text>
             <FlatList
               data={Menus}
               renderItem={({ item }) => (

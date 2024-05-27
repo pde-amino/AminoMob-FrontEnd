@@ -268,7 +268,7 @@ export const Pendaftaran = () => {
         </View>
 
         <Checkbox.Item
-          style={{ flexDirection: "row-reverse", fontSize: 12 }}
+          style={GlobalStyles.cekBox}
           color={WARNA.primary}
           label="Pastikan data sudah benar"
           labelStyle={{ fontSize: 13 }}
