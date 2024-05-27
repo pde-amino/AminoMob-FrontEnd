@@ -13,7 +13,7 @@ const InformasiUmum = () => {
       nm_poli: "Jadmal Dokter",
       icon: "home",
       title: "Account",
-      to: "Favorites",
+      to: "Informasi Dokter",
       color: "pink",
     },
     {

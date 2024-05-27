@@ -23,6 +23,10 @@ export default GlobalStyles = StyleSheet.create({
     color: "#1a4846",
     gap: 8,
     marginTop: 20,
+    // width:
+    //   Platform.OS === "ios"
+    //     ? "100%" // iOS
+    //     : "100%", // Android
   },
   btnContainer: {
     marginLeft: 20,
@@ -75,5 +79,11 @@ export default GlobalStyles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 20,
+  },
+
+  subTitle: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "#3E3E3E",
   },
 });

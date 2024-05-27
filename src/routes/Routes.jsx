@@ -29,6 +29,10 @@ import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 import Swafoto from "../contex/SwaFoto";
 import DisplayPhoto from "../contex/DisplayPhoto";
 import VerifikasiPage from "../contex/VerifikasiPage";
+import InformasiDokter from "../view/screens/informasi/InformasiDokter";
+import SearchPoli from "../view/screens/informasi/SearchDokter";
+import SearchPage from "../view/screens/informasi/SearchDokter";
+import SearchDokter from "../view/screens/informasi/SearchDokter";
 import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
@@ -41,8 +45,7 @@ export default function Routes() {
         initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -137,6 +140,13 @@ export default function Routes() {
           }}
         />
         <Stack.Screen
+          name="Informasi Dokter"
+          component={InformasiDokter}
+          options={{
+            title: "Masuk",
+          }}
+        />
+        <Stack.Screen
           options={{ headerShown: false }}
           name="InfoTT"
           component={InformasiTempatTidur}
@@ -148,6 +158,7 @@ export default function Routes() {
         />
         <Stack.Screen name="Poli Information" component={PoliInformation} />
         <Stack.Screen name="Booking Screen" component={BookingScreen} />
+        <Stack.Screen name="Search Poli" component={SearchDokter} />
         {/* <Stack.Screen name="Poli1" component={Poli1} /> */}
       </Stack.Navigator>
     </NavigationContainer>

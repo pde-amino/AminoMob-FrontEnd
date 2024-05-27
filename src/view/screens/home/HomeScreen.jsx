@@ -60,7 +60,7 @@ const HomeScreen = () => {
       source: require("../../../../assets/icon33.png"),
       title: "Informasi Umum RS",
       desc: "Informasi terkini dan terlengkap seputar Amino Hospital",
-      to: "",
+      to: "Informasi Umum",
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       warna: WARNA.primary,
     },
