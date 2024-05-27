@@ -18,6 +18,8 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import BannerComponent from "../../../components/BannerComponent";
+import ButtonSecondary from "../../../components/ButtonSecondary";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 const ProfileScreen = () => {
   const { data } = useContext(AuthContex);
@@ -26,8 +28,9 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const [banner, setBannerVis] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
 
-  const [name, setName] = useState("Placentino");
+  const [name, setName] = useState("John Doe");
   const [email, setEmail] = useState("johndoe@gmail.com");
   const [RM, setRM] = useState("1234567890");
   const [phone, setPhone] = useState("1234567890");
@@ -43,6 +46,13 @@ const ProfileScreen = () => {
       setBannerVis(false);
     }
   }, [data.status]);
+
+  // const handleLogout = () => {
+  //   // Add your logout logic here
+  //   authLogout(); // Assuming `authLogout` is a function provided by the AuthContex to log the user out
+  //   setConfirmLogout(false); // Close the confirmation modal
+  //   navigation.navigate("Login Screen"); // Navigate to the login screen or any other screen
+  // };
 
   const maskName = (name) => name.replace(/\B\w/g, "●");
 
@@ -72,6 +82,7 @@ const ProfileScreen = () => {
           style={{
             alignItems: "center",
             marginTop: 16,
+            flex: 2,
           }}
         >
           <Avatar.Image
@@ -80,7 +91,7 @@ const ProfileScreen = () => {
           />
         </View>
         {data.status === "Sudah" ? (
-          <View style={{ gap: 12 }}>
+          <View style={{ gap: 12, flex: 2 }}>
             <View style={{ alignItems: "center" }}>
               <Text style={GlobalStyles.h2}>{name}</Text>
             </View>
@@ -106,14 +117,14 @@ const ProfileScreen = () => {
             <Divider />
           </View>
         ) : (
-          <View style={{ gap: 12 }}>
+          <View style={{ gap: 12, flex: 2 }}>
             <View style={{ alignItems: "center" }}>
               <Text style={GlobalStyles.h2}>{displayName}</Text>
             </View>
           </View>
         )}
 
-        <View style={GlobalStyles.Content}>
+        <View style={GlobalStyles.btnContainer}>
           {data.status === "Sudah" ? (
             <ButtonPrimary
               title="Edit Profil"
@@ -126,6 +137,19 @@ const ProfileScreen = () => {
             />
           )}
         </View>
+        <View style={GlobalStyles.btnContainer}>
+          <ButtonSecondary title={"Log Out"} onPress={null} />
+        </View>
+        {confirmLogout && (
+          <ConfirmModal
+            visible={confirmLogout}
+            message={"Apakah anda yakin ingin keluar?"}
+            onCancel={() => setConfirmLogout(false)}
+            onConfirm={"#"}
+            confirmButtonText={"Ya"}
+            cancelButtonText={"Tidak"}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

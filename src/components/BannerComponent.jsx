@@ -1,36 +1,42 @@
 import * as React from "react";
-import { Image, Text } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { Banner, Icon } from "react-native-paper";
 
 const BannerComponent = ({
   visible,
-  pressKiri,
-  pressKanan,
   content,
   bannerStyle,
   textStyle,
   colorIcon,
 }) => {
   return (
-    <Banner
-      visible={visible}
-      // actions={[
-      //   {
-      //     label: "Fix it",
-      //     onPress: { pressKiri },
-      //   },
-      //   {
-      //     label: "Learn more",
-      //     onPress: { pressKanan },
-      //   },
-      // ]}
-      icon={() => <Icon source="alert-circle" size={32} color={colorIcon} />}
-      elevation={1}
-      contentStyle={bannerStyle}
-    >
-      <Text style={textStyle}>{content}</Text>
-    </Banner>
+    <View style={[styles.bannerContainer, bannerStyle]}>
+      <Banner
+        visible={visible}
+        icon={() => <Icon source="alert-circle" size={32} color={colorIcon} />}
+        style={styles.banner}
+      >
+        <Text style={[styles.text, textStyle]}>{content}</Text>
+      </Banner>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  bannerContainer: {
+    backgroundColor: "#FF8310", // Ensure this matches the desired background color
+    borderRadius: 20,
+    marginBottom: 12,
+  },
+  banner: {
+    backgroundColor: "transparent", // Ensure banner itself is transparent to show the parent background
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
+  text: {
+    fontWeight: "bold",
+    color: "white",
+  },
+});
 
 export default BannerComponent;

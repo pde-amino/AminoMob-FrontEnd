@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Modal, View, Text, StyleSheet } from "react-native";
+import {
+  Modal,
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Button } from "react-native-paper";
 
 const ConfirmModal = ({
@@ -12,23 +18,34 @@ const ConfirmModal = ({
   cancelButtonText,
 }) => {
   return (
-    <Modal transparent visible={visible} onRequestClose={onCancel}>
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.title}>{message}</Text>
-          {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onCancel}
+    >
+      <TouchableWithoutFeedback onPress={onCancel}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.title}>{message}</Text>
+            <Text style={styles.subtitle}>{submessage}</Text>
 
-          {/* Tombol konfirmasi */}
-          <View>
-            <Button mode="contained" style={styles.btnYes} onPress={onConfirm}>
-              {confirmButtonText}
-            </Button>
-            <Button mode="outlined" style={styles.btnYes} onPress={onCancel}>
-              {cancelButtonText}
-            </Button>
+            {/* Tombol konfirmasi */}
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                style={styles.btnYes}
+                onPress={onConfirm}
+              >
+                {confirmButtonText}
+              </Button>
+              <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
+                {cancelButtonText}
+              </Button>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -42,30 +59,39 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    height: 300,
+    // height: 250,
     backgroundColor: "white",
     padding: 20,
     borderRadius: 8,
     elevation: 5,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 10,
     textAlign: "center",
+    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 14,
     marginBottom: 20,
     textAlign: "center",
   },
-  // buttonContainer: {
-  //   flexDirection: "column",
-  //   // justifyContent: "space-between",
-  // },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-around",
+  },
   btnYes: {
-    width: 45,
-    marginBottom: 8,
+    flex: 1,
+    marginRight: 10,
     borderRadius: 10,
+    justifyContent: "center",
+    backgroundColor: "blue",
+  },
+  btnNo: {
+    flex: 1,
+    marginRight: 10,
+    borderRadius: 10,
+    justifyContent: "center",
   },
 });
 

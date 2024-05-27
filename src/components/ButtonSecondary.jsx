@@ -8,7 +8,8 @@ const ButtonSecondary = ({ title, onPress }) => (
     mode="outlined"
     labelStyle={styles.labelStyle}
     style={styles.buttonStyle}
-    onPress={onPress}>
+    onPress={onPress}
+  >
     {title}
   </Button>
 );
@@ -19,8 +20,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonStyle: {
+    justifyContent: "center",
     borderRadius: 10,
-    height: 40,
+    backgroundColor: "white",
+    height: 48,
     borderColor: "#0A78E2",
   },
 });

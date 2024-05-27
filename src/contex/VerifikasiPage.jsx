@@ -16,6 +16,8 @@ import { AuthContex } from "./AuthProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonPrimary from "../components/ButtonPrimary";
 import HeaderComponent from "../components/HeaderComponent";
+import GlobalStyles from "../style/GlobalStyles";
+import { Checkbox } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", secondary: "#5DA3E7", white: "#fff" };
 
@@ -24,6 +26,8 @@ const VerifikasiPage = () => {
   const [photoUri1, setPhotoUri1] = useState(null); // State untuk menyimpan URI foto untuk kartu pertama
   const [photoUri2, setPhotoUri2] = useState(null); // State untuk menyimpan URI foto untuk kartu kedua
   const navigation = useNavigation();
+
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -108,25 +112,21 @@ const VerifikasiPage = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent
         title={"Verifikasi"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
-      <View style={styles.container}>
+      <View style={GlobalStyles.Content}>
         <View style={styles.cardContainer}>
-          <Text style={styles.title}>Ambil foto Kartu KTP</Text>
+          <Text style={GlobalStyles.h4}>Ambil foto Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri1 && styles.cardWithPhoto]}
             onPress={() => uploadImage("ktp")}
           >
             {photoUri1 && (
-              <Image
-                source={{ uri: photoUri1 }}
-                style={styles.previewImage}
-                // resizeMode="contain"
-              />
+              <Image source={{ uri: photoUri1 }} style={styles.previewImage} />
             )}
             {!photoUri1 && (
               <Image
@@ -137,11 +137,10 @@ const VerifikasiPage = () => {
                 }}
               />
             )}
-            {/* <Text style={styles.buttonText}>Ambil Foto</Text> */}
           </TouchableOpacity>
         </View>
         <View style={styles.cardContainer}>
-          <Text style={styles.title}>Ambil Selfie dengan Kartu KTP</Text>
+          <Text style={GlobalStyles.h4}>Ambil Selfie dengan Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri2 && styles.cardWithPhoto]} // Tambahkan style khusus jika ada foto di state
             onPress={() => uploadImage("swafoto")}
@@ -158,11 +157,26 @@ const VerifikasiPage = () => {
                 }}
               />
             )}
-            {/* <Text style={styles.buttonText}>Ambil Foto</Text> */}
           </TouchableOpacity>
         </View>
+        <View style={{ width: "100%" }}>
+          <Checkbox.Item
+            style={GlobalStyles.cekBox}
+            color={WARNA.primary}
+            label="Pastikan foto yang anda kirim tajam dan jelas"
+            labelStyle={{ fontSize: 13, color: "#3e3e3e" }}
+            status={checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+          />
+        </View>
         <View style={{ width: screenWidth * 0.9 }}>
-          <ButtonPrimary title="Ajukan Verifikasi" onPress={sendImage} />
+          <ButtonPrimary
+            title="Verifikasi"
+            onPress={sendImage}
+            disabled={!checked}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -172,22 +186,17 @@ const VerifikasiPage = () => {
 const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: "center",
-    alignItems: "center",
-  },
   cardContainer: {
-    flexDirection: "column",
-    marginBottom: 20,
+    marginBottom: 8,
     // backgroundColor: "pink",
+    gap: 8,
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
     width: screenWidth * 0.9,
     height: screenWidth * 0.55,
-    borderWidth: 3,
+    borderWidth: 4,
     borderColor: WARNA.primary,
     borderRadius: 20,
     borderStyle: "dashed",
@@ -195,24 +204,12 @@ const styles = StyleSheet.create({
   },
   cardWithPhoto: {
     borderColor: "green", // Ganti warna border jika ada foto di state
+    borderStyle: "solid",
   },
   previewImage: {
     width: "100%",
     height: "100%",
-    borderRadius: 20,
-    // width: screenWidth * 0.9, // Lebar mengikuti lebar layar dengan sedikit margin
-    // height: screenWidth * 0.5, // Sesuaikan tinggi sesuai dengan aspect ratio 4:3
-    // marginBottom: 10,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginVertical: 8,
-    color: WARNA.secondary,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: "blue",
+    borderRadius: 15,
   },
 });
 
