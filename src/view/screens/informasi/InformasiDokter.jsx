@@ -51,7 +51,7 @@ const InformasiDokter = () => {
     return () => {
       eventSource.close();
     };
-  }, []); // Empty dependencies array means this effect runs once on mount and cleanup on unmount
+  }, []);
 
   if (loading) {
     return (
