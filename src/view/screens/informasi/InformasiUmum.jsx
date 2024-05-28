@@ -5,6 +5,8 @@ import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../../style/GlobalStyles";
+import { SafeAreaView } from "react-native-safe-area-context";
+import HeaderComponent from "../../../components/HeaderComponent";
 
 const InformasiUmum = () => {
   const Menus = [
@@ -96,32 +98,39 @@ const InformasiUmum = () => {
   // }
 
   return (
-    <View style={GlobalStyles.Content}>
-      <FlatList
-        contentContainerStyle={{ flexGrow: 1 }}
-        // refreshControl={
-        //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
-        // }
-        horizontal={false}
-        numColumns={3}
-        data={Menus}
-        renderItem={({ item }) => (
-          <MenuItemComponent
-            onPress={() =>
-              handleClinicSelection(item.to, {
-                clinicId: item.kd_poli,
-                nameClinic: item.nm_poli,
-              })
-            }
-            data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
-            icon={item.icon}
-            title={item.nm_poli}
-            colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli}
+    <SafeAreaView style={GlobalStyles.utama}>
+      <HeaderComponent
+        title="Informasi RS"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
       />
-    </View>
+      <View style={GlobalStyles.Content}>
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
+          // refreshControl={
+          //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
+          // }
+          horizontal={false}
+          numColumns={3}
+          data={Menus}
+          renderItem={({ item }) => (
+            <MenuItemComponent
+              onPress={() =>
+                handleClinicSelection(item.to, {
+                  clinicId: item.kd_poli,
+                  nameClinic: item.nm_poli,
+                })
+              }
+              data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
+              icon={item.icon}
+              title={item.nm_poli}
+              colorIcon={item.color}
+            />
+          )}
+          keyExtractor={(item) => item.kd_poli}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

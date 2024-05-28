@@ -72,6 +72,7 @@ export const PilihPoli = () => {
       toggleShowDate();
     }
   };
+
   // const closeDate = () => {
   //   setShowDate(false);
   // };
@@ -79,6 +80,8 @@ export const PilihPoli = () => {
   const handleRegister = () => {
     // Tambahkan logika pendaftaran di sini
   };
+
+  console.log(dateOfBirth);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

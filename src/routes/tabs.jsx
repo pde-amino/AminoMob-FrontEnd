@@ -169,6 +169,7 @@ import VerifikasiPage from "../contex/VerifikasiPage";
 // mungkin dengan menggunakan fetch api mungkin / dengan kondisi dtatus admin dikeluarkan
 
 const Tabs = createBottomTabNavigator();
+
 export default function HomeTabs() {
   const { data } = useContext(AuthContex);
   // console.log("AuthTabs :", data);
@@ -180,16 +181,12 @@ export default function HomeTabs() {
           height: 60,
           borderTopWidth: 1,
           elevation: 2,
-          // backgroundColor: "#0A78E2",
         },
       }}
     >
       <Tabs.Screen
         options={{
-          // headerShown: true,
-          headerRight: () => (
-            <Ionicons name={"notifications-outline"} size={24} color="grey" />
-          ),
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -198,7 +195,7 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="HomeScreen"
+        name="Home"
         component={HomeScreen}
       />
       {data.role === "admin" ? (
@@ -219,6 +216,7 @@ export default function HomeTabs() {
 
       <Tabs.Screen
         options={{
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "document-text" : "document-text-outline"}
@@ -228,10 +226,11 @@ export default function HomeTabs() {
           ),
         }}
         name="Riwayat"
-        component={HomeScreen}
+        component={FavoriteScreen}
       />
       <Tabs.Screen
         options={{
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "call" : "call-outline"}
@@ -245,6 +244,7 @@ export default function HomeTabs() {
       />
       <Tabs.Screen
         options={{
+          tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
@@ -254,7 +254,7 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="Profile"
+        name="Profil"
         component={ProfileScreen}
       />
     </Tabs.Navigator>

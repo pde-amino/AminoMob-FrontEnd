@@ -126,15 +126,8 @@ const HomeScreen = () => {
             ></Path>
           </Svg>
         </View>
-        <View style={{ marginVertical: 30 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 25,
-            }}
-          >
+        <View style={{ marginVertical: 50 }}>
+          <View style={GlobalStyles.headerHomeContainer}>
             <Image
               source={require("../../../../assets/logo-app.png")}
               resizeMode="contain"
@@ -147,24 +140,27 @@ const HomeScreen = () => {
               style={GlobalStyles.btnRedSmall}
               onPress={darurat}
             >
-              <Text style={GlobalStyles.textButtonSmall}>
-                Panggilan Darurat
-              </Text>
+              <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
             </TouchableOpacity>
           </View>
 
           <BannerComponent
             visible={bannerVisible}
             content={
-              "Lakukan verifikasi data di halaman profil untuk melakukan pendaftaran Poliklinik"
+              "Lakukan verifikasi data di halaman Profil untuk mendaftar Poliklinik"
             }
             bannerStyle={{
-              backgroundColor: "red",
+              backgroundColor: "#FF9B9B",
               borderRadius: 20,
               marginBottom: 12,
             }}
-            textStyle={{ fontWeight: "bold", color: "white" }}
-            colorIcon={"white"}
+            textStyle={{
+              fontWeight: "bold",
+              color: "#710714",
+              // width: "75%",
+              // backgroundColor: "white",
+            }}
+            colorIcon={"#710714"}
           />
 
           <MySlider />

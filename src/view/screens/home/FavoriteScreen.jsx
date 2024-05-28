@@ -1,12 +1,17 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
+import GlobalStyles from "../../../style/GlobalStyles";
+import HeaderComponent from "../../../components/HeaderComponent";
 
 function FavoriteScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Thiss Favorite Screen From Home </Text>
+  return (
+    <SafeAreaView style={GlobalStyles.utama}>
+      <HeaderComponent title={"Riwayat"} />
+      <View style={GlobalStyles.Content}>
+        <Text>Riwayat Screen </Text>
       </View>
-    );
-  }
+    </SafeAreaView>
+  );
+}
 
-  export default FavoriteScreen
+export default FavoriteScreen;

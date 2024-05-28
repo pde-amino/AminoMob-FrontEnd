@@ -175,7 +175,7 @@ const VerifikasiPage = () => {
           <ButtonPrimary
             title="Verifikasi"
             onPress={sendImage}
-            disabled={!checked}
+            disabled={!checked || !photoUri1 || !photoUri2}
           />
         </View>
       </View>

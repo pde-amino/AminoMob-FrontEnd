@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
 export default GlobalStyles = StyleSheet.create({
+  //CONTAINER
   utama: {
     flex: 1,
     backgroundColor: WARNA.white,
@@ -36,9 +37,12 @@ export default GlobalStyles = StyleSheet.create({
     flex: 1,
     padding: Platform.OS === "android" ? StatusBar.currentHeight : 0, // Menghindari statusbar android
   },
-  bannerKuning: {
-    backgroundColor: "yellow",
-    borderRadius: 20,
+  headerHomeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
 
   //TEXT

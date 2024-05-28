@@ -56,26 +56,27 @@ const ProfileScreen = () => {
 
   const maskName = (name) => name.replace(/\B\w/g, "●");
 
-  const displayName = data.status === "Sudah" ? name : maskName(name);
+  const displayName = maskName(name);
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent title="Profil" />
       {banner && (
-        <BannerComponent
-          visible={banner}
-          content={
-            "Data anda sedang dalam proses verifikasi oleh petugas (maks 24 jam)"
-          }
-          bannerStyle={{
-            backgroundColor: "#FF8310",
-            borderRadius: 20,
-            width: "95%",
-            marginTop: 12,
-          }}
-          textStyle={{ fontWeight: "bold", color: "white" }}
-          colorIcon={"white"}
-        />
+        <View style={{ marginHorizontal: 20, justifyContent: "center" }}>
+          <BannerComponent
+            visible={banner}
+            content={
+              "Data anda sedang dalam proses verifikasi oleh petugas (maks 24 jam)"
+            }
+            bannerStyle={{
+              backgroundColor: "#FF8310",
+              borderRadius: 20,
+              marginTop: 12,
+            }}
+            textStyle={{ fontWeight: "bold", color: "white" }}
+            colorIcon={"white"}
+          />
+        </View>
       )}
       <ScrollView>
         <View
@@ -86,7 +87,7 @@ const ProfileScreen = () => {
           }}
         >
           <Avatar.Image
-            size={100}
+            size={80}
             source={require("../../../../assets/avatar.png")}
           />
         </View>

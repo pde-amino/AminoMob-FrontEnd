@@ -27,7 +27,7 @@ export default function LayananNonBPJS() {
   }, [navigation]);
 
   const diriSendiri = () => {
-    if (jnsMenu === "poli") {
+    if (jnsMenu === "Poliklinik") {
       console.log(jnsMenu);
       navigation.navigate("Pilih Poli", { jnsMenu });
     } else if (jnsMenu === "penunjang") {
@@ -45,10 +45,10 @@ export default function LayananNonBPJS() {
   };
 
   const orangLain = () => {
-    if (jnsMenu === "poli") {
+    if (jnsMenu === "Poliklinik") {
       console.log(jnsMenu);
       navigation.navigate("Pendaftaran Poli", { jnsMenu });
-    } else if (jnsMenu === "penunjang") {
+    } else if (jnsMenu === "Penunjang") {
       console.log(jnsMenu);
       navigation.navigate("Pendaftaran Poli", { jnsMenu });
     } else if (jnsMenu === "tele") {
@@ -68,7 +68,7 @@ export default function LayananNonBPJS() {
       title: "Poliklinik",
       desc: "Pendaftaran online poliklinik rawat jalan",
       to: () => {
-        setJnsMenu("poli");
+        setJnsMenu("Poliklinik");
         setBtmPoli(true);
       },
       // warna: "#E79903",
@@ -80,7 +80,7 @@ export default function LayananNonBPJS() {
       title: "Pemeriksaan Penunjang",
       desc: "Pendaftaran Laborat dan Radiologi",
       to: () => {
-        setJnsMenu("penunjang");
+        setJnsMenu("Penunjang");
         setBtmPenunjang(true);
       },
       // warna: "#A9BD2C",
