@@ -171,7 +171,7 @@ import VerifikasiPage from "../contex/VerifikasiPage";
 const Tabs = createBottomTabNavigator();
 
 export default function HomeTabs() {
-  const { data } = useContext(AuthContex);
+  const { auth } = useContext(AuthContex);
   // console.log("AuthTabs :", data);
   return (
     <Tabs.Navigator
@@ -182,8 +182,7 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
@@ -198,7 +197,7 @@ export default function HomeTabs() {
         name="Home"
         component={HomeScreen}
       />
-      {data.role === "admin" ? (
+      {auth.role === "admin" ? (
         <Tabs.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (

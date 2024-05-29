@@ -31,7 +31,6 @@ const data = [
 
 export const Pendaftaran = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
-  const { jnsMenu } = route.params;
 
   const [checked, setChecked] = React.useState(false);
   const [value, setValue] = useState(null);
@@ -85,186 +84,97 @@ export const Pendaftaran = () => {
               fontSize: 18,
               fontWeight: "bold",
               color: WARNA.secondary,
-            }}
-          >
+            }}>
             Pengisian Data Diri {jnsMenu}
           </Text>
-          {jnsMenu === "poli" && (
-            <View style={{ gap: 8 }}>
-              <TextInputIconComponent
-                label={"No Rekam Medis"}
-                placeholder={"Masukan No Rekam Medis Anda"}
-                type={"username"}
-                value={noRM}
-              />
-              <TextInputIconComponent
-                label={"Nama Lengkap"}
-                placeholder={"Masukan Nama Lengkap Anda"}
-                type={"nama"}
-                value={nmLengkap}
-              />
-              <TextInputIconComponent
-                label={"Alamat"}
-                placeholder={"Masukan Alamat Lengkap Anda"}
-                // type={"usernamae"}
-                value={alamat}
-              />
-              <View style={styles.containerDrop}>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocus && {
-                      borderColor: WARNA.primary,
-                      backgroundColor: WARNA.white,
-                    },
-                  ]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  search={false}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={data}
-                  // search
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={
-                    !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
-                  }
-                  searchPlaceholder="Search..."
-                  value={value}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={(item) => {
-                    setValue(item.value);
-                    setIsFocus(false);
-                  }}
-                />
-              </View>
-
-              <View>
-                {showPicker && (
-                  <DateTimePicker
-                    // display={"spinner"}
-                    mode="date"
-                    onChange={berubah}
-                    value={date}
-                    minimumDate={new Date(1940, 10, 20)}
-                  />
-                )}
-
-                {!showPicker && (
-                  <Pressable onPress={toggleShowDate}>
-                    <TextInput
-                      style={styles.tglPilihan}
-                      editable={false}
-                      // label={"Tgl Lahir"}
-                      placeholder={"Tanggal Lahir"}
-                      value={
-                        dateOfBirth
-                          ? new Date(dateOfBirth).toISOString().split("T")[0]
-                          : ""
-                      }
-                      onChangeText={setDateOfBirth}
-                      // type={"username"}
-                      // onPress={() => setShowDate(true)}
-                    />
-                  </Pressable>
-                )}
-              </View>
-              <TextInputIconComponent
-                label={"No Handphone"}
-                placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-                type={"username"}
+          <View style={{ gap: 8 }}>
+            <TextInputIconComponent
+              label={"No Rekam Medis"}
+              placeholder={"Masukan No Rekam Medis Anda"}
+              type={"username"}
+              value={noRM}
+            />
+            <TextInputIconComponent
+              label={"Nama Lengkap"}
+              placeholder={"Masukan Nama Lengkap Anda"}
+              type={"nama"}
+              value={nmLengkap}
+            />
+            <TextInputIconComponent
+              label={"Alamat"}
+              placeholder={"Masukan Alamat Lengkap Anda"}
+              // type={"usernamae"}
+              value={alamat}
+            />
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  isFocus && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={data}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
+                }
+                searchPlaceholder="Search..."
+                value={value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={(item) => {
+                  setValue(item.value);
+                  setIsFocus(false);
+                }}
               />
             </View>
-          )}
 
-          {jnsMenu === "penunjang" && (
-            <View style={{ gap: 8 }}>
-              <TextInputIconComponent
-                label={"No Rekam Medis"}
-                placeholder={"Masukan No Rekam Medis Anda"}
-                type={"username"}
-                value={noRM}
-              />
-              <TextInputIconComponent
-                label={"Nama Lengkap"}
-                placeholder={"Masukan Nama Lengkap Anda"}
-                type={"nama"}
-                value={nmLengkap}
-              />
-              <TextInputIconComponent
-                label={"Alamat"}
-                placeholder={"Masukan Alamat Lengkap Anda"}
-                // type={"usernamae"}
-                value={alamat}
-              />
-              <View style={styles.containerDrop}>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocus && {
-                      borderColor: WARNA.primary,
-                      backgroundColor: WARNA.white,
-                    },
-                  ]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  search={false}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={data}
-                  // search
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={
-                    !isFocus ? "Jenis Kelamin " : "Pilih Jenis Kelamin Anda"
-                  }
-                  searchPlaceholder="Search..."
-                  value={value}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={(item) => {
-                    setValue(item.value);
-                    setIsFocus(false);
-                  }}
+            <View>
+              {showPicker && (
+                <DateTimePicker
+                  // display={"spinner"}
+                  mode="date"
+                  onChange={berubah}
+                  value={date}
+                  minimumDate={new Date(1940, 10, 20)}
                 />
-              </View>
+              )}
 
-              <View>
-                {showPicker && (
-                  <DateTimePicker
-                    // display={"spinner"}
-                    mode="date"
-                    onChange={berubah}
-                    value={date}
-                    minimumDate={new Date(1940, 10, 20)}
+              {!showPicker && (
+                <Pressable onPress={toggleShowDate}>
+                  <TextInput
+                    style={styles.tglPilihan}
+                    editable={false}
+                    // label={"Tgl Lahir"}
+                    placeholder={"Tanggal Lahir"}
+                    value={
+                      dateOfBirth
+                        ? new Date(dateOfBirth).toISOString().split("T")[0]
+                        : ""
+                    }
+                    onChangeText={setDateOfBirth}
+                    // type={"username"}
+                    // onPress={() => setShowDate(true)}
                   />
-                )}
-
-                {!showPicker && (
-                  <Pressable onPress={toggleShowDate}>
-                    <TextInput
-                      style={styles.tglPilihan}
-                      editable={false}
-                      // label={"Tgl Lahir"}
-                      placeholder={"Tanggal Lahir"}
-                      value={
-                        dateOfBirth
-                          ? new Date(dateOfBirth).toISOString().split("T")[0]
-                          : ""
-                      }
-                      onChangeText={setDateOfBirth}
-                      // type={"username"}
-                      // onPress={() => setShowDate(true)}
-                    />
-                  </Pressable>
-                )}
-              </View>
+                </Pressable>
+              )}
             </View>
-          )}
+            <TextInputIconComponent
+              label={"No Handphone"}
+              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
+              type={"username"}
+            />
+          </View>
         </View>
 
         <Checkbox.Item
@@ -282,8 +192,7 @@ export const Pendaftaran = () => {
           style={{
             width: "90%",
             marginLeft: 20,
-          }}
-        >
+          }}>
           <ButtonPrimary
             title="Selanjutnya "
             onPress={handleRegister}

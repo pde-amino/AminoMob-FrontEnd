@@ -3,10 +3,10 @@ import React, { createContext, useState } from "react";
 const AuthContex = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [data, setData] = useState("Mantaaaps");
+  const [auth, setAuth] = useState("Mantaaaps");
 
   return (
-    <AuthContex.Provider value={{ data, setData }}>
+    <AuthContex.Provider value={{ auth, setAuth }}>
       {children}
     </AuthContex.Provider>
   );

@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
   Animated,
   Pressable,
+  FlatList,
 } from "react-native";
+import ButtonPrimary from "./ButtonPrimary";
+import CardButtonNavComponent from "./CardButtonNavComponent";
+import { useNavigation } from "@react-navigation/native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -20,9 +24,12 @@ const BottomSheet = ({
   ukuranModal,
   pressKanan,
   pressKiri,
+  list,
+  dataList,
 }) => {
+  const navigation = useNavigation();
   const slide = React.useRef(new Animated.Value(300)).current;
-
+  // console.log("data kerabat :", dataList);
   const slideUp = () => {
     // Will change slide up the bottom sheet
     Animated.timing(slide, {
@@ -53,48 +60,75 @@ const BottomSheet = ({
     }, 800);
   };
 
+  const navHandle = () => {
+    navigation.navigate("Pendaftaran Poli");
+  };
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
       <Pressable style={ukuranModal}>
         <Animated.View
-          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
-        >
+          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>{judul}</Text>
           <Text style={{ fontSize: 14, color: "grey", marginTop: 12 }}>
             {subjudul}
           </Text>
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 8,
-            }}
-          >
-            <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: WARNA.primary,
-                }}
-              >
-                {buttonKiri}
-              </Text>
-            </TouchableOpacity>
+          {list ? (
+            <View>
+              <ButtonPrimary
+                title={"+ Tambahkan Kerabat"}
+                onPress={navHandle}
+              />
+              {dataList ? (
+                <FlatList
+                  data={dataList}
+                  renderItem={({ item }) => (
+                    <CardButtonNavComponent
+                      title={item.NAMA_PAS}
+                      description={"Ini Desc List Kerabat"}
+                      onPress={"Pilih Poli"}
+                      data={item}
+                      warna={"blue"}
+                    />
+                  )}
+                />
+              ) : (
+                <Text>
+                  Belum ada Kerabat yang terdaftar, silahkan klik tambahkan
+                  kerabat.
+                </Text>
+              )}
+            </View>
+          ) : (
+            <View
+              style={{
+                marginTop: 20,
+                flexDirection: "row",
+                justifyContent: "center",
+                gap: 8,
+              }}>
+              <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    color: WARNA.primary,
+                  }}>
+                  {buttonKiri}
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btnKanan} onPress={pressKanan}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: WARNA.white,
-                }}
-              >
-                {buttonKanan}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.btnKanan} onPress={pressKanan}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    color: WARNA.white,
+                  }}>
+                  {buttonKanan}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </Animated.View>
       </Pressable>
     </Pressable>
