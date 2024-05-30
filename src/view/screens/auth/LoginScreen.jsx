@@ -75,15 +75,15 @@ const LoginScreen = () => {
     }
   };
 
-  const { setData } = useContext(AuthContex);
+  const { setAuth } = useContext(AuthContex);
   const [userInfo, setUserInfo] = useState();
   const loginData = {
     status: "Sudah",
     // status: "Belum",
     // status: "Proses",
-    ids: 4,
+    ids: 7,
     token:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTU5MTUyMDUsImV4cCI6MTcxNjAwMTYwNSwidWlkIjoiNCIsIm5vX3JrbV9tZWRpcyI6bnVsbH0.KRcCvT9tXZsYr0Q-d-ThXq8W5xKcgEFT0v-WiPFILz4",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
     role: "user",
   };
 
@@ -105,7 +105,7 @@ const LoginScreen = () => {
           if (userInfo.status) {
             console.log("Login berhasil. Token:", userInfo);
             // Navigasi ke screen "Amino Care" dan kirim data token dan id
-            setData(userInfo);
+            setAuth(userInfo);
             navigation.replace("Amino Care");
           } else {
             // Tangani kesalahan login
@@ -163,14 +163,14 @@ const LoginScreen = () => {
       const result = await response.json();
       console.log("Login berhasil:", result.message);
       if (result.akun == "Belum Terverifikasi") {
-        setData(result);
+        setAuth(result);
         navigation.replace("Profile Screen");
       }
       if (result.akun == "Proses Verifikasi") {
-        setData(result);
+        setAuth(result);
         navigation.replace("Profile Screen");
       } else {
-        setData(result);
+        setAuth(result);
         navigation.replace("Amino Care");
       }
     } catch (error) {
@@ -196,7 +196,7 @@ const LoginScreen = () => {
   };
 
   const sementara = () => {
-    setData(loginData);
+    setAuth(loginData);
     navigation.replace("Home Screen");
   };
 

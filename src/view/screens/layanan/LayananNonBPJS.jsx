@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList, SafeAreaView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, FlatList, SafeAreaView, Alert } from "react-native";
 
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -7,6 +7,9 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import BottomSheet from "../../../components/BottomSheet";
 import { useNavigation } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
+import axios from "axios";
+import { AuthContex } from "../../../contex/AuthProvider";
+import { BASE_URL } from "../../../contex/Config";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -17,6 +20,11 @@ export default function LayananNonBPJS() {
   const [btmPenunjang, setBtmPenunjang] = useState(false);
   const [btmTele, setBtmTele] = useState(false);
   const [btmTerang, setBtmTerang] = useState(false);
+  const [kerabat, setKerabat] = useState(false);
+  const [dataKerabat, setDataKerabat] = useState("");
+
+  const { auth } = useContext(AuthContex);
+  console.log("Ini Auth :", auth);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -45,17 +53,20 @@ export default function LayananNonBPJS() {
   };
 
   const orangLain = () => {
-    if (jnsMenu === "Poliklinik") {
-      console.log(jnsMenu);
-      navigation.navigate("Pendaftaran Poli", { jnsMenu });
-    } else if (jnsMenu === "Penunjang") {
-      console.log(jnsMenu);
-      navigation.navigate("Pendaftaran Poli", { jnsMenu });
-    } else if (jnsMenu === "tele") {
-      navigation.navigate("");
-    } else if (jnsMenu === "terang") {
-      navigation.navigate("");
-    }
+    // const kerabat = "true";
+    setKerabat(true);
+    getDataKerabat();
+    // if (jnsMenu === "Poliklinik") {
+    //   console.log(jnsMenu);
+    //   navigation.navigate("Pilih Poli", { jnsMenu, kerabat });
+    // } else if (jnsMenu === "Penunjang") {
+    //   console.log(jnsMenu);
+    //   navigation.navigate("Pilih Poli", { jnsMenu, kerabat });
+    // } else if (jnsMenu === "tele") {
+    //   navigation.navigate("");
+    // } else if (jnsMenu === "terang") {
+    //   navigation.navigate("");
+    // }
     setBtmPoli(false);
     setBtmPenunjang(false);
     setBtmTele(false);
@@ -112,6 +123,22 @@ export default function LayananNonBPJS() {
       img: require("../../../../assets/icon44.png"),
     },
   ];
+
+  const getDataKerabat = () => {
+    axios
+      .get(`${BASE_URL}/daftarKerabat/${auth.ids}`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
+      .then((response) => {
+        setDataKerabat(response.data.daftar_kerabat);
+      })
+      .catch((err) => {
+        setDataKerabat(false);
+      });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
@@ -184,6 +211,15 @@ export default function LayananNonBPJS() {
           pressKanan={diriSendiri}
         />
       )}
+      {kerabat ? (
+        <BottomSheet
+          ukuranModal={{ width: "100%", height: "80%" }}
+          setStatus={setKerabat}
+          judul="List Kerabat"
+          list={true}
+          dataList={dataKerabat}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }

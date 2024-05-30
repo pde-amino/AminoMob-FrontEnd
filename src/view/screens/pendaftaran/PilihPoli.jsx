@@ -21,6 +21,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import { id } from "date-fns/locale";
 import { format } from "date-fns";
+import BottomSheet from "../../../components/BottomSheet";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -46,10 +47,14 @@ export const PilihPoli = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const [buttomSheet, setButtomSheet] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
+  const kerabat = route.params.kerabat;
   const { jnsMenu } = route.params;
+
   const [filtDokter, setFiltDokter] = useState("");
+  console.log("data dari data kerabat:", route.params.kerabat);
 
   const extractDay = (dateString) => {
     return dateString.split(" ")[0];
@@ -70,19 +75,26 @@ export const PilihPoli = () => {
 
   const jadwalDok = (param) => {
     // console.log("Ini Params JadwalDok :", param);
-
-    axios
-      .get(`${BASE_URL}/jadwaldok/${param}/${extractDay(dateOfBirth)}/${value}`)
-      .then((response) => {
-        const dokters = response.data.data_dokter.map((item) => {
-          return {
-            key: item.key,
-            label: item.nm_dokter,
-            value: item.kd_dokter,
-          };
+    try {
+      axios
+        .get(
+          `${BASE_URL}/jadwaldok/${param}/${extractDay(dateOfBirth)}/${value}`
+        )
+        .then((response) => {
+          const dokters = response.data.data_dokter.map((item) => {
+            return {
+              key: item.key,
+              label: item.nm_dokter,
+              value: item.kd_dokter,
+            };
+          });
+          setFiltDokter(dokters);
         });
-        setFiltDokter(dokters);
-      });
+    } catch (error) {
+      Alert.alert(
+        "aaaMaaf Poli yang anda pilih sepertinya libur pada Har yang anda pilih"
+      );
+    }
   };
 
   const toggleShowDate = () => {
@@ -119,11 +131,33 @@ export const PilihPoli = () => {
       value1,
       value2
     );
+    if (!kerabat) {
+      console.log("Diri Sendiri");
+    } else {
+      console.log("Kerabat");
+    }
   };
 
   console.log("ini pic tgl :", extractDay(dateOfBirth));
 
-  const pushDataSendiri = {
+  const diriSendiri = {
+    id_user: 1,
+    id_kerabat: "",
+    tanggal_booking: "2024-05-15",
+    jam_booking: "13:25:00",
+    no_rkm_medis: " ",
+    tanggal_periksa: "2024-05-22",
+    jam_periksa: "07:00:00 - 14:00:00",
+    kd_dokter: "D0000020",
+    kd_poli: "9108",
+    no_reg: " ",
+    waktu_kunjungan: " ",
+    // "status_reg": "Belum",
+    jns_kunjungan: "Poli",
+    status_byr: "-",
+    jns_pas: "Diri Sendiri",
+  };
+  const orangLain = {
     id_user: 1,
     id_kerabat: "",
     tanggal_booking: "2024-05-15",
@@ -158,6 +192,9 @@ export const PilihPoli = () => {
           >
             Pengisian Data {jnsMenu}
           </Text>
+          {kerabat ? (
+            <ButtonPrimary title={"Daftar Kerabat"} onPress={setButtomSheet} />
+          ) : null}
 
           <View style={{ gap: 8 }}>
             <View>
@@ -301,6 +338,19 @@ export const PilihPoli = () => {
           />
         </View>
       </ScrollView>
+      {buttomSheet ? (
+        <BottomSheet
+          setStatus={setButtomSheet}
+          ukuranModal={{ width: "100%", height: "25%" }}
+          judul="Untuk siapa Anda mendaftar Poli?"
+          // subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
+          buttonKiri="Orang Lain"
+          buttonKanan="Diri Sendiri"
+          listKerabat={true}
+          // pressKiri={orangLain}
+          // pressKanan={diriSendiri}
+        />
+      ) : null}
     </SafeAreaView>
   );
 };
