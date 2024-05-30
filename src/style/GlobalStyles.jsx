@@ -21,7 +21,7 @@ export default GlobalStyles = StyleSheet.create({
     // justifyContent: "center",
     // backgroundColor: "#e6dfcf",
     alignItems: "center",
-    color: "#1a4846",
+    // color: "#1a4846",
     gap: 8,
     marginTop: 20,
     // width:
@@ -49,7 +49,7 @@ export default GlobalStyles = StyleSheet.create({
   h1: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#3E3E3E",
+    // color: "#3E3E3E",
   },
   h2: {
     fontSize: 20,
@@ -68,8 +68,17 @@ export default GlobalStyles = StyleSheet.create({
   },
   textButtonSmall: {
     color: WARNA.white,
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: "bold",
+  },
+  textBiasa: {
+    fontSize: 14,
+    color: "#3E3E3E",
+  },
+  textLink: {
+    fontSize: 14,
+    color: WARNA.primary,
+    textDecorationLine: "underline",
   },
 
   //CEKBOX

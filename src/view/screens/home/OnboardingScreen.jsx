@@ -31,23 +31,31 @@ const slides = [
     id: "2",
     image: require("../../../../assets/onboard2.png"),
     title: "Pusat Kesehatan Jiwa Provinsi Jawa Tengah",
-    subtitle: "Amino Hospital gvhjbhjvhjvhjvhj cgvgherbesar di Semarang",
+    subtitle: "Amino Hospital cgvgherbesar di Semarang",
   },
   {
     id: "3",
     image: require("../../../../assets/onboard3.png"),
-    title: "Buat Akun atau Masuk Sekarang",
-    subtitle:
-      "Untuk menggunakan aplikasi secara penuh silakan Login terlebih dulu",
+    title: "Buat Akun Sekarang",
+    subtitle: "Untuk menggunakan aplikasi silakan Login terlebih dulu",
   },
 ];
 
 const Slide = ({ item }) => {
   return (
-    <View style={{ alignItems: "center" }}>
+    <View
+      style={{
+        alignItems: "center",
+        width: width,
+      }}
+    >
       <Image
         source={item.image}
-        style={{ height: "70%", width, resizeMode: "contain" }}
+        style={{
+          height: "70%",
+          width: "100%",
+          resizeMode: "contain",
+        }}
       />
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -106,18 +114,13 @@ const OnboardingScreen = ({ navigation }) => {
                       color: WARNA.primary,
                     }}
                   >
-                    MASUK / DAFTAR
+                    DAFTAR
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={{ height: 48 }}>
+              {/* <View style={{ height: 48 }}>
                 <TouchableOpacity
-                  style={[
-                    styles.btn,
-                    {
-                      backgroundColor: "transparent",
-                    },
-                  ]}
+                  style={[styles.btn, { backgroundColor: "transparent" }]}
                   onPress={() => navigation.replace("Amino Care")}
                 >
                   <Text
@@ -130,7 +133,7 @@ const OnboardingScreen = ({ navigation }) => {
                     NANTI
                   </Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
           ) : (
             <View style={{ flexDirection: "row" }}>
@@ -209,6 +212,7 @@ const OnboardingScreen = ({ navigation }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => <Slide item={item} />}
+        keyExtractor={(item) => item.id}
       />
       <Footer />
     </SafeAreaView>
@@ -220,13 +224,13 @@ const styles = StyleSheet.create({
     color: WARNA.white,
     fontSize: 24,
     fontWeight: "bold",
-    maxWidth: "75%",
+    maxWidth: "70%",
     textAlign: "center",
   },
   subtitle: {
     color: WARNA.white,
     fontSize: 14,
-    maxWidth: "75%",
+    maxWidth: "70%",
     marginTop: 12,
     textAlign: "center",
   },

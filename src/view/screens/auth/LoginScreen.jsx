@@ -21,9 +21,9 @@ import DropdownTesting from "../../../components/DropdownTesting";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import DatePicker from "../../../components/DatePicker";
+import GlobalStyles from "../../../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
-const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
   const [status, setStatus] = React.useState(false);
@@ -201,70 +201,58 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-      >
-        <View style={{ gap: 8, marginBottom: 12 }}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.judul}>Masuk</Text>
+    <View style={GlobalStyles.utama}>
+      <View style={GlobalStyles.Content}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <View
+            style={{
+              alignItems: "center",
+              marginBottom: 36,
+            }}
+          >
+            <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
+              Masuk
+            </Text>
+          </View>
+          <View style={{ gap: 8, marginBottom: 12 }}>
+            <TextInputIconComponent
+              label="Nomor RM/NIK/HP"
+              placeholder="Masukkan salah satu"
+              value={username}
+              type={"username"}
+              onChangeText={setUsername}
+            />
+
+            <TextInputIconComponent
+              label="Kata Sandi"
+              placeholder="Masukkan kata sandi  di sini"
+              password={true}
+              value={password}
+              onChangeText={setPassword}
+            />
+
+            <ButtonPrimary
+              title="Masuk"
+              disabled={!!usernameError || !!passwordError}
+              onPress={sementara}
+            />
           </View>
 
-          <TextInputIconComponent
-            label="Nomor RM/NIK/HP"
-            placeholder="Masukkan salah satu"
-            value={username}
-            type={"username"}
-            onChangeText={setUsername}
-          />
-
-          <TextInputIconComponent
-            label="Kata Sandi"
-            placeholder="Masukkan kata sandi  di sini"
-            password={true}
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
-
-        <ButtonPrimary
-          title="Masuk"
-          disabled={!!usernameError || !!passwordError}
-          onPress={sementara}
-        />
-
-        <View style={{ flexDirection: "row" }}>
-          <Text>Belum punya akun?</Text>
-          <TouchableOpacity onPress={() => setStatus(true)}>
-            <Text
-              style={{
-                color: WARNA.primary,
-                textDecorationLine: "underline",
-                marginLeft: 3,
-              }}
-            >
-              Daftar Akun Sekarang
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-      {status && (
-        <BottomSheet
-          setStatus={setStatus}
-          ukuranModal={{ width: "100%", height: "25%" }}
-          judul="Anda pernah periksa sebelumnya?"
-          subjudul="Pilih Sudah jika pernah periksa dan punya No.RM di RSJD Amino"
-          buttonKanan="Sudah"
-          buttonKiri="Belum"
-          pressKanan={handlePasienLama}
-          pressKiri={handlePasienBaru}
-        />
-      )}
+          <View style={{ flexDirection: "row" }}>
+            <Text style={GlobalStyles.textBiasa}>Belum punya akun?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+              <Text style={GlobalStyles.textLink}>Daftar Akun Sekarang</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -274,12 +262,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  judul: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: WARNA.primary,
-    marginBottom: 32,
   },
 });
 

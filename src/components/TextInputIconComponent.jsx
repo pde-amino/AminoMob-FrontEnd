@@ -6,28 +6,22 @@ const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 const { width } = Dimensions.get("window");
 
 const validateInput = (input, type) => {
-  if (type === "username") {
-    const onlyNumbers = /^[0-9]+$/.test(input);
-    return onlyNumbers ? "" : "Mohon gunakan angka saja";
-  } else if (type === "password") {
-    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
-      input
-    );
-    return containsSpecialChar ? "Gak boleh pakai karakter khusus" : "";
+  const SpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(input);
+  const isNumber = /^[0-9]+$/.test(input);
+
+  if (type === "password") {
+    return SpecialChar ? "Gak boleh pakai karakter khusus" : "";
   } else if (type === "nama") {
-    const namaCek = /^[0-9]+$/.test(input);
-    return namaCek ? "Mohon masukkan nama anda" : "";
+    return isNumber ? "Mohon masukkan nama anda" : "";
+  } else if (type === "nomor") {
+    if (!isNumber) {
+      return "Mohon masukkan nomor hp yang benar";
+    }
+    return input.length < 11 ? "Jumlah nomor kurang" : "";
+  } else if (type === "ktp") {
+    return input.length < 16 ? "Masukkan No KTP Anda" : "";
   }
   return "";
-};
-
-const handleTextInputChange = (text) => {
-  // Menampilkan alert saat pengguna memasukkan nilai
-  Alert.alert(
-    "Peringatan",
-    "Data Tidak Dapat Diubah Sebelum Melakukan Verifikasi."
-  );
-  // setInputValue(text);
 };
 
 const TextInputIconComponent = ({
@@ -37,8 +31,6 @@ const TextInputIconComponent = ({
   onChangeText,
   password,
   value,
-
-  maskValue, // Prop baru untuk mengontrol masking
 }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
@@ -56,32 +48,7 @@ const TextInputIconComponent = ({
   };
 
   const toggleSecureTextEntry = () => {
-    if (maskValue) {
-      setSecureTextEntry((prevState) => !prevState);
-    } else {
-      alert("Mohon Lakukan Verifikasi Akun Terlebih Dahulu");
-    }
-  };
-
-  const getDisplayValue = (value) => {
-    if (!maskValue || !value) return value;
-
-    // Memisahkan nilai menjadi array kata-kata
-    const words = value.split(" ");
-
-    // Mengubah setiap kata menjadi tiga karakter pertama
-    const maskedWords = words.map((word) => {
-      // Mengambil tiga karakter pertama dari kata
-      const visiblePart = word.slice(0, 1);
-      // Membuat bagian tersisa menjadi tanda '*'
-      const maskedPart = "*".repeat(word.length - visiblePart.length);
-      return `${visiblePart}${maskedPart}`;
-    });
-
-    // Menggabungkan kembali kata-kata yang telah dimodifikasi
-    const maskedValue = maskedWords.join(" ");
-
-    return maskedValue;
+    setSecureTextEntry((prevState) => !prevState);
   };
 
   return (
@@ -90,7 +57,7 @@ const TextInputIconComponent = ({
         style={{
           backgroundColor: "white",
           width: width * 0.9,
-          fontSize: 15,
+          fontSize: 14,
         }}
         mode="outlined"
         selectionColor={WARNA.primary}
@@ -101,8 +68,8 @@ const TextInputIconComponent = ({
         activeUnderlineColor={WARNA.primary}
         label={label}
         placeholder={placeholder}
-        value={getDisplayValue(value)}
-        onChangeText={maskValue ? handleTextInputChange : handleChange}
+        value={value}
+        onChangeText={handleChange}
         secureTextEntry={secureTextEntry}
         right={
           password ? (
@@ -115,11 +82,11 @@ const TextInputIconComponent = ({
       />
       {error && (
         <HelperText
-          outlineColor={WARNA.red}
-          activeUnderlineColor={WARNA.red}
+          // outlineColor={WARNA.red}
           style={{ color: WARNA.red }}
           type="error"
-          visible={!!error}>
+          visible={!!error}
+        >
           {error}
         </HelperText>
       )}
