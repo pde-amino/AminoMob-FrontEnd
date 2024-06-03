@@ -37,7 +37,6 @@ const SignupScreen = () => {
   const [noKTP, setKTP] = useState("");
   const [nmLengkap, setNama] = useState("");
   const [alamat, setAlamat] = useState("");
-  const [username, setUsername] = useState("");
 
   const [user, setUser] = useState([]);
 
@@ -111,7 +110,7 @@ const SignupScreen = () => {
   };
 
   const daftarAkun = () => {
-    navigation.navigate(HomeScreen);
+    navigation.navigate("Login Screen");
   };
 
   return (
@@ -123,13 +122,6 @@ const SignupScreen = () => {
           </Text>
 
           <View style={{ marginBottom: 12, gap: 8 }}>
-            <TextInputIconComponent
-              label={"Username"}
-              placeholder={"Buat Username dengan minimal 8 karakter"}
-              type={"username"}
-              value={username}
-              onChangeText={setUsername}
-            />
             <TextInputIconComponent
               label={"Nama Lengkap"}
               type={"nama"}

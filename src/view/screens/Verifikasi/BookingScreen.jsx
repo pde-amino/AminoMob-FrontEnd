@@ -116,8 +116,8 @@ const BookingScreen = () => {
 
 const styles = StyleSheet.create({
   successImage: {
-    width: 400,
-    height: 200,
+    width: 320,
+    height: 150,
     // backgroundColor: "pink",
   },
   container: {

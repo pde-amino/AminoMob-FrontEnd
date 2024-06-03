@@ -5,49 +5,25 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
   Linking,
-  Image,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
-import { Button } from "react-native";
-import ConfirmModal from "../../../components/ConfirmModal";
-import DialogComponent from "../../../components/DialogComponent";
-import BottomSheet from "../../../components/BottomSheet";
-import DropdownComponent from "../../../components/DropdownComponent";
-import DropdownTesting from "../../../components/DropdownTesting";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
-import DatePicker from "../../../components/DatePicker";
 import GlobalStyles from "../../../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const LoginScreen = () => {
-  const [status, setStatus] = React.useState(false);
-
-  const handlePasienLama = () => {
-    // Lakukan aksi konfirmasi di sini
-    navigation.navigate("Signup Lama");
-    setStatus(false);
-  };
-
-  const handlePasienBaru = () => {
-    // Lakukan aksi pembatalan di sini
-    navigation.navigate("Signup Baru");
-    setStatus(false);
-  };
-
-  // State untuk menyimpan input pengguna
-  // const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [emailError, setEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  // const [error, setError] = useState("");
+
+  const { setAuth } = useContext(AuthContex);
 
   const navigation = useNavigation();
 
@@ -55,11 +31,7 @@ const LoginScreen = () => {
     setUsername(input);
     // Validasi untuk username hanya berisi angka
     const onlyNumbers = /^[0-9]+$/.test(input);
-    if (!onlyNumbers) {
-      setUsernameError("Cuma boleh pakai angka");
-    } else {
-      setUsernameError("");
-    }
+    setUsernameError(onlyNumbers ? "" : "Cuma boleh pakai angka");
   };
 
   const handlePasswordChange = (input) => {
@@ -75,7 +47,6 @@ const LoginScreen = () => {
     }
   };
 
-  const { setAuth } = useContext(AuthContex);
   const [userInfo, setUserInfo] = useState();
   const loginData = {
     status: "Sudah",
@@ -223,11 +194,11 @@ const LoginScreen = () => {
           </View>
           <View style={{ gap: 8, marginBottom: 12 }}>
             <TextInputIconComponent
-              label="Nomor RM/NIK/HP"
+              label="Nomor HP/ Nama Lengkap"
               placeholder="Masukkan salah satu"
               value={username}
               type={"username"}
-              onChangeText={setUsername}
+              onChangeText={handleUsernameChange}
             />
 
             <TextInputIconComponent

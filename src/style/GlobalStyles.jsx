@@ -33,6 +33,10 @@ export default GlobalStyles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
+  btnFullContainer: {
+    width: "90%",
+    height: 48,
+  },
   safeAreaStyle: {
     flex: 1,
     padding: Platform.OS === "android" ? StatusBar.currentHeight : 0, // Menghindari statusbar android
@@ -79,6 +83,10 @@ export default GlobalStyles = StyleSheet.create({
     fontSize: 14,
     color: WARNA.primary,
     textDecorationLine: "underline",
+  },
+  textWajib: {
+    color: WARNA.red,
+    fontSize: 12,
   },
 
   //CEKBOX
