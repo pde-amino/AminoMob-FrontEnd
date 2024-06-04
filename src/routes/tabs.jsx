@@ -29,6 +29,7 @@ import Swafoto from "../contex/SwaFoto";
 import VerifikasiPage from "../contex/VerifikasiPage";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import ListPasien from "../view/screens/pendaftaran/ListPasien";
+import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -240,8 +241,8 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="Daftar"
-        component={ListPasien}
+        name="Data Pasien"
+        component={InfoListPasien}
       />
       <Tabs.Screen
         options={{

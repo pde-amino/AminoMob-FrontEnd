@@ -31,29 +31,19 @@ const data = [
 ];
 
 const hubungan = [
-  { label: "Diri Sendiri", value: "DIRI SENDIRI" },
-  { label: "Suami", value: "SUAMI" },
-  { label: "Istri", value: "ISTRI" },
-  { label: "Ayah", value: "AYAH" },
-  { label: "Ibu", value: "IBU" },
-  { label: "Anak", value: "ANAK" },
-  { label: "Saudara", value: "SAUDARA" },
-];
-const agama = [
-  { label: "Islam", value: "ISLAM" },
-  { label: "Kristen", value: "KRISTEN" },
-  { label: "Katolik", value: "KATOLIK" },
-  { label: "Hindu", value: "HINDU" },
-  { label: "Buddha", value: "BUDDHA" },
-  { label: "Khonghucu", value: "KHONGHUCU" },
+  { label: "Diri Sendiri", value: "Diri Sendiri" },
+  { label: "Suami", value: "Suami" },
+  { label: "Istri", value: "Istri" },
+  { label: "Ayah", value: "Ayah" },
+  { label: "Ibu", value: "Ibu" },
+  { label: "Anak", value: "Anak" },
+  { label: "Saudara", value: "Saudara" },
 ];
 
-export const TambahPasien = () => {
+export const TambahPasienLama = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
 
-  const [hubunganPasien, setHubungan] = useState("");
-  const [kelaminPasien, setKelamin] = useState("");
-  const [agamaPasien, setAgama] = useState("");
+  const [hubu, setHubungan] = useState("");
 
   const [checked, setChecked] = React.useState(false);
   const [value, setValue] = useState(null);
@@ -90,14 +80,14 @@ export const TambahPasien = () => {
   //   setShowDate(false);
   // };
 
-  const simpanData = () => {
+  const handleRegister = () => {
     // Tambahkan logika pendaftaran di sini
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
-        title={"Daftarkan Pasien Baru"}
+        title={"Daftarkan Pasien Lama"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
@@ -130,11 +120,11 @@ export const TambahPasien = () => {
                     : "Pilih Hubungan"
                 }
                 searchPlaceholder="Search..."
-                value={hubunganPasien}
+                value={hubu}
                 onFocus={() => setIsFocus1(true)}
                 onBlur={() => setIsFocus1(false)}
                 onChange={(item) => {
-                  setHubungan(item.value);
+                  setValue(item.value);
                   setIsFocus1(false);
                   console.log(item.value);
                 }}
@@ -146,12 +136,6 @@ export const TambahPasien = () => {
               placeholder={"Masukan Nama Lengkap Anda"}
               type={"nama"}
               value={nmLengkap}
-            />
-
-            <TextInputIconComponent
-              label={"No Handphone*"}
-              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-              type={"username"}
             />
 
             <TextInputIconComponent
@@ -184,11 +168,11 @@ export const TambahPasien = () => {
                   !isFocus ? "Jenis Kelamin*" : "Pilih Jenis Kelamin Anda"
                 }
                 searchPlaceholder="Search..."
-                value={kelaminPasien}
+                value={value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={(item) => {
-                  setKelamin(item.value);
+                  setValue(item.value);
                   setIsFocus(false);
                 }}
               />
@@ -387,22 +371,28 @@ export const TambahPasien = () => {
                 search={false}
                 inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
-                data={agama}
+                data={data}
                 // search
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
                 placeholder={!isFocus ? "Agama*" : "Pilih Agama Anda"}
                 searchPlaceholder="Search..."
-                value={agamaPasien}
+                value={value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={(item) => {
-                  setAgama(item.value);
+                  setValue(item.value);
                   setIsFocus(false);
                 }}
               />
             </View>
+
+            <TextInputIconComponent
+              label={"No Handphone"}
+              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
+              type={"username"}
+            />
           </View>
         </View>
 
@@ -419,8 +409,8 @@ export const TambahPasien = () => {
 
         <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
           <ButtonPrimary
-            title="Simpan"
-            onPress={simpanData}
+            title="Selanjutnya "
+            onPress={handleRegister}
             disabled={!checked || !!hubu}
           />
         </View>

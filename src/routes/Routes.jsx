@@ -33,6 +33,8 @@ import SearchPoli from "../view/screens/informasi/SearchDokter";
 import SearchPage from "../view/screens/informasi/SearchDokter";
 import SearchDokter from "../view/screens/informasi/SearchDokter";
 import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
+import { TambahPasienLama } from "../view/screens/pendaftaran/TambahPasienLama";
+import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import OTPInputScreen from "../view/screens/auth/OTPInputScreen";
 
 const Stack = createNativeStackNavigator();

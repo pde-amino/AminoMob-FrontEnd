@@ -49,6 +49,13 @@ const ProfileScreen = () => {
   //     setBannerVis(false);
   //   }
   // }, [data.status]);
+  // useEffect(() => {
+  //   if (data.status === "Proses") {
+  //     setBannerVis(true);
+  //   } else {
+  //     setBannerVis(false);
+  //   }
+  // }, [data.status]);
 
   // const handleLogout = () => {
   //   // Add your logout logic here
@@ -76,37 +83,21 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent title="Profil" />
-      {/* {banner && (
-        <View style={{ marginHorizontal: 20, justifyContent: "center" }}>
-          <BannerComponent
-            visible={banner}
-            content={
-              "Data anda sedang dalam proses verifikasi oleh petugas (maks 24 jam)"
-            }
-            bannerStyle={{
-              backgroundColor: "#FF8310",
-              borderRadius: 20,
-              marginTop: 12,
-            }}
-            textStyle={{ fontWeight: "bold", color: "white" }}
-            colorIcon={"white"}
-          />
-        </View>
-      )} */}
       <ScrollView>
         <View
           style={{
             alignItems: "center",
             marginTop: 16,
             flex: 2,
-          }}>
+          }}
+        >
           <Avatar.Image
             size={80}
             source={require("../../../../assets/avatar.png")}
           />
         </View>
-        {/* {data.status === "Sudah" ? ( */}
-        <View style={{ gap: 12, flex: 2 }}>
+
+        <View style={{ gap: 10, flex: 2 }}>
           <View style={{ alignItems: "center" }}>
             <Text style={GlobalStyles.h2}>{name}</Text>
           </View>
@@ -131,26 +122,12 @@ const ProfileScreen = () => {
           </View>
           <Divider />
         </View>
-        {/* ) : (
-          <View style={{ gap: 12, flex: 2 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={GlobalStyles.h2}>{displayName}</Text>
-            </View>
-          </View>
-        )} */}
 
         <View style={GlobalStyles.btnContainer}>
           <ButtonPrimary
             title="Edit Profil"
             onPress={() => navigation.navigate("Edit Profil")}
           />
-          {/* {data.status === "Sudah" ? (
-          ) : (
-            <ButtonPrimary
-              title="Verifikasi Akun"
-              onPress={() => navigation.navigate("VerifikasiPage")}
-            />
-          )} */}
         </View>
         <View style={GlobalStyles.btnContainer}>
           <ButtonSecondary title={"Log Out"} onPress={() => handleLogout()} />

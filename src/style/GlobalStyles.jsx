@@ -23,7 +23,7 @@ export default GlobalStyles = StyleSheet.create({
     alignItems: "center",
     // color: "#1a4846",
     gap: 8,
-    marginTop: 20,
+    marginTop: 10,
     // width:
     //   Platform.OS === "ios"
     //     ? "100%" // iOS

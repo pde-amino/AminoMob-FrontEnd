@@ -124,19 +124,9 @@ const LoginScreen = () => {
       //   console.log("Login gagal, pesan kesalahan:", userInfo.message);
       // }
     } catch (error) {
-      Alert.alert("Haii", "Sepertinya password atau nomor HP anda salah");
+      Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       console.log("Login Error:", error);
     }
-  };
-
-  const handlePasienLama = () => {
-    navigation.navigate("Signup Lama");
-    setStatus(false);
-  };
-
-  const handlePasienBaru = () => {
-    navigation.navigate("Signup Baru");
-    setStatus(false);
   };
 
   return (

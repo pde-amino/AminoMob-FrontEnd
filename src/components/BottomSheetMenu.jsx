@@ -3,34 +3,26 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Animated,
   Pressable,
   FlatList,
 } from "react-native";
-import ButtonPrimary from "./ButtonPrimary";
 import CardButtonNavComponent from "./CardButtonNavComponent";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
-const BottomSheet = ({
+const BottomSheetMenu = ({
   setStatus,
   judul,
   subjudul,
-  buttonKiri,
-  buttonKanan,
   ukuranModal,
-  pressKanan,
-  pressKiri,
-  list,
   dataList,
 }) => {
   const navigation = useNavigation();
   const slide = React.useRef(new Animated.Value(300)).current;
-  // console.log("data kerabat :", dataList);
   const slideUp = () => {
     // Will change slide up the bottom sheet
     Animated.timing(slide, {
@@ -61,9 +53,6 @@ const BottomSheet = ({
     }, 800);
   };
 
-  const navHandle = () => {
-    navigation.navigate("Pendaftaran Poli");
-  };
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
       <Pressable style={ukuranModal}>
@@ -71,64 +60,38 @@ const BottomSheet = ({
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>{judul}</Text>
-          <Text style={{ fontSize: 14, color: "grey", marginTop: 6 }}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "grey",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+          >
             {subjudul}
           </Text>
-          {list ? (
-            <View>
-              <ButtonPrimary
-                title={"+ Tambahkan Kerabat"}
-                onPress={navHandle}
-              />
-              {dataList ? (
-                <FlatList
-                  data={dataList}
-                  renderItem={({ item }) => (
-                    <CardButtonNavComponent
-                      title={item.NAMA_PAS}
-                      description={"Ini Desc List Kerabat"}
-                      onPress={"Pilih Poli"}
-                      data={item}
-                      warna={"blue"}
-                    />
-                  )}
-                />
-              ) : (
-                <Text>
-                  Belum ada Kerabat yang terdaftar, silahkan klik tambahkan
-                  kerabat.
-                </Text>
-              )}
-            </View>
-          ) : (
-            <View
-              style={{
-                marginTop: 12,
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 8,
-              }}
-            >
-              <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
-                <Text style={[GlobalStyles.h4, { color: WARNA.primary }]}>
-                  {buttonKiri}
-                </Text>
-              </TouchableOpacity>
 
-              <TouchableOpacity style={styles.btnKanan} onPress={pressKanan}>
-                <Text style={[GlobalStyles.h4, { color: WARNA.white }]}>
-                  {buttonKanan}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <FlatList
+            data={dataList}
+            renderItem={({ item }) => (
+              <CardButtonNavComponent
+                data={item.kd_poli}
+                title={item.title}
+                description={item.desc}
+                onPress={item.to}
+                warna={item.warna}
+                imgSource={item.img}
+              />
+            )}
+            keyExtractor={(item) => item.kd_poli}
+          />
         </Animated.View>
       </Pressable>
     </Pressable>
   );
 };
 
-export default BottomSheet;
+export default BottomSheetMenu;
 
 const styles = StyleSheet.create({
   backdrop: {
