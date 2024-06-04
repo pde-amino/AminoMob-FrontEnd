@@ -85,7 +85,8 @@ export const Pendaftaran = () => {
               fontWeight: "bold",
               color: WARNA.secondary,
             }}>
-            Pengisian Data Diri {jnsMenu}
+            Pengisian Data Diri
+            {/* {jnsMenu} */}
           </Text>
           <View style={{ gap: 8 }}>
             <TextInputIconComponent

@@ -6,198 +6,88 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Linking,
-  Image,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
-import { Button } from "react-native";
-import ConfirmModal from "../../../components/ConfirmModal";
-import DialogComponent from "../../../components/DialogComponent";
 import BottomSheet from "../../../components/BottomSheet";
-import DropdownComponent from "../../../components/DropdownComponent";
-import DropdownTesting from "../../../components/DropdownTesting";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
-import DatePicker from "../../../components/DatePicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 const { height, width } = Dimensions.get("window");
 
 const LoginScreen = () => {
-  const [status, setStatus] = React.useState(false);
+  const [status, setStatus] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const navigation = useNavigation();
+  const { auth, setAuth } = useContext(AuthContex);
+  console.log("Ini Data Auth :", auth);
+  const handleUsernameChange = (input) => {
+    setUsername(input);
+    const onlyNumbers = /^[0-9]+$/.test(input);
+    setUsernameError(onlyNumbers ? "" : "Cuma boleh pakai angka");
+  };
+
+  const handlePasswordChange = (input) => {
+    setPassword(input);
+    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
+      input
+    );
+    setPasswordError(
+      containsSpecialChar ? "Tidak boleh menggunakan karakter khusus" : ""
+    );
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        `http://192.168.5.5:8080/login`,
+        {
+          user: username,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        }
+      );
+
+      const userInfo = response.data;
+
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setAuth(userInfo);
+      console.log("ini user info:", userInfo);
+      navigation.replace("Home Screen");
+
+      // if (userInfo.message) {
+      //   console.log("Login berhasil. Token:", userInfo);
+      //   setAuth(userInfo);
+      //   navigation.replace("Amino Care");
+      // } else {
+      //   console.log("Login gagal, pesan kesalahan:", userInfo.message);
+      // }
+    } catch (error) {
+      Alert.alert("Haii", "Sepertinya password atau nomor HP anda salah");
+      console.log("Login Error:", error);
+    }
+  };
 
   const handlePasienLama = () => {
-    // Lakukan aksi konfirmasi di sini
     navigation.navigate("Signup Lama");
     setStatus(false);
   };
 
   const handlePasienBaru = () => {
-    // Lakukan aksi pembatalan di sini
     navigation.navigate("Signup Baru");
     setStatus(false);
-  };
-
-  // State untuk menyimpan input pengguna
-  // const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  // const [emailError, setEmailError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  // const [error, setError] = useState("");
-
-  const navigation = useNavigation();
-
-  const handleUsernameChange = (input) => {
-    setUsername(input);
-    // Validasi untuk username hanya berisi angka
-    const onlyNumbers = /^[0-9]+$/.test(input);
-    if (!onlyNumbers) {
-      setUsernameError("Cuma boleh pakai angka");
-    } else {
-      setUsernameError("");
-    }
-  };
-
-  const handlePasswordChange = (input) => {
-    setPassword(input);
-    // Validasi untuk password tidak boleh mengandung karakter khusus
-    const containsSpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(
-      input
-    );
-    if (containsSpecialChar) {
-      setPasswordError("Tidak boleh menggunakan karakter khusus");
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const { setAuth } = useContext(AuthContex);
-  const [userInfo, setUserInfo] = useState();
-  const loginData = {
-    status: "Sudah",
-    // status: "Belum",
-    // status: "Proses",
-    ids: 7,
-    token:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
-    role: "user",
-  };
-
-  const login = (username, password) => {
-    axios
-      .post(`http://192.168.5.5:8080/login`, {
-        user: username,
-        password: password,
-      })
-      .then(async (res) => {
-        const userInfo = res.data;
-
-        // Simpan userInfo ke AsyncStorage dan tangani error di sini
-        try {
-          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-          setUserInfo(userInfo);
-
-          // Periksa status respons
-          if (userInfo.status) {
-            console.log("Login berhasil. Token:", userInfo);
-            // Navigasi ke screen "Amino Care" dan kirim data token dan id
-            setAuth(userInfo);
-            navigation.replace("Amino Care");
-          } else {
-            // Tangani kesalahan login
-            const errorMessage = userInfo.message || "Kesalahan tidak dikenal";
-            console.log("Login gagal, pesan kesalahan:", errorMessage);
-          }
-        } catch (error) {
-          console.log("Gagal menyimpan userInfo ke AsyncStorage:", error);
-        }
-      })
-      .catch((error) => {
-        console.log("Login Error:", error);
-      });
-  };
-
-  const handleSubmit = async () => {
-    Linking.openURL("https://api.whatsapp.com/send?phone=6281213536824");
-    // Cetak data yang dikumpulkan di console
-    // console.log("Email:", email);
-    // console.log("Username:", username);
-    // console.log("Password:", password);
-
-    const data = {
-      user: username,
-      password: password,
-    };
-
-    try {
-      const response = await fetch("http://192.168.5.5:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Login gagal:", errorData);
-        alert(`Login gagal:\n${JSON.stringify(errorData)}`);
-        return;
-      }
-
-      // switch (result.akun) {
-      //   case "Belum Terverifikasi":
-      //     navigation.replace("Profile Screen");
-      //     break;
-      //   case "Proses Verifikasi":
-      //     navigation.replace("Profile Screen");
-      //     break;
-      //   default:
-      //     navigation.replace("Amino Care");
-      // }
-
-      const result = await response.json();
-      console.log("Login berhasil:", result.message);
-      if (result.akun == "Belum Terverifikasi") {
-        setAuth(result);
-        navigation.replace("Profile Screen");
-      }
-      if (result.akun == "Proses Verifikasi") {
-        setAuth(result);
-        navigation.replace("Profile Screen");
-      } else {
-        setAuth(result);
-        navigation.replace("Amino Care");
-      }
-    } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-      alert(
-        "Maaf sepertinya sedang ada kendala pada jaringan internet kami. Tunggu sebentar dan coba lagi."
-      );
-    }
-  };
-
-  const identitas = async () => {
-    const response = await fetch("http://192.168.5.5:8080/cariId?id=", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  };
-
-  const keRegist = () => {
-    navigation.navigate("Pendaftaran");
-  };
-
-  const sementara = () => {
-    setAuth(loginData);
-    navigation.replace("Home Screen");
   };
 
   return (
@@ -218,23 +108,22 @@ const LoginScreen = () => {
             label="Nomor RM/NIK/HP"
             placeholder="Masukkan salah satu"
             value={username}
-            type={"username"}
-            onChangeText={setUsername}
+            onChangeText={handleUsernameChange}
           />
 
           <TextInputIconComponent
             label="Kata Sandi"
-            placeholder="Masukkan kata sandi  di sini"
+            placeholder="Masukkan kata sandi di sini"
             password={true}
             value={password}
-            onChangeText={setPassword}
+            onChangeText={handlePasswordChange}
           />
         </View>
 
         <ButtonPrimary
           title="Masuk"
           disabled={!!usernameError || !!passwordError}
-          onPress={sementara}
+          onPress={handleSubmit}
         />
 
         <View style={{ flexDirection: "row" }}>

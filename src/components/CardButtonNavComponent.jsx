@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -18,17 +19,24 @@ const CardButtonNavComponent = ({
   description,
   onPress,
   imgSource,
+  alertData,
 }) => {
   const navigation = useNavigation();
+  const handlePress = () => {
+    if (onPress) {
+      navigation.navigate({
+        name: onPress,
+        params: { dataString: onPress.data },
+      });
+      console.log("OnPress Data :", onPress);
+    } else {
+      Alert.alert(alertData.title, alertData.desc);
+    }
+  };
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: warna }]}
-      onPress={() =>
-        navigation.navigate({
-          name: onPress,
-          params: { dataString: onPress.data },
-        })
-      }>
+      onPress={handlePress}>
       <View style={styles.iconContainer}>
         <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
         {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}

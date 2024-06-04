@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Button,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Avatar } from "react-native-paper";
@@ -20,9 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 import BannerComponent from "../../../components/BannerComponent";
 import ButtonSecondary from "../../../components/ButtonSecondary";
 import ConfirmModal from "../../../components/ConfirmModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileScreen = () => {
   const { data } = useContext(AuthContex);
+  const { logout } = useContext(AuthContex);
   console.log("inidarihomescreen", data);
 
   const navigation = useNavigation();
@@ -39,13 +42,13 @@ const ProfileScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("1234567890");
   const [avatarSource, setAvatarSource] = useState(null);
 
-  useEffect(() => {
-    if (data.status === "Proses") {
-      setBannerVis(true);
-    } else {
-      setBannerVis(false);
-    }
-  }, [data.status]);
+  // useEffect(() => {
+  //   if (data.status === "Proses") {
+  //     setBannerVis(true);
+  //   } else {
+  //     setBannerVis(false);
+  //   }
+  // }, [data.status]);
 
   // const handleLogout = () => {
   //   // Add your logout logic here
@@ -58,10 +61,22 @@ const ProfileScreen = () => {
 
   const displayName = maskName(name);
 
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("userInfo");
+      navigation.navigate("LoginScreen");
+      logout();
+      Alert.alert("Logout", "Anda telah berhasil logout.");
+    } catch (error) {
+      Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
+      console.error("Error removing userInfo from AsyncStorage", error);
+    }
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent title="Profil" />
-      {banner && (
+      {/* {banner && (
         <View style={{ marginHorizontal: 20, justifyContent: "center" }}>
           <BannerComponent
             visible={banner}
@@ -77,69 +92,68 @@ const ProfileScreen = () => {
             colorIcon={"white"}
           />
         </View>
-      )}
+      )} */}
       <ScrollView>
         <View
           style={{
             alignItems: "center",
             marginTop: 16,
             flex: 2,
-          }}
-        >
+          }}>
           <Avatar.Image
             size={80}
             source={require("../../../../assets/avatar.png")}
           />
         </View>
-        {data.status === "Sudah" ? (
-          <View style={{ gap: 12, flex: 2 }}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={GlobalStyles.h2}>{name}</Text>
-            </View>
-            <View style={{ marginHorizontal: 20 }}>
-              <Text style={GlobalStyles.h4}>Alamat</Text>
-              <Text>{address}</Text>
-            </View>
-            <Divider />
-            <View style={{ marginHorizontal: 20 }}>
-              <Text style={GlobalStyles.h4}>Alamat</Text>
-              <Text>{address}</Text>
-            </View>
-            <Divider />
-            <View style={{ marginHorizontal: 20 }}>
-              <Text style={GlobalStyles.h4}>Alamat</Text>
-              <Text>{address}</Text>
-            </View>
-            <Divider />
-            <View style={{ marginHorizontal: 20 }}>
-              <Text style={GlobalStyles.h4}>Alamat</Text>
-              <Text>{address}</Text>
-            </View>
-            <Divider />
+        {/* {data.status === "Sudah" ? ( */}
+        <View style={{ gap: 12, flex: 2 }}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={GlobalStyles.h2}>{name}</Text>
           </View>
-        ) : (
+          <View style={{ marginHorizontal: 20 }}>
+            <Text style={GlobalStyles.h4}>Alamat</Text>
+            <Text>{address}</Text>
+          </View>
+          <Divider />
+          <View style={{ marginHorizontal: 20 }}>
+            <Text style={GlobalStyles.h4}>Alamat</Text>
+            <Text>{address}</Text>
+          </View>
+          <Divider />
+          <View style={{ marginHorizontal: 20 }}>
+            <Text style={GlobalStyles.h4}>Alamat</Text>
+            <Text>{address}</Text>
+          </View>
+          <Divider />
+          <View style={{ marginHorizontal: 20 }}>
+            <Text style={GlobalStyles.h4}>Alamat</Text>
+            <Text>{address}</Text>
+          </View>
+          <Divider />
+        </View>
+        {/* ) : (
           <View style={{ gap: 12, flex: 2 }}>
             <View style={{ alignItems: "center" }}>
               <Text style={GlobalStyles.h2}>{displayName}</Text>
             </View>
           </View>
-        )}
+        )} */}
 
         <View style={GlobalStyles.btnContainer}>
-          {data.status === "Sudah" ? (
-            <ButtonPrimary
-              title="Edit Profil"
-              onPress={() => navigation.navigate("Edit Profil")}
-            />
+          <ButtonPrimary
+            title="Edit Profil"
+            onPress={() => navigation.navigate("Edit Profil")}
+          />
+          {/* {data.status === "Sudah" ? (
           ) : (
             <ButtonPrimary
               title="Verifikasi Akun"
               onPress={() => navigation.navigate("VerifikasiPage")}
             />
-          )}
+          )} */}
         </View>
         <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary title={"Log Out"} onPress={null} />
+          <ButtonSecondary title={"Log Out"} onPress={handleLogout} />
         </View>
         {confirmLogout && (
           <ConfirmModal

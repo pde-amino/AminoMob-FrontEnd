@@ -12,7 +12,7 @@ const InformasiUmum = () => {
   const Menus = [
     {
       kd_poli: "2",
-      nm_poli: "Jadmal Dokter",
+      nm_poli: "Jadwal Dokter Poli",
       icon: "home",
       title: "Account",
       to: "Informasi Dokter",
@@ -25,24 +25,6 @@ const InformasiUmum = () => {
       title: "Information",
       to: "InfoTT",
       color: "green",
-    },
-    {
-      kd_poli: "2",
-      nm_poli: "Tele Konseling",
-      icon: "question-answer",
-      title: "Klinik Umum",
-      to: "DoctorScreen",
-      params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "grey",
-    },
-    {
-      kd_poli: "2",
-      nm_poli: "Kopi 24",
-      icon: "chat",
-      title: "Web View",
-      to: "Web View",
-      // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
-      color: "grey",
     },
   ];
 

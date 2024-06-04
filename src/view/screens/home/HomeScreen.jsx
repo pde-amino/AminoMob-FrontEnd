@@ -12,6 +12,7 @@ import {
   StatusBar,
   Image,
   Linking,
+  Alert,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -44,6 +45,7 @@ const HomeScreen = () => {
       title: "Layanan RS (Non BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien Non BPJS",
       to: "LayananNonBPJS",
+
       warna: WARNA.primary,
       kondisi: false,
     },
@@ -52,7 +54,12 @@ const HomeScreen = () => {
       source: require("../../../../assets/icon32.png"),
       title: "Layanan RS (BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
-      to: "Informasi Rumah Sakit",
+      // belumAda: true,
+      to: false,
+      alert: {
+        title: "Peringatan !!!",
+        desc: "Fasilitan BPJS hanya terdapat pada Aplikasi Mobile JKN",
+      },
       warna: WARNA.primary,
     },
     {
@@ -175,6 +182,7 @@ const HomeScreen = () => {
                   colorIcon={item.color}
                   imgSource={item.source}
                   warna={item.warna}
+                  alertData={item.alert}
                 />
               )}
             />

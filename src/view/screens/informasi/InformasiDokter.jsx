@@ -25,6 +25,7 @@ const InformasiDokter = () => {
       try {
         const response = await axios.get(`${BASE_URL}/poli`);
         setDataPoli(response.data.daftar_poli || []); // Tambahkan fallback jika daftar_poli undefined
+        setFilteredData(response.data.daftar_poli);
         setLoading(false);
       } catch (err) {
         console.log("Error Informasi Dokter", err);
