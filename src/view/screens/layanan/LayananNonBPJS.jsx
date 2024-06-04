@@ -126,16 +126,18 @@ export default function LayananNonBPJS() {
 
   const getDataKerabat = () => {
     axios
-      .get(`${BASE_URL}/daftarKerabat/${auth.ids}`, {
+      .get(`${BASE_URL}/daftarKerabat/7`, {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${auth.toker}`,
         },
       })
       .then((response) => {
         setDataKerabat(response.data.daftar_kerabat);
       })
       .catch((err) => {
-        setDataKerabat(false);
+        Alert.alert(
+          "Sepertinya sedang ada masalah dengan Server kami. Mohon ulangi beberapa saat lagi"
+        );
       });
   };
 
@@ -216,8 +218,7 @@ export default function LayananNonBPJS() {
           ukuranModal={{ width: "100%", height: "80%" }}
           setStatus={setKerabat}
           judul="List Kerabat"
-          list={true}
-          dataList={dataKerabat}
+          listKerabat={dataKerabat}
         />
       ) : null}
     </SafeAreaView>

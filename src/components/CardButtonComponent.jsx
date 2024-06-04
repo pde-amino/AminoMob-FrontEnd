@@ -24,8 +24,7 @@ const CardButtonComponent = ({
     <View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: warna }]}
-        onPress={onPress}
-      >
+        onPress={onPress}>
         <View style={styles.iconContainer}>
           <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
           {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}
