@@ -50,7 +50,6 @@ export const PilihPoli = () => {
   const [buttomSheet, setButtomSheet] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
-  const kerabat = route.params.kerabat;
   const { jnsMenu } = route.params;
 
   const [filtDokter, setFiltDokter] = useState("");
@@ -118,6 +117,19 @@ export const PilihPoli = () => {
   };
 
   const handleRegister = () => {
+    const formattedDate = date.toISOString().split("T")[0];
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    console.log(
+      "Ajukan booking: ",
+      formattedDate,
+      formattedTime,
+      value,
+      value1,
+      value2
+    );
     if (!kerabat) {
       console.log("Diri Sendiri");
     } else {
@@ -161,6 +173,10 @@ export const PilihPoli = () => {
     status_byr: "-",
     jns_pas: "Diri Sendiri",
   };
+
+  const minimumDate = new Date();
+  minimumDate.setDate(minimumDate.getDate() + 1);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
@@ -170,27 +186,16 @@ export const PilihPoli = () => {
       />
       <ScrollView>
         <View style={GlobalStyles.Content}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              color: WARNA.secondary,
-            }}>
-            Pengisian Data Diri {jnsMenu}
-          </Text>
-          {kerabat ? (
-            <ButtonPrimary title={"Daftar Kerabat"} onPress={setButtomSheet} />
-          ) : null}
-
           <View style={{ gap: 8 }}>
+            <Text>Nama Pasien</Text>
+            {/* <Text>{item.title}</Text> */}
             <View>
               {showPicker && Platform.OS === "android" && (
                 <DateTimePicker
-                  timeZoneOffsetInMinutes={420} // Waktu Indonesia Barat (UTC+7)
                   mode="date"
                   onChange={berubah}
                   value={date}
-                  minimumDate={new Date()}
+                  minimumDate={minimumDate}
                 />
               )}
 
@@ -315,7 +320,8 @@ export const PilihPoli = () => {
           style={{
             width: "90%",
             marginLeft: 20,
-          }}>
+          }}
+        >
           <ButtonPrimary
             title="Ajukan Booking"
             onPress={handleRegister}

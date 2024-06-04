@@ -15,18 +15,20 @@ import {
   ScrollView,
 } from "react-native";
 import TestingWeb from "../view/screens/web/TestingWeb";
-import RegistrationScreen from "../view/screens/auth/SignupScreenBaru";
+import RegistrationScreen from "../view/screens/auth/SignupScreen";
 import KlinikUmum from "../view/screens/poli/KlinikUmum";
 import { IconButton, MD3Colors } from "react-native-paper";
 import LoginScreen from "../view/screens/auth/LoginScreen";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import TestingScreen from "../view/screens/home/TestingScreen";
-import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
+import { TambahPasien } from "../view/screens/pendaftaran/TambahPasien";
 import { AuthContex } from "../contex/AuthProvider";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import Swafoto from "../contex/SwaFoto";
 import VerifikasiPage from "../contex/VerifikasiPage";
+import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
+import ListPasien from "../view/screens/pendaftaran/ListPasien";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -182,7 +184,8 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
@@ -225,7 +228,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Riwayat"
-        component={FavoriteScreen}
+        component={RiwayatKunjungan}
       />
       <Tabs.Screen
         options={{
@@ -238,8 +241,8 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="Bantuan"
-        component={VerifikasiPage}
+        name="Daftar"
+        component={ListPasien}
       />
       <Tabs.Screen
         options={{

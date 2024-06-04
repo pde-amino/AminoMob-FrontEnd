@@ -12,15 +12,14 @@ import LoginScreen from "../view/screens/auth/LoginScreen";
 import PoliInformation from "../view/screens/poli/PoliInformation";
 import { Regist } from "../view/screens/pendaftaran/Regist";
 import OnboardingScreen from "../view/screens/home/OnboardingScreen";
-import SignupScreenBaru from "../view/screens/auth/SignupScreenBaru";
-import SignupScreenLama from "../view/screens/auth/SignupScreenLama";
+import SignupScreen from "../view/screens/auth/SignupScreen";
 import HomeTelekonseling from "../view/screens/telekonseling/HomeTelekonseling";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import FaqHomeScreen from "../view/screens/faq/FaqHomeScreen";
-import { Pendaftaran } from "../view/screens/pendaftaran/Pendaftaran";
+import { TambahPasien } from "../view/screens/pendaftaran/TambahPasien";
 import InformasiUmum from "../view/screens/informasi/InformasiUmum";
 import InformasiRumahSakit from "../view/screens/informasi/InformasiRumahSakit";
-import DiriSendiri from "../view/screens/pendaftaran/DiriSendiri";
+import ListPasien from "../view/screens/pendaftaran/ListPasien";
 import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
 import InformasiTempatTidur from "../view/screens/informasi/InformasiTempatTidur";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
@@ -41,8 +40,8 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
-        // initialRouteName="Onboarding"
-        initialRouteName="Login Screen"
+        initialRouteName="Onboarding"
+        // initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
         }}>
@@ -54,15 +53,14 @@ export default function Routes() {
         <Stack.Screen name="Klinik Umum" component={KlinikUmum} />
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
-        <Stack.Screen name="Signup Baru" component={SignupScreenBaru} />
-        <Stack.Screen name="Signup Lama" component={SignupScreenLama} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
         {/* Pendaftaran */}
         <Stack.Screen
           screenOptions={{ headerShown: true }}
-          name="Pendaftaran Poli"
-          component={PilihPoli}
+          name="Tambah Pasien Baru"
+          component={TambahPasien}
         />
         <Stack.Screen
           screenOptions={{ headerShown: true }}
@@ -71,8 +69,8 @@ export default function Routes() {
         />
         <Stack.Screen
           screenOptions={{ headerShown: true }}
-          name="Dirisendiri"
-          component={DiriSendiri}
+          name="List Pasien"
+          component={ListPasien}
         />
         {/* Niat */}
         <Stack.Group>
@@ -84,14 +82,7 @@ export default function Routes() {
               title: "Profile",
             }}
           />
-          <Stack.Screen
-            name="Daftar Online"
-            screenOptions={{ headerShown: true }}
-            component={DiriSendiri}
-            options={{
-              title: "Masuk",
-            }}
-          />
+
           <Stack.Screen
             name="Informasi Rumah Sakit"
             component={InformasiRumahSakit}

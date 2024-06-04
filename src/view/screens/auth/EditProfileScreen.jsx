@@ -37,14 +37,7 @@ export default function EditProfileScreen() {
           // password={(data.status = "Success" ? true : false)}
           maskValue={data.status === "Sudah" ? false : true}
         />
-        <TextInputIconComponent
-          label={"No Rekam Medis"}
-          placeholder={"Nomor Rekam Medis Anda"}
-          type={"username"}
-          value={RM}
-          onChangeText={setRM}
-          maskValue={data.status === "Sudah" ? false : true}
-        />
+
         <TextInputIconComponent
           label={"Alamat"}
           placeholder={"Alamat Lengkap Anda"}
@@ -53,7 +46,7 @@ export default function EditProfileScreen() {
           maskValue={data.status === "Sudah" ? false : true}
         />
         <TextInputIconComponent
-          label={"Nomor Handphone Anda"}
+          label={"Nomor Handphone"}
           placeholder={"Nomor HP yang bisa dihubungi"}
           type={"username"}
           value={phone}

@@ -164,7 +164,7 @@ const VerifikasiPage = () => {
             style={GlobalStyles.cekBox}
             color={WARNA.primary}
             label="Pastikan foto yang anda kirim tajam dan jelas"
-            labelStyle={{ fontSize: 13, color: "#3e3e3e" }}
+            labelStyle={GlobalStyles.textBiasa}
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
               setChecked(!checked);

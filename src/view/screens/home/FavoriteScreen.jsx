@@ -6,9 +6,8 @@ import HeaderComponent from "../../../components/HeaderComponent";
 function FavoriteScreen() {
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent title={"Riwayat"} />
       <View style={GlobalStyles.Content}>
-        <Text>Riwayat Screen </Text>
+        <Text>Favorite Screen </Text>
       </View>
     </SafeAreaView>
   );
