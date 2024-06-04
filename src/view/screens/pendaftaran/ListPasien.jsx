@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
+import { AuthContex } from "../../../contex/AuthProvider";
 
 const DATA = [
   {
@@ -36,15 +37,21 @@ const Item = ({ item, onPress }) => (
   </TouchableOpacity>
 );
 
-const cekKerabat = () => {
-  axios.get(`${BASE_URL}/`);
-};
-
 export default function ListPasien() {
   const navigation = useNavigation();
   // const [selectedId, setSelectedId] = useState();
   const [btmTambah, setBtmtambah] = useState(false);
-  const [adaKerabat, setAdaKerabat] = useState("");
+  const [adaKerabat, setAdaKerabat] = useState(false);
+
+  const { auth } = useContext(AuthContex);
+
+  const cekKerabat = () => {
+    axios.get(`${BASE_URL}/daftarKerabat/${auth.ids}`).then((res) => {
+      setAdaKerabat(true);
+    });
+  };
+
+  cekKerabat();
 
   const renderItem = ({ item }) => {
     return (
@@ -65,12 +72,12 @@ export default function ListPasien() {
       <HeaderComponent title={"Daftar Pasien"} />
       <View style={GlobalStyles.Content}>
         <View style={GlobalStyles.btnFullContainer}>
-          <ButtonPrimary title={"Tambahkan Keluarga"} onPress={setBtmtambah} />
+          <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
         </View>
         {adaKerabat ? (
           <FlatList
             style={{ width: "100%" }}
-            data={DATA}
+            data={cekKerabat}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             // extraData={selectedId}
@@ -87,8 +94,8 @@ export default function ListPasien() {
           subjudul="Jika sudah punya No. Rekam Medis pilih Sudah"
           buttonKiri="Belum"
           buttonKanan="Sudah"
-          // pressKiri={orangLain}
-          pressKanan={() => navigation.navigate("Tambah Pasien Baru")}
+          pressKiri={() => navigation.navigate("Tambah Pasien Baru")}
+          // pressKanan={() => navigation.navigate("Tambah Pasien Baru")}
         />
       )}
     </SafeAreaView>
