@@ -33,6 +33,8 @@ import SearchPoli from "../view/screens/informasi/SearchDokter";
 import SearchPage from "../view/screens/informasi/SearchDokter";
 import SearchDokter from "../view/screens/informasi/SearchDokter";
 import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
+import { TambahPasienLama } from "../view/screens/pendaftaran/TambahPasienLama";
+import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +46,8 @@ export default function Routes() {
         // initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -57,21 +60,11 @@ export default function Routes() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
         {/* Pendaftaran */}
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="Tambah Pasien Baru"
-          component={TambahPasien}
-        />
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="Pilih Poli"
-          component={PilihPoli}
-        />
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="List Pasien"
-          component={ListPasien}
-        />
+        <Stack.Screen name="Tambah Pasien Baru" component={TambahPasien} />
+        <Stack.Screen name="Tambah Pasien Lama" component={TambahPasienLama} />
+        <Stack.Screen name="Pilih Poli" component={PilihPoli} />
+        <Stack.Screen name="List Pasien" component={ListPasien} />
+        <Stack.Screen name="List Pasien Data" component={InfoListPasien} />
         {/* Niat */}
         <Stack.Group>
           <Stack.Screen

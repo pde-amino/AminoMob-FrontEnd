@@ -50,10 +50,15 @@ export const PilihPoli = () => {
   const [buttomSheet, setButtomSheet] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
-  const { jnsMenu } = route.params;
+  const selectedItem = route.params;
+
+  // Log selectedItem to console
+  // useEffect(() => {
+  //   console.log("selectedItem:", selectedItem);
+  // }, [selectedItem]);
 
   const [filtDokter, setFiltDokter] = useState("");
-  console.log("data dari data kerabat:", route.params.kerabat);
+  // console.log("data dari data kerabat:", route.params.kerabat);
 
   const extractDay = (dateString) => {
     return dateString.split(" ")[0];
@@ -130,11 +135,11 @@ export const PilihPoli = () => {
       value1,
       value2
     );
-    if (!kerabat) {
-      console.log("Diri Sendiri");
-    } else {
-      console.log("Kerabat");
-    }
+    // if (!kerabat) {
+    //   console.log("Diri Sendiri");
+    // } else {
+    //   console.log("Kerabat");
+    // }
   };
 
   console.log("ini pic tgl :", extractDay(dateOfBirth));
@@ -174,161 +179,158 @@ export const PilihPoli = () => {
     jns_pas: "Diri Sendiri",
   };
 
+  console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
+
   const minimumDate = new Date();
   minimumDate.setDate(minimumDate.getDate() + 1);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent
         title={"Pilih Poli"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
-      <ScrollView>
-        <View style={GlobalStyles.Content}>
-          <View style={{ gap: 8 }}>
-            <Text>Nama Pasien</Text>
-            {/* <Text>{item.title}</Text> */}
-            <View>
-              {showPicker && Platform.OS === "android" && (
-                <DateTimePicker
-                  mode="date"
-                  onChange={berubah}
-                  value={date}
-                  minimumDate={minimumDate}
-                />
-              )}
 
-              {!showPicker && (
-                <Pressable onPress={toggleShowDate}>
-                  <TextInput
-                    style={styles.tglPilihan}
-                    editable={false}
-                    placeholder={"Pilih Tanggal Periksa"}
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                  />
-                </Pressable>
-              )}
-            </View>
+      <View style={{ margin: 20 }}>
+        <Text>Nama Pasien</Text>
+        <Text style={GlobalStyles.h4}>{selectedItem.nm_pasien}</Text>
+      </View>
+      <View style={GlobalStyles.Content}>
+        <View>
+          {showPicker && Platform.OS === "android" && (
+            <DateTimePicker
+              mode="date"
+              onChange={berubah}
+              value={date}
+              minimumDate={minimumDate}
+            />
+          )}
 
-            <View style={styles.containerDrop}>
-              <Dropdown
-                style={[
-                  styles.dropdown,
-                  isFocus && {
-                    borderColor: WARNA.primary,
-                    backgroundColor: WARNA.white,
-                  },
-                ]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                search={false}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={data}
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isFocus ? "Pilih Jam Periksa " : ""}
-                value={value}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
-                onChange={(item) => {
-                  setValue(item.value);
-                  setIsFocus(false);
-                }}
+          {!showPicker && (
+            <Pressable onPress={toggleShowDate}>
+              <TextInput
+                style={styles.tglPilihan}
+                editable={false}
+                placeholder={"Pilih Tanggal Periksa"}
+                value={dateOfBirth}
+                onChangeText={setDateOfBirth}
               />
-            </View>
-            {datas ? (
-              <View style={styles.containerDrop}>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocus1 && {
-                      borderColor: WARNA.primary,
-                      backgroundColor: WARNA.white,
-                    },
-                  ]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  search={true}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={datas}
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={!isFocus1 ? "Pilih Poliklinik " : ""}
-                  searchPlaceholder="Search..."
-                  value={value2}
-                  onFocus={() => setIsFocus1(true)}
-                  onBlur={() => setIsFocus1(false)}
-                  onChange={(item) => {
-                    setValue2(item.value);
-                    setIsFocus1(false);
-                    jadwalDok(item.value); // Memanggil fungsi jadwalDok dengan parameter
-                  }}
-                />
-              </View>
-            ) : null}
-            {filtDokter ? (
-              <View style={styles.containerDrop}>
-                <Dropdown
-                  style={[
-                    styles.dropdown,
-                    isFocus2 && {
-                      borderColor: WARNA.primary,
-                      backgroundColor: WARNA.white,
-                    },
-                  ]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  search={false}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={filtDokter}
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={!isFocus2 ? "Pilih Dokter " : ""}
-                  value={value1}
-                  onFocus={() => setIsFocus2(true)}
-                  onBlur={() => setIsFocus2(false)}
-                  onChange={(item) => {
-                    setValue1(item.value);
-                    setIsFocus2(false);
-                  }}
-                />
-              </View>
-            ) : null}
-          </View>
+            </Pressable>
+          )}
         </View>
 
-        <Checkbox.Item
-          style={{ flexDirection: "row-reverse", fontSize: 12 }}
-          color={WARNA.primary}
-          label="Pastikan data sudah benar"
-          labelStyle={{ fontSize: 13 }}
-          status={checked ? "checked" : "unchecked"}
-          onPress={() => {
-            setChecked(!checked);
-          }}
-        />
-
-        <View
-          style={{
-            width: "90%",
-            marginLeft: 20,
-          }}
-        >
-          <ButtonPrimary
-            title="Ajukan Booking"
-            onPress={handleRegister}
-            disabled={!checked || !value || !value1 || !value2}
+        <View style={styles.containerDrop}>
+          <Dropdown
+            style={[
+              styles.dropdown,
+              isFocus && {
+                borderColor: WARNA.primary,
+                backgroundColor: WARNA.white,
+              },
+            ]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            search={false}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={data}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? "Pilih Jam Periksa " : ""}
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={(item) => {
+              setValue(item.value);
+              setIsFocus(false);
+            }}
           />
         </View>
-      </ScrollView>
+        {datas ? (
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                isFocus1 && {
+                  borderColor: WARNA.primary,
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={true}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={datas}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus1 ? "Pilih Poliklinik " : ""}
+              searchPlaceholder="Search..."
+              value={value2}
+              onFocus={() => setIsFocus1(true)}
+              onBlur={() => setIsFocus1(false)}
+              onChange={(item) => {
+                setValue2(item.value);
+                setIsFocus1(false);
+                jadwalDok(item.value); // Memanggil fungsi jadwalDok dengan parameter
+              }}
+            />
+          </View>
+        ) : null}
+        {filtDokter ? (
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                isFocus2 && {
+                  borderColor: WARNA.primary,
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={false}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={filtDokter}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus2 ? "Pilih Dokter " : ""}
+              value={value1}
+              onFocus={() => setIsFocus2(true)}
+              onBlur={() => setIsFocus2(false)}
+              onChange={(item) => {
+                setValue1(item.value);
+                setIsFocus2(false);
+              }}
+            />
+          </View>
+        ) : null}
+      </View>
+
+      <Checkbox.Item
+        style={{ flexDirection: "row-reverse", fontSize: 12 }}
+        color={WARNA.primary}
+        label="Pastikan data sudah benar"
+        labelStyle={{ fontSize: 13 }}
+        status={checked ? "checked" : "unchecked"}
+        onPress={() => {
+          setChecked(!checked);
+        }}
+      />
+
+      <View style={GlobalStyles.btnContainer}>
+        <ButtonPrimary
+          title="Ajukan Booking"
+          onPress={handleRegister}
+          disabled={!checked || !value || !value1 || !value2}
+        />
+      </View>
+
       {buttomSheet ? (
         <BottomSheet
           setStatus={setButtomSheet}

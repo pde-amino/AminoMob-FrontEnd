@@ -87,7 +87,7 @@ export const TambahPasienLama = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
-        title={"Tambah Data Pasien Baru"}
+        title={"Daftarkan Pasien Lama"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />

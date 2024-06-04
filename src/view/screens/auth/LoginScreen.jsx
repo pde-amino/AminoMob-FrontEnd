@@ -51,7 +51,7 @@ const LoginScreen = () => {
     status: "Sudah",
     // status: "Belum",
     // status: "Proses",
-    ids: 7,
+    id: 7,
     token:
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
     role: "user",
@@ -122,19 +122,9 @@ const LoginScreen = () => {
       //   console.log("Login gagal, pesan kesalahan:", userInfo.message);
       // }
     } catch (error) {
-      Alert.alert("Haii", "Sepertinya password atau nomor HP anda salah");
+      Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       console.log("Login Error:", error);
     }
-  };
-
-  const handlePasienLama = () => {
-    navigation.navigate("Signup Lama");
-    setStatus(false);
-  };
-
-  const handlePasienBaru = () => {
-    navigation.navigate("Signup Baru");
-    setStatus(false);
   };
 
   return (
@@ -146,12 +136,14 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View
             style={{
               alignItems: "center",
               marginBottom: 36,
-            }}>
+            }}
+          >
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
             </Text>

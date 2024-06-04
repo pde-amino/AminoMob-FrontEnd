@@ -97,7 +97,7 @@ export const TambahPasien = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
-        title={"Tambah Data Pasien Baru"}
+        title={"Daftarkan Pasien Baru"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
@@ -146,6 +146,12 @@ export const TambahPasien = () => {
               placeholder={"Masukan Nama Lengkap Anda"}
               type={"nama"}
               value={nmLengkap}
+            />
+
+            <TextInputIconComponent
+              label={"No Handphone*"}
+              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
+              type={"username"}
             />
 
             <TextInputIconComponent
@@ -397,12 +403,6 @@ export const TambahPasien = () => {
                 }}
               />
             </View>
-
-            <TextInputIconComponent
-              label={"No Handphone"}
-              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-              type={"username"}
-            />
           </View>
         </View>
 
