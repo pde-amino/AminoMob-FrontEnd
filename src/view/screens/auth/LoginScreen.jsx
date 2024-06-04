@@ -25,8 +25,6 @@ const LoginScreen = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const { setAuth } = useContext(AuthContex);
-
   const navigation = useNavigation();
   const { auth, setAuth } = useContext(AuthContex);
   console.log("Ini Data Auth :", auth);
