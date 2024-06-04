@@ -89,13 +89,13 @@ const HomeScreen = () => {
     Linking.openURL("https://wa.me/6281213536824");
   };
 
-  useEffect(() => {
-    if (auth.status === "Belum") {
-      setBannerVisible(true);
-    } else {
-      setBannerVisible(false);
-    }
-  }, [auth.status]);
+  // useEffect(() => {
+  //   if (auth.status === "Belum") {
+  //     setBannerVisible(true);
+  //   } else {
+  //     setBannerVisible(false);
+  //   }
+  // }, [auth.status]);
 
   // const handleKondisi = (item) => {
   //   if (item.kondisi) {

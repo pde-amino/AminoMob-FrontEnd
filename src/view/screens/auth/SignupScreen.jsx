@@ -1,45 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
   ScrollView,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Dimensions,
   Alert,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
-import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import HomeScreen from "../home/HomeScreen";
-import { Ionicons } from "react-native-vector-icons";
-import TextInputComponent from "../../../components/TextInputComponent";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
-import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getTokenSourceMapRange } from "typescript";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const { width } = Dimensions.get("window");
 
 const SignupScreen = () => {
+  const navigation = useNavigation();
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [showConfPassword, setShowConfPassword] = useState(false);
   const [confPasswordError, setConfPasswordError] = useState("");
   const [noHP, setHP] = useState("");
   const [noKTP, setKTP] = useState("");
   const [nmLengkap, setNama] = useState("");
-  const [alamat, setAlamat] = useState("");
-
-  const [user, setUser] = useState([]);
-
+  // const data = {
+  //   telp: noHP,
+  //   nik: noKTP,
+  //   password: password,
+  //   confirm_password: confirmPassword,
+  // };
   useEffect(() => {
     validatePasswords();
   }, [password, confirmPassword]);
@@ -68,49 +64,55 @@ const SignupScreen = () => {
       Alert.alert("Maaf, mohon pastikan password benar");
       return;
     }
-
-    const data = {
-      NO_RM: username,
-      // telp: noTelp,
-      password: password,
-      confirm_password: confirmPassword,
-    };
-
     try {
-      const token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTYxNzAyMTksImV4cCI6MTcxNjI1NjYxOSwidWlkIjoiNCIsIm5vX3JrbV9tZWRpcyI6bnVsbH0.th7rafe55P0xDcpepQoVkJzbqXvrj0Bm_Q0LCY8vyAo";
-      const register = await axios.post(`${BASE_URL}/register`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${BASE_URL}/register`,
+        {
+          nama: nmLengkap,
+          telp: noHP,
+          nik: noKTP,
+          password: password,
+          confirm_password: confirmPassword,
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        }
+      );
+      const userInfo = response.data;
 
-      // Assuming the response contains the user data
-      const userData = register.data;
-      await AsyncStorage.setItem("user", JSON.stringify(userData));
-      Alert.alert("Berhasil", "Registrasi berhasil!");
+      await AsyncStorage.setItem("user", JSON.stringify(userInfo));
+
+      const userData = response.data;
+      navigation.navigate("OTPInputScreen", userData);
+      console.log("alksdlkjasldkjlaksdjklasj", userData);
+      // Alert.alert(
+      //   "SUCCESS",
+      //   "Gagal menyimpan data pengguna. Silakan coba lagi." + error
+      // );
+
+      // Alert.alert(
+      //   "Error",
+      //   "Gagal menyimpan data pengguna. Silakan coba lagi." + error
+      // );
+
+      // try {
+      // } catch (error) {
+      //   console.error("Error saving user data to AsyncStorage", error);
+      // }
     } catch (error) {
       console.log("Error response", error.response);
       Alert.alert(
         "Gagal Mendaftar",
-        "Gagal Mendaftar : " + (error.response?.data?.message || error.message)
+        "Sepertinya Nomor HP atau NIK sudah didaftarkan"
       );
     }
   };
 
-  const navigation = useNavigation();
-
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-  };
-
-  const handleConfPasswordChange = (text) => {
-    setConfPassword(text);
-  };
-
   const daftarAkun = () => {
-    navigation.navigate("Login Screen");
+    navigation.navigate("LoginScreen");
   };
 
   return (
@@ -141,17 +143,11 @@ const SignupScreen = () => {
               onChangeText={setHP}
             />
             <TextInputIconComponent
-              label={"Alamat"}
-              // type={"nomor"}
-              value={alamat}
-              onChangeText={setAlamat}
-            />
-            <TextInputIconComponent
               label={"Buat Kata Sandi"}
               placeholder={"Buat Kata Sandi"}
               type={"password"}
               value={password}
-              onChangeText={handlePasswordChange}
+              onChangeText={setPassword}
               password={true}
             />
 
@@ -164,7 +160,7 @@ const SignupScreen = () => {
               placeholder={"Masukan kata sandi lagi"}
               type={"password"}
               value={confirmPassword}
-              onChangeText={handleConfPasswordChange}
+              onChangeText={setConfPassword}
               password={true}
             />
 
@@ -193,46 +189,11 @@ const SignupScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  judul: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: WARNA.primary,
-    marginBottom: 32,
-  },
-  inputan: {
-    height: 48,
-    width: width * 0.9,
-    borderWidth: 1,
-    padding: 8,
-    margin: 4,
-    paddingHorizontal: 10,
-    backgroundColor: "white",
-    borderRadius: 8,
-  },
-  showHideButton: {
-    padding: 10,
-  },
-  tombol: {
-    marginTop: 10,
-    backgroundColor: "#007bff",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    alignItems: "center",
-  },
   errorText: {
     color: "red",
     fontSize: 12,
     marginBottom: 8,
     marginLeft: 5,
-  },
-  inputError: {
-    borderColor: "red",
   },
 });
 

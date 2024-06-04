@@ -1,5 +1,5 @@
 // SearchDokter.js
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
@@ -79,7 +79,9 @@ export default function SearchDokter() {
             title={item.nm_dokter}
             // description={item.nm_poli}
             imgSource={{ uri: `${item.image}` }}
-            onPress={() => console.log(`Navigating to ${item.nm_dokter}`)}
+            onPress={() =>
+              Alert.alert(`${item.nm_dokter}`, `${item.nm_dokter}`)
+            }
             warna={"#AACFD0"}
           />
         )}

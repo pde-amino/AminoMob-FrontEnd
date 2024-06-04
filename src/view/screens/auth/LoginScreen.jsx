@@ -47,15 +47,15 @@ const LoginScreen = () => {
   };
 
   const [userInfo, setUserInfo] = useState();
-  const loginData = {
-    status: "Sudah",
-    // status: "Belum",
-    // status: "Proses",
-    ids: 7,
-    token:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
-    role: "user",
-  };
+  // const loginData = {
+  //   status: "Sudah",
+  //   // status: "Belum",
+  //   // status: "Proses",
+  //   ids: 7,
+  //   token:
+  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
+  //   role: "user",
+  // };
 
   const login = (username, password) => {
     axios
@@ -72,7 +72,7 @@ const LoginScreen = () => {
           setUserInfo(userInfo);
 
           // Periksa status respons
-          if (userInfo.status) {
+          if (userInfo) {
             console.log("Login berhasil. Token:", userInfo);
             // Navigasi ke screen "Amino Care" dan kirim data token dan id
             setAuth(userInfo);
@@ -96,6 +96,8 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
+          // user: "012345678901",
+          // password: "123456",
           user: username,
           password: password,
         },

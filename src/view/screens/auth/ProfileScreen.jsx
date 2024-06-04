@@ -64,9 +64,9 @@ const ProfileScreen = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userInfo");
-      navigation.navigate("LoginScreen");
-      logout();
+      navigation.navigate("Login Screen");
       Alert.alert("Logout", "Anda telah berhasil logout.");
+      logout();
     } catch (error) {
       Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
       console.error("Error removing userInfo from AsyncStorage", error);
@@ -153,7 +153,7 @@ const ProfileScreen = () => {
           )} */}
         </View>
         <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary title={"Log Out"} onPress={handleLogout} />
+          <ButtonSecondary title={"Log Out"} onPress={() => handleLogout()} />
         </View>
         {confirmLogout && (
           <ConfirmModal

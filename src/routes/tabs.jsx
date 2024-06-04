@@ -184,8 +184,7 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
@@ -200,21 +199,21 @@ export default function HomeTabs() {
         name="Home"
         component={HomeScreen}
       />
-      {auth.role === "admin" ? (
-        <Tabs.Screen
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons
-                name={focused ? "calendar" : "calendar-outline"}
-                size={24}
-                color="grey"
-              />
-            ),
-          }}
-          name="Daftar Poli"
-          component={LoginScreen}
-        />
-      ) : null}
+      {/* {auth.role === "admin" ? ( */}
+      <Tabs.Screen
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "calendar" : "calendar-outline"}
+              size={24}
+              color="grey"
+            />
+          ),
+        }}
+        name="Daftar Poli"
+        component={LoginScreen}
+      />
+      {/* ) : null} */}
 
       <Tabs.Screen
         options={{
