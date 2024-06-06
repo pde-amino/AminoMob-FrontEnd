@@ -7,6 +7,7 @@ import {
   Button,
   SafeAreaView,
   Alert,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Avatar } from "react-native-paper";
@@ -22,68 +23,70 @@ import BannerComponent from "../../../components/BannerComponent";
 import ButtonSecondary from "../../../components/ButtonSecondary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
 
 const ProfileScreen = () => {
-  const { data } = useContext(AuthContex);
-  const { logout } = useContext(AuthContex);
-  console.log("inidarihomescreen", data);
+  const { logout, auth } = useContext(AuthContex);
+  // console.log("log yang muncul dari screen profilescreen", auth);
 
   const navigation = useNavigation();
-
-  const [banner, setBannerVis] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
-
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@gmail.com");
-  const [RM, setRM] = useState("1234567890");
-  const [phone, setPhone] = useState("1234567890");
   const [address, setAddress] = useState("123 Main St, Anytown, CA 12345");
-  const [password, setPassword] = useState("1234567890");
-  const [confirmPassword, setConfirmPassword] = useState("1234567890");
-  const [avatarSource, setAvatarSource] = useState(null);
 
-  // useEffect(() => {
-  //   if (data.status === "Proses") {
-  //     setBannerVis(true);
-  //   } else {
-  //     setBannerVis(false);
-  //   }
-  // }, [data.status]);
-  // useEffect(() => {
-  //   if (data.status === "Proses") {
-  //     setBannerVis(true);
-  //   } else {
-  //     setBannerVis(false);
-  //   }
-  // }, [data.status]);
+  const [dataUser, setDataUser] = useState(null);
 
-  // const handleLogout = () => {
-  //   // Add your logout logic here
-  //   authLogout(); // Assuming `authLogout` is a function provided by the AuthContex to log the user out
-  //   setConfirmLogout(false); // Close the confirmation modal
-  //   navigation.navigate("Login Screen"); // Navigate to the login screen or any other screen
-  // };
+  const [refreshing, setRefreshing] = useState(false);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+        },
+      });
+      console.log("FetCH Response data:", response.data); // Logging response data
 
-  const maskName = (name) => name.replace(/\B\w/g, "●");
+      const nmData = response.data.user[0];
+      setDataUser(nmData);
+      console.log("userdata", nmData);
+      console.log("userdata", nmData.nama);
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+      console.error("Error response data:", error.response?.data);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
-  const displayName = maskName(name);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userInfo");
       navigation.navigate("Login Screen");
-      Alert.alert("Logout", "Anda telah berhasil logout.");
       logout();
+      Alert.alert("Logout", "Anda telah berhasil logout.");
     } catch (error) {
       Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
       console.error("Error removing userInfo from AsyncStorage", error);
     }
   };
 
+  const onRefresh = () => {
+    setRefreshing(true); // Mulai refreshing
+    fetchData(); // Panggil fungsi fetchData untuk mengambil data terbaru
+    // setRefreshing(false); // Mulai refreshing
+  };
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent title="Profil" />
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View
           style={{
             alignItems: "center",
@@ -97,32 +100,24 @@ const ProfileScreen = () => {
           />
         </View>
 
-        <View style={{ gap: 10, flex: 2 }}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={GlobalStyles.h2}>{name}</Text>
-          </View>
-          <View style={{ marginHorizontal: 20 }}>
-            <Text style={GlobalStyles.h4}>Alamat</Text>
-            <Text>{address}</Text>
-          </View>
-          <Divider />
-          <View style={{ marginHorizontal: 20 }}>
-            <Text style={GlobalStyles.h4}>Alamat</Text>
-            <Text>{address}</Text>
-          </View>
-          <Divider />
-          <View style={{ marginHorizontal: 20 }}>
-            <Text style={GlobalStyles.h4}>Alamat</Text>
-            <Text>{address}</Text>
-          </View>
-          <Divider />
-          <View style={{ marginHorizontal: 20 }}>
-            <Text style={GlobalStyles.h4}>Alamat</Text>
-            <Text>{address}</Text>
-          </View>
-          <Divider />
-        </View>
+        {dataUser ? (
+          <View style={{ gap: 10, flex: 2 }}>
+            <View style={{ alignItems: "center", gap: 4 }}>
+              <Text style={GlobalStyles.h2}>{dataUser.nama}</Text>
+              <Text>{dataUser.telp}</Text>
+            </View>
 
+            <Divider />
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={GlobalStyles.h4}>Alamat</Text>
+              <Text>{address}</Text>
+            </View>
+
+            <Divider />
+          </View>
+        ) : (
+          <Text>Loading...</Text> // Display a loading indicator while fetching data
+        )}
         <View style={GlobalStyles.btnContainer}>
           <ButtonPrimary
             title="Edit Profil"
@@ -130,14 +125,18 @@ const ProfileScreen = () => {
           />
         </View>
         <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary title={"Log Out"} onPress={() => handleLogout()} />
+          <ButtonSecondary
+            title={"Log Out"}
+            onPress={() => setConfirmLogout(true)}
+          />
         </View>
+
         {confirmLogout && (
           <ConfirmModal
             visible={confirmLogout}
             message={"Apakah anda yakin ingin keluar?"}
             onCancel={() => setConfirmLogout(false)}
-            onConfirm={"#"}
+            onConfirm={() => handleLogout()}
             confirmButtonText={"Ya"}
             cancelButtonText={"Tidak"}
           />

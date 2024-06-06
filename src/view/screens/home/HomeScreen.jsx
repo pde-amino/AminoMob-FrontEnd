@@ -111,7 +111,6 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <StatusBar backgroundColor={WARNA.primary} />
       <View style={{ flex: 1, alignItems: "center" }}>
         <View
           style={{

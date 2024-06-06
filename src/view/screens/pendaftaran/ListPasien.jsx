@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -33,10 +34,21 @@ export default function ListPasien() {
   const [btmTambah, setBtmtambah] = useState(false);
   const [btmMenu, setBtmMenu] = useState(false);
   const [dataPasien, setDataPasien] = useState([]);
+  const [pilihPasien, setPilihPasien] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const { auth } = useContext(AuthContex);
 
-  console.log("ini adalah id auth", auth.user.id);
+  console.log("id user dari screen listpasien", auth.user.id);
+
+  const pasienLama = () => {
+    navigation.navigate("Tambah Pasien Lama");
+    setBtmtambah(false);
+  };
+  const pasienBaru = () => {
+    navigation.navigate("Tambah Pasien Baru");
+    setBtmtambah(false);
+  };
 
   const fetchData = async () => {
     try {
@@ -50,12 +62,14 @@ export default function ListPasien() {
       );
       console.log("Response data:", response.data); // Logging response data
       const data = response.data.data_kerabat;
+
       setDataPasien(data);
     } catch (error) {
       console.error("Error fetching kerabat data:", error.message);
       console.error("Error response data:", error.response?.data);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -63,14 +77,12 @@ export default function ListPasien() {
     fetchData();
   }, []);
 
-  const Menus = ({ item }) => [
+  const Menus = [
     {
       kd_poli: "1",
       title: "Poliklinik",
       desc: "Pendaftaran online poliklinik rawat jalan",
-      to: () => {
-        navigation.navigate("Pilih Poli", (selectedItem = item));
-      },
+      to: "Pilih Poli",
       // warna: "#E79903",
       warna: "#DC9203",
       img: require("../../../../assets/icon41.png"),
@@ -79,10 +91,7 @@ export default function ListPasien() {
       kd_poli: "2",
       title: "Pemeriksaan Penunjang",
       desc: "Pendaftaran Laborat dan Radiologi",
-      to: () => {
-        setJnsMenu("Penunjang");
-        setBtmPenunjang(true);
-      },
+      // to:
       // warna: "#A9BD2C",
       warna: "#8FA11E",
       img: require("../../../../assets/icon42.png"),
@@ -91,10 +100,10 @@ export default function ListPasien() {
       kd_poli: "3",
       title: "Telekonseling",
       desc: "Konsultasi online dengan Psikiater atau Psikolog pilihan Anda",
-      to: () => {
-        setJnsMenu("tele");
-        setBtmTele(true);
-      },
+      // to: () => {
+      //   setJnsMenu("tele");
+      //   setBtmTele(true);
+      // },
       // warna: "#09A0CF",
       warna: "#0293C0",
       img: require("../../../../assets/icon43.png"),
@@ -103,10 +112,10 @@ export default function ListPasien() {
       kd_poli: "4",
       title: "Terang Bulan",
       desc: "Pelayanan Fisioterapi dan Terapi Wicara yang dilakukan dirumah pasien",
-      to: () => {
-        setJnsMenu("terang");
-        setBtmTerang(true);
-      },
+      // to: () => {
+      //   setJnsMenu("terang");
+      //   setBtmTerang(true);
+      // },
       // warna: "#A557F3",
       warna: "#9335F0",
       img: require("../../../../assets/icon44.png"),
@@ -118,13 +127,24 @@ export default function ListPasien() {
       <Item
         item={item}
         onPress={() => {
-          console.log("Item clicked:", item);
+          setPilihPasien(item.no_rkm_medis);
+          console.log("Item pilihpasien:", pilihPasien);
           setBtmMenu(true);
           // navigation.navigate("Pilih Poli", (selectedItem = item));
           // console.log("Pilih Poli", selectedItem);
         }}
       />
     );
+  };
+
+  const handleMenuPress = (menuItem) => {
+    setBtmMenu(false);
+    navigation.navigate(menuItem.to, { no_rkm_medis: pilihPasien });
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
   };
 
   return (
@@ -136,34 +156,27 @@ export default function ListPasien() {
       />
       <View style={GlobalStyles.Content}>
         {loading ? (
-          <ActivityIndicator
-            animating={true}
-            color={WARNA.primary}
-            size={"large"}
-          />
+          <ActivityIndicator animating={true} color={WARNA.primary} />
         ) : dataPasien.length > 0 ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}
             renderItem={renderItem}
             keyExtractor={(item) => item.no_ktp.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         ) : (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              alignContent: "center",
-            }}
-          >
-            <Icon
-              source="account-supervisor-circle"
-              size={250}
-              color={WARNA.primary}
-            />
-            <Text style={{ fontSize: 16, maxWidth: 250 }}>
-              Belum ada data pasien sebelumnya, silakan tambah data
+          <View style={styles.containerTengah}>
+            <Icon source="account-search" size={250} color={"#73B9FC"} />
+            <Text
+              style={{
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              Belum ada data pasien, silakan tambah data
             </Text>
           </View>
         )}
@@ -172,13 +185,14 @@ export default function ListPasien() {
         <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
       </View>
 
-      {btmMenu && (
+      {btmMenu && pilihPasien && (
         <BottomSheetMenu
+          dataMenu={Menus}
           setStatus={setBtmMenu}
-          ukuranModal={{ width: "100%", height: "70%" }}
+          ukuranModal={{ width: "100%", height: "65%" }}
           judul="Menu Layanan"
           subjudul="Pilih Layanan Non BPJS"
-          dataList={Menus}
+          onMenuPress={handleMenuPress}
         />
       )}
 
@@ -190,8 +204,8 @@ export default function ListPasien() {
           subjudul="Pilih Sudah jika punya No. Rekam Medis"
           buttonKiri="Belum"
           buttonKanan="Sudah"
-          pressKiri={() => navigation.navigate("Tambah Pasien Baru")}
-          pressKanan={() => navigation.navigate("Tambah Pasien Lama")}
+          pressKiri={pasienBaru}
+          pressKanan={pasienLama}
         />
       )}
     </SafeAreaView>
@@ -216,5 +230,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+  },
+  containerTengah: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
   },
 });
