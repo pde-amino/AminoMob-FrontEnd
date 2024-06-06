@@ -34,7 +34,7 @@ import SearchPage from "../view/screens/informasi/SearchDokter";
 import SearchDokter from "../view/screens/informasi/SearchDokter";
 import EditProfileScreen from "../view/screens/auth/EditProfileScreen";
 import { TambahPasienLama } from "../view/screens/pendaftaran/TambahPasienLama";
-import InfoListPasien from "../view/screens/informasi/InfoListPasien";
+// import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import OTPInputScreen from "../view/screens/auth/OTPInputScreen";
 
 const Stack = createNativeStackNavigator();
@@ -43,11 +43,12 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
-        initialRouteName="Onboarding"
-        // initialRouteName="Login Screen"
+        // initialRouteName="Onboarding"
+        initialRouteName="Login Screen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
@@ -65,11 +66,8 @@ export default function Routes() {
           name="OTPInputScreen"
           component={OTPInputScreen}
         />
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="Tambah Pasien Baru"
-          component={TambahPasien}
-        />
+        <Stack.Screen name="Tambah Pasien Baru" component={TambahPasien} />
+        <Stack.Screen name="Tambah Pasien Lama" component={TambahPasienLama} />
         <Stack.Screen
           screenOptions={{ headerShown: true }}
           name="Pilih Poli"

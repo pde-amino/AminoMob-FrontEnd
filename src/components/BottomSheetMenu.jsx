@@ -19,7 +19,8 @@ const BottomSheetMenu = ({
   judul,
   subjudul,
   ukuranModal,
-  dataList,
+  dataMenu,
+  onMenuPress,
 }) => {
   const navigation = useNavigation();
   const slide = React.useRef(new Animated.Value(300)).current;
@@ -53,36 +54,49 @@ const BottomSheetMenu = ({
     }, 800);
   };
 
+  const renderItem = ({ item }) => (
+    <CardButtonNavComponent
+      data={item.kd_poli}
+      title={item.title}
+      description={item.desc}
+      onPress={() => onMenuPress(item)}
+      warna={item.warna}
+      imgSource={item.img}
+    />
+  );
+
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
       <Pressable style={ukuranModal}>
         <Animated.View
           style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>{judul}</Text>
+          <Text style={GlobalStyles.h3}>{judul}</Text>
           <Text
             style={{
               fontSize: 14,
               color: "grey",
-              marginTop: 10,
-              marginBottom: 10,
             }}
           >
             {subjudul}
           </Text>
 
           <FlatList
-            data={dataList}
-            renderItem={({ item }) => (
-              <CardButtonNavComponent
-                data={item.kd_poli}
-                title={item.title}
-                description={item.desc}
-                onPress={item.to}
-                warna={item.warna}
-                imgSource={item.img}
-              />
-            )}
+            data={dataMenu}
+            renderItem={renderItem}
+            // renderItem={({ item }) => (
+            //   <CardButtonNavComponent
+            //     data={item.kd_poli}
+            //     title={item.title}
+            //     description={item.desc}
+            //     onPress={() => {
+            //       item.to();
+            //       slideDown();
+            //     }}
+            //     warna={item.warna}
+            //     imgSource={item.img}
+            //   />
+            // )}
             keyExtractor={(item) => item.kd_poli}
           />
         </Animated.View>
@@ -114,29 +128,5 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 16,
-  },
-  btnKanan: {
-    width: "50%",
-    height: 48,
-    justifyContent: "center",
-    // paddingHorizontal: 24,
-    // paddingVertical: 8,
-    borderRadius: 10,
-    backgroundColor: WARNA.primary,
-    alignItems: "center",
-    // marginTop: 15,
-  },
-  btnKiri: {
-    width: "50%",
-    height: 48,
-    justifyContent: "center",
-    // paddingHorizontal: 24,
-    // paddingVertical: 8,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: WARNA.primary,
-    // backgroundColor: "#fffff",
-    alignItems: "center",
-    // marginTop: 15,
   },
 });

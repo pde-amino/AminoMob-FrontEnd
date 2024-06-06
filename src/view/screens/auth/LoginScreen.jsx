@@ -27,7 +27,8 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
   const { auth, setAuth } = useContext(AuthContex);
-  console.log("Ini Data Auth :", auth);
+  // console.log("Ini Data Auth :", auth);
+
   const handleUsernameChange = (input) => {
     setUsername(input);
     const onlyNumbers = /^[0-9]+$/.test(input);
@@ -96,10 +97,10 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
-          // user: "012345678901",
-          // password: "123456",
-          user: username,
-          password: password,
+          user: "012345678901",
+          password: "123456",
+          // user: username,
+          // password: password,
         },
         {
           headers: {
@@ -138,12 +139,14 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View
             style={{
               alignItems: "center",
               marginBottom: 36,
-            }}>
+            }}
+          >
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
             </Text>
