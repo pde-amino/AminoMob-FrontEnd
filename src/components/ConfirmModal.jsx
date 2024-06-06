@@ -5,47 +5,105 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Button } from "react-native-paper";
+import CardButtonNavComponent from "./CardButtonNavComponent";
+import CardButtonComponent from "./CardButtonComponent";
 
 const ConfirmModal = ({
   visible,
   onConfirm,
   onCancel,
+  onData,
   message,
   submessage,
   confirmButtonText,
   cancelButtonText,
+  list,
+  listData,
 }) => {
+  // State untuk menyimpan item yang dipilih
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // Handler untuk saat item ditekan
+  const handleItemPress = (item) => {
+    setSelectedItem(item); // Menyimpan item yang dipilih dalam state
+  };
+
+  // Handler untuk tombol konfirmasi
+  const handleConfirmPress = () => {
+    if (selectedItem) {
+      // Hanya memanggil onConfirm jika ada item yang dipilih
+      if (onConfirm) {
+        onConfirm(selectedItem); // Memanggil onConfirm dengan item yang dipilih
+      }
+    } else {
+      // Menampilkan pesan kesalahan jika tidak ada item yang dipilih
+      console.warn("Pilih item terlebih dahulu.");
+    }
+  };
+
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onCancel}
-    >
-      <TouchableWithoutFeedback onPress={onCancel}>
-        <View style={styles.modalBackground}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.title}>{message}</Text>
-            <Text style={styles.subtitle}>{submessage}</Text>
-
-            {/* Tombol konfirmasi */}
-            <View style={styles.buttonContainer}>
-              <Button
-                mode="contained"
-                style={styles.btnYes}
-                onPress={onConfirm}
-              >
-                {confirmButtonText}
-              </Button>
-              <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
-                {cancelButtonText}
-              </Button>
+      onRequestClose={onCancel}>
+      {list ? (
+        <TouchableWithoutFeedback onPress={onCancel}>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.title}>{message}</Text>
+              <ScrollView>
+                {listData &&
+                  listData.map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => onData(item)}>
+                      <Text>{item.label}</Text>
+                      <Text>{item.value}</Text>
+                      <Text>{item.jam_layanan}</Text>
+                    </TouchableOpacity>
+                  ))}
+              </ScrollView>
+              {/* <View style={[styles.buttonContainer, { marginTop: 12 }]}>
+                <Button
+                  mode="contained"
+                  style={styles.btnYes}
+                  onPress={handleConfirmPress} // Memanggil handleConfirmPress saat tombol ditekan
+                >
+                  {confirmButtonText}
+                </Button>
+                <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
+                  {cancelButtonText}
+                </Button>
+              </View> */}
             </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      ) : (
+        <TouchableWithoutFeedback onPress={onCancel}>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.title}>{message}</Text>
+              <Text style={styles.subtitle}>{submessage}</Text>
+              <View style={styles.buttonContainer}>
+                <Button
+                  mode="contained"
+                  style={styles.btnYes}
+                  onPress={onConfirm} // Memanggil handleConfirmPress saat tombol ditekan
+                >
+                  {confirmButtonText}
+                </Button>
+                <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
+                  {cancelButtonText}
+                </Button>
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
     </Modal>
   );
 };
@@ -58,8 +116,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContainer: {
-    width: "80%",
-    // height: 250,
+    width: "85%",
+    maxHeight: "98%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 8,

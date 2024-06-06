@@ -10,6 +10,7 @@ import { useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
 export default function SearchDokter() {
+  const WARNA = { primary: "#0A78E2", white: "#fff" };
   const route = useRoute();
   const { nameClinic, clinicId } = route.params;
   console.log("nameClinic", nameClinic);
@@ -82,7 +83,7 @@ export default function SearchDokter() {
             onPress={() =>
               Alert.alert(`${item.nm_dokter}`, `${item.nm_dokter}`)
             }
-            warna={"#AACFD0"}
+            warna={WARNA.primary}
           />
         )}
       />

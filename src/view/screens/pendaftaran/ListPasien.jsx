@@ -127,10 +127,14 @@ export default function ListPasien() {
       <Item
         item={item}
         onPress={() => {
-          setPilihPasien(item.no_rkm_medis);
-          console.log("Item pilihpasien:", pilihPasien);
-          setBtmMenu(true);
-          // navigation.navigate("Pilih Poli", (selectedItem = item));
+          setPilihPasien(item);
+          // console.log("Item pilihpasien:", item);
+          // setBtmMenu(true);
+          navigation.navigate(
+            "LayananNonBPJS",
+            item
+            // (selectedItem = item)
+          );
           // console.log("Pilih Poli", selectedItem);
         }}
       />
@@ -174,8 +178,7 @@ export default function ListPasien() {
               style={{
                 fontSize: 14,
                 textAlign: "center",
-              }}
-            >
+              }}>
               Belum ada data pasien, silakan tambah data
             </Text>
           </View>
