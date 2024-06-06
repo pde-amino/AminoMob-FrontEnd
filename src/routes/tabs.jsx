@@ -30,6 +30,7 @@ import VerifikasiPage from "../contex/VerifikasiPage";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import ListPasien from "../view/screens/pendaftaran/ListPasien";
 import InfoListPasien from "../view/screens/informasi/InfoListPasien";
+import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -228,7 +229,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Riwayat"
-        component={RiwayatKunjungan}
+        component={PilihPoli}
       />
       <Tabs.Screen
         options={{

@@ -44,13 +44,15 @@ export const PilihPoli = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [hariPoli, setHariPoli] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [buttomSheet, setButtomSheet] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const selectedItem = route.params;
+  const [tglBooking, setTglBooking] = useState();
+  const [tglPeriksa, setTglPeriksa] = useState();
 
   // Log selectedItem to console
   // useEffect(() => {
@@ -81,9 +83,7 @@ export const PilihPoli = () => {
     // console.log("Ini Params JadwalDok :", param);
     try {
       axios
-        .get(
-          `${BASE_URL}/jadwaldok/${param}/${extractDay(dateOfBirth)}/${value}`
-        )
+        .get(`${BASE_URL}/jadwaldok/${param}/${extractDay(hariPoli)}/${value}`)
         .then((response) => {
           const dokters = response.data.data_dokter.map((item) => {
             return {
@@ -112,9 +112,7 @@ export const PilihPoli = () => {
 
       if (Platform.OS === "android") {
         toggleShowDate();
-        setDateOfBirth(
-          format(currentDate, "eeee dd MMMM yyyy", { locale: id })
-        );
+        setHariPoli(format(currentDate, "eeee dd MMMM yyyy", { locale: id }));
       }
     } else {
       toggleShowDate();
@@ -127,14 +125,15 @@ export const PilihPoli = () => {
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
     const formattedTime = `${hours}:${minutes}:${seconds}`;
-    console.log(
-      "Ajukan booking: ",
-      formattedDate,
-      formattedTime,
-      value,
-      value1,
-      value2
-    );
+    const tglBooking = new Date();
+    console.log("Ajukan booking: ", {
+      formattedDate: formattedDate,
+      formattedTime: formattedTime,
+      value: value,
+      value1: value1,
+      value2: value2,
+      tglBooking: tglBooking.toISOString().split("T")[0],
+    });
     // if (!kerabat) {
     //   console.log("Diri Sendiri");
     // } else {
@@ -142,7 +141,26 @@ export const PilihPoli = () => {
     // }
   };
 
-  console.log("ini pic tgl :", extractDay(dateOfBirth));
+  const dataInput = {
+    id_user: 1,
+    id_kerabat: 2,
+    tanggal_booking: tglBooking,
+    jam_booking: "13:25:00",
+    no_rkm_medis: " ",
+    tanggal_periksa: tglPeriksa,
+    jam_periksa:
+      // "07:00:00 - 14:00:00"
+      value,
+    kd_dokter: value1,
+    kd_poli: value2,
+    no_reg: " ",
+    waktu_kunjungan: " ",
+    // status_reg: "Belum",
+    jns_kunjungan: "Poli",
+    status_byr: "-",
+    jns_pas: "Diri Sendiri",
+  };
+  console.log("ini pic tgl :", extractDay(hariPoli));
 
   const diriSendiri = {
     id_user: 1,
@@ -179,7 +197,7 @@ export const PilihPoli = () => {
     jns_pas: "Diri Sendiri",
   };
 
-  console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
+  // console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
 
   const minimumDate = new Date();
   minimumDate.setDate(minimumDate.getDate() + 1);
@@ -194,7 +212,7 @@ export const PilihPoli = () => {
 
       <View style={{ margin: 20 }}>
         <Text>Nama Pasien</Text>
-        <Text style={GlobalStyles.h4}>{selectedItem.nm_pasien}</Text>
+        <Text style={GlobalStyles.h4}>"asdasdsadsdasds"</Text>
       </View>
       <View style={GlobalStyles.Content}>
         <View>
@@ -213,8 +231,8 @@ export const PilihPoli = () => {
                 style={styles.tglPilihan}
                 editable={false}
                 placeholder={"Pilih Tanggal Periksa"}
-                value={dateOfBirth}
-                onChangeText={setDateOfBirth}
+                value={hariPoli}
+                onChangeText={setHariPoli}
               />
             </Pressable>
           )}
@@ -327,7 +345,7 @@ export const PilihPoli = () => {
         <ButtonPrimary
           title="Ajukan Booking"
           onPress={handleRegister}
-          disabled={!checked || !value || !value1 || !value2}
+          // disabled={!checked || !value || !value1 || !value2}
         />
       </View>
 
