@@ -48,8 +48,6 @@ const ProfileScreen = () => {
 
       const nmData = response.data.user[0];
       setDataUser(nmData);
-      console.log("userdata", nmData);
-      console.log("userdata", nmData.nama);
     } catch (error) {
       console.error("Error fetching user data:", error.message);
       console.error("Error response data:", error.response?.data);
@@ -101,19 +99,11 @@ const ProfileScreen = () => {
         </View>
 
         {dataUser ? (
-          <View style={{ gap: 10, flex: 2 }}>
+          <View style={{ gap: 10, flex: 1, backgroundColor: "pink" }}>
             <View style={{ alignItems: "center", gap: 4 }}>
               <Text style={GlobalStyles.h2}>{dataUser.nama}</Text>
               <Text>{dataUser.telp}</Text>
             </View>
-
-            <Divider />
-            <View style={{ marginHorizontal: 20 }}>
-              <Text style={GlobalStyles.h4}>Alamat</Text>
-              <Text>{address}</Text>
-            </View>
-
-            <Divider />
           </View>
         ) : (
           <Text>Loading...</Text> // Display a loading indicator while fetching data

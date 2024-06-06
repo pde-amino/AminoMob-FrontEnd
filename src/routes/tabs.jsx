@@ -185,7 +185,8 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
@@ -211,8 +212,8 @@ export default function HomeTabs() {
             />
           ),
         }}
-        name="Daftar Poli"
-        component={LoginScreen}
+        name="DUMMY "
+        component={BookingScreen}
       />
       {/* ) : null} */}
 
