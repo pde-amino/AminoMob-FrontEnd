@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -24,6 +24,7 @@ import { id } from "date-fns/locale";
 import { format } from "date-fns";
 import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
+import { AuthContex } from "../../../contex/AuthProvider";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -38,11 +39,12 @@ const data = [
 ];
 
 export const PilihPoli = () => {
+  const { auth } = useContext(AuthContex);
   const [datas, setDatas] = useState([]);
   const [checked, setChecked] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("Pilih Jam Periksa");
   const [value1, setValue1] = useState(null);
-  const [value2, setValue2] = useState(null);
+  const [value2, setValue2] = useState("Pilih Poliklinik");
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const [isFocus2, setIsFocus2] = useState(false);
@@ -52,9 +54,6 @@ export const PilihPoli = () => {
   const [buttomSheet, setButtomSheet] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
-  // const selectedItem = route.params;
-  const [tglBooking, setTglBooking] = useState();
-  const [tglPeriksa, setTglPeriksa] = useState();
 
   const [subMessMod, setSubMessMod] = useState("");
   const [messMod, setMessMod] = useState("Silahkan Pilih");
@@ -63,31 +62,46 @@ export const PilihPoli = () => {
   const [poli, setPoli] = useState();
   const [kdPoli, setKdPoli] = useState();
   const [jamPoli, setJamPoli] = useState();
-
-  // Log selectedItem to console
-  // useEffect(() => {
-  //   console.log("selectedItem:", selectedItem);
-  // }, [selectedItem]);
-
   const [filtDokter, setFiltDokter] = useState("");
-  // console.log("data dari data kerabat:", route.params.kerabat);
+  const [pilihan, setPilihan] = useState("");
+  const [visMod, setVisMod] = useState(false);
+  const [confMod, setConfMod] = useState("Sore");
+  const [cancMod, setCancMod] = useState("Tidak");
+
+  const [modalList, setModalList] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const extractDay = (dateString) => {
     return dateString.split(" ")[0];
   };
 
-  useEffect(() => {
-    axios.get(`${BASE_URL}/poli`).then((response) => {
-      const poli = response.data.daftar_poli.map((item, index) => {
-        return {
-          key: index,
-          label: item.nm_poli,
-          value: item.kd_poli,
-        };
+  const getPoli = () => {
+    axios
+      .get(`${BASE_URL}/jadwalpoli/${extractDay(hariPoli)}/${value}`)
+      .then((response) => {
+        if (response.data.status === false) {
+          setDatas(null);
+          Alert.alert(
+            "Pemberitahuan",
+            "Tidak ada Dokter Poli yang bertugas Pada Hari yang dipilih."
+          );
+        } else {
+          const poli = response.data.data_poli.map((item, index) => {
+            return {
+              key: index,
+              label: item.nm_poli,
+              value: item.kd_poli,
+            };
+          });
+          setDatas(poli);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
       });
-      setDatas(poli);
-    });
-  }, []);
+  };
+
   console.log("data pasodojasfkjhdsklfjklf: ", [kdPoli, hariPoli, value]);
   const jadwalDok = (param) => {
     console.log("Ini Params JadwalDok :", param);
@@ -113,108 +127,62 @@ export const PilihPoli = () => {
 
   const handleRegister = () => {
     setButtomSheet(true);
-    const formattedDate = date.toISOString().split("T")[0];
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const seconds = date.getSeconds().toString().padStart(2, "0");
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
-    const tglBooking = new Date();
-    console.log("Ajukan booking: ", {
-      formattedDate: formattedDate,
-      formattedTime: formattedTime,
-      value: value,
-      value1: value1,
-      value2: value2,
-      tglBooking: tglBooking.toISOString().split("T")[0],
-    });
-    // if (!kerabat) {
-    //   console.log("Diri Sendiri");
-    // } else {
-    //   console.log("Kerabat");
-    // }
+    // const formattedDate = date.toISOString().split("T")[0];
+    // const hours = date.getHours().toString().padStart(2, "0");
+    // const minutes = date.getMinutes().toString().padStart(2, "0");
+    // const seconds = date.getSeconds().toString().padStart(2, "0");
+    // const formattedTime = `${hours}:${minutes}:${seconds}`;
+    // const tglBooking = new Date();
+    // console.log("Ajukan booking: ", {
+    //   formattedDate: formattedDate,
+    //   formattedTime: formattedTime,
+    //   value: value,
+    //   value1: value1,
+    //   value2: value2,
+    //   tglBooking: tglBooking.toISOString().split("T")[0],
+    // });
   };
 
-  const Menus = {
-    message: "success",
-    data_dokter: [
-      {
-        kd_dokter: "D0000026",
-        nm_dokter: "dr. WITRIE SUTATY MR, Sp.KJ.",
-        hari_kerja: "SENIN",
-        jam_layanan: "Sore",
-        kd_poli: "9108",
-        nm_poli: "POLI JIWA PSIKIATRI GERIATRI",
-        kuota: "30",
-      },
-      {
-        kd_dokter: "D0000030",
-        nm_dokter: "dr. RILLA FIFTINA HADI,Sp.KJ",
-        hari_kerja: "SENIN",
-        jam_layanan: "Sore",
-        kd_poli: "9108",
-        nm_poli: "POLI JIWA PSIKIATRI GERIATRI",
-        kuota: "30",
-      },
-    ],
-  };
-  const dataInput = {
-    id_user: 1,
-    id_kerabat: 2,
-    tanggal_booking: tglBooking,
-    jam_booking: "13:25:00",
-    no_rkm_medis: " ",
-    tanggal_periksa: tglPeriksa,
+  // Error
+  const dataBooking = {
+    tanggal_booking: new Date(),
+    id_pasien: route.params.id_pasien,
+    no_rkm_medis: route.params.no_rkm_medis,
+    tanggal_periksa: date,
     jam_periksa:
-      // "07:00:00 - 14:00:00"
-      value,
-    kd_dokter: value1,
-    kd_poli: value2,
-    no_reg: " ",
-    waktu_kunjungan: " ",
-    // status_reg: "Belum",
+      value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+    kd_dokter: dokter,
+    kd_poli: kdPoli,
+    status_reg: "Belum",
     jns_kunjungan: "Poli",
     status_byr: "-",
     jns_pas: "Diri Sendiri",
   };
-  console.log("ini pic tgl :", datas);
-
-  const diriSendiri = {
-    id_user: 1,
-    id_kerabat: "",
-    tanggal_booking: "2024-05-15",
-    jam_booking: "13:25:00",
-    no_rkm_medis: " ",
-    tanggal_periksa: "2024-05-22",
-    jam_periksa: "07:00:00 - 14:00:00",
-    kd_dokter: "D0000020",
-    kd_poli: "9108",
-    no_reg: " ",
-    waktu_kunjungan: " ",
-    // "status_reg": "Belum",
-    jns_kunjungan: "Poli",
-    status_byr: "-",
-    jns_pas: "Diri Sendiri",
-  };
-  const orangLain = {
-    id_user: 1,
-    id_kerabat: "",
-    tanggal_booking: "2024-05-15",
-    jam_booking: "13:25:00",
-    no_rkm_medis: " ",
-    tanggal_periksa: "2024-05-22",
-    jam_periksa: "07:00:00 - 14:00:00",
-    kd_dokter: "D0000020",
-    kd_poli: "9108",
-    no_reg: " ",
-    waktu_kunjungan: " ",
-    // "status_reg": "Belum",
-    jns_kunjungan: "Poli",
-    status_byr: "-",
-    jns_pas: "Diri Sendiri",
+  // endError
+  const postData = async () => {
+    try {
+      const response = await axios
+        .post(`${BASE_URL}/bookPeriksa/${auth.user.id}`, dataBooking, {
+          headers: {
+            "Content-Type": "application/json",
+            // "x-api-key": "pd3@mino347",
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        })
+        .then();
+      const dataPasien = response.data;
+      // console.log("Ini Data PAsiennnsajndkijshbafkjsdhbn:", response.data);
+      navigation.navigate("Booking Screen", dataPasien);
+    } catch (error) {
+      Alert.alert(
+        "Maaf",
+        `Sepertinya ${route.params.id_pasien} Sudah Didaftarkan`
+      );
+      console.log("Login Error:", error);
+    }
   };
 
   // console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
-  const [pilihan, setPilihan] = useState("");
   const pilihJamPeriksa = () => {
     setMessMod("Pilih Jam Periksa");
     setSubMessMod(`Jam Pagi (07:00:00 - 14:00:00)
@@ -254,6 +222,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
   };
   const [dataListPoli, setDataListPoli] = useState("");
   const poliTujuan = () => {
+    getPoli();
     setDataListPoli(datas);
     setMessMod("Silahkan Pilih Poliklinik");
     setPilihan("poli");
@@ -266,14 +235,8 @@ Jam Sore (14:00:00 - 18:00:00)`);
   const minimumDate = new Date();
   minimumDate.setDate(minimumDate.getDate() + 1);
 
-  const [visMod, setVisMod] = useState(false);
-  const [confMod, setConfMod] = useState("Sore");
-  const [cancMod, setCancMod] = useState("Tidak");
-
-  const [modalList, setModalList] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const navHandle = () => {
-    navigation.navigate("Booking Screen");
+  const navHandle = async () => {
+    postData();
   };
   const confirmData = (
     <View>
@@ -372,7 +335,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
           <Text style={GlobalStyles.h4}>{dokter}</Text>
 
           <Button
-            disabled={value2 ? false : true}
+            disabled={value2 == "Pilih Poliklinik" ? true : false}
             title={"Pilih"}
             onPress={pilihDokter}
           />
@@ -387,97 +350,6 @@ Jam Sore (14:00:00 - 18:00:00)`);
             minimumDate={minimumDate}
           />
         )}
-
-        <View style={styles.containerDrop}>
-          <Dropdown
-            style={[
-              styles.dropdown,
-              isFocus && {
-                borderColor: WARNA.primary,
-                backgroundColor: WARNA.white,
-              },
-            ]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            search={false}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={data}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={!isFocus ? "Pilih Jam Periksa " : ""}
-            value={value}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={(item) => {
-              setValue(item.value);
-              setIsFocus(false);
-            }}
-          />
-        </View>
-        {datas ? (
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                isFocus1 && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={true}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={datas}
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!isFocus1 ? "Pilih Poliklinik " : ""}
-              searchPlaceholder="Search..."
-              value={value2}
-              onFocus={() => setIsFocus1(true)}
-              onBlur={() => setIsFocus1(false)}
-              onChange={(item) => {
-                setValue2(item.value);
-                setIsFocus1(false);
-                jadwalDok(item.value); // Memanggil fungsi jadwalDok dengan parameter
-              }}
-            />
-          </View>
-        ) : null}
-        {filtDokter ? (
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                isFocus2 && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={filtDokter}
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!isFocus2 ? "Pilih Dokter " : ""}
-              value={value1}
-              onFocus={() => setIsFocus2(true)}
-              onBlur={() => setIsFocus2(false)}
-              onChange={(item) => {
-                setValue1(item.value);
-                setIsFocus2(false);
-              }}
-            />
-          </View>
-        ) : null}
       </View>
 
       <Checkbox.Item
@@ -495,7 +367,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         <ButtonPrimary
           title="Ajukan Booking"
           onPress={handleRegister}
-          disabled={!checked || !value || !value1 || !value2}
+          // disabled={!checked || !value || !value1 || !value2}
         />
       </View>
 
@@ -506,7 +378,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
           judul="Pastikan Data Benar"
           subjudul={confirmData}
           buttonKiri="Orang Lain"
-          buttonKanan="Diri Sendiri"
+          buttonKanan="Booking"
           listKerabat={true}
           pressKiri={() => setButtomSheet(false)}
           pressKanan={navHandle}

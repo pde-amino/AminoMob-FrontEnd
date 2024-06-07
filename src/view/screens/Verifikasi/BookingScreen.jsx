@@ -95,8 +95,7 @@ const BookingScreen = () => {
                 style={{
                   alignItems: "center",
                   marginVertical: 12,
-                }}
-              >
+                }}>
                 <GenerateQRCode
                   value={transactionData.transactionId}
                   size={150}
