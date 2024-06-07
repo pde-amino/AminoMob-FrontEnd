@@ -11,6 +11,7 @@ import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 
 export default function SearchDokter() {
+  const WARNA = { primary: "#0A78E2", white: "#fff" };
   const route = useRoute();
   const { nameClinic, clinicId } = route.params;
   console.log("nameClinic", nameClinic);
