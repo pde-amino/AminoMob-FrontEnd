@@ -7,7 +7,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-const initialOffset = 200;
+const initialOffset = 500;
 
 export default function SplashScreen() {
   const offset = useSharedValue(initialOffset);
@@ -27,16 +27,16 @@ export default function SplashScreen() {
   React.useEffect(() => {
     // Animate the box to the center position
     offset.value = withSpring(centerPosition, {
-      damping: 20,
-      stiffness: 50,
-      mass: 2,
-      overshootClamping: true,
+      mass: 1,
+      damping: 10,
+      stiffness: 100,
+      overshootClamping: false,
       restDisplacementThreshold: 0.01,
       restSpeedThreshold: 2,
     });
-    // setTimeout(() => {
-    //   navigation.dispatch(StackActions.replace("Login Screen"));
-    // }, 3000);
+    setTimeout(() => {
+      navigation.dispatch(StackActions.replace("Login Screen"));
+    }, 4000);
   }, [centerPosition]);
 
   console.log(centerPosition);

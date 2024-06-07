@@ -56,8 +56,8 @@ const HomeScreen = () => {
       // belumAda: true,
       to: false,
       alert: {
-        title: "Peringatan !!!",
-        desc: "Fasilitan BPJS hanya terdapat pada Aplikasi Mobile JKN",
+        title: "Mohon Maaf",
+        desc: "Saat ini pendaftaran Layanan RS BPJS hanya bisa menggunakan aplikasi Mobile JKN",
       },
       warna: WARNA.primary,
     },

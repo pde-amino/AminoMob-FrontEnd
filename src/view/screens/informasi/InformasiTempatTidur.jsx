@@ -14,12 +14,15 @@ import MenuItemComponent from "../../../components/MenuItemComponent";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import CardListComponent from "../../../components/CardListComponent";
 import SearchComponent from "../../../components/SearchComponent";
+import HeaderComponent from "../../../components/HeaderComponent";
+import { useNavigation } from "@react-navigation/native";
 
 const InformasiTempatTidur = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
@@ -55,16 +58,21 @@ const InformasiTempatTidur = () => {
   };
   return (
     <View style={GlobalStyles.Content}>
+      <HeaderComponent
+        title="Informasi Tempat Tidur"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
       <SearchComponent
         platform="android"
         data={data}
         onSearch={handleSearch}
-        placeholder={"Cari dengan Nama Dokter / Hari"}
+        placeholder={"Cari Tempat Tidur"}
         filterAttribute={"kelas"}
       />
-      <Text style={GlobalStyles.subTitle}>
+      {/* <Text style={GlobalStyles.subTitle}>
         Kelas dan Kamar yang tersedia pada RS
-      </Text>
+      </Text> */}
       <FlatList
         style={{ width: "100%" }}
         data={filteredData}
