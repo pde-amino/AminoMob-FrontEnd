@@ -90,25 +90,7 @@ export const PilihPoli = () => {
   }, []);
   console.log("data pasodojasfkjhdsklfjklf: ", [kdPoli, hariPoli, value]);
   const jadwalDok = (param) => {
-    // console.log("Ini Params JadwalDok :", param);
-    try {
-      axios
-        .get(`${BASE_URL}/jadwaldok/${value2}/${extractDay(hariPoli)}/${value}`)
-        .then((response) => {
-          const dokters = response.data.data_dokter.map((item) => {
-            return {
-              key: item.key,
-              label: item.nm_dokter,
-              value: item.kd_dokter,
-            };
-          });
-          setFiltDokter(dokters);
-        });
-    } catch (error) {
-      Alert.alert(
-        "aaaMaaf Poli yang anda pilih sepertinya libur pada Har yang anda pilih"
-      );
-    }
+    console.log("Ini Params JadwalDok :", param);
   };
 
   const toggleShowDate = () => {
@@ -130,6 +112,7 @@ export const PilihPoli = () => {
   };
 
   const handleRegister = () => {
+    setButtomSheet(true);
     const formattedDate = date.toISOString().split("T")[0];
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -237,12 +220,31 @@ export const PilihPoli = () => {
     setSubMessMod(`Jam Pagi (07:00:00 - 14:00:00)
 Jam Sore (14:00:00 - 18:00:00)`);
     setModalList(false);
+
     setConfMod("Sore");
     setCancMod("Pagi");
     setVisMod(true);
   };
 
   const pilihDokter = () => {
+    try {
+      axios
+        .get(`${BASE_URL}/jadwaldok/${kdPoli}/${extractDay(hariPoli)}/${value}`)
+        .then((response) => {
+          const dokters = response.data.data_dokter.map((item) => {
+            return {
+              key: item.key,
+              label: item.nm_dokter,
+              value: item.kd_dokter,
+            };
+          });
+          setFiltDokter(dokters);
+        });
+    } catch (error) {
+      Alert.alert(
+        "aaaMaaf Poli yang anda pilih sepertinya libur pada Har yang anda pilih"
+      );
+    }
     setMessMod("Silahkan Pilih Dokter");
     setPilihan("dokter");
     setModalList(true);
@@ -270,6 +272,34 @@ Jam Sore (14:00:00 - 18:00:00)`);
 
   const [modalList, setModalList] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const navHandle = () => {
+    navigation.navigate("Booking Screen");
+  };
+  const confirmData = (
+    <View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Nama</Text>
+        <Text style={GlobalStyles.h3}>{route.params.nm_pasien}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Tanggal Periksa</Text>
+        <Text style={GlobalStyles.h3}>{hariPoli}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Jam Periksa</Text>
+        <Text style={GlobalStyles.h3}>{value}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Poli Tujuan</Text>
+        <Text style={GlobalStyles.h3}>{value2}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Dokter Dituju</Text>
+        <Text style={GlobalStyles.h3}>{dokter}</Text>
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <ConfirmModal
@@ -282,8 +312,9 @@ Jam Sore (14:00:00 - 18:00:00)`);
           console.log("iniconsole", item);
           {
             if (pilihan == "poli") {
-              setValue2(item.value);
+              setValue2(item.label);
               setKdPoli(item.value);
+              jadwalDok(item.value);
             } else if (pilihan == "dokter") {
               setDokter(item.label);
             }
@@ -292,11 +323,11 @@ Jam Sore (14:00:00 - 18:00:00)`);
           setVisMod(false);
         }}
         onCancel={() => {
-          setValue("pagi");
+          setValue("Pagi");
           setVisMod(false);
         }}
         onConfirm={() => {
-          setValue("sore");
+          setValue("Sore");
           setVisMod(false);
         }}
         confirmButtonText={confMod}
@@ -464,21 +495,21 @@ Jam Sore (14:00:00 - 18:00:00)`);
         <ButtonPrimary
           title="Ajukan Booking"
           onPress={handleRegister}
-          // disabled={!checked || !value || !value1 || !value2}
+          disabled={!checked || !value || !value1 || !value2}
         />
       </View>
 
       {buttomSheet ? (
         <BottomSheet
           setStatus={setButtomSheet}
-          ukuranModal={{ width: "100%", height: "25%" }}
-          judul="Untuk siapa Anda mendaftar Poli?"
-          // subjudul='Pilih "Diri Sendiri" jika Anda ingin mendaftar untuk Diri Anda sendiri. Pilih "Orang Lain" jika Anda ingin mendaftarkan Kerabat atau Orang Lain'
+          ukuranModal={{ width: "100%", height: "65%" }}
+          judul="Pastikan Data Benar"
+          subjudul={confirmData}
           buttonKiri="Orang Lain"
           buttonKanan="Diri Sendiri"
           listKerabat={true}
-          // pressKiri={orangLain}
-          // pressKanan={diriSendiri}
+          pressKiri={() => setButtomSheet(false)}
+          pressKanan={navHandle}
         />
       ) : null}
     </SafeAreaView>
