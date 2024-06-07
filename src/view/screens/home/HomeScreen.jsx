@@ -85,7 +85,7 @@ const HomeScreen = () => {
   };
 
   const darurat = () => {
-    Linking.openURL("https://wa.me/6281213536824");
+    Linking.openURL("https://wa.me/6281225204301");
   };
 
   // useEffect(() => {

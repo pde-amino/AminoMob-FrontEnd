@@ -495,7 +495,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         <ButtonPrimary
           title="Ajukan Booking"
           onPress={handleRegister}
-          disabled={!checked || !value || !value1 || !value2}
+          // disabled={!checked || !value || !value1 || !value2}
         />
       </View>
 
