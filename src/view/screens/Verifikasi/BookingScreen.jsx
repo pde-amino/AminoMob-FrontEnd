@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import ButtonPrimary from "../../../components/ButtonPrimary";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { AuthContex } from "../../../contex/AuthProvider";
 
 const { height, width } = Dimensions.get("window");
 
@@ -26,13 +27,53 @@ const BookingScreen = () => {
   const route = useRoute();
   const [adaRM, setAdaRM] = useState(true);
 
+  const auth = useContext(AuthContex);
+
+  console.log(auth);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+          },
+        }
+      );
+      console.log("Response data:", response.data); // Logging response data
+      const data = response.data.data_kerabat;
+
+      setDataPasien(data);
+    } catch (error) {
+      // console.error("Error fetching kerabat data:", error.message);
+      // console.error("Error response data:", error.response?.data);
+    }
+    // finally {
+    // setLoading(false);
+    // setRefreshing(false);
+    // }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const data = route.params.data;
+
+  const tglFormatted = new Date(data.tanggal_periksa)
+    .toISOString()
+    .split("T")[0];
+
   // Dummy data transaksi
   const transactionData = {
-    amount: "Rp 1,000,000",
-    transactionId: "TRX123456790",
-    date: "April 20, 2024",
-    merchantName: "Poli Dewasa",
-    status: "Success",
+    noRM: "ini no RM",
+    kdBook: data.kode_booking,
+    nmPas: "Nama Pasien di sini",
+    tglPeriksa: tglFormatted,
+    jamPeriksa: data.jam_periksa,
+    poliPeriksa: "Poli Dewasa",
+    nmDokter: data.kd_dokter,
   };
 
   // Fungsi untuk menangani tombol kembali ke halaman utama
@@ -60,36 +101,30 @@ const BookingScreen = () => {
                 {adaRM ? (
                   <View>
                     <Text style={styles.label}>No RM:</Text>
-                    <Text style={styles.value}>{transactionData.amount}</Text>
+                    <Text style={styles.value}>{transactionData.noRM}</Text>
                   </View>
                 ) : null}
                 <View>
                   <Text style={styles.label}>Nama:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.nmPas}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Tanggal Periksa:</Text>
-                  <Text style={styles.value}>{transactionData.date}</Text>
+                  <Text style={styles.value}>{transactionData.tglPeriksa}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Jam Periksa:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.jamPeriksa}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Poliklinik:</Text>
                   <Text style={styles.value}>
-                    {transactionData.merchantName}
+                    {transactionData.poliPeriksa}
                   </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Dokter :</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.nmDokter}</Text>
                 </View>
               </View>
               <View
@@ -100,12 +135,9 @@ const BookingScreen = () => {
                   gap: 24,
                 }}
               >
-                <GenerateQRCode
-                  value={transactionData.transactionId}
-                  size={150}
-                />
+                <GenerateQRCode value={transactionData.kdBook} size={150} />
                 <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  {transactionData.transactionId}
+                  {transactionData.kdBook}
                 </Text>
               </View>
               <View style={{ marginBottom: 100, gap: 20 }}>
