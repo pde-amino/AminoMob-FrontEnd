@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -17,6 +17,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -25,7 +27,9 @@ const WARNA = {
   secondary: "#5DA3E7",
 };
 
-const data = [
+const data = [{}];
+
+const kelamin = [
   { label: "Laki-laki", value: "1" },
   { label: "Perempuan", value: "2" },
 ];
@@ -55,7 +59,14 @@ export const TambahPasien = () => {
   const [kelaminPasien, setKelamin] = useState("");
   const [agamaPasien, setAgama] = useState("");
 
-  const [checked, setChecked] = React.useState(false);
+  const [prov, setProv] = useState([]);
+  const [pilihProv, setPilihProv] = useState();
+  const [provFocus, setProvFocus] = useState(false);
+  const [kab, setKab] = useState([]);
+  const [pilihKab, setPilihKab] = useState();
+  const [kabFocus, setKabFocus] = useState(false);
+
+  const [checked, setChecked] = useState(false);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
@@ -93,6 +104,48 @@ export const TambahPasien = () => {
   const simpanData = () => {
     // Tambahkan logika pendaftaran di sini
   };
+
+  // axios.get(`${BASE_URL}/poli`).then((response) => {
+  //     const poli = response.data.daftar_poli.map((item, index) => {
+  //       return {
+  //         key: index,
+  //         label: item.nm_poli,
+  //         value: item.kd_poli,
+  //       };
+  //     });
+  //     setDatas(poli);
+
+  const fetchData = async () => {
+    try {
+      const provinsi = await axios.get(`${BASE_URL}/prov`);
+      const transProv = provinsi.data.data.map((prov) => ({
+        label: prov.nm_prop, // Adjust according to your data structure
+        value: prov.kd_prop, // Adjust according to your data structure
+      }));
+      const kabupaten = await axios.get(`${BASE_URL}/kab`);
+      const transKab = kabupaten.data.data.map((kab) => ({
+        label: kab.nm_kab, // Adjust according to your data structure
+        value: kab.kd_kab, // Adjust according to your data structure
+      }));
+      // const jateng = await axios.get(`${BASE_URL}/prov`);
+      // const transformedData = provinsi.data.data.map((prov) => ({
+      //   label: prov.nm_prop, // Adjust according to your data structure
+      //   value: prov.kd_prop, // Adjust according to your data structure
+      // }));
+      console.log("Response data:", kabupaten.data.data); // Logging response data
+      // console.log("transformed data:", transformedData); // Logging response data
+      setProv(transProv);
+      setKab(transKab);
+    } catch (error) {
+      console.error("Error fetching prov:", error.message);
+      console.error("Error response data:", error.provinsi?.data);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -182,7 +235,7 @@ export const TambahPasien = () => {
               search={false}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={data}
+              data={kelamin}
               // search
               maxHeight={300}
               labelField="label"
@@ -262,22 +315,21 @@ export const TambahPasien = () => {
               ]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
-              search={false}
+              search={true}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={data}
-              // search
+              data={prov}
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={!isFocus ? "Provinsi*" : "Pilih Provinsi"}
+              placeholder={!provFocus ? "Provinsi*" : "Pilih Provinsi"}
               searchPlaceholder="Search..."
-              value={value}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+              value={pilihProv}
+              onFocus={() => setProvFocus(true)}
+              onBlur={() => setProvFocus(false)}
               onChange={(item) => {
-                setValue(item.value);
-                setIsFocus(false);
+                setPilihProv(item.value);
+                setProvFocus(false);
               }}
             />
           </View>
@@ -294,22 +346,22 @@ export const TambahPasien = () => {
               ]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
-              search={false}
+              search={true}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={data}
+              data={kab}
               // search
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={!isFocus ? "Kab/Kota*" : "Pilih Kota Anda"}
+              placeholder={!kabFocus ? "Kab/Kota*" : "Pilih Kota Anda"}
               searchPlaceholder="Search..."
-              value={value}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+              value={pilihKab}
+              onFocus={() => setKabFocus(true)}
+              onBlur={() => setKabFocus(false)}
               onChange={(item) => {
-                setValue(item.value);
-                setIsFocus(false);
+                setPilihKab(item.value);
+                setKabFocus(false);
               }}
             />
           </View>

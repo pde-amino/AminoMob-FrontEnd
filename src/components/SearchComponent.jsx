@@ -38,18 +38,16 @@ const SearchComponent = ({ data, onSearch, placeholder, filterAttribute }) => {
 
 const styles = StyleSheet.create({
   srcContainer: {
-    margin: 15,
+    marginTop: 10,
+    marginHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
   },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    // height: 32,
     borderColor: "gray",
     padding: 10,
-    gap: 10,
-    // marginHorizontal: 5,
     flex: 1,
   },
   borderShadow: {
@@ -64,7 +62,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderTopWidth: 0,
     borderLeftWidth: 0.2,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "white",
   },
 });
 

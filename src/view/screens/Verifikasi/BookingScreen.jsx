@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,19 +13,69 @@ import GenerateQRCode from "../../../contex/GenerateQRCode";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../../../style/GlobalStyles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { AuthContex } from "../../../contex/AuthProvider";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
 
 const { height, width } = Dimensions.get("window");
 
+const B = (props) => (
+  <Text style={{ fontWeight: "bold" }}>{props.children}</Text>
+);
+
 const BookingScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [adaRM, setAdaRM] = useState(true);
+
+  const auth = useContext(AuthContex);
+
+  console.log(auth);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+          },
+        }
+      );
+      console.log("Response data:", response.data); // Logging response data
+      const data = response.data.data_kerabat;
+
+      setDataPasien(data);
+    } catch (error) {
+      console.error("Error fetching kerabat data:", error.message);
+      console.error("Error response data:", error.response?.data);
+    }
+    // finally {
+    // setLoading(false);
+    // setRefreshing(false);
+    // }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const data = route.params.data;
+
+  const tglFormatted = new Date(data.tanggal_periksa)
+    .toISOString()
+    .split("T")[0];
+
   // Dummy data transaksi
   const transactionData = {
-    amount: "Rp 1,000,000",
-    transactionId: "TRX123456790",
-    date: "April 20, 2024",
-    merchantName: "Poli Dewasa",
-    status: "Success",
+    noRM: "ini no RM",
+    kdBook: data.kode_booking,
+    nmPas: "Nama Pasien di sini",
+    tglPeriksa: tglFormatted,
+    jamPeriksa: data.jam_periksa,
+    poliPeriksa: "Poli Dewasa",
+    nmDokter: data.kd_dokter,
   };
 
   // Fungsi untuk menangani tombol kembali ke halaman utama
@@ -33,15 +83,15 @@ const BookingScreen = () => {
     navigation.replace("Home Screen");
   };
 
+  console.log("ini dari verifikasi berhasil", route.params);
   return (
     <SafeAreaView style={[GlobalStyles.utama, { backgroundColor: "#0A78E2" }]}>
       <View style={GlobalStyles.Content}>
-        <Text style={[GlobalStyles.h1, { color: "white" }]}>
+        <Text style={[GlobalStyles.h2, { color: "white" }]}>
           Booking Berhasil
         </Text>
         <Image
-          resizeMode="cover"
-          source={require("../../../../assets/success.png")} // Ganti dengan path gambar yang Anda inginkan
+          source={require("../../../../assets/success.png")}
           style={styles.successImage}
         />
 
@@ -49,57 +99,58 @@ const BookingScreen = () => {
         <View style={styles.container}>
           <ScrollView style={{ flex: 1, borderRadius: 20 }}>
             <View style={styles.detailsContainer}>
-              <View style={{ gap: 8 }}>
-                <View>
-                  <Text style={styles.label}>KD Booking:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.transactionId}
-                  </Text>
-                </View>
-                <View>
-                  <Text style={styles.label}>No RM:</Text>
-                  <Text style={styles.value}>{transactionData.amount}</Text>
-                </View>
+              <View style={{ gap: 4 }}>
+                {adaRM ? (
+                  <View>
+                    <Text style={styles.label}>No RM:</Text>
+                    <Text style={styles.value}>{transactionData.noRM}</Text>
+                  </View>
+                ) : null}
                 <View>
                   <Text style={styles.label}>Nama:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.nmPas}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Tanggal Periksa:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.tglPeriksa}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Jam Periksa:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.value}>{transactionData.jamPeriksa}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Poliklinik:</Text>
                   <Text style={styles.value}>
-                    {transactionData.merchantName}
+                    {transactionData.poliPeriksa}
                   </Text>
                 </View>
                 <View>
-                  <Text style={styles.label}>Dokter:</Text>
-                  <Text style={styles.value}>
-                    {transactionData.merchantName}
-                  </Text>
+                  <Text style={styles.label}>Dokter :</Text>
+                  <Text style={styles.value}>{transactionData.nmDokter}</Text>
                 </View>
               </View>
               <View
                 style={{
                   alignItems: "center",
                   marginVertical: 12,
-                }}>
-                <GenerateQRCode
-                  value={transactionData.transactionId}
-                  size={150}
-                />
+                  padding: 20,
+                  gap: 24,
+                }}
+              >
+                <GenerateQRCode value={transactionData.kdBook} size={150} />
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                  {transactionData.kdBook}
+                </Text>
+              </View>
+              <View style={{ marginBottom: 100, gap: 20 }}>
+                {adaRM ? null : (
+                  <Text style={{ fontSize: 16 }}>
+                    <B>Tunjukkan KTP/KK pendaftar saat daftar ulang.</B>
+                  </Text>
+                )}
+                <Text style={{ fontSize: 16 }}>
+                  Mohon datang minimal <B>30 menit</B> sebelum jam periksa
+                </Text>
               </View>
               <ButtonPrimary
                 title={"Kembali ke Halaman Utama"}
@@ -115,9 +166,8 @@ const BookingScreen = () => {
 
 const styles = StyleSheet.create({
   successImage: {
-    width: 320,
-    height: 150,
-    // backgroundColor: "pink",
+    width: 300,
+    height: 120,
   },
   container: {
     flex: 1,
@@ -132,6 +182,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingHorizontal: 25,
     width: width * 1,
+    height: "100%",
     gap: 8,
   },
   label: {

@@ -7,6 +7,7 @@ import MenuItemComponent from "../../../components/MenuItemComponent";
 import EventSource from "react-native-event-source";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
+import HeaderComponent from "../../../components/HeaderComponent";
 
 const InformasiDokter = () => {
   const [dataPoli, setDataPoli] = useState([]);
@@ -72,13 +73,17 @@ const InformasiDokter = () => {
 
   return (
     <View style={GlobalStyles.Content}>
+      <HeaderComponent
+        title={"Daftar Poliklinik"}
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
       <SearchComponent
         data={dataPoli}
         onSearch={handleSearch}
-        placeholder={"Cari Nama Poli"}
+        placeholder={"Cari Poli"}
         filterAttribute={"nm_poli"}
       />
-      <Text style={GlobalStyles.subTitle}>Daftar Poliklinik</Text>
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         horizontal={false}

@@ -13,7 +13,7 @@ const InformasiUmum = () => {
     {
       kd_poli: "2",
       nm_poli: "Jadwal Dokter Poli",
-      icon: "home",
+      icon: "local-hospital",
       title: "Account",
       to: "Informasi Dokter",
       color: "pink",
@@ -21,7 +21,7 @@ const InformasiUmum = () => {
     {
       kd_poli: "2",
       nm_poli: "Informasi Tempat Tidur",
-      icon: "format-list-numbered",
+      icon: "hotel",
       title: "Information",
       to: "InfoTT",
       color: "green",

@@ -6,8 +6,9 @@ import SearchComponent from "../../../components/SearchComponent";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
+import HeaderComponent from "../../../components/HeaderComponent";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -19,6 +20,7 @@ export default function SearchDokter() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
@@ -56,6 +58,11 @@ export default function SearchDokter() {
 
   return (
     <View style={GlobalStyles.Content}>
+      <HeaderComponent
+        title="Daftar Dokter"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
       <SearchComponent
         platform="android"
         data={dataPoli}
@@ -63,15 +70,13 @@ export default function SearchDokter() {
         placeholder="Cari dengan Nama Dokter / Hari"
         filterAttribute="nm_dokter"
       />
-      {filteredData ? (
-        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}>
-          Daftar Dokter pada {nameClinic}
-        </Text>
+      {/* {filteredData ? (
+        <Text style={GlobalStyles.h3}>Daftar Dokter pada {nameClinic}</Text>
       ) : (
-        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#3E3E3E" }}>
+        <Text style={GlobalStyles.h3}>
           Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
         </Text>
-      )}
+      )} */}
       <FlatList
         data={filteredData}
         keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
@@ -83,10 +88,11 @@ export default function SearchDokter() {
             onPress={() =>
               Alert.alert(`${item.nm_dokter}`, `${item.nm_dokter}`)
             }
-            warna={WARNA.primary}
+            warna={"#73B9FC"}
           />
         )}
       />
+      <View />
     </View>
   );
 }

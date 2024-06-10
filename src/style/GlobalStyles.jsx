@@ -72,7 +72,7 @@ export default GlobalStyles = StyleSheet.create({
   },
   textButtonSmall: {
     color: WARNA.white,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
   },
   textBiasa: {
