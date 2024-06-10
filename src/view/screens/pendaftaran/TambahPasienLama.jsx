@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -17,6 +17,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
+import { AuthContex, AuthProvider } from "../../../contex/AuthProvider";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -50,10 +53,10 @@ export const TambahPasienLama = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [noKTP, setnoKTP] = useState("");
+  const [noRM, setNoRM] = useState("");
   const [nmLengkap, setnmLengkap] = useState("");
   const [alamat, setAlamat] = useState("");
-
+  const auth = useContext(AuthContex);
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -84,6 +87,34 @@ export const TambahPasienLama = () => {
     // Tambahkan logika pendaftaran di sini
   };
 
+  // const cariPasienLama
+  const cariPasienLama = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+          },
+        }
+      );
+      console.log("Response data:", response.data); // Logging response data
+      const data = response.data.data_kerabat;
+
+      setDataPasien(data);
+    } catch (error) {
+      console.error("Error fetching kerabat data:", error.message);
+      console.error("Error response data:", error.response?.data);
+    }
+    // finally {
+    //   setLoading(false);
+    //   setRefreshing(false);
+    // }
+  };
+
+  useEffect(() => {
+    cariPasienLama();
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
@@ -100,6 +131,7 @@ export const TambahPasienLama = () => {
               label={"No Rekam Medis*"}
               placeholder={"Masukkan No RM yang sudah terdaftar"}
               type={"username"}
+              value={noRM}
             />
 
             <View>
