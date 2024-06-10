@@ -15,6 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AuthContex } from "../../../contex/AuthProvider";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
 
 const { height, width } = Dimensions.get("window");
 
@@ -46,8 +48,8 @@ const BookingScreen = () => {
 
       setDataPasien(data);
     } catch (error) {
-      // console.error("Error fetching kerabat data:", error.message);
-      // console.error("Error response data:", error.response?.data);
+      console.error("Error fetching kerabat data:", error.message);
+      console.error("Error response data:", error.response?.data);
     }
     // finally {
     // setLoading(false);
