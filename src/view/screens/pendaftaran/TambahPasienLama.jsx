@@ -19,7 +19,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
-import { AuthContex, AuthProvider } from "../../../contex/AuthProvider";
+import { AuthContex } from "../../../contex/AuthProvider";
+import { Alert } from "react-native";
+import BottomSheet from "../../../components/BottomSheet";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -46,17 +48,15 @@ const hubungan = [
 export const TambahPasienLama = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
 
-  const [hubu, setHubungan] = useState("");
-
   const [checked, setChecked] = React.useState(false);
   const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const [bs, setBs] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [noRM, setNoRM] = useState("");
-  const [nmLengkap, setnmLengkap] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const auth = useContext(AuthContex);
+  const [noRm, setNoRm] = useState("");
+  const { auth } = useContext(AuthContex);
+  const [dataGet, setDataGet] = useState("");
+
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -73,48 +73,90 @@ export const TambahPasienLama = () => {
 
       if (Platform.OS === "android") {
         toggleShowDate();
-        setDateOfBirth(currentDate.toDateString());
+        setDateOfBirth(currentDate.toISOString().split("T")[0]);
       }
     } else {
       toggleShowDate();
     }
   };
-  // const closeDate = () => {
-  //   setShowDate(false);
-  // };
 
-  const handleRegister = () => {
-    // Tambahkan logika pendaftaran di sini
+  const searchPass = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/cariPas/${auth.user.id}/${noRm}/${dateOfBirth}`, {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        })
+        .then((response) => {
+          if (response.data.status == true) {
+            console.log("data api :", response.data.user.nm_pasien);
+            setDataGet(response.data.user);
+            setBs(true);
+
+            // navigation.navigate("TambahPasienLamaDetail", {
+            //   idPasien: response.data[0].id,
+            // });
+          }
+        })
+        .catch((error) => {
+          Alert.alert(
+            "Peringatan",
+            "Pastikan data yang anda input adalah data pasien yang pernah periksa di RS"
+          );
+          // console.error("Error fetching data: ", error);
+        });
+
+      // console.log("No Rekam Medis: ", noRm);
+      // console.log("Tanggal Lahir: ", dateOfBirth);
+      // console.log("No Handphone: ", value);
+    } catch (error) {
+      console.error("Error in try-catch: ", error);
+    }
   };
 
-  // const cariPasienLama
-  const cariPasienLama = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
+  const addKerabat = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/tambahKerabat/${auth.user.id}`,
+        {
+          no_rkm_medis: dataGet.no_rkm_medis,
+          status_user: "Kerabat",
+          id_pasien: dataGet.id_pasien,
+        },
         {
           headers: {
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.token}`,
           },
         }
-      );
-      console.log("Response data:", response.data); // Logging response data
-      const data = response.data.data_kerabat;
-
-      setDataPasien(data);
-    } catch (error) {
-      console.error("Error fetching kerabat data:", error.message);
-      console.error("Error response data:", error.response?.data);
-    }
-    // finally {
-    //   setLoading(false);
-    //   setRefreshing(false);
-    // }
+      )
+      .then((response) => {
+        Alert.alert("Berhasil", "Data berhasil disimpan");
+        // navigation.navigate("Pilih Poli");
+      })
+      .catch((error) => {
+        console.log(dataGet.nm_pasien);
+        Alert.alert("Gagal", "Data gagal disimpan");
+      });
   };
 
-  useEffect(() => {
-    cariPasienLama();
-  }, []);
+  const confirmData = (
+    <View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Nama</Text>
+        <Text style={GlobalStyles.h3}>{dataGet.nm_pasien}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Nomor Telepon</Text>
+        <Text style={GlobalStyles.h3}>{dataGet.no_tlp}</Text>
+      </View>
+      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+        <Text>Alamat</Text>
+        <Text style={GlobalStyles.h3}>{dataGet.alamat}</Text>
+      </View>
+    </View>
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -132,13 +174,13 @@ export const TambahPasienLama = () => {
               label={"No Rekam Medis*"}
               placeholder={"Masukkan No RM yang sudah terdaftar"}
               type={"username"}
-              value={noRM}
+              value={noRm}
+              onChangeText={setNoRm}
             />
 
             <View>
               {showPicker && (
                 <DateTimePicker
-                  // display={"spinner"}
                   mode="date"
                   onChange={berubah}
                   value={date}
@@ -152,16 +194,9 @@ export const TambahPasienLama = () => {
                   <TextInput
                     style={styles.tglPilihan}
                     editable={false}
-                    // label={"Tgl Lahir"}
                     placeholder={"Tanggal Lahir*"}
-                    value={
-                      dateOfBirth
-                        ? new Date(dateOfBirth).toISOString().split("T")[0]
-                        : ""
-                    }
+                    value={dateOfBirth}
                     onChangeText={setDateOfBirth}
-                    // type={"username"}
-                    // onPress={() => setShowDate(true)}
                   />
                 </Pressable>
               )}
@@ -173,6 +208,8 @@ export const TambahPasienLama = () => {
               label={"No Handphone"}
               placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
               type={"username"}
+              value={value}
+              onChangeText={setValue}
             />
           </View>
         </View>
@@ -191,11 +228,24 @@ export const TambahPasienLama = () => {
         <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
           <ButtonPrimary
             title="Simpan"
-            onPress={handleRegister}
-            disabled={!checked || !!hubu}
+            onPress={searchPass}
+            disabled={!checked}
           />
         </View>
       </ScrollView>
+      {bs ? (
+        <BottomSheet
+          setStatus={setBs}
+          ukuranModal={{ width: "100%", height: "65%" }}
+          judul="Pastikan Data Benar"
+          subjudul={confirmData}
+          buttonKiri="Ubah Data"
+          buttonKanan="Simpan"
+          listKerabat={true}
+          pressKiri={() => setBs(false)}
+          pressKanan={addKerabat}
+        />
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -214,13 +264,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: WARNA.primary,
-    // justifyContent: "center",
     width: 370,
     backgroundColor: "white",
     color: "black",
     padding: 14,
     fontSize: 14,
-    // backgroundColor: "red",
   },
   inputan: {
     marginBottom: 16,
@@ -228,7 +276,6 @@ const styles = StyleSheet.create({
   },
   containerDrop: {
     backgroundColor: "white",
-    // padding: 16,
   },
   dropdown: {
     height: 50,

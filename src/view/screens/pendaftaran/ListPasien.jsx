@@ -115,7 +115,7 @@ export default function ListPasien() {
       <View style={GlobalStyles.Content}>
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
-        ) : dataPasien.length > 0 ? (
+        ) : dataPasien ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}

@@ -59,6 +59,7 @@ export const PilihPoli = () => {
   const [messMod, setMessMod] = useState("Silahkan Pilih");
   const [jamPeriksa, setJamPeriksa] = useState("Pilih Jam Periksa");
   const [dokter, setDokter] = useState("Pilih Dokter");
+  const [kdDokter, setKdDokter] = useState("Pilih Dokter");
   const [poli, setPoli] = useState();
   const [kdPoli, setKdPoli] = useState();
   const [jamPoli, setJamPoli] = useState();
@@ -151,7 +152,7 @@ export const PilihPoli = () => {
     tanggal_periksa: date,
     jam_periksa:
       value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
-    kd_dokter: dokter,
+    kd_dokter: kdDokter,
     kd_poli: kdPoli,
     status_reg: "Belum",
     jns_kunjungan: "Poli",
@@ -277,6 +278,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
               jadwalDok(item.value);
             } else if (pilihan == "dokter") {
               setDokter(item.label);
+              setKdDokter(item.value);
             }
             // pilihan == "poli" ? setPoli(item) : setDokter(item);
           }

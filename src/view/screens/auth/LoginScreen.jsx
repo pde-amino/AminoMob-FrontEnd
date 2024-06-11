@@ -97,8 +97,8 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
-          user: "012345678901",
-          password: "123456",
+          user: "111111111111",
+          password: "111111",
           // user: username,
           // password: password,
         },
@@ -117,7 +117,7 @@ const LoginScreen = () => {
       console.log("ini user info:", userInfo);
       navigation.replace("Home Screen");
 
-      // if (userInfo.message) {
+      // if (userInfo.message == "Unable to connect to the database") {
       //   console.log("Login berhasil. Token:", userInfo);
       //   setAuth(userInfo);
       //   navigation.replace("Amino Care");
@@ -125,7 +125,19 @@ const LoginScreen = () => {
       //   console.log("Login gagal, pesan kesalahan:", userInfo.message);
       // }
     } catch (error) {
-      Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
+      try {
+        if (error == "AxiosError: Request failed with status code 500") {
+          // console.log("Login berhasil. Token:", userInfo);
+          // setAuth(userInfo);
+          // navigation.replace("Amino Care");
+          Alert.alert(
+            "Maaf",
+            "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
+          );
+        }
+      } catch (error) {
+        Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
+      }
       console.log("Login Error:", error);
     }
   };
@@ -139,14 +151,12 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View
             style={{
               alignItems: "center",
               marginBottom: 36,
-            }}
-          >
+            }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
             </Text>
