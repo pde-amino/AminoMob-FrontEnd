@@ -162,7 +162,7 @@ export const PilihPoli = () => {
   const postData = async () => {
     try {
       const response = await axios
-        .post(`${BASE_URL}/bookPeriksa/${auth.user.id}`, dataBooking, {
+        .post(`${BASE_URL}/bookPeriksa/${auth.user.id}/poli`, dataBooking, {
           headers: {
             "Content-Type": "application/json",
             // "x-api-key": "pd3@mino347",
@@ -174,10 +174,7 @@ export const PilihPoli = () => {
       // console.log("Ini Data PAsiennnsajndkijshbafkjsdhbn:", response.data);
       navigation.navigate("Booking Screen", dataPasien);
     } catch (error) {
-      Alert.alert(
-        "Maaf",
-        `Sepertinya ${route.params.id_pasien} Sudah Didaftarkan`
-      );
+      Alert.alert("Maaf", `Sepertinya pasien tersebut sudah didaftarkan`);
       console.log("Login Error:", error);
     }
   };

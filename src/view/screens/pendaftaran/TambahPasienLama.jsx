@@ -115,6 +115,7 @@ export const TambahPasienLama = () => {
   useEffect(() => {
     cariPasienLama();
   }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <HeaderComponent
