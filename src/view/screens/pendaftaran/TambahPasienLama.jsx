@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import React, { useContext, useState } from "react";
 import {
   View,
   TextInput,
@@ -81,7 +80,7 @@ export const TambahPasienLama = () => {
     }
   };
 
-  const handleRegister = async () => {
+  const searchPass = async () => {
     try {
       await axios
         .get(`${BASE_URL}/cariPas/${auth.user.id}/${noRm}/${dateOfBirth}`, {
@@ -114,6 +113,32 @@ export const TambahPasienLama = () => {
     } catch (error) {
       console.error("Error in try-catch: ", error);
     }
+  };
+
+  const addKerabat = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/tambahKerabat/${auth.user.id}`,
+        {
+          no_rkm_medis: dataGet.no_rkm_medis,
+          status_user: "Kerabat",
+          id_pasien: dataGet.id_pasien,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      )
+      .then((response) => {
+        Alert.alert("Berhasil", "Data berhasil disimpan");
+        // navigation.navigate("Pilih Poli");
+      })
+      .catch((error) => {
+        console.log(dataGet.nm_pasien);
+        Alert.alert("Gagal", "Data gagal disimpan");
+      });
   };
 
   const confirmData = (
@@ -203,7 +228,7 @@ export const TambahPasienLama = () => {
         <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
           <ButtonPrimary
             title="Simpan"
-            onPress={handleRegister}
+            onPress={searchPass}
             disabled={!checked}
           />
         </View>
@@ -218,7 +243,7 @@ export const TambahPasienLama = () => {
           buttonKanan="Simpan"
           listKerabat={true}
           pressKiri={() => setBs(false)}
-          pressKanan={""}
+          pressKanan={addKerabat}
         />
       ) : null}
     </SafeAreaView>

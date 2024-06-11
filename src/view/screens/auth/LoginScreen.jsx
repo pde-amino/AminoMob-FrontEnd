@@ -97,8 +97,8 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
-          user: "012345678901",
-          password: "123456",
+          user: "111111111111",
+          password: "111111",
           // user: username,
           // password: password,
         },
