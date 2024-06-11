@@ -315,7 +315,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
 
       <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
         <Text>Nama</Text>
-        <Text style={GlobalStyles.h1}>{route.params.nm_pasien}</Text>
+        <Text style={GlobalStyles.h3}>{route.params.nm_pasien}</Text>
       </View>
       <View style={styles.list}>
         <Text>Tanggal Periksa</Text>
@@ -378,7 +378,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
       {buttomSheet ? (
         <BottomSheet
           setStatus={setButtomSheet}
-          ukuranModal={{ width: "100%", height: "50%" }}
+          ukuranModal={{ width: "100%", height: "45%" }}
           judul="Pastikan Data Benar"
           subjudul={confirmData}
           buttonKiri="Batal"
