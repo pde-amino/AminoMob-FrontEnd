@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import { Icon } from "react-native-paper";
 
 const CardColapse = ({ title, subtitle, children }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
   const animatedHeight = useRef(new Animated.Value(0)).current;
 
   const toggleExpand = () => {
@@ -22,13 +23,28 @@ const CardColapse = ({ title, subtitle, children }) => {
       }).start();
     } else {
       Animated.timing(animatedHeight, {
-        toValue: 120, // or some other value based on content height
+        toValue: contentHeight, // or some other value based on content height
         duration: 300,
         useNativeDriver: false,
       }).start();
     }
     setIsExpanded(!isExpanded);
   };
+
+  const handleLayout = (event) => {
+    const { height } = event.nativeEvent.layout;
+    setContentHeight(height);
+  };
+
+  useEffect(() => {
+    if (isExpanded) {
+      Animated.timing(animatedHeight, {
+        toValue: contentHeight,
+        duration: 0,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [contentHeight, isExpanded]);
 
   return (
     <View style={styles.card}>
@@ -44,8 +60,13 @@ const CardColapse = ({ title, subtitle, children }) => {
         )}
       </TouchableOpacity>
       <Animated.View style={[styles.content, { height: animatedHeight }]}>
-        {isExpanded && <View style={styles.innerContent}>{children}</View>}
+        <View onLayout={handleLayout} style={styles.innerContent}>
+          {children}
+        </View>
       </Animated.View>
+      {/* <Animated.View style={[styles.content, { height: animatedHeight }]}>
+        {isExpanded && <View style={styles.innerContent}>{children}</View>}
+      </Animated.View> */}
     </View>
   );
 };

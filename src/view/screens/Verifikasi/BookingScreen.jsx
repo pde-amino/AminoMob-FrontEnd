@@ -29,12 +29,19 @@ const BookingScreen = () => {
 
   const { auth } = useContext(AuthContex);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  const cekRM = () => {
+    if (data.no_rkm_medis == null || data.no_rkm_medis == "") {
+      setAdaRM(false);
+    }
+  };
+
+  useEffect(() => {
+    cekRM();
+  }, []);
 
   const data = route.params.data;
   console.log("ini data rouute:", data);
+  console.log("ini data tgl periksa", data.tanggal_periksa);
 
   const tglFormatted = new Date(data.tanggal_periksa)
     .toISOString()
@@ -71,34 +78,40 @@ const BookingScreen = () => {
         <View style={styles.container}>
           <ScrollView style={{ flex: 1, borderRadius: 20 }}>
             <View style={styles.detailsContainer}>
-              <View style={{ gap: 4 }}>
+              <View style={{ gap: 8 }}>
                 {adaRM ? (
                   <View>
                     <Text style={styles.label}>No RM:</Text>
-                    <Text style={styles.value}>{transactionData.noRM}</Text>
+                    <Text style={GlobalStyles.h4}>{transactionData.noRM}</Text>
                   </View>
                 ) : null}
                 <View>
                   <Text style={styles.label}>Nama:</Text>
-                  <Text style={styles.value}>{transactionData.nmPas}</Text>
+                  <Text style={GlobalStyles.h4}>{transactionData.nmPas}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Tanggal Periksa:</Text>
-                  <Text style={styles.value}>{transactionData.tglPeriksa}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.tglPeriksa}
+                  </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Jam Periksa:</Text>
-                  <Text style={styles.value}>{transactionData.jamPeriksa}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.jamPeriksa}
+                  </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Poliklinik:</Text>
-                  <Text style={styles.value}>
+                  <Text style={GlobalStyles.h4}>
                     {transactionData.poliPeriksa}
                   </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Dokter :</Text>
-                  <Text style={styles.value}>{transactionData.nmDokter}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.nmDokter}
+                  </Text>
                 </View>
               </View>
               <View
@@ -110,11 +123,9 @@ const BookingScreen = () => {
                 }}
               >
                 <GenerateQRCode value={transactionData.kdBook} size={150} />
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  {transactionData.kdBook}
-                </Text>
+                <Text style={GlobalStyles.h2}>{transactionData.kdBook}</Text>
               </View>
-              <View style={{ marginBottom: 100, gap: 20 }}>
+              <View style={{ marginBottom: 80, gap: 20 }}>
                 {adaRM ? null : (
                   <Text style={{ fontSize: 16 }}>
                     <B>Tunjukkan KTP/KK pendaftar saat daftar ulang.</B>

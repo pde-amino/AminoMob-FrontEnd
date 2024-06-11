@@ -1,7 +1,6 @@
 import {
   View,
   SafeAreaView,
-  ScrollView,
   FlatList,
   RefreshControl,
   TouchableOpacity,
@@ -16,10 +15,12 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
 import axios from "axios";
 import { useState } from "react";
-import { Icon, List } from "react-native-paper";
+import { ActivityIndicator, Icon, List } from "react-native-paper";
 import CardColapse from "../../../components/CardColapse";
-import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { useNavigation } from "@react-navigation/native";
+import ButtonPrimary from "../../../components/ButtonPrimary";
+import ConfirmModal from "../../../components/ConfirmModal";
+import GenerateQRCode from "../../../contex/GenerateQRCode";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -27,45 +28,12 @@ export default function RiwayatKunjungan() {
   const { auth } = useContext(AuthContex);
   const [refreshing, setRefreshing] = useState(false);
   const [dataRiwayat, setDataRiwayat] = useState();
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   // const handlePress = () => setExpanded(!expanded);
 
   console.log("auth dari riwayat:", auth.user.id);
-
-  const Item = ({ item, onPress }) => (
-    <CardColapse title={item.kode_booking} subtitle={item.nm_pasien}>
-      <View style={{ flexDirection: "row" }}>
-        <View>
-          <Text>Poliklinik : </Text>
-          <Text>Tanggal periksa : </Text>
-          <Text>Dokter : </Text>
-        </View>
-        <View>
-          <Text> {item.nm_poli}</Text>
-          <Text> {item.tanggal_periksa}</Text>
-          <Text> {item.nm_dokter}</Text>
-        </View>
-      </View>
-      <Button title="Lihat QR Code" onPress={onPress}>
-        Lihat QR Code
-      </Button>
-    </CardColapse>
-
-    // <View>
-    //   <TouchableOpacity onPress={onPress} style={styles.item}>
-    //     <View>
-    //       <Text style={GlobalStyles.textBiasa}>{item.kode_booking}</Text>
-    //       <Text style={GlobalStyles.textBiasa}>{item.nm_poli}</Text>
-    //       <Text style={GlobalStyles.textBiasa}>{item.nm_dokter}</Text>
-    //       <Text style={[GlobalStyles.h4, { fontWeight: "bold" }]}>
-    //         {item.nm_pasien}
-    //       </Text>
-    //     </View>
-    //     <Icon source="chevron-down" size={24} />
-    //   </TouchableOpacity>
-    // </View>
-  );
 
   const ambilDataRiwayat = async () => {
     try {
@@ -82,9 +50,9 @@ export default function RiwayatKunjungan() {
       setDataRiwayat(data);
     } catch (error) {
       console.error("Error fetching riwayat data:", error.message);
-      console.error("Error response data:", error.response?.data);
+      console.error("Error response data:", error.response.data);
     } finally {
-      // setLoading(false);
+      setLoading(false);
       setRefreshing(false);
     }
   };
@@ -93,15 +61,62 @@ export default function RiwayatKunjungan() {
     ambilDataRiwayat();
   }, []);
 
+  // console.log("ini status riwayat:", item.status_reg);
+
+  const Item = ({ item, onPress }) => (
+    <CardColapse title={item.kode_booking} subtitle={item.nm_pasien}>
+      <View style={{ flexDirection: "row", gap: 8 }}>
+        <View>
+          <Text>Poliklinik : </Text>
+          <Text>Tanggal periksa : </Text>
+          <Text>Dokter : </Text>
+        </View>
+        <View>
+          <Text> {item.nm_poli}</Text>
+          <Text> {item.tanggal_periksa}</Text>
+          <Text> {item.nm_dokter}</Text>
+        </View>
+      </View>
+      <View style={{ marginTop: 10 }}>
+        {item.status_reg == "Belum" && (
+          <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
+        )}
+        {item.status_reg == "Terdaftar" && (
+          <View style={GlobalStyles.chipSuccess}>
+            <Text style={GlobalStyles.textChipSucces}>Sudah Periksa</Text>
+          </View>
+        )}
+        {item.status_reg == "Batal" && (
+          <View style={GlobalStyles.chipError}>
+            <Text style={GlobalStyles.textChipError}>Batal Periksa</Text>
+          </View>
+        )}
+      </View>
+    </CardColapse>
+
+    // <View>
+    //   <TouchableOpacity onPress={onPress} style={styles.item}>
+    //     <View>
+    //       <Text style={GlobalStyles.textBiasa}>{item.kode_booking}</Text>
+    //       <Text style={GlobalStyles.textBiasa}>{item.nm_poli}</Text>
+    //       <Text style={GlobalStyles.textBiasa}>{item.nm_dokter}</Text>
+    //       <Text style={[GlobalStyles.h4, { fontWeight: "bold" }]}>
+    //         {item.nm_pasien}
+    //       </Text>
+    //     </View>
+    //     <Icon source="chevron-down" size={24} />
+    //   </TouchableOpacity>
+    // </View>
+  );
   const renderItem = ({ item }) => {
     return (
       <Item
         item={item}
         onPress={() => {
           //   // setPilihPasien(item);
-          console.log("Item pilihpasien:", item);
+          console.log("Item pilihpasien:", item.tanggal_periksa);
           //   // setBtmMenu(true);
-          // navigation.navigate("Booking Screen", item);
+          navigation.navigate("Booking Screen", item);
         }}
       />
     );
@@ -109,14 +124,41 @@ export default function RiwayatKunjungan() {
 
   const onRefresh = () => {
     setRefreshing(true);
-    // fetchData();
+    ambilDataRiwayat();
   };
+
+  // console.log('ini status')
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent title={"Riwayat Periksa"} />
       <View style={GlobalStyles.Content}>
-        <FlatList
+        {loading ? (
+          <ActivityIndicator animating={true} color={WARNA.primary} />
+        ) : dataRiwayat ? (
+          <FlatList
+            style={{ width: "100%" }}
+            data={dataRiwayat}
+            renderItem={renderItem}
+            // keyExtractor={(item) => item.no_ktp.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        ) : (
+          <View style={styles.containerTengah}>
+            <Icon source="account-search" size={250} color={"#73B9FC"} />
+            <Text
+              style={{
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              Belum ada riwayat periksa pasien
+            </Text>
+          </View>
+        )}
+        {/* <FlatList
           style={{ width: "100%" }}
           data={dataRiwayat}
           renderItem={renderItem}
@@ -124,7 +166,7 @@ export default function RiwayatKunjungan() {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );
