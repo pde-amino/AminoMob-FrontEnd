@@ -39,8 +39,6 @@ export default function SplashScreen() {
     }, 4000);
   }, [centerPosition]);
 
-  console.log(centerPosition);
-
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.box, animatedStyles]}>
@@ -64,7 +62,6 @@ const styles = StyleSheet.create({
   box: {
     height: 200,
     width: 200,
-    // backgroundColor: "#b58df1",
     borderRadius: 20,
     overflow: "hidden", // Ensures the image stays within the rounded corners
     justifyContent: "center", // Centers the image within the box

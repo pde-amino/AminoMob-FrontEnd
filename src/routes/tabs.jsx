@@ -203,7 +203,7 @@ export default function HomeTabs() {
         component={HomeScreen}
       />
       {/* {auth.role === "admin" ? ( */}
-      <Tabs.Screen
+      {/* <Tabs.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
@@ -215,7 +215,7 @@ export default function HomeTabs() {
         }}
         name="DUMMY "
         component={BookingScreen}
-      />
+      /> */}
       {/* ) : null} */}
 
       <Tabs.Screen
@@ -230,7 +230,7 @@ export default function HomeTabs() {
           ),
         }}
         name="Riwayat"
-        component={PilihPoli}
+        component={RiwayatKunjungan}
       />
       <Tabs.Screen
         options={{

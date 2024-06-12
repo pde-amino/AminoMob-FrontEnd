@@ -48,6 +48,24 @@ export default GlobalStyles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 10,
   },
+  chipSuccess: {
+    borderRadius: 30,
+    backgroundColor: "#97E7A4",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignSelf: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  chipError: {
+    borderRadius: 30,
+    backgroundColor: "#FFC5C5",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    alignSelf: "flex-start",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   //TEXT
   h1: {
@@ -87,6 +105,14 @@ export default GlobalStyles = StyleSheet.create({
   textWajib: {
     color: WARNA.red,
     fontSize: 12,
+  },
+  textChipSucces: {
+    color: "#077404",
+    fontWeight: "bold",
+  },
+  textChipError: {
+    color: "#CA0101",
+    fontWeight: "bold",
   },
 
   //CEKBOX

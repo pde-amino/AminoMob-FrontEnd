@@ -5,10 +5,8 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Button } from "react-native-paper";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,7 +16,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 
-const { height, width } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const B = (props) => (
   <Text style={{ fontWeight: "bold" }}>{props.children}</Text>
@@ -29,39 +27,21 @@ const BookingScreen = () => {
   const route = useRoute();
   const [adaRM, setAdaRM] = useState(true);
 
-  const auth = useContext(AuthContex);
+  const { auth } = useContext(AuthContex);
 
-  console.log(auth);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
-          },
-        }
-      );
-      console.log("Response data:", response.data); // Logging response data
-      const data = response.data.data_kerabat;
-
-      setDataPasien(data);
-    } catch (error) {
-      console.error("Error fetching kerabat data:", error.message);
-      console.error("Error response data:", error.response?.data);
+  const cekRM = () => {
+    if (data.no_rkm_medis == null || data.no_rkm_medis == "") {
+      setAdaRM(false);
     }
-    // finally {
-    // setLoading(false);
-    // setRefreshing(false);
-    // }
   };
 
   useEffect(() => {
-    fetchData();
+    cekRM();
   }, []);
 
   const data = route.params.data;
+  console.log("ini data rouute:", data);
+  console.log("ini data tgl periksa", data.tanggal_periksa);
 
   const tglFormatted = new Date(data.tanggal_periksa)
     .toISOString()
@@ -69,13 +49,13 @@ const BookingScreen = () => {
 
   // Dummy data transaksi
   const transactionData = {
-    noRM: "ini no RM",
+    noRM: data.no_rkm_medis,
     kdBook: data.kode_booking,
-    nmPas: "Nama Pasien di sini",
+    nmPas: data.nm_pasien,
     tglPeriksa: tglFormatted,
     jamPeriksa: data.jam_periksa,
-    poliPeriksa: "Poli Dewasa",
-    nmDokter: data.kd_dokter,
+    poliPeriksa: data.nm_poli,
+    nmDokter: data.nm_dokter,
   };
 
   // Fungsi untuk menangani tombol kembali ke halaman utama
@@ -83,7 +63,6 @@ const BookingScreen = () => {
     navigation.replace("Home Screen");
   };
 
-  console.log("ini dari verifikasi berhasil", route.params);
   return (
     <SafeAreaView style={[GlobalStyles.utama, { backgroundColor: "#0A78E2" }]}>
       <View style={GlobalStyles.Content}>
@@ -99,34 +78,40 @@ const BookingScreen = () => {
         <View style={styles.container}>
           <ScrollView style={{ flex: 1, borderRadius: 20 }}>
             <View style={styles.detailsContainer}>
-              <View style={{ gap: 4 }}>
+              <View style={{ gap: 8 }}>
                 {adaRM ? (
                   <View>
                     <Text style={styles.label}>No RM:</Text>
-                    <Text style={styles.value}>{transactionData.noRM}</Text>
+                    <Text style={GlobalStyles.h4}>{transactionData.noRM}</Text>
                   </View>
                 ) : null}
                 <View>
                   <Text style={styles.label}>Nama:</Text>
-                  <Text style={styles.value}>{transactionData.nmPas}</Text>
+                  <Text style={GlobalStyles.h4}>{transactionData.nmPas}</Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Tanggal Periksa:</Text>
-                  <Text style={styles.value}>{transactionData.tglPeriksa}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.tglPeriksa}
+                  </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Jam Periksa:</Text>
-                  <Text style={styles.value}>{transactionData.jamPeriksa}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.jamPeriksa}
+                  </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Poliklinik:</Text>
-                  <Text style={styles.value}>
+                  <Text style={GlobalStyles.h4}>
                     {transactionData.poliPeriksa}
                   </Text>
                 </View>
                 <View>
                   <Text style={styles.label}>Dokter :</Text>
-                  <Text style={styles.value}>{transactionData.nmDokter}</Text>
+                  <Text style={GlobalStyles.h4}>
+                    {transactionData.nmDokter}
+                  </Text>
                 </View>
               </View>
               <View
@@ -138,18 +123,17 @@ const BookingScreen = () => {
                 }}
               >
                 <GenerateQRCode value={transactionData.kdBook} size={150} />
-                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                  {transactionData.kdBook}
-                </Text>
+                <Text style={GlobalStyles.h2}>{transactionData.kdBook}</Text>
               </View>
-              <View style={{ marginBottom: 100, gap: 20 }}>
+              <View style={{ marginBottom: 80, gap: 20 }}>
                 {adaRM ? null : (
                   <Text style={{ fontSize: 16 }}>
                     <B>Tunjukkan KTP/KK pendaftar saat daftar ulang.</B>
                   </Text>
                 )}
                 <Text style={{ fontSize: 16 }}>
-                  Mohon datang minimal <B>30 menit</B> sebelum jam periksa
+                  Terima Kasih. Mohon datang minimal <B>30 menit</B> sebelum jam
+                  periksa
                 </Text>
               </View>
               <ButtonPrimary
@@ -190,8 +174,9 @@ const styles = StyleSheet.create({
     color: "#555",
   },
   value: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#000",
+    fontWeight: "bold",
   },
 });
 

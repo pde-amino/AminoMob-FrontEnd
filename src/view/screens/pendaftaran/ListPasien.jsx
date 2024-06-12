@@ -85,51 +85,6 @@ export default function ListPasien() {
   //   fetchData();
   // }, []);
 
-  const Menus = [
-    {
-      kd_poli: "1",
-      title: "Poliklinik",
-      desc: "Pendaftaran online poliklinik rawat jalan",
-      to: "Pilih Poli",
-      // warna: "#E79903",
-      warna: "#DC9203",
-      img: require("../../../../assets/icon41.png"),
-    },
-    {
-      kd_poli: "2",
-      title: "Pemeriksaan Penunjang",
-      desc: "Pendaftaran Laborat dan Radiologi",
-      // to:
-      // warna: "#A9BD2C",
-      warna: "#8FA11E",
-      img: require("../../../../assets/icon42.png"),
-    },
-    {
-      kd_poli: "3",
-      title: "Telekonseling",
-      desc: "Konsultasi online dengan Psikiater atau Psikolog pilihan Anda",
-      // to: () => {
-      //   setJnsMenu("tele");
-      //   setBtmTele(true);
-      // },
-      // warna: "#09A0CF",
-      warna: "#0293C0",
-      img: require("../../../../assets/icon43.png"),
-    },
-    {
-      kd_poli: "4",
-      title: "Terang Bulan",
-      desc: "Pelayanan Fisioterapi dan Terapi Wicara yang dilakukan dirumah pasien",
-      // to: () => {
-      //   setJnsMenu("terang");
-      //   setBtmTerang(true);
-      // },
-      // warna: "#A557F3",
-      warna: "#9335F0",
-      img: require("../../../../assets/icon44.png"),
-    },
-  ];
-
   const renderItem = ({ item }) => {
     return (
       <Item
@@ -143,7 +98,6 @@ export default function ListPasien() {
             item
             // (selectedItem = item)
           );
-          // console.log("Pilih Poli", selectedItem);
         }}
       />
     );
@@ -186,7 +140,8 @@ export default function ListPasien() {
               style={{
                 fontSize: 14,
                 textAlign: "center",
-              }}>
+              }}
+            >
               Belum ada data pasien, silakan tambah data
             </Text>
           </View>
@@ -195,17 +150,6 @@ export default function ListPasien() {
       <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
         <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
       </View>
-
-      {btmMenu && pilihPasien && (
-        <BottomSheetMenu
-          dataMenu={Menus}
-          setStatus={setBtmMenu}
-          ukuranModal={{ width: "100%", height: "65%" }}
-          judul="Menu Layanan"
-          subjudul="Pilih Layanan Non BPJS"
-          onMenuPress={handleMenuPress}
-        />
-      )}
 
       {btmTambah && (
         <BottomSheet

@@ -41,9 +41,7 @@ const data = [
 export const PilihPoli = () => {
   const { auth } = useContext(AuthContex);
   const [datas, setDatas] = useState([]);
-  const [checked, setChecked] = useState(false);
   const [value, setValue] = useState("Pilih Jam Periksa");
-  const [value1, setValue1] = useState(null);
   const [value2, setValue2] = useState("Pilih Poliklinik");
   const [isFocus, setIsFocus] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
@@ -104,6 +102,7 @@ export const PilihPoli = () => {
   };
 
   console.log("data pasodojasfkjhdsklfjklf: ", [kdPoli, hariPoli, value]);
+
   const jadwalDok = (param) => {
     console.log("Ini Params JadwalDok :", param);
   };
@@ -144,12 +143,26 @@ export const PilihPoli = () => {
     // });
   };
 
+  const tglPeriksa = new Date(date).toISOString().split("T")[0];
+  const getCurrentDateTime = () => {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   // Error
   const dataBooking = {
-    tanggal_booking: new Date(),
+    tanggal_booking: getCurrentDateTime(),
     id_pasien: route.params.id_pasien,
     no_rkm_medis: route.params.no_rkm_medis,
-    tanggal_periksa: date,
+    tanggal_periksa: tglPeriksa,
     jam_periksa:
       value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
     kd_dokter: kdDokter,
@@ -160,6 +173,7 @@ export const PilihPoli = () => {
     jns_pas: "Diri Sendiri",
   };
   // endError
+
   const postData = async () => {
     await axios
       .post(
@@ -269,27 +283,28 @@ Jam Sore (14:00:00 - 18:00:00)`);
   const navHandle = async () => {
     postData();
   };
+
   const confirmData = (
-    <View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+    <View style={{ gap: 8 }}>
+      <View>
         <Text>Nama</Text>
-        <Text style={GlobalStyles.h3}>{route.params.nm_pasien}</Text>
+        <Text style={GlobalStyles.h4}>{route.params.nm_pasien}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Tanggal Periksa</Text>
-        <Text style={GlobalStyles.h3}>{hariPoli}</Text>
+        <Text style={GlobalStyles.h4}>{hariPoli}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Jam Periksa</Text>
-        <Text style={GlobalStyles.h3}>{value}</Text>
+        <Text style={GlobalStyles.h4}>{value}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Poli Tujuan</Text>
-        <Text style={GlobalStyles.h3}>{value2}</Text>
+        <Text style={GlobalStyles.h4}>{value2}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Dokter Dituju</Text>
-        <Text style={GlobalStyles.h3}>{dokter}</Text>
+        <Text style={GlobalStyles.h4}>{dokter}</Text>
       </View>
     </View>
   );
@@ -336,7 +351,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
 
       <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
         <Text>Nama</Text>
-        <Text style={GlobalStyles.h1}>{route.params.nm_pasien}</Text>
+        <Text style={GlobalStyles.h3}>{route.params.nm_pasien}</Text>
       </View>
       <View style={styles.list}>
         <Text>Tanggal Periksa</Text>
@@ -384,32 +399,25 @@ Jam Sore (14:00:00 - 18:00:00)`);
         )}
       </View>
 
-      <Checkbox.Item
-        style={{ flexDirection: "row-reverse", fontSize: 12 }}
-        color={WARNA.primary}
-        label="Pastikan data sudah benar"
-        labelStyle={{ fontSize: 13 }}
-        status={checked ? "checked" : "unchecked"}
-        onPress={() => {
-          setChecked(!checked);
-        }}
-      />
-
       <View style={GlobalStyles.btnContainer}>
         <ButtonPrimary
           title="Ajukan Booking"
           onPress={handleRegister}
-          // disabled={!checked || !value || !value1 || !value2}
+          disabled={
+            value == "Pilih Jam Periksa" ||
+            value2 == "Pilih Poliklinik" ||
+            dokter == "Pilih Dokter"
+          }
         />
       </View>
 
       {buttomSheet ? (
         <BottomSheet
           setStatus={setButtomSheet}
-          ukuranModal={{ width: "100%", height: "65%" }}
+          ukuranModal={{ width: "100%", height: "45%" }}
           judul="Pastikan Data Benar"
           subjudul={confirmData}
-          buttonKiri="Orang Lain"
+          buttonKiri="Batal"
           buttonKanan="Booking"
           listKerabat={true}
           pressKiri={() => setButtomSheet(false)}

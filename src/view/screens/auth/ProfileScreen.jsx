@@ -65,7 +65,7 @@ const ProfileScreen = () => {
       await AsyncStorage.removeItem("userInfo");
       navigation.navigate("Login Screen");
       logout();
-      Alert.alert("Logout", "Anda telah berhasil logout.");
+      // Alert.alert("Logout", "Anda telah berhasil logout.");
     } catch (error) {
       Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
       console.error("Error removing userInfo from AsyncStorage", error);
