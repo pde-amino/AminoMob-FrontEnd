@@ -36,19 +36,20 @@ const data = [
 ];
 
 const hubungan = [
-  { label: "Diri Sendiri", value: "Diri Sendiri" },
-  { label: "Suami", value: "Suami" },
-  { label: "Istri", value: "Istri" },
-  { label: "Ayah", value: "Ayah" },
-  { label: "Ibu", value: "Ibu" },
-  { label: "Anak", value: "Anak" },
-  { label: "Saudara", value: "Saudara" },
+  { label: "Kerabat", value: "KERABAT" },
+  { label: "Ayah", value: "AYAH" },
+  { label: "Ibu", value: "IBU" },
+  { label: "Istri", value: "ISTRI" },
+  { label: "Suami", value: "SUAMI" },
+  { label: "Saudara", value: "SAUDARA" },
+  { label: "Anak", value: "ANAK" },
+  { label: "Diri Dendiri", value: "DIRI SENDIRI" },
+  { label: "Lain - Lain", value: "LAIN-LAIN" },
 ];
 
 export const TambahPasienLama = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
 
-  const [checked, setChecked] = React.useState(false);
   const [value, setValue] = useState(null);
   const [bs, setBs] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
@@ -59,6 +60,9 @@ export const TambahPasienLama = () => {
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const [hubunganPasien, setHubungan] = useState(
+    "Hubungan Dengan Pemilik Akun"
+  );
 
   const navigation = useNavigation();
 
@@ -90,7 +94,6 @@ export const TambahPasienLama = () => {
         })
         .then((response) => {
           if (response.data.status == true) {
-            console.log("data api :", response.data.user.nm_pasien);
             setDataGet(response.data.user);
             setBs(true);
 
@@ -121,7 +124,7 @@ export const TambahPasienLama = () => {
         `${BASE_URL}/tambahKerabat/${auth.user.id}`,
         {
           no_rkm_medis: dataGet.no_rkm_medis,
-          status_user: "Kerabat",
+          status_user: hubunganPasien,
           id_pasien: dataGet.id_pasien,
         },
         {
@@ -133,11 +136,10 @@ export const TambahPasienLama = () => {
       )
       .then((response) => {
         Alert.alert("Berhasil", "Data berhasil disimpan");
-        // navigation.navigate("Pilih Poli");
+        navigation.navigate("List Pasien");
       })
       .catch((error) => {
-        console.log(dataGet.nm_pasien);
-        Alert.alert("Gagal", "Data gagal disimpan");
+        Alert.alert("Gagal", "Data gagal disimpansss");
       });
   };
 
@@ -168,7 +170,9 @@ export const TambahPasienLama = () => {
       <ScrollView>
         <View style={GlobalStyles.Content}>
           <View style={{ gap: 8 }}>
-            <Text style={GlobalStyles.h4}>Teks dengan tanda * wajib diisi</Text>
+            <Text style={GlobalStyles.h4}>
+              Masukan Nomor Rekam Medis dan Tanggal Lahir Kerabat
+            </Text>
 
             <TextInputIconComponent
               label={"No Rekam Medis*"}
@@ -201,35 +205,51 @@ export const TambahPasienLama = () => {
                 </Pressable>
               )}
             </View>
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  isFocus1 && {
+                    borderColor: "green",
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={hubungan}
+                // search
+                maxHeight={300}
+                labelField="label"
+                // valueField="value"
+                placeholder={hubunganPasien}
+                searchPlaceholder="Search..."
+                value={hubunganPasien}
+                onFocus={() => setIsFocus1(true)}
+                onBlur={() => setIsFocus1(false)}
+                onChange={(item) => {
+                  setHubungan(item.value);
+                  console.log(hubunganPasien);
+                  setIsFocus1(false);
+                }}
+              />
+            </View>
 
             <Divider />
-
-            <TextInputIconComponent
-              label={"No Handphone"}
-              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-              type={"username"}
-              value={value}
-              onChangeText={setValue}
-            />
           </View>
         </View>
 
-        <Checkbox.Item
-          style={GlobalStyles.cekBox}
-          color={WARNA.primary}
-          label="Pastikan data sudah benar"
-          labelStyle={{ fontSize: 13 }}
-          status={checked ? "checked" : "unchecked"}
-          onPress={() => {
-            setChecked(!checked);
-          }}
-        />
-
-        <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
+        <View
+          style={[
+            GlobalStyles.btnFullContainer,
+            { marginLeft: 20, marginTop: 20 },
+          ]}>
           <ButtonPrimary
-            title="Simpan"
+            title="Cari"
             onPress={searchPass}
-            disabled={!checked}
+            disabled={dateOfBirth ? false : true}
           />
         </View>
       </ScrollView>

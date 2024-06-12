@@ -161,26 +161,56 @@ export const PilihPoli = () => {
   };
   // endError
   const postData = async () => {
-    try {
-      const response = await axios
-        .post(`${BASE_URL}/bookPeriksa/${auth.user.id}/poli`, dataBooking, {
+    await axios
+      .post(
+        `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
+        {
+          tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
+          id_pasien: route.params.id_pasien,
+          no_rkm_medis: route.params.no_rkm_medis,
+          tanggal_periksa: date,
+          jam_periksa:
+            value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+          kd_dokter: kdDokter,
+          kd_poli: kdPoli,
+          status_reg: "Belum",
+          jns_kunjungan: "Poli",
+          status_byr: "-",
+          jns_pas: "Diri Sendiri",
+        },
+        {
           headers: {
             "Content-Type": "application/json",
-            // "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`,
           },
-        })
-        .then();
-      const dataPasien = response.data;
-      // console.log("Ini Data PAsiennnsajndkijshbafkjsdhbn:", response.data);
-      navigation.navigate("Booking Screen", dataPasien);
-    } catch (error) {
-      Alert.alert(
-        "Maaf",
-        `Sepertinya ${route.params.id_pasien} Sudah Didaftarkan`
-      );
-      console.log("Login Error:", error);
-    }
+        }
+      )
+      .then((response) => {
+        navigation.navigate("Booking Screen", response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Server merespon dengan status code yang di luar rentang 2xx
+          console.log("Response data:", error.response.data);
+          console.log("Response status:", error.response.status);
+          console.log("Response headers:", error.response.headers);
+          Alert.alert(
+            "Error",
+            `Error: ${error.response.data.message || "Something went wrong"}`
+          );
+        } else if (error.request) {
+          // Permintaan telah dibuat tetapi tidak ada respons yang diterima
+          console.log("Request:", error.request);
+          Alert.alert(
+            "Error",
+            "No response received from the server. Please try again later."
+          );
+        } else {
+          // Ada sesuatu yang salah dalam mengatur permintaan
+          console.log("Error", error.message);
+          Alert.alert("Error", `Error: ${error.message}`);
+        }
+      });
   };
 
   // console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
