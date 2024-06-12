@@ -38,6 +38,21 @@ const HomeScreen = () => {
   // const { data } = route.params;
   // console.log("result", { route });
   // const { result } = route.params;
+
+  // const openWhatsApp = (phoneNumber) => {
+  //   const url = `whatsapp://send?phone=${phoneNumber}`;
+
+  //   Linking.canOpenURL(url)
+  //     .then((supported) => {
+  //       if (!supported) {
+  //         Alert.alert("WhatsApp is not installed on your device");
+  //       } else {
+  //         return Linking.openURL(url);
+  //       }
+  //     })
+  //     .catch((err) => console.error("An error occurred", err));
+  // };
+
   const Menus = [
     {
       kd_poli: "1",
@@ -109,6 +124,7 @@ const HomeScreen = () => {
 
   const [kondisi, setKondisi] = React.useState(false);
 
+  // const phoneNumber = "6281225204301";
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <View style={{ flex: 1, alignItems: "center" }}>

@@ -30,8 +30,8 @@ const WARNA = {
 const data = [{}];
 
 const kelamin = [
-  { label: "Laki-laki", value: "1" },
-  { label: "Perempuan", value: "2" },
+  { label: "Laki-laki", value: "L" },
+  { label: "Perempuan", value: "P" },
 ];
 
 const hubungan = [
@@ -187,7 +187,9 @@ export const TambahPasien = () => {
               labelField="label"
               // valueField="value"
               placeholder={
-                !isFocus1 ? "Hubungan dengan Pemilik Akun* " : "Pilih Hubungan"
+                !isFocus1
+                  ? "Hubungan Pasien dengan Pemilik Akun* "
+                  : "Pilih Hubungan"
               }
               searchPlaceholder="Search..."
               value={hubunganPasien}
@@ -196,11 +198,19 @@ export const TambahPasien = () => {
               onChange={(item) => {
                 setHubungan(item.value);
                 setIsFocus1(false);
-                console.log(item.value);
               }}
             />
           </View>
+          <Divider />
 
+          <View
+            style={{
+              width: "100%",
+              marginLeft: 40,
+            }}
+          >
+            <Text style={GlobalStyles.h4}>Data diri Pasien</Text>
+          </View>
           <TextInputIconComponent
             label={"Nama Lengkap*"}
             placeholder={"Masukan Nama Lengkap Anda"}
@@ -250,6 +260,7 @@ export const TambahPasien = () => {
               onChange={(item) => {
                 setKelamin(item.value);
                 setIsFocus(false);
+                console.log(item.value);
               }}
             />
           </View>

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   Button,
+  ScrollView,
 } from "react-native";
 import React, { useContext, useEffect } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -146,7 +147,12 @@ export default function RiwayatKunjungan() {
             }
           />
         ) : (
-          <View style={styles.containerTengah}>
+          <ScrollView
+            style={styles.containerTengah}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             <Icon source="account-search" size={250} color={"#73B9FC"} />
             <Text
               style={{
@@ -156,7 +162,7 @@ export default function RiwayatKunjungan() {
             >
               Belum ada riwayat periksa pasien
             </Text>
-          </View>
+          </ScrollView>
         )}
         {/* <FlatList
           style={{ width: "100%" }}

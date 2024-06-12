@@ -28,15 +28,15 @@ import { BASE_URL } from "../../../contex/Config";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
-  // console.log("log yang muncul dari screen profilescreen", auth);
+  console.log("auth yang muncul dari screen profilescreen", auth);
 
   const navigation = useNavigation();
   const [confirmLogout, setConfirmLogout] = useState(false);
   const [address, setAddress] = useState("123 Main St, Anytown, CA 12345");
 
   const [dataUser, setDataUser] = useState(null);
-
   const [refreshing, setRefreshing] = useState(false);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
