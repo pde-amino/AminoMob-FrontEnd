@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -73,9 +73,17 @@ export default function ListPasien() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      // Add any cleanup logic here if needed
+      return () => {};
+    }, [])
+  );
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const renderItem = ({ item }) => {
     return (
