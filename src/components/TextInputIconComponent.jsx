@@ -19,7 +19,7 @@ const validateInput = (input, type) => {
     }
     return input.length < 11 ? "Jumlah nomor kurang" : "";
   } else if (type === "ktp") {
-    return input.length != 16 ? "Jumlah nomor KTP harus sesuai" : "";
+    return input.length === 16 ? "" : "Jumlah nomor KTP harus sesuai";
   }
   return "";
 };

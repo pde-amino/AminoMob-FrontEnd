@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -8,6 +8,7 @@ import {
   Pressable,
   Platform,
   Text,
+  Alert,
 } from "react-native";
 import { Checkbox, Divider } from "react-native-paper";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
@@ -19,6 +20,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
+import { AuthContex } from "../../../contex/AuthProvider";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -51,13 +53,55 @@ const agama = [
   { label: "Buddha", value: "BUDDHA" },
   { label: "Khonghucu", value: "KHONGHUCU" },
 ];
+const goldar = [
+  { label: "A", value: "A" },
+  { label: "O", value: "O" },
+  { label: "B", value: "B" },
+  { label: "AB", value: "AB" },
+  { label: "-", value: "-" },
+];
+const pendidikan = [
+  { label: "TIDAK SEKOLAH", value: "TS" },
+  { label: "TK", value: "TK" },
+  { label: "SD", value: "SD" },
+  { label: "SMP", value: "SMP" },
+  { label: "SMA", value: "SMA" },
+  { label: "SLB", value: "SLB" },
+  { label: "SLTA/SEDERAJAT", value: "SLTA/SEDERAJAT" },
+  { label: "D1", value: "D1" },
+  { label: "D2", value: "D2" },
+  { label: "D3", value: "D3" },
+  { label: "D4", value: "D4" },
+  { label: "S1", value: "S1" },
+  { label: "S2", value: "S2" },
+  { label: "S3", value: "S3" },
+];
+const sttsNikah = [
+  { label: "MENIKAH", value: "MENIKAH" },
+  { label: "BELUM MENIKAH", value: "BELUM MENIKAH" },
+  { label: "JANDA", value: "JANDA" },
+  { label: "DUDHA", value: "DUDHA" },
+];
 
 export const TambahPasien = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
+  const { auth } = useContext(AuthContex);
 
+  console.log("ini auth", auth);
+
+  //value yang akan diambil post
   const [hubunganPasien, setHubungan] = useState("");
+  const [nmLengkap, setnmLengkap] = useState("");
+  const [noHP, setnoHP] = useState("");
+  const [noKTP, setnoKTP] = useState();
+  const [statusNikah, setStatusNikah] = useState("");
   const [kelaminPasien, setKelamin] = useState("");
+  const [tempatLahir, setTempatLahir] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [alamat, setAlamat] = useState("");
   const [agamaPasien, setAgama] = useState("");
+  const [goldarPasien, setGoldar] = useState("");
+  const [pndPasien, setPendidikan] = useState("");
 
   const [prov, setProv] = useState([]);
   const [pilihProv, setPilihProv] = useState();
@@ -67,13 +111,14 @@ export const TambahPasien = () => {
   const [kabFocus, setKabFocus] = useState(false);
 
   const [checked, setChecked] = useState(false);
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [isFocus1, setIsFocus1] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [noKTP, setnoKTP] = useState("");
-  const [nmLengkap, setnmLengkap] = useState("");
-  const [alamat, setAlamat] = useState("");
+
+  //focus utk dropdown
+  const [focusNama, setfocusNama] = useState(false);
+  const [focusNikah, setfocusNikah] = useState(false);
+  const [focusKelamin, setFocusKelamin] = useState(false);
+  const [focusAgama, setFocuAgama] = useState(false);
+  const [focusGoldar, setFocuGoldar] = useState(false);
+  const [focusPendidikan, setFocusPendidikan] = useState(false);
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -101,56 +146,211 @@ export const TambahPasien = () => {
   //   setShowDate(false);
   // };
 
-  const simpanData = () => {
-    // Tambahkan logika pendaftaran di sini
+  // const handleNama = (input) => {
+  //   setnmLengkap(input);
+  // };
+  // const handleHP = (input) => {
+  //   setnoHP(input);
+  // };
+  // const handleKTP = (input) => {
+  //   setnoKTP(input);
+  // };
+  // const handleAlamat = (input) => {
+  //   setAlamat(input);
+  // };
+  // const handleTL = (input) => {
+  //   setTempatLahir(input);
+  // };
+
+  // const simpanData = () => {
+  //   postPasienBaru();
+  // };
+
+  const formattedDate = date ? date.toISOString().split("T")[0] : "";
+
+  const dataValue = {
+    no_rkm_medis: "",
+    nm_pasien: nmLengkap,
+    no_ktp: noKTP,
+    jk: kelaminPasien,
+    tmp_lahir: tempatLahir,
+    tgl_lahir: formattedDate,
+    nm_ibu: "",
+    alamat: alamat,
+    gol_darah: goldarPasien,
+    pekerjaan: "",
+    stts_nikah: statusNikah,
+    agama: agamaPasien,
+    tgl_daftar: "",
+    no_tlp: noHP,
+    umur: "",
+    pnd: pndPasien,
+    keluarga: "",
+    namakeluarga: "",
+    kd_pj: "A09",
+    no_peserta: "",
+    kd_kel: "",
+    kd_kec: "",
+    kd_kab: "",
+    pekerjaanpj: "",
+    alamatpj: "",
+    kelurahanpj: "",
+    kecamatanpj: "",
+    kabupatenpj: "",
+    perusahaan_pasien: "-",
+    suku_bangsa: "",
+    bahasa_pasien: "",
+    cacat_fisik: "",
+    email: "",
+    nip: "",
+    kd_prop: "",
+    propinsipj: "",
+    status_user: hubunganPasien,
   };
 
-  // axios.get(`${BASE_URL}/poli`).then((response) => {
-  //     const poli = response.data.daftar_poli.map((item, index) => {
-  //       return {
-  //         key: index,
-  //         label: item.nm_poli,
-  //         value: item.kd_poli,
-  //       };
-  //     });
-  //     setDatas(poli);
+  const getCurrentDate = () => {
+    const now = new Date();
 
-  const fetchData = async () => {
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Bulan dalam format dua digit
+    const day = String(now.getDate()).padStart(2, "0"); // Hari dalam format dua digit
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const tglHariIni = getCurrentDate();
+
+  const postPasienBaru = async () => {
     try {
-      const provinsi = await axios.get(`${BASE_URL}/prov`);
-      const transProv = provinsi.data.data.map((prov) => ({
-        label: prov.nm_prop, // Adjust according to your data structure
-        value: prov.kd_prop, // Adjust according to your data structure
-      }));
-      const kabupaten = await axios.get(`${BASE_URL}/kab`);
-      const transKab = kabupaten.data.data.map((kab) => ({
-        label: kab.nm_kab, // Adjust according to your data structure
-        value: kab.kd_kab, // Adjust according to your data structure
-      }));
-      // const jateng = await axios.get(`${BASE_URL}/prov`);
-      // const transformedData = provinsi.data.data.map((prov) => ({
-      //   label: prov.nm_prop, // Adjust according to your data structure
-      //   value: prov.kd_prop, // Adjust according to your data structure
-      // }));
-      console.log("Response data:", kabupaten.data.data); // Logging response data
-      // console.log("transformed data:", transformedData); // Logging response data
-      setProv(transProv);
-      setKab(transKab);
+      const payload = {
+        nm_pasien: nmLengkap,
+        no_ktp: noKTP,
+        jk: kelaminPasien,
+        tmp_lahir: tempatLahir,
+        tgl_lahir: formattedDate,
+        alamat: alamat,
+        gol_darah: goldarPasien,
+        stts_nikah: statusNikah,
+        agama: agamaPasien,
+        no_tlp: noHP,
+        pnd: pndPasien,
+        status_user: hubunganPasien,
+      };
+
+      const response = await axios.post(
+        `${BASE_URL}/insertPas/${auth.user.id}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+
+      console.log(response.data); // Log response dari server
+
+      // Alert.alert("Berhasil", "Data pasien berhasil disimpan");
+      // navigation.goBack();
     } catch (error) {
-      console.error("Error fetching prov:", error.message);
-      console.error("Error response data:", error.provinsi?.data);
-    } finally {
+      if (error.response) {
+        Alert.alert("Error", `Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        Alert.alert(
+          "Error",
+          "No response received from the server. Please try again later."
+        );
+      } else {
+        Alert.alert("Error", `Error: ${error.message}`);
+      }
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const postPasienBaru = async () => {
+  //   await axios
+  //     .post(
+  //       `${BASE_URL}/insertPas/${auth.user.id}`,
+  //       {
+  //         // no_rkm_medis: "",
+  //         nm_pasien: nmLengkap,
+  //         no_ktp: noKTP,
+  //         jk: kelaminPasien,
+  //         tmp_lahir: tempatLahir,
+  //         tgl_lahir: formattedDate,
+  //         // nm_ibu: "",
+  //         alamat: alamat,
+  //         gol_darah: goldarPasien,
+  //         // pekerjaan: "",
+  //         stts_nikah: statusNikah,
+  //         agama: agamaPasien,
+  //         // tgl_daftar: "",
+  //         no_tlp: noHP,
+  //         umur: "",
+  //         pnd: pndPasien,
+  //         keluarga: "",
+  //         namakeluarga: "",
+  //         kd_pj: "A09",
+  //         no_peserta: "",
+  //         kd_kel: "",
+  //         kd_kec: "",
+  //         kd_kab: "",
+  //         pekerjaanpj: "",
+  //         alamatpj: "",
+  //         kelurahanpj: "",
+  //         kecamatanpj: "",
+  //         kabupatenpj: "",
+  //         perusahaan_pasien: "-",
+  //         suku_bangsa: "",
+  //         bahasa_pasien: "",
+  //         cacat_fisik: "",
+  //         email: "",
+  //         nip: "",
+  //         kd_prop: "",
+  //         propinsipj: "",
+  //         status_user: hubunganPasien,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       // navigation.navigate("Booking Screen", response.data);
+  //       Alert.alert("Berhasil", response);
+  //     })
+  //     .catch((error) => {
+  //       if (error.response) {
+  //         // Server merespon dengan status code yang di luar rentang 2xx
+  //         console.log("error:", error);
+  //         Alert.alert("Error", `Error: ${error || "Something went wrong"}`);
+  //       } else if (error.request) {
+  //         // Permintaan telah dibuat tetapi tidak ada respons yang diterima
+  //         console.log("error Request:", error.request);
+  //         Alert.alert(
+  //           "Error",
+  //           "No response received from the server. Please try again later."
+  //         );
+  //       } else {
+  //         // Ada sesuatu yang salah dalam mengatur permintaan
+  //         console.log("Error", error.message);
+  //         Alert.alert("Error", `Error: ${error.message}`);
+  //       }
+  //     });
+  // };
+
+  console.log("kamu sekarang ada di screen tambah pasien baru");
+  console.log("ini formatdate: ", formattedDate);
+  console.log("ini date: ", date);
+  console.log("ini dateofbirth: ", dateOfBirth);
+  console.log("ini tgl hari ini: ", tglHariIni);
+  console.log("data value: ", dataValue);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent
-        title={"Daftarkan Pasien Baru"}
+        title={"Pendaftaran Pasien Baru"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
@@ -160,18 +360,16 @@ export const TambahPasien = () => {
             style={{
               width: "100%",
               marginLeft: 40,
-              marginVertical: 8,
+              // marginVertical: 8,
             }}
           >
-            <Text style={GlobalStyles.h4}>
-              Isian dengan tanda * wajib diisi
-            </Text>
+            <Text style={GlobalStyles.h4}>Isi semuanya lur</Text>
           </View>
           <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
-                isFocus1 && {
+                focusNama && {
                   borderColor: "green",
                   backgroundColor: WARNA.white,
                 },
@@ -185,57 +383,85 @@ export const TambahPasien = () => {
               // search
               maxHeight={300}
               labelField="label"
-              // valueField="value"
+              valueField="value"
               placeholder={
-                !isFocus1
-                  ? "Hubungan Pasien dengan Pemilik Akun* "
+                !focusNama
+                  ? "Hubungan Pasien dengan Pemilik Akun"
                   : "Pilih Hubungan"
               }
               searchPlaceholder="Search..."
               value={hubunganPasien}
-              onFocus={() => setIsFocus1(true)}
-              onBlur={() => setIsFocus1(false)}
+              onFocus={() => setfocusNama(true)}
+              onBlur={() => setfocusNama(false)}
               onChange={(item) => {
                 setHubungan(item.value);
-                setIsFocus1(false);
+                setfocusNama(false);
               }}
             />
           </View>
           <Divider />
 
-          <View
-            style={{
-              width: "100%",
-              marginLeft: 40,
-            }}
-          >
-            <Text style={GlobalStyles.h4}>Data diri Pasien</Text>
-          </View>
           <TextInputIconComponent
-            label={"Nama Lengkap*"}
+            label={"Nama Lengkap"}
             placeholder={"Masukan Nama Lengkap Anda"}
             type={"nama"}
             value={nmLengkap}
+            onChangeText={setnmLengkap}
           />
 
           <TextInputIconComponent
-            label={"No Handphone*"}
+            label={"No Handphone"}
             placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-            type={"username"}
+            type={"nomor"}
+            value={noHP}
+            onChangeText={setnoHP}
           />
 
           <TextInputIconComponent
-            label={"Nomor KTP*"}
+            label={"Nomor KTP"}
             placeholder={"Masukan NIK Anda"}
             type={"ktp"}
             value={noKTP}
+            onChangeText={setnoKTP}
           />
 
           <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
-                isFocus && {
+                focusNikah && {
+                  borderColor: WARNA.primary,
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={false}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={sttsNikah}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={
+                !focusNikah ? "Status Nikah" : "Pilih Status Pernikahan"
+              }
+              searchPlaceholder="Search..."
+              value={statusNikah}
+              onFocus={() => setfocusNikah(true)}
+              onBlur={() => setfocusNikah(false)}
+              onChange={(item) => {
+                setStatusNikah(item.value);
+                setfocusNikah(false);
+              }}
+            />
+          </View>
+
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                focusKelamin && {
                   borderColor: WARNA.primary,
                   backgroundColor: WARNA.white,
                 },
@@ -251,16 +477,15 @@ export const TambahPasien = () => {
               labelField="label"
               valueField="value"
               placeholder={
-                !isFocus ? "Jenis Kelamin*" : "Pilih Jenis Kelamin Anda"
+                !focusKelamin ? "Jenis Kelamin" : "Pilih Jenis Kelamin Anda"
               }
               searchPlaceholder="Search..."
               value={kelaminPasien}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+              onFocus={() => setFocusKelamin(true)}
+              onBlur={() => setFocusKelamin(false)}
               onChange={(item) => {
                 setKelamin(item.value);
-                setIsFocus(false);
-                console.log(item.value);
+                setFocusKelamin(false);
               }}
             />
           </View>
@@ -268,9 +493,11 @@ export const TambahPasien = () => {
           <Divider />
 
           <TextInputIconComponent
-            label={"Tempat Lahir*"}
+            label={"Tempat Lahir"}
             placeholder={"Masukkan Kota tempat lahir Anda"}
             type={"username"}
+            value={tempatLahir}
+            onChangeText={setTempatLahir}
           />
 
           <View>
@@ -291,10 +518,10 @@ export const TambahPasien = () => {
                   style={styles.tglPilihan}
                   editable={false}
                   // label={"Tgl Lahir"}
-                  placeholder={"Tanggal Lahir*"}
+                  placeholder={"Tanggal Lahir"}
                   value={
                     dateOfBirth
-                      ? new Date(dateOfBirth).toISOString().split("T")[0]
+                      ? new Date(date).toISOString().split("T")[0]
                       : ""
                   }
                   onChangeText={setDateOfBirth}
@@ -309,13 +536,14 @@ export const TambahPasien = () => {
 
           <TextInputIconComponent
             label={"Alamat"}
-            placeholder={"Masukan Alamat Lengkap Anda"}
-            // type={"usernamae"}
+            placeholder={"Masukan Alamat sesuai KTP"}
             value={alamat}
+            type={"username"}
+            onChangeText={setAlamat}
           />
 
           {/* ini prov */}
-          <View style={styles.containerDrop}>
+          {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -343,10 +571,10 @@ export const TambahPasien = () => {
                 setProvFocus(false);
               }}
             />
-          </View>
+          </View> */}
 
           {/* ini kab */}
-          <View style={styles.containerDrop}>
+          {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -375,10 +603,10 @@ export const TambahPasien = () => {
                 setKabFocus(false);
               }}
             />
-          </View>
+          </View> */}
 
           {/* ini kecamatan */}
-          <View style={styles.containerDrop}>
+          {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -407,10 +635,10 @@ export const TambahPasien = () => {
                 setIsFocus(false);
               }}
             />
-          </View>
+          </View> */}
 
           {/* ini kelurahan */}
-          <View style={styles.containerDrop}>
+          {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -439,7 +667,7 @@ export const TambahPasien = () => {
                 setIsFocus(false);
               }}
             />
-          </View>
+          </View> */}
 
           <Divider />
 
@@ -447,7 +675,7 @@ export const TambahPasien = () => {
             <Dropdown
               style={[
                 styles.dropdown,
-                isFocus && {
+                focusAgama && {
                   borderColor: WARNA.primary,
                   backgroundColor: WARNA.white,
                 },
@@ -458,28 +686,90 @@ export const TambahPasien = () => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               data={agama}
-              // search
               maxHeight={300}
               labelField="label"
               valueField="value"
-              placeholder={!isFocus ? "Agama*" : "Pilih Agama Anda"}
+              placeholder={!focusAgama ? "Agama" : "Pilih Agama Anda"}
               searchPlaceholder="Search..."
               value={agamaPasien}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+              onFocus={() => setFocuAgama(true)}
+              onBlur={() => setFocuAgama(false)}
               onChange={(item) => {
                 setAgama(item.value);
-                setIsFocus(false);
+                setFocuAgama(false);
               }}
             />
           </View>
 
-          <TextInputIconComponent
-            label={"Nama Ibu*"}
-            placeholder={"Masukkan nama Ibu"}
-            type={"username"}
-          />
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                focusGoldar && {
+                  borderColor: WARNA.primary,
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={false}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={goldar}
+              // search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={
+                !focusGoldar ? "Golongan Darah" : "Pilih Golongan Darah"
+              }
+              searchPlaceholder="Search..."
+              value={goldarPasien}
+              onFocus={() => setFocuGoldar(true)}
+              onBlur={() => setFocuGoldar(false)}
+              onChange={(item) => {
+                setGoldar(item.value);
+                setFocuGoldar(false);
+              }}
+            />
+          </View>
+
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                focusPendidikan && {
+                  borderColor: WARNA.primary,
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={false}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={pendidikan}
+              // search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={
+                !focusPendidikan
+                  ? "Riwayat Pendidikan"
+                  : "Pilih Pendidikan Terakhir"
+              }
+              searchPlaceholder="Search..."
+              value={pndPasien}
+              onFocus={() => setFocusPendidikan(true)}
+              onBlur={() => setFocusPendidikan(false)}
+              onChange={(item) => {
+                setPendidikan(item.value);
+                setFocusPendidikan(false);
+              }}
+            />
+          </View>
         </View>
+        <View style={{ marginBottom: 300 }} />
 
         <Checkbox.Item
           style={GlobalStyles.cekBox}
@@ -495,8 +785,8 @@ export const TambahPasien = () => {
         <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
           <ButtonPrimary
             title="Simpan"
-            onPress={simpanData}
-            disabled={!checked || !!hubunganPasien}
+            onPress={postPasienBaru}
+            // disabled={!checked || !!hubunganPasien}
           />
         </View>
       </ScrollView>

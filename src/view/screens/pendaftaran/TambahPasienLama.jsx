@@ -144,18 +144,18 @@ export const TambahPasienLama = () => {
   };
 
   const confirmData = (
-    <View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+    <View style={{ gap: 8 }}>
+      <View>
         <Text>Nama</Text>
-        <Text style={GlobalStyles.h3}>{dataGet.nm_pasien}</Text>
+        <Text style={GlobalStyles.h4}>{dataGet.nm_pasien}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Nomor Telepon</Text>
-        <Text style={GlobalStyles.h3}>{dataGet.no_tlp}</Text>
+        <Text style={GlobalStyles.h4}>{dataGet.no_tlp}</Text>
       </View>
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+      <View>
         <Text>Alamat</Text>
-        <Text style={GlobalStyles.h3}>{dataGet.alamat}</Text>
+        <Text style={GlobalStyles.h4}>{dataGet.alamat}</Text>
       </View>
     </View>
   );
@@ -245,7 +245,8 @@ export const TambahPasienLama = () => {
           style={[
             GlobalStyles.btnFullContainer,
             { marginLeft: 20, marginTop: 20 },
-          ]}>
+          ]}
+        >
           <ButtonPrimary
             title="Cari"
             onPress={searchPass}
@@ -256,7 +257,7 @@ export const TambahPasienLama = () => {
       {bs ? (
         <BottomSheet
           setStatus={setBs}
-          ukuranModal={{ width: "100%", height: "65%" }}
+          ukuranModal={{ width: "100%", height: "50%" }}
           judul="Pastikan Data Benar"
           subjudul={confirmData}
           buttonKiri="Ubah Data"

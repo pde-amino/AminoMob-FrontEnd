@@ -17,8 +17,8 @@ export default GlobalStyles = StyleSheet.create({
   },
   Content: {
     flex: 1,
-    alignContent: "center",
-    // justifyContent: "center",
+    // alignContent: "center",
+    justifyContent: "center",
     // backgroundColor: "#e6dfcf",
     alignItems: "center",
     // color: "#1a4846",

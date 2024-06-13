@@ -147,7 +147,7 @@ export default function RiwayatKunjungan() {
             }
           />
         ) : (
-          <ScrollView
+          <View
             style={styles.containerTengah}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -162,17 +162,8 @@ export default function RiwayatKunjungan() {
             >
               Belum ada riwayat periksa pasien
             </Text>
-          </ScrollView>
+          </View>
         )}
-        {/* <FlatList
-          style={{ width: "100%" }}
-          data={dataRiwayat}
-          renderItem={renderItem}
-          // keyExtractor={(item) => item.no_ktp.toString()}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        /> */}
       </View>
     </SafeAreaView>
   );
