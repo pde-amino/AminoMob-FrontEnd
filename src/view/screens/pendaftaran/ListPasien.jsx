@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -53,14 +54,14 @@ export default function ListPasien() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/daftarKerabat/${auth.user.id}`,
+        `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
         {
           headers: {
             Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
           },
         }
       );
-      console.log("Response data:", response.data); // Logging response data
+      console.log("Respon data kerabat:", response.data); // Logging response data
       const data = response.data.data_kerabat;
 
       setDataPasien(data);
@@ -134,7 +135,12 @@ export default function ListPasien() {
             }
           />
         ) : (
-          <View style={styles.containerTengah}>
+          <ScrollView
+            style={styles.containerTengah}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             <Icon source="account-search" size={250} color={"#73B9FC"} />
             <Text
               style={{
@@ -144,7 +150,7 @@ export default function ListPasien() {
             >
               Belum ada data pasien, silakan tambah data
             </Text>
-          </View>
+          </ScrollView>
         )}
       </View>
       <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>

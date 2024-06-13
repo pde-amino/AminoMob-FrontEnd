@@ -181,7 +181,6 @@ export const TambahPasien = () => {
     pekerjaan: "",
     stts_nikah: statusNikah,
     agama: agamaPasien,
-    tgl_daftar: "",
     no_tlp: noHP,
     umur: "",
     pnd: pndPasien,
@@ -220,70 +219,93 @@ export const TambahPasien = () => {
 
   const tglHariIni = getCurrentDate();
 
-  const postPasienBaru = async () => {
-    try {
-      const payload = {
-        nm_pasien: nmLengkap,
-        no_ktp: noKTP,
-        jk: kelaminPasien,
-        tmp_lahir: tempatLahir,
-        tgl_lahir: formattedDate,
-        alamat: alamat,
-        gol_darah: goldarPasien,
-        stts_nikah: statusNikah,
-        agama: agamaPasien,
-        no_tlp: noHP,
-        pnd: pndPasien,
-        status_user: hubunganPasien,
-      };
+  // const postPasienBaru = async () => {
+  //   try {
+  //     const payload = {
+  //       no_rkm_medis: "",
+  //       nm_pasien: nmLengkap,
+  //       no_ktp: noKTP,
+  //       jk: kelaminPasien,
+  //       tmp_lahir: tempatLahir,
+  //       tgl_lahir: formattedDate,
+  //       nm_ibu: "",
+  //       alamat: alamat,
+  //       gol_darah: goldarPasien,
+  //       pekerjaan: "",
+  //       stts_nikah: statusNikah,
+  //       agama: agamaPasien,
+  //       no_tlp: noHP,
+  //       umur: "",
+  //       pnd: pndPasien,
+  //       keluarga: "",
+  //       namakeluarga: "",
+  //       kd_pj: "A09",
+  //       no_peserta: "",
+  //       kd_kel: "",
+  //       kd_kec: "",
+  //       kd_kab: "",
+  //       pekerjaanpj: "",
+  //       alamatpj: "",
+  //       kelurahanpj: "",
+  //       kecamatanpj: "",
+  //       kabupatenpj: "",
+  //       perusahaan_pasien: "-",
+  //       suku_bangsa: "",
+  //       bahasa_pasien: "",
+  //       cacat_fisik: "",
+  //       email: "",
+  //       nip: "",
+  //       kd_prop: "",
+  //       propinsipj: "",
+  //       status_user: hubunganPasien,
+  //     };
 
-      const response = await axios.post(
-        `${BASE_URL}/insertPas/${auth.user.id}`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.user.token}`,
-          },
-        }
-      );
+  //     const response = await axios.post(
+  //       `${BASE_URL}/insertPas/${auth.user.id}`,
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${auth.user.token}`,
+  //         },
+  //       }
+  //     );
 
-      console.log(response.data); // Log response dari server
+  //     console.log("response data post:", response.data); // Log response dari server
 
-      // Alert.alert("Berhasil", "Data pasien berhasil disimpan");
-      // navigation.goBack();
-    } catch (error) {
-      if (error.response) {
-        Alert.alert("Error", `Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        Alert.alert(
-          "Error",
-          "No response received from the server. Please try again later."
-        );
-      } else {
-        Alert.alert("Error", `Error: ${error.message}`);
-      }
-    }
-  };
+  //     // Alert.alert("Berhasil", "Data pasien berhasil disimpan");
+  //     // navigation.goBack();
+  //   } catch (error) {
+  //     if (error.response) {
+  //       Alert.alert("Error", `Error response: ${error.response.data.message}`);
+  //     } else if (error.request) {
+  //       Alert.alert(
+  //         "Error",
+  //         "No response received from the server. Please try again later."
+  //       );
+  //     } else {
+  //       Alert.alert("Error", `Error: ${error.message}`);
+  //     }
+  //   }
+  // };
 
   // const postPasienBaru = async () => {
   //   await axios
   //     .post(
   //       `${BASE_URL}/insertPas/${auth.user.id}`,
   //       {
-  //         // no_rkm_medis: "",
+  //         no_rkm_medis: "",
   //         nm_pasien: nmLengkap,
   //         no_ktp: noKTP,
   //         jk: kelaminPasien,
   //         tmp_lahir: tempatLahir,
   //         tgl_lahir: formattedDate,
-  //         // nm_ibu: "",
+  //         nm_ibu: "",
   //         alamat: alamat,
   //         gol_darah: goldarPasien,
-  //         // pekerjaan: "",
+  //         pekerjaan: "",
   //         stts_nikah: statusNikah,
   //         agama: agamaPasien,
-  //         // tgl_daftar: "",
   //         no_tlp: noHP,
   //         umur: "",
   //         pnd: pndPasien,
@@ -339,6 +361,86 @@ export const TambahPasien = () => {
   //       }
   //     });
   // };
+
+  const postPasienBaru = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/insertPas/${auth.user.id}`,
+        {
+          no_rkm_medis: "",
+          nm_pasien: nmLengkap,
+          no_ktp: noKTP,
+          jk: kelaminPasien,
+          tmp_lahir: tempatLahir,
+          tgl_lahir: formattedDate,
+          nm_ibu: "",
+          alamat: alamat,
+          gol_darah: goldarPasien,
+          pekerjaan: "",
+          stts_nikah: statusNikah,
+          agama: agamaPasien,
+          no_tlp: noHP,
+          umur: "",
+          pnd: pndPasien,
+          keluarga: hubunganPasien,
+          namakeluarga: "",
+          kd_pj: "A09",
+          no_peserta: "",
+          kd_kel: "",
+          kd_kec: "",
+          kd_kab: "",
+          pekerjaanpj: "",
+          alamatpj: "",
+          kelurahanpj: "",
+          kecamatanpj: "",
+          kabupatenpj: "",
+          perusahaan_pasien: "-",
+          suku_bangsa: "",
+          bahasa_pasien: "",
+          cacat_fisik: "",
+          email: "",
+          nip: "",
+          kd_prop: "",
+          propinsipj: "",
+          status_user: hubunganPasien,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.user.token}`,
+          },
+        }
+      );
+
+      // Jika respons berhasil, tambahkan logika atau navigasi yang sesuai
+      console.log("Response:", response.data);
+      Alert.alert("Berhasil", "Pasien berhasil ditambahkan");
+
+      // Jika Anda ingin melakukan navigasi ke layar lain, gunakan navigation.navigate di sini
+      // navigation.navigate("Booking Screen", response.data);
+    } catch (error) {
+      // Tangani kesalahan yang terjadi selama permintaan POST
+      if (error.response) {
+        // Server merespon dengan status code yang di luar rentang 2xx
+        console.error("Error response:", error.response.data);
+        Alert.alert(
+          "Error",
+          `Error: ${error.response.data || "Something went wrong"}`
+        );
+      } else if (error.request) {
+        // Permintaan telah dibuat tetapi tidak ada respons yang diterima
+        console.error("Error request:", error.request);
+        Alert.alert(
+          "Error",
+          "No response received from the server. Please try again later."
+        );
+      } else {
+        // Kesalahan dalam mengatur permintaan
+        console.error("Error:", error.message);
+        Alert.alert("Error", `Error: ${error.message}`);
+      }
+    }
+  };
 
   console.log("kamu sekarang ada di screen tambah pasien baru");
   console.log("ini formatdate: ", formattedDate);
