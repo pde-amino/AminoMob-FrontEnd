@@ -55,14 +55,6 @@ const InformasiDokter = () => {
     };
   }, []);
 
-  if (loading) {
-    return (
-      <View style={GlobalStyles.Content}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
   if (error) {
     return (
       <View style={GlobalStyles.Content}>
@@ -84,27 +76,33 @@ const InformasiDokter = () => {
         placeholder={"Cari Poli"}
         filterAttribute={"nm_poli"}
       />
-      <FlatList
-        contentContainerStyle={{ flexGrow: 1 }}
-        horizontal={false}
-        numColumns={3}
-        data={filteredData}
-        renderItem={({ item }) => (
-          <MenuItemComponent
-            onPress={() =>
-              navigation.navigate("Search Poli", {
-                clinicId: item.kd_poli,
-                nameClinic: item.nm_poli,
-              })
-            }
-            data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
-            icon={"apps"}
-            title={item.nm_poli}
-            // colorIcon={item.color}
-          />
-        )}
-        keyExtractor={(item) => item.kd_poli.toString()}
-      />
+      {loading ? (
+        <View style={GlobalStyles.Content}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
+          horizontal={false}
+          numColumns={3}
+          data={filteredData}
+          renderItem={({ item }) => (
+            <MenuItemComponent
+              onPress={() =>
+                navigation.navigate("Search Poli", {
+                  clinicId: item.kd_poli,
+                  nameClinic: item.nm_poli,
+                })
+              }
+              data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
+              icon={"apps"}
+              title={item.nm_poli}
+              // colorIcon={item.color}
+            />
+          )}
+          keyExtractor={(item) => item.kd_poli.toString()}
+        />
+      )}
     </View>
   );
 };

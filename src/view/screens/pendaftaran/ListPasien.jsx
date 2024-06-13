@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -134,17 +135,20 @@ export default function ListPasien() {
             }
           />
         ) : (
-          <View style={styles.containerTengah}>
+          <ScrollView
+            style={styles.containerTengah}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             <Icon source="account-search" size={250} color={"#73B9FC"} />
             <Text
               style={{
                 fontSize: 14,
                 textAlign: "center",
-              }}
-            >
+              }}>
               Belum ada data pasien, silakan tambah data
             </Text>
-          </View>
+          </ScrollView>
         )}
       </View>
       <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
@@ -188,8 +192,8 @@ const styles = StyleSheet.create({
   },
   containerTengah: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     gap: 8,
   },
 });

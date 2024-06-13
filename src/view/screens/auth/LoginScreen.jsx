@@ -97,8 +97,8 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
-          user: "012345678901",
-          password: "123456",
+          user: "222222222222",
+          password: "222222",
           // user: username,
           // password: password,
         },
@@ -151,14 +151,12 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View
             style={{
               alignItems: "center",
               marginBottom: 36,
-            }}
-          >
+            }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
             </Text>

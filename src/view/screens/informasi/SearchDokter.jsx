@@ -9,6 +9,9 @@ import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
+import ModalComponent from "../../../components/ModalComponent";
+import BottomSheet from "../../../components/BottomSheet";
+import DetailDoctorScreen from "../../../components/DetailDoctorScreen";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -21,6 +24,7 @@ export default function SearchDokter() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
+  const [bottomSeed, setBootomSeed] = useState(false);
 
   useEffect(() => {
     axios
@@ -34,6 +38,13 @@ export default function SearchDokter() {
       .catch((err) => console.log("Error Search Dokter :", err));
   }, []);
 
+  const detailDokter = () => {
+    return (
+      <View>
+        <Text>Detail Dokter</Text>
+      </View>
+    );
+  };
   if (loading) {
     return (
       <View style={GlobalStyles.Content}>
@@ -85,13 +96,25 @@ export default function SearchDokter() {
             title={item.nm_dokter}
             // description={item.nm_poli}
             imgSource={{ uri: `${item.image}` }}
-            onPress={() =>
-              Alert.alert(`${item.nm_dokter}`, `${item.nm_dokter}`)
-            }
+            modal={true}
+            onPress={() => setBootomSeed(true)}
             warna={"#73B9FC"}
           />
         )}
       />
+      {bottomSeed ? (
+        <BottomSheet
+          setStatus={setBootomSeed}
+          ukuranModal={{ width: "100%", height: "80%" }}
+          judul="Pastikan Data Benar"
+          subjudul={<DetailDoctorScreen />}
+          buttonKiri="Batal"
+          buttonKanan="Booking"
+          listKerabat={true}
+          pressKiri={() => setBootomSeed(false)}
+          pressKanan={() => setBootomSeed(false)}
+        />
+      ) : null}
       <View />
     </View>
   );
