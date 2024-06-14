@@ -36,21 +36,6 @@ const InformasiTempatTidur = () => {
       .catch((err) => console.log("Error Dari Informasi TT :" + err));
   }, []);
 
-  if (loading) {
-    return (
-      <View style={GlobalStyles.Content}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={GlobalStyles.Content}>
-        <Text>Error fetching data: {error.message}</Text>
-      </View>
-    );
-  }
   console.log("Dari Informasi Tempat Tidur", filteredData);
 
   const handleSearch = (filteredData) => {
@@ -73,12 +58,23 @@ const InformasiTempatTidur = () => {
       {/* <Text style={GlobalStyles.subTitle}>
         Kelas dan Kamar yang tersedia pada RS
       </Text> */}
-      <FlatList
-        style={{ width: "100%" }}
-        data={filteredData}
-        keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
-        renderItem={({ item }) => <CardListComponent data={item} />}
-      />
+      {loading ? (
+        <View style={GlobalStyles.Content}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <FlatList
+          style={{ width: "100%" }}
+          data={filteredData}
+          keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
+          renderItem={({ item }) => <CardListComponent data={item} />}
+        />
+      )}
+      {error ? (
+        <View style={GlobalStyles.Content}>
+          <Text>Error fetching data: {error.message}</Text>
+        </View>
+      ) : null}
     </View>
   );
 };

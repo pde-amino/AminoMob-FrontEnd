@@ -7,6 +7,9 @@ import {
   Alert,
   Dimensions,
   TouchableOpacity,
+  SafeAreaView,
+  Pressable,
+  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -22,6 +25,25 @@ const { width } = Dimensions.get("window");
 
 const SignupScreen = () => {
   const navigation = useNavigation();
+  const [showPicker, setShowPicker] = useState(false);
+  const toggleShowDate = () => {
+    setShowPicker(!showPicker);
+  };
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const berubah = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+
+      if (Platform.OS === "android") {
+        toggleShowDate();
+        setDateOfBirth(currentDate.toISOString().split("T")[0]);
+      }
+    } else {
+      toggleShowDate();
+    }
+  };
+  const [date, setDate] = useState(new Date());
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");
@@ -112,11 +134,11 @@ const SignupScreen = () => {
   };
 
   const daftarAkun = () => {
-    navigation.navigate("LoginScreen");
+    navigation.navigate("Login Screen");
   };
 
   return (
-    <View style={GlobalStyles.utama}>
+    <SafeAreaView style={GlobalStyles.utama}>
       <ScrollView>
         <View style={GlobalStyles.Content}>
           <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
@@ -142,6 +164,29 @@ const SignupScreen = () => {
               value={noHP}
               onChangeText={setHP}
             />
+            <View>
+              {showPicker && (
+                <DateTimePicker
+                  mode="date"
+                  onChange={berubah}
+                  value={date}
+                  minimumDate={new Date(1935, 12, 31)}
+                  maximumDate={new Date()}
+                />
+              )}
+
+              {!showPicker && (
+                <Pressable onPress={toggleShowDate}>
+                  <TextInput
+                    style={styles.tglPilihan}
+                    editable={false}
+                    placeholder={"Tanggal Lahir*"}
+                    value={dateOfBirth}
+                    onChangeText={setDateOfBirth}
+                  />
+                </Pressable>
+              )}
+            </View>
             <TextInputIconComponent
               label={"Buat Kata Sandi"}
               placeholder={"Buat Kata Sandi"}
@@ -184,7 +229,7 @@ const SignupScreen = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

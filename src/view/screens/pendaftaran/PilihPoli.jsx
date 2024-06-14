@@ -182,7 +182,7 @@ export const PilihPoli = () => {
           tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
           id_pasien: route.params.id_pasien,
           no_rkm_medis: route.params.no_rkm_medis,
-          tanggal_periksa: date,
+          tanggal_periksa: date.toISOString().split("T")[0],
           jam_periksa:
             value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
           kd_dokter: kdDokter,
@@ -200,34 +200,19 @@ export const PilihPoli = () => {
         }
       )
       .then((response) => {
-        navigation.navigate("Booking Screen", response.data);
+        navigation.replace("Booking Screen", response.data);
       })
-      .catch((error) => {
-        if (error.response) {
-          // Server merespon dengan status code yang di luar rentang 2xx
-          console.log("Response data:", error.response.data);
-          console.log("Response status:", error.response.status);
-          console.log("Response headers:", error.response.headers);
-          Alert.alert(
-            "Error",
-            `Error: ${error.response.data.message || "Something went wrong"}`
-          );
-        } else if (error.request) {
-          // Permintaan telah dibuat tetapi tidak ada respons yang diterima
-          console.log("Request:", error.request);
-          Alert.alert(
-            "Error",
-            "No response received from the server. Please try again later."
-          );
-        } else {
-          // Ada sesuatu yang salah dalam mengatur permintaan
-          console.log("Error", error.message);
-          Alert.alert("Error", `Error: ${error.message}`);
-        }
+      .catch((response) => {
+        console.log("response error", response);
+        Alert.alert(
+          "Mohon Maaf",
+          `Sepertinya ${route.params.nm_pasien} sudah terdaftar pada Tanggal ${
+            date.toISOString().split("T")[0]
+          } di ${value2}`
+        );
       });
   };
 
-  // console.log(selectedItem.nm_pasien, selectedItem.no_rkm_medis);
   const pilihJamPeriksa = () => {
     setMessMod("Pilih Jam Periksa");
     setSubMessMod(`Jam Pagi (07:00:00 - 14:00:00)

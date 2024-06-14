@@ -35,7 +35,7 @@ export default function EditProfileScreen() {
           value={name}
           onChangeText={setName}
           // password={(data.status = "Success" ? true : false)}
-          maskValue={data.status === "Sudah" ? false : true}
+          // maskValue={data.status === "Sudah" ? false : true}
         />
 
         <TextInputIconComponent
@@ -43,7 +43,7 @@ export default function EditProfileScreen() {
           placeholder={"Alamat Lengkap Anda"}
           // type={"usernamae"}
           value={address}
-          maskValue={data.status === "Sudah" ? false : true}
+          // maskValue={data.status === "Sudah" ? false : true}
         />
         <TextInputIconComponent
           label={"Nomor Handphone"}
@@ -51,7 +51,7 @@ export default function EditProfileScreen() {
           type={"username"}
           value={phone}
           // {data.status? "disabled" : null}
-          maskValue={data.status === "Sudah" ? false : true}
+          // maskValue={data.status === "Sudah" ? false : true}
         />
 
         <ButtonPrimary title={"Simpan"} />

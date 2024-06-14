@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
   },
   containerTengah: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     gap: 8,
   },
 });
