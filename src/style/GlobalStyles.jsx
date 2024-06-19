@@ -1,5 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
@@ -47,6 +51,7 @@ export default GlobalStyles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 10,
     marginHorizontal: 10,
+    width: "90%",
   },
   chipSuccess: {
     borderRadius: 30,
@@ -66,39 +71,44 @@ export default GlobalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  containerLogo: {
+    height: hp(5),
+    width: wp(30),
+    // backgroundColor: "pink",
+  },
 
   //TEXT
   h1: {
-    fontSize: 24,
+    fontSize: hp(4),
     fontWeight: "bold",
     // color: "#3E3E3E",
   },
   h2: {
-    fontSize: 20,
+    fontSize: hp(2.2),
     fontWeight: "bold",
     color: "#3E3E3E",
   },
   h3: {
-    fontSize: 18,
+    fontSize: hp(2),
     fontWeight: "bold",
     color: "#3E3E3E",
   },
   h4: {
-    fontSize: 16,
+    fontSize: hp(1.8),
     fontWeight: "bold",
     color: "#3E3E3E",
   },
   textButtonSmall: {
     color: WARNA.white,
-    fontSize: 16,
+    fontSize: hp(1.8),
     fontWeight: "bold",
   },
   textBiasa: {
-    fontSize: 14,
+    fontSize: hp(1.6),
     color: "#3E3E3E",
   },
   textLink: {
-    fontSize: 14,
+    fontSize: hp(1.6),
     color: WARNA.primary,
     textDecorationLine: "underline",
   },

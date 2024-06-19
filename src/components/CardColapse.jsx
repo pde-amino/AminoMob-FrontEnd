@@ -50,7 +50,7 @@ const CardColapse = ({ title, subtitle, children }) => {
     <View style={styles.card}>
       <TouchableOpacity onPress={toggleExpand} style={styles.header}>
         <View>
-          <Text>{title}</Text>
+          <Text style={GlobalStyles.textBiasa}>{title}</Text>
           <Text style={GlobalStyles.h4}>{subtitle}</Text>
         </View>
         {isExpanded ? (
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 15,
-    backgroundColor: "#C5E1FC",
+    // backgroundColor: "#C5E1FC",
+    backgroundColor: "#E1F0FF",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
     flexDirection: "row",

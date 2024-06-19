@@ -72,11 +72,15 @@ export default function InfoListPasien() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent title={"Data Pasien"} />
-      <View style={GlobalStyles.Content}>
+      <View style={{ flex: 2 }}>
+        <HeaderComponent title={"Data Pasien"} />
+      </View>
+      <View style={{ flex: 1, alignItems: "center" }}>
         <View style={GlobalStyles.btnFullContainer}>
           <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
         </View>
+      </View>
+      <View style={{ flex: 12, alignItems: "center" }}>
         {loading ? (
           <ActivityIndicator
             animating={true}

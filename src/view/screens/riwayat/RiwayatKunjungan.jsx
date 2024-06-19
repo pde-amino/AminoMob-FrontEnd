@@ -94,20 +94,6 @@ export default function RiwayatKunjungan() {
         )}
       </View>
     </CardColapse>
-
-    // <View>
-    //   <TouchableOpacity onPress={onPress} style={styles.item}>
-    //     <View>
-    //       <Text style={GlobalStyles.textBiasa}>{item.kode_booking}</Text>
-    //       <Text style={GlobalStyles.textBiasa}>{item.nm_poli}</Text>
-    //       <Text style={GlobalStyles.textBiasa}>{item.nm_dokter}</Text>
-    //       <Text style={[GlobalStyles.h4, { fontWeight: "bold" }]}>
-    //         {item.nm_pasien}
-    //       </Text>
-    //     </View>
-    //     <Icon source="chevron-down" size={24} />
-    //   </TouchableOpacity>
-    // </View>
   );
   const renderItem = ({ item }) => {
     return (
@@ -132,8 +118,10 @@ export default function RiwayatKunjungan() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent title={"Riwayat Periksa"} />
-      <View style={GlobalStyles.Content}>
+      <View style={{ flex: 1 }}>
+        <HeaderComponent title={"Riwayat Periksa"} />
+      </View>
+      <View style={{ flex: 9 }}>
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
         ) : dataRiwayat ? (
@@ -170,29 +158,6 @@ export default function RiwayatKunjungan() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  item: {
-    borderWidth: 1,
-    borderColor: "#eaeaea",
-    borderRadius: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    marginVertical: 4,
-    marginHorizontal: 20,
-    backgroundColor: "white",
-    elevation: 2,
-    // gap: 8,
-    // marginVertical: 8,
-    // marginHorizontal: 20,
-  },
-  title: {
-    fontSize: 16,
-  },
   containerTengah: {
     flex: 1,
     justifyContent: "center",

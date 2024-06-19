@@ -9,8 +9,10 @@ import {
   Linking,
 } from "react-native";
 import React from "react";
-import { Button, IconButton } from "react-native-paper";
-import { Ionicons } from "react-native-vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { TextInput, TouchableRipple } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
@@ -107,11 +109,11 @@ export default function MySlider() {
             parallaxScrollingScale: 0.98,
             parallaxScrollingOffset: 100,
           }}
-          width={360}
-          height={200}
+          width={wp(90)}
+          height={hp(25)}
           // autoPlay={true}
           data={dataCarousel}
-          scrollAnimationDuration={1000}
+          scrollAnimationDuration={3000}
           onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({ item }) => (
             <TouchableRipple
@@ -128,20 +130,6 @@ export default function MySlider() {
                 }}
               />
             </TouchableRipple>
-            // <Pressable
-            //   onPress={() =>
-            //     Linking.openURL(
-            //       "https://www.youtube.com/@RSJDDrAminoGondohutomo"
-            //     )
-            //   }
-            // >
-            //   <Image
-            //     style={styles.imageCarousel}
-            //     source={{
-            //       uri: item.image,
-            //     }}
-            //   />
-            // </Pressable>
           )}
         />
       </View>

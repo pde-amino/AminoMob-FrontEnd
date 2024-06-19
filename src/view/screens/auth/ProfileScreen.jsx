@@ -75,65 +75,68 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent title="Profil" />
-      {loading ? (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      ) : (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <View style={{ alignItems: "center", marginTop: 16, flex: 2 }}>
-            <Avatar.Image
-              size={80}
-              source={require("../../../../assets/avatar.png")}
-            />
+      <View style={{ flex: 1 }}>
+        <HeaderComponent title="Profil" />
+      </View>
+      <View style={{ flex: 8 }}>
+        {loading ? (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <ActivityIndicator size="large" color="#0000ff" />
           </View>
+        ) : (
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <View style={{ alignItems: "center", marginTop: 16 }}>
+              <Avatar.Image
+                size={80}
+                source={require("../../../../assets/avatar.png")}
+              />
+            </View>
 
-          {dataUser ? (
-            <View style={{ gap: 10, flex: 1 }}>
-              <View style={{ alignItems: "center", gap: 4 }}>
-                <Text style={GlobalStyles.h2}>
-                  {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
-                </Text>
-                <View>
-                  <Text>Nomor Telepon</Text>
-                  <Text style={GlobalStyles.h4}>{dataUser.telp}</Text>
-                </View>
-                <View>
-                  <Text>Tanggal Lahir</Text>
-                  <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
+            {dataUser ? (
+              <View style={{ gap: 10, flex: 1 }}>
+                <View style={{ alignItems: "center", gap: 4 }}>
+                  <Text style={GlobalStyles.h2}>
+                    {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
+                  </Text>
+                  <View>
+                    <Text>Nomor Telepon</Text>
+                    <Text style={GlobalStyles.h4}>{dataUser.telp}</Text>
+                  </View>
+                  <View>
+                    <Text>Tanggal Lahir</Text>
+                    <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ) : (
-            <Text>Loading...</Text>
-          )}
+            ) : (
+              <Text>Loading...</Text>
+            )}
 
-          <View style={GlobalStyles.btnContainer}>
-            <ButtonSecondary
-              title={"Log Out"}
-              onPress={() => setConfirmLogout(true)}
-            />
-          </View>
-
-          {confirmLogout && (
-            <ConfirmModal
-              visible={confirmLogout}
-              message={"Apakah anda yakin ingin keluar?"}
-              onCancel={() => setConfirmLogout(false)}
-              onConfirm={handleLogout}
-              confirmButtonText={"Ya"}
-              cancelButtonText={"Tidak"}
-            />
-          )}
-        </ScrollView>
-      )}
+            {confirmLogout && (
+              <ConfirmModal
+                visible={confirmLogout}
+                message={"Apakah anda yakin ingin keluar?"}
+                onCancel={() => setConfirmLogout(false)}
+                onConfirm={handleLogout}
+                confirmButtonText={"Ya"}
+                cancelButtonText={"Tidak"}
+              />
+            )}
+          </ScrollView>
+        )}
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={GlobalStyles.btnContainer}>
+          <ButtonSecondary
+            title={"Log Out"}
+            onPress={() => setConfirmLogout(true)}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

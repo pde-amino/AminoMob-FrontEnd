@@ -15,6 +15,11 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
@@ -127,81 +132,63 @@ const HomeScreen = () => {
   // const phoneNumber = "6281225204301";
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <View
-          style={{
-            backgroundColor: "#0a78e2",
-            height: 150,
-            position: "absolute",
-          }}>
-          <Svg
-            height={380}
-            width={Dimensions.get("screen").width}
-            viewBox="0 0 1440 320">
-            <Path
-              fill="#0a78e2"
-              fill-opacity="1"
-              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
-          </Svg>
-        </View>
-        <View style={{ marginVertical: 50 }}>
-          <View style={GlobalStyles.headerHomeContainer}>
-            <Image
-              source={require("../../../../assets/logo-app.png")}
-              resizeMode="contain"
-              style={{
-                height: 40,
-                width: 80,
-              }}
-            />
-            <TouchableOpacity
-              style={GlobalStyles.btnRedSmall}
-              onPress={darurat}>
-              <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
-            </TouchableOpacity>
+      <View style={{ flex: 1, backgroundColor: WARNA.primary }}>
+        <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              backgroundColor: WARNA.primary,
+              height: 150,
+              width: "100%",
+              position: "absolute",
+            }}
+          >
+            <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
+              <Path
+                fill="#0a78e2"
+                fill-opacity="1"
+                d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+              ></Path>
+            </Svg>
           </View>
-
-          <BannerComponent
-            visible={bannerVisible}
-            content={
-              "Lakukan verifikasi data di halaman Profil untuk mendaftar Poliklinik"
-            }
-            bannerStyle={{
-              backgroundColor: "#FF9B9B",
-              borderRadius: 20,
-              marginBottom: 12,
-            }}
-            textStyle={{
-              fontWeight: "bold",
-              color: "#710714",
-              // width: "75%",
-              // backgroundColor: "white",
-            }}
-            colorIcon={"#710714"}
-          />
-
-          <MySlider />
-
-          <View style={{ marginTop: 16 }}>
-            <Text style={GlobalStyles.h3}>Menu</Text>
-            <FlatList
-              data={Menus}
-              renderItem={({ item }) => (
-                <CardButtonNavComponent
-                  data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.desc}
-                  onPress={item.to}
-                  colorIcon={item.color}
-                  imgSource={item.source}
-                  warna={item.warna}
-                  alertData={item.alert}
-                />
-              )}
-            />
+          <View style={{ marginVertical: 50 }}>
+            <View style={GlobalStyles.headerHomeContainer}>
+              <Image
+                source={require("../../../../assets/logo-app.png")}
+                resizeMode="contain"
+                style={GlobalStyles.containerLogo}
+              />
+              <TouchableOpacity
+                style={GlobalStyles.btnRedSmall}
+                onPress={darurat}
+              >
+                <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+      </View>
+      <View style={{ flex: 2 }}>
+        <MySlider />
+      </View>
+
+      <View style={{ flex: 4, marginTop: 16, paddingHorizontal: 20 }}>
+        <Text style={GlobalStyles.h3}>Menu</Text>
+        <FlatList
+          data={Menus}
+          renderItem={({ item }) => (
+            <CardButtonNavComponent
+              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+              icon={item.icon}
+              title={item.title}
+              description={item.desc}
+              onPress={item.to}
+              colorIcon={item.color}
+              imgSource={item.source}
+              warna={item.warna}
+              alertData={item.alert}
+            />
+          )}
+        />
       </View>
       {/* 
       <SpeedDial

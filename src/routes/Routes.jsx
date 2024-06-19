@@ -37,6 +37,7 @@ import { TambahPasienLama } from "../view/screens/pendaftaran/TambahPasienLama";
 // import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import OTPInputScreen from "../view/screens/auth/OTPInputScreen";
 import SplashScreen from "../view/screens/home/SplashScreen";
+import DetailDoctorScreen from "../view/screens/informasi/DetailDoctorScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,7 @@ export default function Routes() {
         />
         <Stack.Screen name="Tambah Pasien Baru" component={TambahPasien} />
         <Stack.Screen name="Tambah Pasien Lama" component={TambahPasienLama} />
+        <Stack.Screen name="Detail Dokter" component={DetailDoctorScreen} />
         <Stack.Screen
           screenOptions={{ headerShown: true }}
           name="Pilih Poli"
@@ -98,13 +100,7 @@ export default function Routes() {
               title: "Informasi RS",
             }}
           />
-          <Stack.Screen
-            name="Telekonseling"
-            component={HomeTelekonseling}
-            options={{
-              title: "Masuk",
-            }}
-          />
+          <Stack.Screen name="Telekonseling" component={HomeTelekonseling} />
 
           <Stack.Screen
             name="Riwayat Kunjungan"
