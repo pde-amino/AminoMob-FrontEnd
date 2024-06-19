@@ -73,7 +73,7 @@ const TextInputIconComponent = ({
         secureTextEntry={secureTextEntry}
         right={
           password ? (
-            <TextInput.Icon
+            <TextInput
               icon={secureTextEntry ? "eye-off" : "eye"}
               onPress={toggleSecureTextEntry}
             />
@@ -85,8 +85,7 @@ const TextInputIconComponent = ({
           // outlineColor={WARNA.red}
           style={{ color: WARNA.red }}
           type="error"
-          visible={!!error}
-        >
+          visible={!!error}>
           {error}
         </HelperText>
       )}

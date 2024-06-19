@@ -144,29 +144,11 @@ const HomeScreen = () => {
               <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
             </TouchableOpacity>
           </View>
+          <View style={{ flex: 2 }}>
+            <MySlider />
+          </View>
 
-          <BannerComponent
-            visible={bannerVisible}
-            content={
-              "Lakukan verifikasi data di halaman Profil untuk mendaftar Poliklinik"
-            }
-            bannerStyle={{
-              backgroundColor: "#FF9B9B",
-              borderRadius: 20,
-              marginBottom: 12,
-            }}
-            textStyle={{
-              fontWeight: "bold",
-              color: "#710714",
-              // width: "75%",
-              // backgroundColor: "white",
-            }}
-            colorIcon={"#710714"}
-          />
-
-          <MySlider />
-
-          <View style={{ marginTop: 16 }}>
+          <View style={{ marginTop: 16, flex: 4 }}>
             <Text style={GlobalStyles.h3}>Menu</Text>
             <FlatList
               data={Menus}
