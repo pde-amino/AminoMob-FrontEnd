@@ -457,7 +457,7 @@ export const TambahPasien = () => {
         onPress={() => navigation.goBack()}
       />
       <ScrollView>
-        <View style={[GlobalStyles.Content, { gap: 8 }]}>
+        <View style={{ flex: 8, gap: 8, alignItems: "center" }}>
           <View
             style={{
               width: "100%",
@@ -883,7 +883,6 @@ export const TambahPasien = () => {
             setChecked(!checked);
           }}
         />
-
         <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
           <ButtonPrimary
             title="Simpan"

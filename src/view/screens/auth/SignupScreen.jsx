@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { BASE_URL } from "../../../contex/Config";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -139,11 +140,20 @@ const SignupScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <ScrollView>
-        <View style={GlobalStyles.Content}>
-          <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
-            Daftar Akun
-          </Text>
+      <View style={GlobalStyles.Content}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
+              Daftar Akun
+            </Text>
+          </View>
 
           <View style={{ marginBottom: 12, gap: 8 }}>
             <TextInputIconComponent
@@ -164,7 +174,8 @@ const SignupScreen = () => {
               value={noHP}
               onChangeText={setHP}
             />
-            <View>
+
+            {/* <View>
               {showPicker && (
                 <DateTimePicker
                   mode="date"
@@ -186,7 +197,8 @@ const SignupScreen = () => {
                   />
                 </Pressable>
               )}
-            </View>
+            </View> */}
+
             <TextInputIconComponent
               label={"Buat Kata Sandi"}
               placeholder={"Buat Kata Sandi"}
@@ -212,23 +224,26 @@ const SignupScreen = () => {
             {confPasswordError ? (
               <Text style={styles.errorText}>{confPasswordError}</Text>
             ) : null}
+          </View>
 
+          <View style={{ paddingTop: 8 }}>
             <ButtonPrimary
               title="Daftar"
               onPress={simpanData}
               disabled={passwordError || confPasswordError}
             />
           </View>
-        </View>
-        <View style={{ flex: 1, marginHorizontal: 20, flexDirection: "row" }}>
-          <Text style={GlobalStyles.textBiasa}>Sudah Punya akun? </Text>
-          <TouchableOpacity>
-            <Text style={GlobalStyles.textLink} onPress={daftarAkun}>
-              Masuk disini
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+
+          <View style={{ flexDirection: "row" }}>
+            <Text style={GlobalStyles.textBiasa}>Sudah Punya akun?</Text>
+            <TouchableOpacity>
+              <Text style={GlobalStyles.textLink} onPress={daftarAkun}>
+                Masuk disini
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

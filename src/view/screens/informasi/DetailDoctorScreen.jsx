@@ -9,7 +9,6 @@ import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
-import { LinearGradient } from "expo-linear-gradient";
 
 export default function DetailDoctorScreen() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -71,11 +70,6 @@ export default function DetailDoctorScreen() {
           icon={"arrow-back"}
           onPress={() => navigation.goBack()}
         />
-      </View>
-      <View style={{ flex: 4 }}>
-        <LinearGradient
-          colors={["#4c669f", "#3b5998", "#192f6a"]}
-        ></LinearGradient>
       </View>
 
       {/* {filteredData ? (

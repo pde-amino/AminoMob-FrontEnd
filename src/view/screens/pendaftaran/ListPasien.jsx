@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   ScrollView,
+  Image,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -18,7 +19,6 @@ import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { ActivityIndicator, Icon } from "react-native-paper";
-import BottomSheetMenu from "../../../components/BottomSheetMenu";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>
@@ -31,7 +31,6 @@ const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
 export default function ListPasien() {
   const navigation = useNavigation();
-  // const [selectedId, setSelectedId] = useState();
   const [btmTambah, setBtmtambah] = useState(false);
   const [btmMenu, setBtmMenu] = useState(false);
   const [dataPasien, setDataPasien] = useState([]);
@@ -116,12 +115,14 @@ export default function ListPasien() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent
-        title={"Daftar Pasien"}
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
-      <View style={GlobalStyles.Content}>
+      <View style={{ flex: 1 }}>
+        <HeaderComponent
+          title={"Daftar Pasien"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <View style={[GlobalStyles.Content, { flex: 10 }]}>
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
         ) : dataPasien ? (
@@ -136,24 +137,35 @@ export default function ListPasien() {
           />
         ) : (
           <ScrollView
-            style={styles.containerTengah}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <Icon source="account-search" size={250} color={"#73B9FC"} />
-            <Text
-              style={{
-                fontSize: 14,
-                textAlign: "center",
-              }}
-            >
-              Belum ada data pasien, silakan tambah data
-            </Text>
+            <View style={{ alignItems: "center", alignContent: "center" }}>
+              <Image
+                style={{
+                  width: "80%",
+                  resizeMode: "contain",
+                }}
+                source={require("../../../../assets/no-data.png")}
+              />
+              <Text
+                style={[
+                  GlobalStyles.h4,
+                  {
+                    fontWeight: "normal",
+                    maxWidth: "85%",
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                Belum ada data pasien, silakan tambah data atau refresh
+              </Text>
+            </View>
           </ScrollView>
         )}
       </View>
-      <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
+      <View style={[GlobalStyles.btnFullContainer, { flex: 1, margin: 20 }]}>
         <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
       </View>
 
@@ -174,9 +186,6 @@ export default function ListPasien() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   item: {
     width: "100%",
     backgroundColor: "white",
@@ -185,12 +194,6 @@ const styles = StyleSheet.create({
     borderColor: "#eaeaea",
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 8,
-    // marginVertical: 8,
-    // marginHorizontal: 20,
-  },
-  title: {
-    fontSize: 16,
   },
   containerTengah: {
     flex: 1,

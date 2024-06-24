@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
+import { Image } from "react-native";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -95,13 +96,15 @@ export default function RiwayatKunjungan() {
       </View>
     </CardColapse>
   );
+
   const renderItem = ({ item }) => {
     return (
       <Item
         item={item}
         onPress={() => {
           //   // setPilihPasien(item);
-          console.log("Item pilihpasien:", item.tanggal_periksa);
+          console.log("Item pilihpasien:");
+          // , item.kode_booking);
           //   // setBtmMenu(true);
           navigation.navigate("Booking Screen", item);
         }}
@@ -125,32 +128,36 @@ export default function RiwayatKunjungan() {
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
         ) : dataRiwayat ? (
-          <FlatList
-            style={{ width: "100%" }}
-            data={dataRiwayat}
-            renderItem={renderItem}
-            // keyExtractor={(item) => item.no_ktp.toString()}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          />
+          <View>
+            <FlatList
+              style={{ width: "100%" }}
+              data={dataRiwayat}
+              renderItem={renderItem}
+              // keyExtractor={(item) => item.kode_booking.toString()}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          </View>
         ) : (
-          <View
-            style={styles.containerTengah}
+          <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <Icon source="account-search" size={250} color={"#73B9FC"} />
-            <Text
-              style={{
-                fontSize: 14,
-                textAlign: "center",
-              }}
-            >
-              Belum ada riwayat periksa pasien
-            </Text>
-          </View>
+            <View style={{ alignItems: "center", alignContent: "center" }}>
+              <Image
+                style={{
+                  width: "80%",
+                  resizeMode: "contain",
+                }}
+                source={require("../../../../assets/no-data.png")}
+              />
+              <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>
+                Belum ada riwayat periksa pasien
+              </Text>
+            </View>
+          </ScrollView>
         )}
       </View>
     </SafeAreaView>

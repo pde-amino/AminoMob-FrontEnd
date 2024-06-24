@@ -89,27 +89,32 @@ const ProfileScreen = () => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <View style={{ alignItems: "center", marginTop: 16 }}>
+            <View
+              style={{
+                alignItems: "center",
+                margin: 20,
+                flexDirection: "row",
+                gap: 16,
+              }}
+            >
               <Avatar.Image
                 size={80}
                 source={require("../../../../assets/avatar.png")}
               />
+              <Text style={GlobalStyles.h2}>
+                {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
+              </Text>
             </View>
 
             {dataUser ? (
-              <View style={{ gap: 10, flex: 1 }}>
-                <View style={{ alignItems: "center", gap: 4 }}>
-                  <Text style={GlobalStyles.h2}>
-                    {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
-                  </Text>
-                  <View>
-                    <Text>Nomor Telepon</Text>
-                    <Text style={GlobalStyles.h4}>{dataUser.telp}</Text>
-                  </View>
-                  <View>
-                    <Text>Tanggal Lahir</Text>
-                    <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
-                  </View>
+              <View style={{ gap: 12, padding: 20 }}>
+                <View>
+                  <Text>Nomor Telepon</Text>
+                  <Text style={GlobalStyles.h4}>{dataUser.telp}</Text>
+                </View>
+                <View>
+                  <Text>Tanggal Lahir</Text>
+                  <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
                 </View>
               </View>
             ) : (

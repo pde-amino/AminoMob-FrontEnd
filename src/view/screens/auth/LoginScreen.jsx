@@ -151,12 +151,9 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
-          <View
-            style={{
-              alignItems: "center",
-              marginBottom: 36,
-            }}>
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
             </Text>
@@ -196,13 +193,5 @@ const LoginScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default LoginScreen;

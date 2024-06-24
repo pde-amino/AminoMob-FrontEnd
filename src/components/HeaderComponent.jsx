@@ -19,7 +19,7 @@ export default function HeaderComponent({ title, icon, onPress }) {
   return (
     <SafeAreaView>
       <Header
-        containerStyle={{ width: wp(100), height: hp(8.3) }}
+        containerStyle={{ width: wp(100), height: hp(9) }}
         backgroundColor={WARNA.primary}
         leftComponent={
           <TouchableOpacity onPress={onPress}>

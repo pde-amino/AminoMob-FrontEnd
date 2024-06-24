@@ -73,13 +73,13 @@ export default GlobalStyles = StyleSheet.create({
   },
   containerLogo: {
     height: hp(5),
-    width: wp(30),
+    width: wp(20),
     // backgroundColor: "pink",
   },
 
   //TEXT
   h1: {
-    fontSize: hp(4),
+    fontSize: hp(2.8),
     fontWeight: "bold",
     // color: "#3E3E3E",
   },

@@ -167,11 +167,12 @@ const HomeScreen = () => {
           </View>
         </View>
       </View>
+
       <View style={{ flex: 2 }}>
         <MySlider />
       </View>
 
-      <View style={{ flex: 4, marginTop: 16, paddingHorizontal: 20 }}>
+      <View style={{ flex: 4, paddingHorizontal: 20 }}>
         <Text style={GlobalStyles.h3}>Menu</Text>
         <FlatList
           data={Menus}

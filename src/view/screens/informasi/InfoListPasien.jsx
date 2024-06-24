@@ -1,63 +1,104 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   FlatList,
-  StyleSheet,
-  TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
-import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { ActivityIndicator } from "react-native-paper";
+import CardColapse from "../../../components/CardColapse";
 
-const Item = ({ item, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={styles.item}>
-    <Text style={styles.title}>{item.nm_pasien}</Text>
-  </TouchableOpacity>
+const Item = ({ item }) => (
+  <CardColapse title={item.id_pasien} subtitle={item.nm_pasien}>
+    <View style={{ flexDirection: "row", gap: 8 }}>
+      <View>
+        <Text>No.Telp : </Text>
+        <Text>Pekerjaan : </Text>
+        <Text>Tgl Lahir : </Text>
+      </View>
+      <View>
+        <Text> {item.no_telp}</Text>
+        <Text> {item.pekerjaan}</Text>
+        <Text> {item.tgl_lahir}</Text>
+      </View>
+    </View>
+    <View style={{ marginTop: 10 }}>
+      {item.no_rkm_medis != null ? (
+        <View style={GlobalStyles.chipSuccess}>
+          <Text style={GlobalStyles.textChipSucces}>Terverifikasi</Text>
+        </View>
+      ) : (
+        <View style={GlobalStyles.chipError}>
+          <Text style={GlobalStyles.textChipError}>Belum Verifikasi</Text>
+        </View>
+      )}
+      {/* {item.status_reg == "Batal" && (
+        <View style={GlobalStyles.chipError}>
+          <Text style={GlobalStyles.textChipError}>Batal Periksa</Text>
+        </View>
+      )} */}
+    </View>
+  </CardColapse>
+  // <TouchableOpacity onPress={onPress} style={styles.item}>
+  //   <Text style={styles.title}>{item.nm_pasien}</Text>
+  // </TouchableOpacity>
 );
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
 export default function InfoListPasien() {
   const navigation = useNavigation();
-  // const [selectedId, setSelectedId] = useState();
   const [btmTambah, setBtmtambah] = useState(false);
   const [adaKerabat, setAdaKerabat] = useState(false);
   const [dataPasien, setDataPasien] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const { auth } = useContext(AuthContex);
 
   console.log("ini adalah id auth", auth.user.id);
 
   const fetchData = async () => {
     try {
-      const url = `${BASE_URL}/daftarKerabat/${auth.user.id}`;
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
-        },
-      });
-      console.log("Response data:", response.data); // Logging response data
+      const response = await axios.get(
+        `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+          },
+        }
+      );
+      console.log("Respon data kerabat:", response.data); // Logging response data
       const data = response.data.data_kerabat;
+
       setDataPasien(data);
     } catch (error) {
       console.error("Error fetching kerabat data:", error.message);
       console.error("Error response data:", error.response?.data);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      // Add any cleanup logic here if needed
+      return () => {};
+    }, [])
+  );
 
   const renderItem = ({ item }) => {
     return (
@@ -70,17 +111,22 @@ export default function InfoListPasien() {
     );
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 2 }}>
-        <HeaderComponent title={"Data Pasien"} />
+      <View style={{ flex: 1 }}>
+        <HeaderComponent title={"Informasi Data Pasien"} />
       </View>
-      <View style={{ flex: 1, alignItems: "center" }}>
+      {/* <View style={{ flex: 1, alignItems: "center" }}>
         <View style={GlobalStyles.btnFullContainer}>
           <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
         </View>
-      </View>
-      <View style={{ flex: 12, alignItems: "center" }}>
+      </View> */}
+      <View style={{ flex: 9, alignItems: "center" }}>
         {loading ? (
           <ActivityIndicator
             animating={true}
@@ -93,11 +139,15 @@ export default function InfoListPasien() {
             data={dataPasien}
             renderItem={renderItem}
             keyExtractor={(item) => item.no_ktp.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         ) : (
           <Text>Belum ada data pasien sebelumnya, silakan tambah data</Text>
         )}
       </View>
+
       {btmTambah && (
         <BottomSheet
           setStatus={setBtmtambah}
@@ -113,20 +163,3 @@ export default function InfoListPasien() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  item: {
-    width: "100%",
-    backgroundColor: "white",
-    padding: 20,
-    borderBottomWidth: 0.5,
-    // marginVertical: 8,
-    // marginHorizontal: 20,
-  },
-  title: {
-    fontSize: 16,
-  },
-});

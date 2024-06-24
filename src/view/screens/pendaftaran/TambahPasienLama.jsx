@@ -9,7 +9,7 @@ import {
   Platform,
   Text,
 } from "react-native";
-import { Checkbox, Divider } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -22,6 +22,10 @@ import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
 import { Alert } from "react-native";
 import BottomSheet from "../../../components/BottomSheet";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -29,11 +33,6 @@ const WARNA = {
   red: "#F01F1F",
   secondary: "#5DA3E7",
 };
-
-const data = [
-  { label: "Laki-laki", value: "1" },
-  { label: "Perempuan", value: "2" },
-];
 
 const hubungan = [
   { label: "Kerabat", value: "KERABAT" },
@@ -51,7 +50,7 @@ export const TambahPasienLama = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
 
   const [value, setValue] = useState(null);
-  const [bs, setBs] = useState(false);
+  const [bs, setBs] = useState(true);
   const [isFocus1, setIsFocus1] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [noRm, setNoRm] = useState("");
@@ -161,103 +160,96 @@ export const TambahPasienLama = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <HeaderComponent
-        title={"Daftarkan Pasien Lama"}
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
-      <ScrollView>
-        <View style={GlobalStyles.Content}>
-          <View style={{ gap: 8 }}>
-            <Text style={GlobalStyles.h4}>
-              Masukan Nomor Rekam Medis dan Tanggal Lahir Kerabat
-            </Text>
+    <SafeAreaView style={GlobalStyles.utama}>
+      <View style={styles.containerHeader}>
+        <HeaderComponent
+          title={"Daftarkan Pasien Lama"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <View style={styles.containerMid}>
+        <View style={{ gap: 8 }}>
+          <Text style={[GlobalStyles.h4, { maxWidth: "85%" }]}>
+            Untuk pengecekan data pasien, mohon masukkan data dengan benar
+          </Text>
 
-            <TextInputIconComponent
-              label={"No Rekam Medis*"}
-              placeholder={"Masukkan No RM yang sudah terdaftar"}
-              type={"username"}
-              value={noRm}
-              onChangeText={setNoRm}
-            />
+          <TextInputIconComponent
+            label={"No Rekam Medis*"}
+            placeholder={"Masukkan No RM yang sudah terdaftar"}
+            type={"username"}
+            value={noRm}
+            onChangeText={setNoRm}
+          />
 
-            <View>
-              {showPicker && (
-                <DateTimePicker
-                  mode="date"
-                  onChange={berubah}
-                  value={date}
-                  minimumDate={new Date(1935, 12, 31)}
-                  maximumDate={new Date()}
-                />
-              )}
-
-              {!showPicker && (
-                <Pressable onPress={toggleShowDate}>
-                  <TextInput
-                    style={styles.tglPilihan}
-                    editable={false}
-                    placeholder={"Tanggal Lahir*"}
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                  />
-                </Pressable>
-              )}
-            </View>
-            <View style={styles.containerDrop}>
-              <Dropdown
-                style={[
-                  styles.dropdown,
-                  isFocus1 && {
-                    borderColor: "green",
-                    backgroundColor: WARNA.white,
-                  },
-                ]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                search={false}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={hubungan}
-                // search
-                maxHeight={300}
-                labelField="label"
-                // valueField="value"
-                placeholder={hubunganPasien}
-                searchPlaceholder="Search..."
-                value={hubunganPasien}
-                onFocus={() => setIsFocus1(true)}
-                onBlur={() => setIsFocus1(false)}
-                onChange={(item) => {
-                  setHubungan(item.value);
-                  console.log(hubunganPasien);
-                  setIsFocus1(false);
-                }}
+          <View>
+            {showPicker && (
+              <DateTimePicker
+                mode="date"
+                onChange={berubah}
+                value={date}
+                minimumDate={new Date(1935, 12, 31)}
+                maximumDate={new Date()}
               />
-            </View>
+            )}
 
-            <Divider />
+            {!showPicker && (
+              <Pressable onPress={toggleShowDate}>
+                <TextInput
+                  style={styles.tglPilihan}
+                  editable={false}
+                  placeholder={"Tanggal Lahir*"}
+                  value={dateOfBirth}
+                  onChangeText={setDateOfBirth}
+                />
+              </Pressable>
+            )}
+          </View>
+          <View style={styles.containerDrop}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                isFocus1 && {
+                  borderColor: "green",
+                  backgroundColor: WARNA.white,
+                },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              search={false}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={hubungan}
+              // search
+              maxHeight={300}
+              labelField="label"
+              // valueField="value"
+              placeholder={hubunganPasien}
+              searchPlaceholder="Search..."
+              value={hubunganPasien}
+              onFocus={() => setIsFocus1(true)}
+              onBlur={() => setIsFocus1(false)}
+              onChange={(item) => {
+                setHubungan(item.value);
+                console.log(hubunganPasien);
+                setIsFocus1(false);
+              }}
+            />
           </View>
         </View>
+      </View>
 
-        <View
-          style={[
-            GlobalStyles.btnFullContainer,
-            { marginLeft: 20, marginTop: 20 },
-          ]}
-        >
-          <ButtonPrimary
-            title="Cari"
-            onPress={searchPass}
-            disabled={dateOfBirth ? false : true}
-          />
-        </View>
-      </ScrollView>
+      <View style={[GlobalStyles.btnFullContainer, styles.containerBot]}>
+        <ButtonPrimary
+          title="Cari"
+          onPress={searchPass}
+          disabled={dateOfBirth ? false : true}
+        />
+      </View>
       {bs ? (
         <BottomSheet
           setStatus={setBs}
-          ukuranModal={{ width: "100%", height: "50%" }}
+          ukuranModal={{ width: "100%", height: "40%" }}
           judul="Pastikan Data Benar"
           subjudul={confirmData}
           buttonKiri="Ubah Data"
@@ -272,24 +264,26 @@ export const TambahPasienLama = () => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    width: 300,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginTop: 10,
-    paddingHorizontal: 10,
+  containerHeader: {
+    height: hp(10),
+  },
+  containerMid: {
+    height: hp(80),
+    alignItems: "center",
+  },
+  containerBot: {
+    height: hp(10),
+    margin: 20,
   },
   tglPilihan: {
     height: 50,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: WARNA.primary,
-    width: 370,
+    width: "100%",
     backgroundColor: "white",
     color: "black",
     padding: 14,
-    fontSize: 14,
   },
   inputan: {
     marginBottom: 16,
@@ -300,29 +294,18 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    width: 370,
+    width: "100%",
     borderColor: WARNA.primary,
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 12,
   },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: "absolute",
-    backgroundColor: "white",
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-  },
+
   placeholderStyle: {
-    fontSize: 14,
+    fontSize: hp(1.6),
   },
   selectedTextStyle: {
-    fontSize: 14,
+    fontSize: hp(1.6),
   },
   iconStyle: {
     width: 20,
@@ -330,6 +313,6 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: hp(1.6),
   },
 });

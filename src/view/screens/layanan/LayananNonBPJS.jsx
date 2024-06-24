@@ -78,18 +78,19 @@ export default function LayananNonBPJS() {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <HeaderComponent
-        title={"Layanan Non BPJS"}
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
-      <View style={{ margin: 20 }}>
-        <Text>Daftarkan untuk :</Text>
+    <SafeAreaView style={GlobalStyles.utama}>
+      <View style={{ flex: 2 }}>
+        <HeaderComponent
+          title={"Layanan Non BPJS"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <View style={{ flex: 1, marginHorizontal: 20 }}>
+        <Text style={GlobalStyles.textBiasa}>Daftarkan untuk :</Text>
         <Text style={GlobalStyles.h4}>{dataKerabat.nm_pasien}</Text>
       </View>
-      <View style={{ alignItems: "center" }}>
-        {/* <Text style={GlobalStyles.h3}>Anda akan mendaftarkan kerabat :</Text> */}
+      <View style={{ flex: 14, alignItems: "center" }}>
         <FlatList
           data={Menus}
           renderItem={({ item }) => (

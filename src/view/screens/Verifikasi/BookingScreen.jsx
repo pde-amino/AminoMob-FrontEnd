@@ -40,8 +40,8 @@ const BookingScreen = () => {
   }, []);
 
   const data = route.params.data;
-  console.log("ini data rouute:", data);
-  console.log("ini data tgl periksa", data.tanggal_periksa);
+  // console.log("ini data rouute:", data);
+  // console.log("ini data tgl periksa", data.tanggal_periksa);
 
   const tglFormatted = new Date(data.tanggal_periksa)
     .toISOString()
