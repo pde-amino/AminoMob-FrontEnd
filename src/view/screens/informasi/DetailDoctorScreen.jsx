@@ -17,7 +17,42 @@ import {
 import { AirbnbRating } from "@rneui/themed";
 import { Avatar } from "react-native-paper";
 
+const getSpecializationText = (doctorName) => {
+  if (doctorName.includes("Sp.KJ")) {
+    return "Spesialis Kesehatan Jiwa";
+  } else if (doctorName.includes("Sp.A")) {
+    return "Spesialis Anak";
+  } else if (doctorName.includes("Sp.OG")) {
+    return "Spesialis Kandungan dan Ginekologi";
+  } else if (doctorName.includes("Sp.PD")) {
+    return "Spesialis Penyakit Dalam";
+  } else if (doctorName.includes("Sp.N")) {
+    return "Spesialis Saraf";
+  } else if (doctorName.includes("Sp.PK")) {
+    return "Spesialis Patologi Klinis";
+  } else if (doctorName.includes("Sp.Rad")) {
+    return "Spesialis Radiologi";
+  } else if (doctorName.includes("Sp.BM")) {
+    return "Spesialis Bedah Mulut";
+  } else if (doctorName.includes("Sp.P")) {
+    return "Spesialis Paru";
+  } else if (doctorName.includes("drg")) {
+    return "Dokter Gigi";
+  } else if (doctorName.includes("Sp.An")) {
+    return "Spesialis Anastesi";
+  } else if (doctorName.includes("Sp.K.F.R")) {
+    return "Spesialis Kesehatan Fisik & Rehabilitasi";
+  } else if (doctorName.includes("Sp.B")) {
+    return "Spesialis Bedah";
+  } else if (doctorName.includes("Sp.JP")) {
+    return "Spesialis Jantung & Pembuluh Darah";
+  } else {
+    return "Umum";
+  }
+};
+
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
+
 export default function DetailDoctorScreen() {
   const route = useRoute();
   const navigation = useNavigation();
@@ -56,6 +91,14 @@ export default function DetailDoctorScreen() {
             style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}
           >
             {data.nm_dokter}
+          </Text>
+          <Text
+            style={[
+              GlobalStyles.h3,
+              { textAlign: "center", maxWidth: "80%", fontWeight: "normal" },
+            ]}
+          >
+            {getSpecializationText(data.nm_dokter)}
           </Text>
           {/* <AirbnbRating showRating={false} size={18} /> */}
         </View>

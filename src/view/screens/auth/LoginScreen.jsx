@@ -58,40 +58,6 @@ const LoginScreen = () => {
   //   role: "user",
   // };
 
-  const login = (username, password) => {
-    axios
-      .post(`http://192.168.5.5:8080/login`, {
-        user: username,
-        password: password,
-      })
-      .then(async (res) => {
-        const userInfo = res.data;
-
-        // Simpan userInfo ke AsyncStorage dan tangani error di sini
-        try {
-          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-          setUserInfo(userInfo);
-
-          // Periksa status respons
-          if (userInfo) {
-            console.log("Login berhasil. Token:", userInfo);
-            // Navigasi ke screen "Amino Care" dan kirim data token dan id
-            setAuth(userInfo);
-            navigation.replace("Amino Care");
-          } else {
-            // Tangani kesalahan login
-            const errorMessage = userInfo.message || "Kesalahan tidak dikenal";
-            console.log("Login gagal, pesan kesalahan:", errorMessage);
-          }
-        } catch (error) {
-          console.log("Gagal menyimpan userInfo ke AsyncStorage:", error);
-        }
-      })
-      .catch((error) => {
-        console.log("Login Error:", error);
-      });
-  };
-
   const handleSubmit = async () => {
     try {
       const response = await axios.post(

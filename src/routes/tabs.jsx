@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { Ionicons } from "react-native-vector-icons";
 import FavoriteScreen from "../view/screens/home/FavoriteScreen";
 import HomeScreen from "../view/screens/home/HomeScreen";
@@ -31,6 +31,8 @@ import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
 import ListPasien from "../view/screens/pendaftaran/ListPasien";
 import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -175,8 +177,39 @@ import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 const Tabs = createBottomTabNavigator();
 
 export default function HomeTabs() {
-  const { auth } = useContext(AuthContex);
+  const { logout, auth } = useContext(AuthContex);
+  const [dataUser, setDataUser] = useState(null);
+  const navigation = useNavigation();
   // console.log("AuthTabs :", data);
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${auth.user.token}`,
+  //       },
+  //     });
+  //     setDataUser(response.data.user);
+  //     console.log("Fetch Response data:", response.data);
+  //   } catch (error) {
+  //     // console.error("Error fetching user data:", error.message);
+  //     // console.error("Error response data:", error);
+  //     if (error.message === "Request failed with status code 401") {
+  //       AsyncStorage.removeItem("userInfo");
+  //       logout();
+  //       navigation.replace("Login Screen");
+  //       Alert.alert("Maaf", "Hanya bisa login di satu perangkat.");
+  //       return;
+  //     }
+  //   }
+  // };
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchData();
+  //   }, [])
+  // );
+
   return (
     <Tabs.Navigator
       screenOptions={{

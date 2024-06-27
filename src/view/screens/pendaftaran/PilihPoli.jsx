@@ -52,6 +52,9 @@ export const PilihPoli = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
+  const dataPas = route.params.dataKerabat;
+  const kunjungan = route.params.jnsMenu;
+
   const [subMessMod, setSubMessMod] = useState("");
   const [messMod, setMessMod] = useState("Silahkan Pilih");
   const [jamPeriksa, setJamPeriksa] = useState("Pilih Jam Periksa");
@@ -74,34 +77,61 @@ export const PilihPoli = () => {
   };
 
   const getPoli = () => {
-    axios
-      .get(`${BASE_URL}/jadwalpoli/${extractDay(hariPoli)}/${value}`)
-      .then((response) => {
-        if (response.data.status === false) {
-          setDatas(null);
-          Alert.alert(
-            "Pemberitahuan",
-            "Tidak ada Dokter Poli yang bertugas Pada Hari yang dipilih."
-          );
-        } else {
-          const poli = response.data.data_poli.map((item, index) => {
-            return {
-              key: index,
-              label: item.nm_poli,
-              value: item.kd_poli,
-            };
-          });
-          setDatas(poli);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
-      });
+    if (kunjungan === "Poliklinik") {
+      axios
+        .get(`${BASE_URL}/jadwalpoli/${extractDay(hariPoli)}/${value}`)
+        .then((response) => {
+          if (response.data.status === false) {
+            setDatas(null);
+            Alert.alert(
+              "Pemberitahuan",
+              "Tidak ada Dokter Poli yang bertugas Pada Hari yang dipilih."
+            );
+          } else {
+            const poli = response.data.data_poli.map((item, index) => {
+              return {
+                key: index,
+                label: item.nm_poli,
+                value: item.kd_poli,
+              };
+            });
+            setDatas(poli);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
+        });
+    } else if (kunjungan === "Penunjang") {
+      axios
+        .get(`${BASE_URL}/jadwalpenunjang/${extractDay(hariPoli)}/${value}`)
+        .then((response) => {
+          if (response.data.status === false) {
+            setDatas(null);
+            Alert.alert(
+              "Pemberitahuan",
+              "Tidak ada Dokter Penunjang yang bertugas Pada Hari yang dipilih."
+            );
+          } else {
+            const poli = response.data.data_poli.map((item, index) => {
+              return {
+                key: index,
+                label: item.nm_poli,
+                value: item.kd_poli,
+              };
+            });
+            setDatas(poli);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
+        });
+    }
   };
-  console.log("jenismenu", route);
 
-  console.log("data pasodojasfkjhdsklfjklf: ", [kdPoli, hariPoli, value]);
+  console.log("iniroute : ", dataPas);
+  console.log("route params: ", kunjungan);
 
   const jadwalDok = (param) => {
     console.log("Ini Params JadwalDok :", param);
@@ -157,60 +187,82 @@ export const PilihPoli = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // Error
-  const dataBooking = {
-    tanggal_booking: getCurrentDateTime(),
-    id_pasien: route.params.id_pasien,
-    no_rkm_medis: route.params.no_rkm_medis,
-    tanggal_periksa: tglPeriksa,
-    jam_periksa:
-      value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
-    kd_dokter: kdDokter,
-    kd_poli: kdPoli,
-    status_reg: "Belum",
-    jns_kunjungan: "Poli",
-    status_byr: "-",
-    jns_pas: "Diri Sendiri",
-  };
-  // endError
-
   const postData = async () => {
-    await axios
-      .post(
-        `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
-        {
-          tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
-          id_pasien: route.params.id_pasien,
-          no_rkm_medis: route.params.no_rkm_medis,
-          tanggal_periksa: date.toISOString().split("T")[0],
-          jam_periksa:
-            value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
-          kd_dokter: kdDokter,
-          kd_poli: kdPoli,
-          status_reg: "Belum",
-          jns_kunjungan: "Poli",
-          status_byr: "-",
-          jns_pas: "Diri Sendiri",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.user.token}`,
+    if (kunjungan === "Poliklinik") {
+      await axios
+        .post(
+          `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
+          {
+            tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
+            id_pasien: dataPas.id_pasien,
+            no_rkm_medis: dataPas.no_rkm_medis,
+            tanggal_periksa: date.toISOString().split("T")[0],
+            jam_periksa:
+              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+            kd_dokter: kdDokter,
+            kd_poli: kdPoli,
+            status_reg: "Belum",
+            jns_kunjungan: "Poli",
+            status_byr: "-",
+            jns_pas: dataPas.status_user,
           },
-        }
-      )
-      .then((response) => {
-        navigation.replace("Booking Screen", response.data);
-      })
-      .catch((response) => {
-        console.log("response error", response);
-        Alert.alert(
-          "Mohon Maaf",
-          `Sepertinya ${route.params.nm_pasien} sudah terdaftar pada Tanggal ${
-            date.toISOString().split("T")[0]
-          } di ${value2}`
-        );
-      });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          navigation.replace("Booking Screen", response.data);
+        })
+        .catch((response) => {
+          console.log("response error", response);
+          Alert.alert(
+            "Mohon Maaf",
+            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+              date.toISOString().split("T")[0]
+            } di ${value2}`
+          );
+        });
+    } else if (kunjungan === "Penunjang") {
+      await axios
+        .post(
+          `${BASE_URL}/bookPeriksa/${auth.user.id}/penunjang`,
+          {
+            tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
+            id_pasien: dataPas.id_pasien,
+            no_rkm_medis: dataPas.no_rkm_medis,
+            tanggal_periksa: date.toISOString().split("T")[0],
+            jam_periksa:
+              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+            kd_dokter: kdDokter,
+            kd_poli: kdPoli,
+            status_reg: "Belum",
+            jns_kunjungan: "Penunjang",
+            status_byr: "-",
+            jns_pas: dataPas.status_user,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          navigation.replace("Booking Screen", response.data);
+        })
+        .catch((response) => {
+          console.log("response error", response);
+          Alert.alert(
+            "Mohon Maaf",
+            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+              date.toISOString().split("T")[0]
+            } di ${value2}`
+          );
+        });
+    }
   };
 
   const pilihJamPeriksa = () => {
@@ -240,7 +292,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         });
     } catch (error) {
       Alert.alert(
-        "aaaMaaf Poli yang anda pilih sepertinya libur pada Har yang anda pilih"
+        "Maaf Poli yang anda pilih sepertinya libur pada Hari yang anda pilih"
       );
     }
     setMessMod("Silahkan Pilih Dokter");
@@ -273,7 +325,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
     <View style={{ gap: 8 }}>
       <View>
         <Text style={GlobalStyles.textBiasa}>Nama</Text>
-        <Text style={GlobalStyles.h4}>{route.params.nm_pasien}</Text>
+        <Text style={GlobalStyles.h4}>{dataPas.nm_pasien}</Text>
       </View>
       <View>
         <Text>Tanggal Periksa</Text>
@@ -337,7 +389,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
 
       <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
         <Text>Nama</Text>
-        <Text style={GlobalStyles.h3}>{route.params.nm_pasien}</Text>
+        <Text style={GlobalStyles.h3}>{dataPas.nm_pasien}</Text>
       </View>
       <View style={styles.list}>
         <Text>Tanggal Periksa</Text>

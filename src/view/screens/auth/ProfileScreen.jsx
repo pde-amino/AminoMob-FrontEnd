@@ -30,6 +30,22 @@ const ProfileScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // try {
+  //   const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${auth.user.token}`,
+  //     },
+  //   });
+  //   setDataUser(response.data.user);
+  //   console.log("Fetch Response data:", response.data);
+  // } catch (error) {
+  //   console.error("Error fetching user data:", error.message);
+  //   console.error("Error response data:", error);
+  // } finally {
+  //   setLoading(false);
+  //   setRefreshing(false);
+  // }
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
@@ -42,6 +58,13 @@ const ProfileScreen = () => {
     } catch (error) {
       console.error("Error fetching user data:", error.message);
       console.error("Error response data:", error);
+      if (error.message === "Request failed with status code 401") {
+        AsyncStorage.removeItem("userInfo");
+        logout();
+        navigation.replace("Login Screen");
+        Alert.alert("Maaf", "Hanya bisa login di satu perangkat.");
+        return;
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);

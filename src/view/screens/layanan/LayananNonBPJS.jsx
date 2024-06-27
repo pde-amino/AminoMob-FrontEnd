@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, FlatList, SafeAreaView, Alert, Text } from "react-native";
-
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
-import BottomSheet from "../../../components/BottomSheet";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
 import axios from "axios";
@@ -31,10 +29,15 @@ export default function LayananNonBPJS() {
       kd_poli: "1",
       title: "Poliklinik",
       desc: "Pendaftaran online poliklinik rawat jalan",
-      // to: () => {
-      //   setJnsMenu("Poliklinik");
-      //   setBtmPoli(true);
-      // },
+      // to: "Pilih Poli",
+      poli: "Klinik",
+      to: () => {
+        setJnsMenu("Poliklinik");
+        navigation.navigate("Pilih Poli", {
+          dataKerabat,
+          jnsMenu: "Poliklinik",
+        });
+      },
       // warna: "#E79903",
       warna: "#DC9203",
       img: require("../../../../assets/icon41.png"),
@@ -43,11 +46,16 @@ export default function LayananNonBPJS() {
       kd_poli: "2",
       title: "Pemeriksaan Penunjang",
       desc: "Pendaftaran Laborat dan Radiologi",
-      // to: () => {
-      //   setJnsMenu("Penunjang");
-      //   setBtmPenunjang(true);
-      // },
-      // warna: "#A9BD2C",
+      // to: "Pilih Poli",
+      poli: "Penunjang",
+      to: () => {
+        setJnsMenu("Penunjang");
+        navigation.navigate("Pilih Poli", {
+          dataKerabat,
+          jnsMenu: "Penunjang",
+        });
+      },
+      warna: "#A9BD2C",
       warna: "#8FA11E",
       img: require("../../../../assets/icon42.png"),
     },
@@ -55,10 +63,15 @@ export default function LayananNonBPJS() {
       kd_poli: "3",
       title: "Telekonseling",
       desc: "Konsultasi online dengan Psikiater atau Psikolog pilihan Anda",
-      // to: () => {
-      //   setJnsMenu("tele");
-      //   setBtmTele(true);
-      // },
+      to: "Pilih Poli",
+      poli: "Penunjang",
+      to: () => {
+        Alert.alert(
+          "Maaf",
+          "Saat ini menu Telekonseling masih dalam tahap pengembangan"
+        );
+        // setJnsMenu("tele");
+      },
       // warna: "#09A0CF",
       warna: "#0293C0",
       img: require("../../../../assets/icon43.png"),
@@ -67,10 +80,15 @@ export default function LayananNonBPJS() {
       kd_poli: "4",
       title: "Terang Bulan",
       desc: "Pelayanan Fisioterapi dan Terapi Wicara yang dilakukan dirumah pasien",
-      // to: () => {
-      //   setJnsMenu("terang");
-      //   setBtmTerang(true);
-      // },
+      to: "Pilih Poli",
+      poli: "Penunjang",
+      to: () => {
+        // setJnsMenu("terang");
+        Alert.alert(
+          "Maaf",
+          "Saat ini menu Terang Bulang masih dalam tahap pengembangan"
+        );
+      },
       // warna: "#A557F3",
       warna: "#9335F0",
       img: require("../../../../assets/icon44.png"),
@@ -95,10 +113,14 @@ export default function LayananNonBPJS() {
           data={Menus}
           renderItem={({ item }) => (
             <CardButtonComponent
-              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+              data={{
+                clinicId: item.kd_poli,
+                nameClinic: item.desc,
+                poli: item.poli,
+              }}
               title={item.title}
               description={item.desc}
-              onPress={() => navigation.navigate("Pilih Poli", dataKerabat)}
+              onPress={item.to}
               warna={item.warna}
               imgSource={item.img}
             />
