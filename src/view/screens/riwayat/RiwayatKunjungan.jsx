@@ -16,13 +16,20 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
 import axios from "axios";
 import { useState } from "react";
-import { ActivityIndicator, Icon, List } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Icon,
+  List,
+  Dialog,
+  Portal,
+} from "react-native-paper";
 import CardColapse from "../../../components/CardColapse";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
+import BottomSheet from "../../../components/BottomSheet";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -31,11 +38,12 @@ export default function RiwayatKunjungan() {
   const [refreshing, setRefreshing] = useState(false);
   const [dataRiwayat, setDataRiwayat] = useState();
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
-
-  // const handlePress = () => setExpanded(!expanded);
+  const [lihatQR, setLihatQR] = useState(false);
+  const [selectedKodeBooking, setSelectedKodeBooking] = useState(null);
 
   console.log("auth dari riwayat:", auth.user.id);
+
+  const hideDialog = () => setLihatQR(false);
 
   const ambilDataRiwayat = async () => {
     try {
@@ -62,8 +70,6 @@ export default function RiwayatKunjungan() {
   useEffect(() => {
     ambilDataRiwayat();
   }, []);
-
-  // console.log("ini status riwayat:", item.status_reg);
 
   const Item = ({ item, onPress }) => (
     <CardColapse title={item.kode_booking} subtitle={item.nm_pasien}>
@@ -102,11 +108,11 @@ export default function RiwayatKunjungan() {
       <Item
         item={item}
         onPress={() => {
-          //   // setPilihPasien(item);
-          console.log("Item pilihpasien:");
+          setSelectedKodeBooking(item.kode_booking);
+          console.log("Item pilihpasien:", selectedKodeBooking);
           // , item.kode_booking);
-          //   // setBtmMenu(true);
-          navigation.navigate("Booking Screen", item);
+          setLihatQR(true);
+          // navigation.navigate("Booking Screen", item);
         }}
       />
     );
@@ -160,15 +166,33 @@ export default function RiwayatKunjungan() {
           </ScrollView>
         )}
       </View>
+
+      <Portal>
+        <Dialog
+          visible={lihatQR}
+          onDismiss={hideDialog}
+          style={{
+            alignSelf: "center",
+            width: "90%",
+            height: "45%",
+            backgroundColor: "white",
+          }}
+        >
+          <Dialog.Title
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
+          <Dialog.Content
+            style={{
+              alignContent: "center",
+              justifyContent: "center",
+              marginTop: 10,
+              height: "70%",
+            }}
+          >
+            <GenerateQRCode size={200} value={selectedKodeBooking} />
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  containerTengah: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 8,
-  },
-});

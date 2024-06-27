@@ -25,12 +25,12 @@ const validateInput = (input, type) => {
 };
 
 const TextInputIconComponent = ({
-  label,
-  placeholder,
+  label = "",
+  placeholder = "",
   type,
   onChangeText,
-  password,
-  value,
+  password = false,
+  value = "",
 }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
@@ -73,7 +73,7 @@ const TextInputIconComponent = ({
         secureTextEntry={secureTextEntry}
         right={
           password ? (
-            <TextInput
+            <TextInput.Icon
               icon={secureTextEntry ? "eye-off" : "eye"}
               onPress={toggleSecureTextEntry}
             />
@@ -81,11 +81,7 @@ const TextInputIconComponent = ({
         }
       />
       {error && (
-        <HelperText
-          // outlineColor={WARNA.red}
-          style={{ color: WARNA.red }}
-          type="error"
-          visible={!!error}>
+        <HelperText style={{ color: WARNA.red }} type="error" visible={!!error}>
           {error}
         </HelperText>
       )}

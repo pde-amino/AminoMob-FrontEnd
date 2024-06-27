@@ -14,7 +14,11 @@ import {
   Linking,
   Alert,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -32,6 +36,9 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
 import BannerComponent from "../../../components/BannerComponent";
 import { SpeedDial } from "@rneui/themed";
+import axios from "axios";
+import { BASE_URL } from "../../../contex/Config";
+import { useCallback } from "react";
 
 // const { lebar } = Dimensions.get("screen");
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -44,8 +51,41 @@ const HomeScreen = () => {
   // console.log("result", { route });
   // const { result } = route.params;
 
-  // const openWhatsApp = (phoneNumber) => {
-  //   const url = `whatsapp://send?phone=${phoneNumber}`;
+  // const handleLogout = async () => {
+  //   try {
+  //     await AsyncStorage.removeItem("userInfo");
+  //     logout();
+  //     navigation.navigate("Login Screen");
+  //     Alert.alert("Logout", "Anda telah berhasil logout.");
+  //   } catch (error) {
+  //     Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
+  //     console.error("Error removing userInfo from AsyncStorage", error);
+  //   }
+  // };
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${auth.user.token}`,
+  //       },
+  //     });
+  //     setDataUser(response.data.user);
+  //     console.log("Fetch Response data:", response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error.message);
+  //     console.error("Error response data:", error);
+  //     if (error.message === "Request failed with status code 401") {
+  //       handleLogout();
+  //     }
+  //   }
+  // };
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchData();
+  //   }, [])
+  // );
 
   //   Linking.canOpenURL(url)
   //     .then((supported) => {
@@ -100,10 +140,6 @@ const HomeScreen = () => {
   const [open, setOpen] = useState(false);
   const [bannerVisible, setBannerVisible] = useState(false);
 
-  const handleClinicSelection = (screen, params) => {
-    navigation.navigate(screen, params);
-  };
-
   const darurat = () => {
     Linking.openURL("https://wa.me/6281225204301");
   };
@@ -132,38 +168,36 @@ const HomeScreen = () => {
   // const phoneNumber = "6281225204301";
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1, backgroundColor: WARNA.primary }}>
-        <View style={{ alignItems: "center" }}>
-          <View
-            style={{
-              backgroundColor: WARNA.primary,
-              height: 150,
-              width: "100%",
-              position: "absolute",
-            }}
-          >
-            <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
-              <Path
-                fill="#0a78e2"
-                fill-opacity="1"
-                d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-              ></Path>
-            </Svg>
-          </View>
-          <View style={{ marginVertical: 50 }}>
-            <View style={GlobalStyles.headerHomeContainer}>
-              <Image
-                source={require("../../../../assets/logo-app.png")}
-                resizeMode="contain"
-                style={GlobalStyles.containerLogo}
-              />
-              <TouchableOpacity
-                style={GlobalStyles.btnRedSmall}
-                onPress={darurat}
-              >
-                <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
-              </TouchableOpacity>
-            </View>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <View
+          style={{
+            backgroundColor: WARNA.primary,
+            height: 150,
+            width: "100%",
+            position: "absolute",
+          }}
+        >
+          <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
+            <Path
+              fill="#0a78e2"
+              fill-opacity="1"
+              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            ></Path>
+          </Svg>
+        </View>
+        <View style={{ marginVertical: 50 }}>
+          <View style={GlobalStyles.headerHomeContainer}>
+            <Image
+              source={require("../../../../assets/logo-app.png")}
+              resizeMode="contain"
+              style={GlobalStyles.containerLogo}
+            />
+            <TouchableOpacity
+              style={GlobalStyles.btnRedSmall}
+              onPress={darurat}
+            >
+              <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

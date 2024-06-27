@@ -1,67 +1,20 @@
 import {
   View,
-  Text,
   Image,
   useWindowDimensions,
   StyleSheet,
-  StatusBar,
   Dimensions,
   Linking,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { TextInput, TouchableRipple } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
 const width = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  mainContent: {
-    // flex: 1,
-    // padding: 10,
-    // padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    // paddingTop: StatusBar.currentHeight,
-    gap: 0,
-    // backgroundColor: "black",
-  },
-  //   srcContainer: {
-  //     margin: 15,
-  //     flexDirection: "row",
-  //     alignItems: "center",
-  //   },
-  //   searchBar: {
-  //     flexDirection: "row",
-  //     alignItems: "center",
-  //     // height: 32,
-  //     borderColor: "gray",
-  //     padding: 10,
-  //     gap: 10,
-  //     // marginHorizontal: 5,
-  //     // flex: 1,
-  //   },
-  borderShadow: {
-    borderRadius: 50,
-    shadowColor: "gray",
-    shadowOffset: {
-      widh: 2,
-      height: 1,
-    },
-    shadowOpacity: 5,
-    shadowRadius: 2,
-    elevation: 5,
-    borderTopWidth: 0,
-    borderLeftWidth: 0.2,
-    backgroundColor: "#f5f5f5",
-  },
-  imageCarousel: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 10,
-  },
-});
 
 const dataCarousel = [
   {
@@ -100,39 +53,58 @@ export default function MySlider() {
   const { width } = useWindowDimensions(); //Agae dinamis sesuai perangkat
 
   return (
-    <View style={styles.mainContent}>
-      <View style={{ alignItems: "center" }}>
-        <Carousel
-          // loop
-          mode="parallax"
-          modeConfig={{
-            parallaxScrollingScale: 0.98,
-            parallaxScrollingOffset: 100,
-          }}
-          width={wp(90)}
-          height={hp(25)}
-          // autoPlay={true}
-          data={dataCarousel}
-          scrollAnimationDuration={3000}
-          onSnapToItem={(index) => console.log("current index:", index)}
-          renderItem={({ item }) => (
-            <TouchableRipple
-              onPress={() =>
-                Linking.openURL(
-                  "https://www.youtube.com/@RSJDDrAminoGondohutomo"
-                )
-              }
-            >
-              <Image
-                style={styles.imageCarousel}
-                source={{
-                  uri: item.image,
-                }}
-              />
-            </TouchableRipple>
-          )}
-        />
-      </View>
+    <View style={{ alignItems: "center" }}>
+      <Carousel
+        // loop
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.98,
+          parallaxScrollingOffset: 100,
+        }}
+        width={wp(90)}
+        height={hp(25)}
+        // autoPlay={true}
+        data={dataCarousel}
+        scrollAnimationDuration={3000}
+        onSnapToItem={(index) => console.log("current index:", index)}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL("https://www.youtube.com/@RSJDDrAminoGondohutomo")
+            }
+            style={styles.borderShadow}
+          >
+            <Image
+              style={styles.imageCarousel}
+              source={{
+                uri: item.image,
+              }}
+            />
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  borderShadow: {
+    borderRadius: 50,
+    shadowColor: "gray",
+    shadowOffset: {
+      widh: 2,
+      height: 1,
+    },
+    shadowOpacity: 5,
+    shadowRadius: 2,
+    elevation: 5,
+    borderTopWidth: 0,
+    borderLeftWidth: 0.2,
+    backgroundColor: "#f5f5f5",
+  },
+  imageCarousel: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+  },
+});

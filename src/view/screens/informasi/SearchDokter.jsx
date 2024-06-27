@@ -1,5 +1,12 @@
 // SearchDokter.js
-import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Alert,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
@@ -23,7 +30,11 @@ export default function SearchDokter() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
-  const [bottomSeed, setBootomSeed] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+  };
 
   useEffect(() => {
     axios
@@ -69,7 +80,7 @@ export default function SearchDokter() {
 
   return (
     <View style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View>
         <HeaderComponent
           title="Daftar Dokter"
           icon={"arrow-back"}
@@ -77,7 +88,7 @@ export default function SearchDokter() {
         />
       </View>
 
-      <View style={{ flex: 1 }}>
+      <View>
         <SearchComponent
           platform="android"
           data={dataPoli}
@@ -94,37 +105,30 @@ export default function SearchDokter() {
           Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
         </Text>
       )} */}
-      <View style={{ flex: 10, alignItems: "center" }}>
+      <View style={{ alignItems: "center" }}>
         <FlatList
           data={filteredData}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
           renderItem={({ item }) => (
             <CardButtonNavComponent
               title={item.nm_dokter}
-              // description={item.nm_poli}
+              description={item.nm_poli}
               imgSource={{ uri: `${item.image}` }}
               modal={true}
-              onPress={() => navigation.navigate("Detail Dokter")}
-              warna={"#73B9FC"}
+              onPress={() =>
+                navigation.navigate("Detail Dokter", { doctorData: item })
+              }
+              warna={"#0A78E2"}
             />
           )}
         />
       </View>
 
-      {/* {bottomSeed ? (
-        <BottomSheet
-          setStatus={setBootomSeed}
-          ukuranModal={{ width: "100%", height: "80%" }}
-          judul="Pastikan Data Benar"
-          subjudul={""}
-          buttonKiri="Batal"
-          buttonKanan="Booking"
-          listKerabat={true}
-          pressKiri={() => setBootomSeed(false)}
-          pressKanan={() => setBootomSeed(false)}
-        />
-      ) : null} */}
-      <View />
+      <View style={{ height: 100 }}></View>
     </View>
   );
 }

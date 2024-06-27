@@ -97,10 +97,10 @@ const LoginScreen = () => {
       const response = await axios.post(
         `http://192.168.5.5:8080/login`,
         {
-          user: "222222222222",
-          password: "222222",
-          // user: username,
-          // password: password,
+          // user: "111111111111",
+          // password: "111111",
+          user: username,
+          password: password,
         },
         {
           headers: {
@@ -116,14 +116,6 @@ const LoginScreen = () => {
       setAuth(userInfo);
       console.log("ini user info:", userInfo);
       navigation.replace("Home Screen");
-
-      // if (userInfo.message == "Unable to connect to the database") {
-      //   console.log("Login berhasil. Token:", userInfo);
-      //   setAuth(userInfo);
-      //   navigation.replace("Amino Care");
-      // } else {
-      //   console.log("Login gagal, pesan kesalahan:", userInfo.message);
-      // }
     } catch (error) {
       try {
         if (error == "AxiosError: Request failed with status code 500") {

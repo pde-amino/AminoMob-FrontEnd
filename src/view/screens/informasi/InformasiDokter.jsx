@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, View, Text } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  View,
+  Text,
+  RefreshControl,
+} from "react-native";
 import { BASE_URL } from "../../../contex/Config";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import EventSource from "react-native-event-source";
@@ -15,6 +21,11 @@ const InformasiDokter = () => {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const [filteredData, setFilteredData] = useState();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+  };
 
   const handleSearch = (filteredData) => {
     setFilteredData(filteredData);
@@ -83,7 +94,10 @@ const InformasiDokter = () => {
       ) : (
         <FlatList
           contentContainerStyle={{ flexGrow: 1 }}
-          horizontal={false}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           numColumns={3}
           data={filteredData}
           renderItem={({ item }) => (

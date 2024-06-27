@@ -184,9 +184,9 @@ export const TambahPasien = () => {
     no_tlp: noHP,
     umur: "",
     pnd: pndPasien,
-    keluarga: "",
+    keluarga: hubunganPasien,
     namakeluarga: "",
-    kd_pj: "A09",
+    kd_pj: "",
     no_peserta: "",
     kd_kel: "",
     kd_kec: "",
@@ -196,7 +196,7 @@ export const TambahPasien = () => {
     kelurahanpj: "",
     kecamatanpj: "",
     kabupatenpj: "",
-    perusahaan_pasien: "-",
+    perusahaan_pasien: "",
     suku_bangsa: "",
     bahasa_pasien: "",
     cacat_fisik: "",
@@ -204,7 +204,6 @@ export const TambahPasien = () => {
     nip: "",
     kd_prop: "",
     propinsipj: "",
-    status_user: hubunganPasien,
   };
 
   const getCurrentDate = () => {
@@ -218,149 +217,6 @@ export const TambahPasien = () => {
   };
 
   const tglHariIni = getCurrentDate();
-
-  // const postPasienBaru = async () => {
-  //   try {
-  //     const payload = {
-  //       no_rkm_medis: "",
-  //       nm_pasien: nmLengkap,
-  //       no_ktp: noKTP,
-  //       jk: kelaminPasien,
-  //       tmp_lahir: tempatLahir,
-  //       tgl_lahir: formattedDate,
-  //       nm_ibu: "",
-  //       alamat: alamat,
-  //       gol_darah: goldarPasien,
-  //       pekerjaan: "",
-  //       stts_nikah: statusNikah,
-  //       agama: agamaPasien,
-  //       no_tlp: noHP,
-  //       umur: "",
-  //       pnd: pndPasien,
-  //       keluarga: "",
-  //       namakeluarga: "",
-  //       kd_pj: "A09",
-  //       no_peserta: "",
-  //       kd_kel: "",
-  //       kd_kec: "",
-  //       kd_kab: "",
-  //       pekerjaanpj: "",
-  //       alamatpj: "",
-  //       kelurahanpj: "",
-  //       kecamatanpj: "",
-  //       kabupatenpj: "",
-  //       perusahaan_pasien: "-",
-  //       suku_bangsa: "",
-  //       bahasa_pasien: "",
-  //       cacat_fisik: "",
-  //       email: "",
-  //       nip: "",
-  //       kd_prop: "",
-  //       propinsipj: "",
-  //       status_user: hubunganPasien,
-  //     };
-
-  //     const response = await axios.post(
-  //       `${BASE_URL}/insertPas/${auth.user.id}`,
-  //       payload,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${auth.user.token}`,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("response data post:", response.data); // Log response dari server
-
-  //     // Alert.alert("Berhasil", "Data pasien berhasil disimpan");
-  //     // navigation.goBack();
-  //   } catch (error) {
-  //     if (error.response) {
-  //       Alert.alert("Error", `Error response: ${error.response.data.message}`);
-  //     } else if (error.request) {
-  //       Alert.alert(
-  //         "Error",
-  //         "No response received from the server. Please try again later."
-  //       );
-  //     } else {
-  //       Alert.alert("Error", `Error: ${error.message}`);
-  //     }
-  //   }
-  // };
-
-  // const postPasienBaru = async () => {
-  //   await axios
-  //     .post(
-  //       `${BASE_URL}/insertPas/${auth.user.id}`,
-  //       {
-  //         no_rkm_medis: "",
-  //         nm_pasien: nmLengkap,
-  //         no_ktp: noKTP,
-  //         jk: kelaminPasien,
-  //         tmp_lahir: tempatLahir,
-  //         tgl_lahir: formattedDate,
-  //         nm_ibu: "",
-  //         alamat: alamat,
-  //         gol_darah: goldarPasien,
-  //         pekerjaan: "",
-  //         stts_nikah: statusNikah,
-  //         agama: agamaPasien,
-  //         no_tlp: noHP,
-  //         umur: "",
-  //         pnd: pndPasien,
-  //         keluarga: "",
-  //         namakeluarga: "",
-  //         kd_pj: "A09",
-  //         no_peserta: "",
-  //         kd_kel: "",
-  //         kd_kec: "",
-  //         kd_kab: "",
-  //         pekerjaanpj: "",
-  //         alamatpj: "",
-  //         kelurahanpj: "",
-  //         kecamatanpj: "",
-  //         kabupatenpj: "",
-  //         perusahaan_pasien: "-",
-  //         suku_bangsa: "",
-  //         bahasa_pasien: "",
-  //         cacat_fisik: "",
-  //         email: "",
-  //         nip: "",
-  //         kd_prop: "",
-  //         propinsipj: "",
-  //         status_user: hubunganPasien,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${auth.user.token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       // navigation.navigate("Booking Screen", response.data);
-  //       Alert.alert("Berhasil", response);
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         // Server merespon dengan status code yang di luar rentang 2xx
-  //         console.log("error:", error);
-  //         Alert.alert("Error", `Error: ${error || "Something went wrong"}`);
-  //       } else if (error.request) {
-  //         // Permintaan telah dibuat tetapi tidak ada respons yang diterima
-  //         console.log("error Request:", error.request);
-  //         Alert.alert(
-  //           "Error",
-  //           "No response received from the server. Please try again later."
-  //         );
-  //       } else {
-  //         // Ada sesuatu yang salah dalam mengatur permintaan
-  //         console.log("Error", error.message);
-  //         Alert.alert("Error", `Error: ${error.message}`);
-  //       }
-  //     });
-  // };
 
   const postPasienBaru = async () => {
     try {
@@ -384,7 +240,7 @@ export const TambahPasien = () => {
           pnd: pndPasien,
           keluarga: hubunganPasien,
           namakeluarga: "",
-          kd_pj: "A09",
+          kd_pj: "",
           no_peserta: "",
           kd_kel: "",
           kd_kec: "",
@@ -394,7 +250,7 @@ export const TambahPasien = () => {
           kelurahanpj: "",
           kecamatanpj: "",
           kabupatenpj: "",
-          perusahaan_pasien: "-",
+          perusahaan_pasien: "",
           suku_bangsa: "",
           bahasa_pasien: "",
           cacat_fisik: "",
@@ -402,7 +258,6 @@ export const TambahPasien = () => {
           nip: "",
           kd_prop: "",
           propinsipj: "",
-          status_user: hubunganPasien,
         },
         {
           headers: {
@@ -422,23 +277,25 @@ export const TambahPasien = () => {
       // Tangani kesalahan yang terjadi selama permintaan POST
       if (error.response) {
         // Server merespon dengan status code yang di luar rentang 2xx
-        console.error("Error response:", error.response.data);
+        console.error("Error response A:", error.response.data);
         Alert.alert(
           "Error",
           `Error: ${error.response.data || "Something went wrong"}`
         );
       } else if (error.request) {
         // Permintaan telah dibuat tetapi tidak ada respons yang diterima
-        console.error("Error request:", error.request);
+        console.error("Error request B:", error.request);
         Alert.alert(
           "Error",
           "No response received from the server. Please try again later."
         );
       } else {
         // Kesalahan dalam mengatur permintaan
-        console.error("Error:", error.message);
+        console.error("Error C:", error.message);
         Alert.alert("Error", `Error: ${error.message}`);
       }
+    } finally {
+      navigation.navigate("List Pasien");
     }
   };
 
@@ -451,201 +308,204 @@ export const TambahPasien = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent
-        title={"Pendaftaran Pasien Baru"}
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
-      <ScrollView>
-        <View style={{ flex: 8, gap: 8, alignItems: "center" }}>
-          <View
-            style={{
-              width: "100%",
-              marginLeft: 40,
-              // marginVertical: 8,
-            }}
-          >
-            <Text style={GlobalStyles.h4}>Isi semuanya lur</Text>
-          </View>
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusNama && {
-                  borderColor: "green",
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={hubungan}
-              // search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !focusNama
-                  ? "Hubungan Pasien dengan Pemilik Akun"
-                  : "Pilih Hubungan"
-              }
-              searchPlaceholder="Search..."
-              value={hubunganPasien}
-              onFocus={() => setfocusNama(true)}
-              onBlur={() => setfocusNama(false)}
-              onChange={(item) => {
-                setHubungan(item.value);
-                setfocusNama(false);
+      <View style={{ flex: 1 }}>
+        <HeaderComponent
+          title={"Pendaftaran Pasien Baru"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <View style={{ flex: 9 }}>
+        <ScrollView>
+          <View style={{ gap: 8, alignItems: "center" }}>
+            <View
+              style={{
+                width: "100%",
+                marginLeft: 40,
+                // marginVertical: 8,
               }}
-            />
-          </View>
-          <Divider />
-
-          <TextInputIconComponent
-            label={"Nama Lengkap"}
-            placeholder={"Masukan Nama Lengkap Anda"}
-            type={"nama"}
-            value={nmLengkap}
-            onChangeText={setnmLengkap}
-          />
-
-          <TextInputIconComponent
-            label={"No Handphone"}
-            placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
-            type={"nomor"}
-            value={noHP}
-            onChangeText={setnoHP}
-          />
-
-          <TextInputIconComponent
-            label={"Nomor KTP"}
-            placeholder={"Masukan NIK Anda"}
-            type={"ktp"}
-            value={noKTP}
-            onChangeText={setnoKTP}
-          />
-
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusNikah && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={sttsNikah}
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !focusNikah ? "Status Nikah" : "Pilih Status Pernikahan"
-              }
-              searchPlaceholder="Search..."
-              value={statusNikah}
-              onFocus={() => setfocusNikah(true)}
-              onBlur={() => setfocusNikah(false)}
-              onChange={(item) => {
-                setStatusNikah(item.value);
-                setfocusNikah(false);
-              }}
-            />
-          </View>
-
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusKelamin && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={kelamin}
-              // search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !focusKelamin ? "Jenis Kelamin" : "Pilih Jenis Kelamin Anda"
-              }
-              searchPlaceholder="Search..."
-              value={kelaminPasien}
-              onFocus={() => setFocusKelamin(true)}
-              onBlur={() => setFocusKelamin(false)}
-              onChange={(item) => {
-                setKelamin(item.value);
-                setFocusKelamin(false);
-              }}
-            />
-          </View>
-
-          <Divider />
-
-          <TextInputIconComponent
-            label={"Tempat Lahir"}
-            placeholder={"Masukkan Kota tempat lahir Anda"}
-            type={"username"}
-            value={tempatLahir}
-            onChangeText={setTempatLahir}
-          />
-
-          <View>
-            {showPicker && (
-              <DateTimePicker
-                // display={"spinner"}
-                mode="date"
-                onChange={berubah}
-                value={date}
-                minimumDate={new Date(1935, 12, 31)}
-                maximumDate={new Date()}
+            >
+              <Text style={GlobalStyles.h4}>Isi semuanya lur</Text>
+            </View>
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusNama && {
+                    borderColor: "green",
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                // iconStyle={styles.iconStyle}
+                data={hubungan}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !focusNama
+                    ? "Hubungan Pasien dengan Pemilik Akun"
+                    : "Pilih Hubungan"
+                }
+                searchPlaceholder="Search..."
+                value={hubunganPasien}
+                onFocus={() => setfocusNama(true)}
+                onBlur={() => setfocusNama(false)}
+                onChange={(item) => {
+                  setHubungan(item.value);
+                  setfocusNama(false);
+                }}
               />
-            )}
+            </View>
+            <Divider />
 
-            {!showPicker && (
-              <Pressable onPress={toggleShowDate}>
-                <TextInput
-                  style={styles.tglPilihan}
-                  editable={false}
-                  // label={"Tgl Lahir"}
-                  placeholder={"Tanggal Lahir"}
-                  value={
-                    dateOfBirth
-                      ? new Date(date).toISOString().split("T")[0]
-                      : ""
-                  }
-                  onChangeText={setDateOfBirth}
-                  // type={"username"}
-                  // onPress={() => setShowDate(true)}
+            <TextInputIconComponent
+              label={"Nama Lengkap"}
+              placeholder={"Masukan Nama Lengkap Anda"}
+              type={"nama"}
+              value={nmLengkap}
+              onChangeText={setnmLengkap}
+            />
+
+            <TextInputIconComponent
+              label={"No Handphone"}
+              placeholder={"Masukkan Nomor HP yang bisa dihubungi"}
+              type={"nomor"}
+              value={noHP}
+              onChangeText={setnoHP}
+            />
+
+            <TextInputIconComponent
+              label={"Nomor KTP"}
+              placeholder={"Masukan NIK Anda"}
+              type={"ktp"}
+              value={noKTP}
+              onChangeText={setnoKTP}
+            />
+
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusNikah && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={sttsNikah}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !focusNikah ? "Status Nikah" : "Pilih Status Pernikahan"
+                }
+                searchPlaceholder="Search..."
+                value={statusNikah}
+                onFocus={() => setfocusNikah(true)}
+                onBlur={() => setfocusNikah(false)}
+                onChange={(item) => {
+                  setStatusNikah(item.value);
+                  setfocusNikah(false);
+                }}
+              />
+            </View>
+
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusKelamin && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={kelamin}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !focusKelamin ? "Jenis Kelamin" : "Pilih Jenis Kelamin Anda"
+                }
+                searchPlaceholder="Search..."
+                value={kelaminPasien}
+                onFocus={() => setFocusKelamin(true)}
+                onBlur={() => setFocusKelamin(false)}
+                onChange={(item) => {
+                  setKelamin(item.value);
+                  setFocusKelamin(false);
+                }}
+              />
+            </View>
+
+            <Divider />
+
+            <TextInputIconComponent
+              label={"Tempat Lahir"}
+              placeholder={"Masukkan Kota tempat lahir Anda"}
+              type={"username"}
+              value={tempatLahir}
+              onChangeText={setTempatLahir}
+            />
+
+            <View>
+              {showPicker && (
+                <DateTimePicker
+                  // display={"spinner"}
+                  mode="date"
+                  onChange={berubah}
+                  value={date}
+                  minimumDate={new Date(1935, 12, 31)}
+                  maximumDate={new Date()}
                 />
-              </Pressable>
-            )}
-          </View>
+              )}
 
-          <Divider />
+              {!showPicker && (
+                <Pressable onPress={toggleShowDate}>
+                  <TextInput
+                    style={styles.tglPilihan}
+                    editable={false}
+                    // label={"Tgl Lahir"}
+                    placeholder={"Tanggal Lahir"}
+                    value={
+                      dateOfBirth
+                        ? new Date(date).toISOString().split("T")[0]
+                        : ""
+                    }
+                    onChangeText={setDateOfBirth}
+                    // type={"username"}
+                    // onPress={() => setShowDate(true)}
+                  />
+                </Pressable>
+              )}
+            </View>
 
-          <TextInputIconComponent
-            label={"Alamat"}
-            placeholder={"Masukan Alamat sesuai KTP"}
-            value={alamat}
-            type={"username"}
-            onChangeText={setAlamat}
-          />
+            <Divider />
 
-          {/* ini prov */}
-          {/* <View style={styles.containerDrop}>
+            <TextInputIconComponent
+              label={"Alamat"}
+              placeholder={"Masukan Alamat sesuai KTP"}
+              value={alamat}
+              type={"username"}
+              onChangeText={setAlamat}
+            />
+
+            {/* ini prov */}
+            {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -675,8 +535,8 @@ export const TambahPasien = () => {
             />
           </View> */}
 
-          {/* ini kab */}
-          {/* <View style={styles.containerDrop}>
+            {/* ini kab */}
+            {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -707,8 +567,8 @@ export const TambahPasien = () => {
             />
           </View> */}
 
-          {/* ini kecamatan */}
-          {/* <View style={styles.containerDrop}>
+            {/* ini kecamatan */}
+            {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -739,8 +599,8 @@ export const TambahPasien = () => {
             />
           </View> */}
 
-          {/* ini kelurahan */}
-          {/* <View style={styles.containerDrop}>
+            {/* ini kelurahan */}
+            {/* <View style={styles.containerDrop}>
             <Dropdown
               style={[
                 styles.dropdown,
@@ -771,126 +631,128 @@ export const TambahPasien = () => {
             />
           </View> */}
 
-          <Divider />
+            <Divider />
 
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusAgama && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={agama}
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!focusAgama ? "Agama" : "Pilih Agama Anda"}
-              searchPlaceholder="Search..."
-              value={agamaPasien}
-              onFocus={() => setFocuAgama(true)}
-              onBlur={() => setFocuAgama(false)}
-              onChange={(item) => {
-                setAgama(item.value);
-                setFocuAgama(false);
-              }}
-            />
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusAgama && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={agama}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!focusAgama ? "Agama" : "Pilih Agama Anda"}
+                searchPlaceholder="Search..."
+                value={agamaPasien}
+                onFocus={() => setFocuAgama(true)}
+                onBlur={() => setFocuAgama(false)}
+                onChange={(item) => {
+                  setAgama(item.value);
+                  setFocuAgama(false);
+                }}
+              />
+            </View>
+
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusGoldar && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={goldar}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !focusGoldar ? "Golongan Darah" : "Pilih Golongan Darah"
+                }
+                searchPlaceholder="Search..."
+                value={goldarPasien}
+                onFocus={() => setFocuGoldar(true)}
+                onBlur={() => setFocuGoldar(false)}
+                onChange={(item) => {
+                  setGoldar(item.value);
+                  setFocuGoldar(false);
+                }}
+              />
+            </View>
+
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  focusPendidikan && {
+                    borderColor: WARNA.primary,
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={pendidikan}
+                // search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={
+                  !focusPendidikan
+                    ? "Riwayat Pendidikan"
+                    : "Pilih Pendidikan Terakhir"
+                }
+                searchPlaceholder="Search..."
+                value={pndPasien}
+                onFocus={() => setFocusPendidikan(true)}
+                onBlur={() => setFocusPendidikan(false)}
+                onChange={(item) => {
+                  setPendidikan(item.value);
+                  setFocusPendidikan(false);
+                }}
+              />
+            </View>
           </View>
 
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusGoldar && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={goldar}
-              // search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !focusGoldar ? "Golongan Darah" : "Pilih Golongan Darah"
-              }
-              searchPlaceholder="Search..."
-              value={goldarPasien}
-              onFocus={() => setFocuGoldar(true)}
-              onBlur={() => setFocuGoldar(false)}
-              onChange={(item) => {
-                setGoldar(item.value);
-                setFocuGoldar(false);
+          <View style={{ flex: 2, marginVertical: 20 }}>
+            <Checkbox.Item
+              style={GlobalStyles.cekBox}
+              color={WARNA.primary}
+              label="Data yang saya masukkan sudah benar"
+              labelStyle={GlobalStyles.textBiasa}
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked(!checked);
               }}
             />
+            <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
+              <ButtonPrimary
+                title="Simpan"
+                onPress={postPasienBaru}
+                // disabled={!checked || !!hubunganPasien}
+              />
+            </View>
           </View>
-
-          <View style={styles.containerDrop}>
-            <Dropdown
-              style={[
-                styles.dropdown,
-                focusPendidikan && {
-                  borderColor: WARNA.primary,
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={pendidikan}
-              // search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={
-                !focusPendidikan
-                  ? "Riwayat Pendidikan"
-                  : "Pilih Pendidikan Terakhir"
-              }
-              searchPlaceholder="Search..."
-              value={pndPasien}
-              onFocus={() => setFocusPendidikan(true)}
-              onBlur={() => setFocusPendidikan(false)}
-              onChange={(item) => {
-                setPendidikan(item.value);
-                setFocusPendidikan(false);
-              }}
-            />
-          </View>
-        </View>
-        <View style={{ marginBottom: 300 }} />
-
-        <Checkbox.Item
-          style={GlobalStyles.cekBox}
-          color={WARNA.primary}
-          label="Data yang saya masukkan sudah benar"
-          labelStyle={{ fontSize: 12 }}
-          status={checked ? "checked" : "unchecked"}
-          onPress={() => {
-            setChecked(!checked);
-          }}
-        />
-        <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
-          <ButtonPrimary
-            title="Simpan"
-            onPress={postPasienBaru}
-            // disabled={!checked || !!hubunganPasien}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -923,18 +785,15 @@ const styles = StyleSheet.create({
   },
   containerDrop: {
     backgroundColor: "white",
+    width: "90%",
     // padding: 16,
   },
   dropdown: {
     height: 50,
-    width: 370,
     borderColor: WARNA.primary,
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 12,
-  },
-  icon: {
-    marginRight: 5,
   },
   label: {
     position: "absolute",

@@ -223,7 +223,7 @@ export default function HomeTabs() {
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name={focused ? "document-text" : "document-text-outline"}
+              name={focused ? "book" : "book-outline"}
               size={24}
               color="grey"
             />
@@ -237,7 +237,7 @@ export default function HomeTabs() {
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name={focused ? "call" : "call-outline"}
+              name={focused ? "document-text" : "document-text-outline"}
               size={24}
               color="grey"
             />

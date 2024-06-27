@@ -11,7 +11,6 @@ import {
   Alert,
   Button,
 } from "react-native";
-import { Checkbox } from "react-native-paper";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -100,6 +99,7 @@ export const PilihPoli = () => {
         Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
       });
   };
+  console.log("jenismenu", route);
 
   console.log("data pasodojasfkjhdsklfjklf: ", [kdPoli, hariPoli, value]);
 
@@ -272,7 +272,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
   const confirmData = (
     <View style={{ gap: 8 }}>
       <View>
-        <Text>Nama</Text>
+        <Text style={GlobalStyles.textBiasa}>Nama</Text>
         <Text style={GlobalStyles.h4}>{route.params.nm_pasien}</Text>
       </View>
       <View>
@@ -328,6 +328,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         confirmButtonText={confMod}
         cancelButtonText={cancMod}
       />
+
       <HeaderComponent
         title={"Pilih Poli"}
         icon={"arrow-back"}

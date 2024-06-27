@@ -81,7 +81,7 @@ export default GlobalStyles = StyleSheet.create({
   h1: {
     fontSize: hp(2.8),
     fontWeight: "bold",
-    // color: "#3E3E3E",
+    color: "#3E3E3E",
   },
   h2: {
     fontSize: hp(2.2),
