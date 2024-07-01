@@ -39,10 +39,10 @@ const CardButtonNavComponent = ({
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: warna }]}
-      onPress={modal ? onPress : handlePress}>
+      onPress={modal ? onPress : handlePress}
+    >
       <View style={styles.iconContainer}>
         <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
-        {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}
         <View style={styles.textContainer}>
           <Text style={[GlobalStyles.h3, { color: WARNA.white }]}>{title}</Text>
           <Text style={(GlobalStyles.textBiasa, { color: WARNA.white })}>

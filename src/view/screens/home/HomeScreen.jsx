@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   FlatList,
@@ -10,19 +10,13 @@ import {
   Linking,
   Alert,
 } from "react-native";
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 import MenuItemComponent from "../../../components/MenuItemComponent";
-import LoadingContent from "../../../components/LoadingContent";
-import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -34,7 +28,7 @@ import BannerComponent from "../../../components/BannerComponent";
 import { SpeedDial } from "@rneui/themed";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
-import { useCallback } from "react";
+import CardButtonComponent from "../../../components/CardButtonComponent";
 
 // const { lebar } = Dimensions.get("screen");
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -43,47 +37,27 @@ const HomeScreen = () => {
   const { logout, auth } = useContext(AuthContex);
   console.log("Ini dari HomeScreen :", auth);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
-        headers: {
-          Authorization: `Bearer ${auth.user.token}`,
-        },
-      });
-      console.log("Fetch Response data:", response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error.message);
-      console.error("Error response data:", error);
-      if (error.message === "Request failed with status code 401") {
-        AsyncStorage.removeItem("userInfo");
-        logout();
-        navigation.replace("Login Screen");
-        Alert.alert("Maaf", "Hanya bisa login di satu perangkat.");
-        return;
-      }
-    }
+  const alertMJKN = () => {
+    Alert.alert(
+      "Maaf",
+      "Saat ini pendaftaran Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
+      [{ text: "OK", onPress: () => checkAndOpenApp() }]
+    );
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      const intervalId = setInterval(() => {
-        fetchData();
-      }, 10000); // 30000 ms = 30 seconds
+  const checkAndOpenApp = async () => {
+    const packageName = "app.bpjs.mobile";
+    const appLink = `intent://${packageName}#Intent;scheme=package;end`;
+    const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
 
-      return () => clearInterval(intervalId); // Clear interval on component unmount
-    }, [])
-  );
-
-  //   Linking.canOpenURL(url)
-  //     .then((supported) => {
-  //       if (!supported) {
-  //         Alert.alert("WhatsApp is not installed on your device");
-  //       } else {
-  //         return Linking.openURL(url);
-  //       }
-  //     })
-  //     .catch((err) => console.error("An error occurred", err));
-  // };
+    try {
+      // Coba buka aplikasi MJKN
+      await Linking.openURL(appLink);
+    } catch (error) {
+      // Jika gagal, buka Play Store
+      Linking.openURL(playStoreLink);
+    }
+  };
 
   const Menus = [
     {
@@ -91,9 +65,8 @@ const HomeScreen = () => {
       source: require("../../../../assets/icon31.png"),
       title: "Layanan RS (Non BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien Non BPJS",
-      to: "List Pasien",
+      to: () => navigation.navigate("List Pasien"),
       warna: WARNA.primary,
-      kondisi: false,
     },
     {
       kd_poli: "2",
@@ -101,11 +74,11 @@ const HomeScreen = () => {
       title: "Layanan RS (BPJS)",
       desc: "Pendaftaran layanan kesehatan khusus untuk pasien BPJS",
       // belumAda: true,
-      to: false,
-      alert: {
-        title: "Mohon Maaf",
-        desc: "Saat ini pendaftaran Layanan RS BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      },
+      to: () => alertMJKN(),
+      // alert: {
+      //   title: "Mohon Maaf",
+      //   desc: "Saat ini pendaftaran Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
+      // },
       warna: WARNA.primary,
     },
     {
@@ -113,19 +86,19 @@ const HomeScreen = () => {
       source: require("../../../../assets/icon33.png"),
       title: "Informasi Umum RS",
       desc: "Informasi terkini dan terlengkap seputar Amino Hospital",
-      to: "Informasi Umum",
+      to: () => navigation.navigate("Informasi Umum"),
       // params: { clinicId: 1, nameClinic: "Klinik Umum" }, // Parameter yang disertakan (misalnya clinicId)
       warna: WARNA.primary,
     },
   ];
 
   const navigation = useNavigation();
-  const [poliklinikData, setPoliklinikData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [poliklinikData, setPoliklinikData] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(false);
 
-  const [open, setOpen] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(false);
+  // const [open, setOpen] = useState(false);
+  // const [bannerVisible, setBannerVisible] = useState(false);
 
   const darurat = () => {
     Linking.openURL("https://wa.me/6281225204301");
@@ -196,7 +169,7 @@ const HomeScreen = () => {
         <FlatList
           data={Menus}
           renderItem={({ item }) => (
-            <CardButtonNavComponent
+            <CardButtonComponent
               data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
               icon={item.icon}
               title={item.title}

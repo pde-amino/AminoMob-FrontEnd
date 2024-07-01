@@ -59,16 +59,16 @@ const ProfileScreen = () => {
     } catch (error) {
       console.error("Error fetching user data:", error.message);
       console.error("Error response data:", error);
-      if (error.message === "Request failed with status code 401") {
-        AsyncStorage.removeItem("userInfo");
-        logout();
-        navigation.replace("Login Screen");
-        Alert.alert(
-          "Maaf",
-          "Hanya bisa login di satu perangkat, silakan logout di perangkat yang lain"
-        );
-        return;
-      }
+      // if (error.message === "Request failed with status code 401") {
+      //   AsyncStorage.removeItem("userInfo");
+      //   logout();
+      //   navigation.replace("Login Screen");
+      //   Alert.alert(
+      //     "Maaf",
+      //     "Hanya bisa login di satu perangkat, silakan logout di perangkat yang lain"
+      //   );
+      //   return;
+      // }
     } finally {
       setLoading(false);
       setRefreshing(false);

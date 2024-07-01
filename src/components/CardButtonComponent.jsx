@@ -19,15 +19,15 @@ const CardButtonComponent = ({
   onPress,
   imgSource,
 }) => {
-  const navigation = useNavigation();
   return (
     <View>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: warna }]}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         <View style={styles.iconContainer}>
           <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
-          {/* <MaterialIcons name={icon} size={24} color={WARNA.white} /> */}
+
           <View style={styles.textContainer}>
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.description}>{description}</Text>

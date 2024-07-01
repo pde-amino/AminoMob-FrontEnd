@@ -33,6 +33,8 @@ import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { BASE_URL } from "../contex/Config";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -182,33 +184,42 @@ export default function HomeTabs() {
   const navigation = useNavigation();
   // console.log("AuthTabs :", data);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${auth.user.token}`,
-  //       },
-  //     });
-  //     setDataUser(response.data.user);
-  //     console.log("Fetch Response data:", response.data);
-  //   } catch (error) {
-  //     // console.error("Error fetching user data:", error.message);
-  //     // console.error("Error response data:", error);
-  //     if (error.message === "Request failed with status code 401") {
-  //       AsyncStorage.removeItem("userInfo");
-  //       logout();
-  //       navigation.replace("Login Screen");
-  //       Alert.alert("Maaf", "Hanya bisa login di satu perangkat.");
-  //       return;
-  //     }
-  //   }
-  // };
+  const paksaLogin = () => {
+    AsyncStorage.removeItem("userInfo");
+    logout();
+    navigation.replace("Login Screen");
+  };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     fetchData();
-  //   }, [])
-  // );
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+      console.log("Fetch cek login data:", response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+      if (error.message === "Request failed with status code 401") {
+        Alert.alert(
+          "Maaf",
+          "Ada yang login menggunakan perangkat lain, hanya bisa login dengan satu perangkat",
+          [{ text: "OK", onPress: () => paksaLogin() }]
+        );
+        return;
+      }
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const intervalId = setInterval(() => {
+        fetchData();
+      }, 10000); // 30000 ms = 30 seconds
+
+      return () => clearInterval(intervalId); // Clear interval on component unmount
+    }, [])
+  );
 
   return (
     <Tabs.Navigator
