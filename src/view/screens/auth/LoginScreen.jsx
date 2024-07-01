@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -16,6 +17,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
+import { BASE_URL } from "../../../contex/Config";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -24,6 +26,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
   const { auth, setAuth } = useContext(AuthContex);
@@ -60,13 +63,14 @@ const LoginScreen = () => {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const response = await axios.post(
-        `http://192.168.5.5:8080/login`,
+        `${BASE_URL}/login`,
         {
-          // user: "111111111111",
-          // password: "111111",
-          user: username,
-          password: password,
+          user: "111111111111",
+          password: "111111",
+          // user: username,
+          // password: password,
         },
         {
           headers: {
@@ -81,6 +85,7 @@ const LoginScreen = () => {
       await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
       setAuth(userInfo);
       console.log("ini user info:", userInfo);
+      setLoading(false);
       navigation.replace("Home Screen");
     } catch (error) {
       try {
@@ -93,10 +98,12 @@ const LoginScreen = () => {
             "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
           );
         }
+        setLoading(false);
       } catch (error) {
         Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       }
       console.log("Login Error:", error);
+      setLoading(false);
     }
   };
 
@@ -134,11 +141,15 @@ const LoginScreen = () => {
             />
           </View>
 
-          <ButtonPrimary
-            title="Masuk"
-            disabled={!!usernameError || !!passwordError}
-            onPress={handleSubmit}
-          />
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <ButtonPrimary
+              title="Masuk"
+              disabled={!!usernameError || !!passwordError}
+              onPress={handleSubmit}
+            />
+          )}
 
           <View style={{ flexDirection: "row" }}>
             <Text style={GlobalStyles.textBiasa}>Belum punya akun?</Text>
