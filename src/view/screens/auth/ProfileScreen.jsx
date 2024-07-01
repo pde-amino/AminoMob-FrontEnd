@@ -6,6 +6,7 @@ import {
   Alert,
   RefreshControl,
   ActivityIndicator,
+  StyleSheet,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Avatar } from "react-native-paper";
@@ -62,7 +63,10 @@ const ProfileScreen = () => {
         AsyncStorage.removeItem("userInfo");
         logout();
         navigation.replace("Login Screen");
-        Alert.alert("Maaf", "Hanya bisa login di satu perangkat.");
+        Alert.alert(
+          "Maaf",
+          "Hanya bisa login di satu perangkat, silakan logout di perangkat yang lain"
+        );
         return;
       }
     } finally {
@@ -112,14 +116,7 @@ const ProfileScreen = () => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <View
-              style={{
-                alignItems: "center",
-                margin: 20,
-                flexDirection: "row",
-                gap: 16,
-              }}
-            >
+            <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
                 source={require("../../../../assets/avatar.png")}
@@ -168,5 +165,14 @@ const ProfileScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  containerAvatar: {
+    alignItems: "center",
+    margin: 20,
+    flexDirection: "row",
+    gap: 16,
+  },
+});
 
 export default ProfileScreen;

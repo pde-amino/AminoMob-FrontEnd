@@ -38,8 +38,9 @@ export default GlobalStyles = StyleSheet.create({
     marginRight: 20,
   },
   btnFullContainer: {
-    width: "90%",
+    width: wp(90),
     height: 48,
+    marginHorizontal: 20,
   },
   safeAreaStyle: {
     flex: 1,

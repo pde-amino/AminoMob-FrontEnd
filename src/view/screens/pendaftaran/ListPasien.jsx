@@ -165,7 +165,7 @@ export default function ListPasien() {
           </ScrollView>
         )}
       </View>
-      <View style={[GlobalStyles.btnFullContainer, { flex: 1, margin: 20 }]}>
+      <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
         <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
       </View>
 
@@ -173,8 +173,8 @@ export default function ListPasien() {
         <BottomSheet
           setStatus={setBtmtambah}
           ukuranModal={{ width: "100%", height: "20%" }}
-          judul="Sudah Pernah Periksa Sebelumnya?"
-          subjudul="Pilih Sudah jika punya No. Rekam Medis"
+          judul="Pernah Periksa Sebelumnya?"
+          subjudul="Pasien yang sudah pernah periksa di Amino Hospital dan mempunyai nomor RM pilih Sudah"
           buttonKiri="Belum"
           buttonKanan="Sudah"
           pressKiri={pasienBaru}

@@ -21,6 +21,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -308,14 +312,14 @@ export const TambahPasien = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View style={{ height: hp(10) }}>
         <HeaderComponent
           title={"Pendaftaran Pasien Baru"}
           icon={"arrow-back"}
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={{ flex: 9 }}>
+      <View style={{ height: hp(80) }}>
         <ScrollView>
           <View style={{ gap: 8, alignItems: "center" }}>
             <View
@@ -731,27 +735,26 @@ export const TambahPasien = () => {
               />
             </View>
           </View>
-
-          <View style={{ flex: 2, marginVertical: 20 }}>
-            <Checkbox.Item
-              style={GlobalStyles.cekBox}
-              color={WARNA.primary}
-              label="Data yang saya masukkan sudah benar"
-              labelStyle={GlobalStyles.textBiasa}
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => {
-                setChecked(!checked);
-              }}
-            />
-            <View style={[GlobalStyles.btnFullContainer, { marginLeft: 20 }]}>
-              <ButtonPrimary
-                title="Simpan"
-                onPress={postPasienBaru}
-                // disabled={!checked || !!hubunganPasien}
-              />
-            </View>
-          </View>
         </ScrollView>
+        <View style={{ height: hp(2), marginVertical: 10 }}>
+          <Checkbox.Item
+            style={GlobalStyles.cekBox}
+            color={WARNA.primary}
+            label="Data yang saya masukkan sudah benar"
+            labelStyle={GlobalStyles.textBiasa}
+            status={checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+          />
+          <View style={GlobalStyles.btnFullContainer}>
+            <ButtonPrimary
+              title="Simpan"
+              onPress={postPasienBaru}
+              disabled={!checked || !!hubunganPasien}
+            />
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );

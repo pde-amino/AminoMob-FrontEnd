@@ -111,20 +111,6 @@ const SignupScreen = () => {
       const userData = response.data;
       navigation.navigate("OTPInputScreen", userData);
       console.log("alksdlkjasldkjlaksdjklasj", userData);
-      // Alert.alert(
-      //   "SUCCESS",
-      //   "Gagal menyimpan data pengguna. Silakan coba lagi." + error
-      // );
-
-      // Alert.alert(
-      //   "Error",
-      //   "Gagal menyimpan data pengguna. Silakan coba lagi." + error
-      // );
-
-      // try {
-      // } catch (error) {
-      //   console.error("Error saving user data to AsyncStorage", error);
-      // }
     } catch (error) {
       console.log("Error response", error.response);
       Alert.alert(
@@ -132,10 +118,6 @@ const SignupScreen = () => {
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"
       );
     }
-  };
-
-  const daftarAkun = () => {
-    navigation.navigate("Login Screen");
   };
 
   return (
@@ -237,7 +219,12 @@ const SignupScreen = () => {
           <View style={{ flexDirection: "row" }}>
             <Text style={GlobalStyles.textBiasa}>Sudah Punya akun?</Text>
             <TouchableOpacity>
-              <Text style={GlobalStyles.textLink} onPress={daftarAkun}>
+              <Text
+                style={GlobalStyles.textLink}
+                onPress={() => {
+                  navigation.navigate("Login Screen");
+                }}
+              >
                 Masuk disini
               </Text>
             </TouchableOpacity>

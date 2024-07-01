@@ -50,7 +50,7 @@ export const TambahPasienLama = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
 
   const [value, setValue] = useState(null);
-  const [bs, setBs] = useState(true);
+  const [bs, setBs] = useState(false);
   const [isFocus1, setIsFocus1] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [noRm, setNoRm] = useState("");
@@ -104,7 +104,7 @@ export const TambahPasienLama = () => {
         .catch((error) => {
           Alert.alert(
             "Peringatan",
-            "Pastikan data yang anda input adalah data pasien yang pernah periksa di RS"
+            "Pastikan data yang anda input adalah data pasien yang pernah periksa di Amino Hospital"
           );
           // console.error("Error fetching data: ", error);
         });
