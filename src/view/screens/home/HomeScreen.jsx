@@ -32,6 +32,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import WebView from "react-native-webview";
+import CardComponentArticel from "../../../components/CardComponentArticel";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -166,7 +167,23 @@ const HomeScreen = () => {
             )}
           />
         </View>
-        <WebViewCard />
+        <ScrollView horizontal={true} style={{ gap: 4 }}>
+          <CardComponentArticel
+            imgSource={{ uri: "https://via.placeholder.com/150" }}
+            title="Sample Title"
+            description="This is a sample description that will be truncated if it's too long. This is a sample description that will be truncated if it's too long."
+          />
+          <CardComponentArticel
+            imgSource={{ uri: "https://via.placeholder.com/150" }}
+            title="Another Title"
+            description="Another sample description that will be truncated."
+          />
+          <CardComponentArticel
+            imgSource={{ uri: "https://via.placeholder.com/150" }}
+            title="Another Title"
+            description="Another sample description that will be truncated."
+          />
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,4 +198,15 @@ const styles = StyleSheet.create({
   },
 });
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   scrollView: {
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     justifyContent: "center",
+//   },
+// });
 export default HomeScreen;

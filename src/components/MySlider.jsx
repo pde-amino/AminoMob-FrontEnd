@@ -72,8 +72,7 @@ export default function MySlider() {
             onPress={() =>
               Linking.openURL("https://www.youtube.com/@RSJDDrAminoGondohutomo")
             }
-            style={styles.borderShadow}
-          >
+            style={styles.borderShadow}>
             <Image
               style={styles.imageCarousel}
               source={{
