@@ -85,7 +85,6 @@ const ProfileScreen = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userInfo");
-      logout();
       navigation.navigate("Login Screen");
       Alert.alert("Logout", "Anda telah berhasil logout.");
     } catch (error) {
