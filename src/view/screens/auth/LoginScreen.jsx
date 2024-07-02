@@ -67,10 +67,10 @@ const LoginScreen = () => {
       const response = await axios.post(
         `${BASE_URL}/login`,
         {
-          user: "111111111111",
-          password: "111111",
-          // user: username,
-          // password: password,
+          // user: "111111111111",
+          // password: "111111",
+          user: username,
+          password: password,
         },
         {
           headers: {
@@ -116,8 +116,7 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
