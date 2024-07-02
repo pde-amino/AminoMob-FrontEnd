@@ -10,6 +10,7 @@ import {
   Linking,
   Alert,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -116,14 +117,7 @@ const HomeScreen = () => {
     <SafeAreaView style={GlobalStyles.utama}>
       <ScrollView>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <View
-            style={{
-              backgroundColor: WARNA.primary,
-              height: 150,
-              width: "100%",
-              position: "absolute",
-            }}
-          >
+          <View style={styles.containerHeader}>
             <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
               <Path
                 fill="#0a78e2"
@@ -149,11 +143,11 @@ const HomeScreen = () => {
           </View>
         </View>
 
-        <View style={{ flex: 2 }}>
+        <View style={{ flex: 3 }}>
           <MySlider />
         </View>
 
-        <View style={{ flex: 4, paddingHorizontal: 20 }}>
+        <View style={{ flex: 6, paddingHorizontal: 20 }}>
           <Text style={GlobalStyles.h3}>Menu</Text>
           <FlatList
             data={Menus}
@@ -177,5 +171,14 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  containerHeader: {
+    backgroundColor: WARNA.primary,
+    height: 150,
+    width: "100%",
+    position: "absolute",
+  },
+});
 
 export default HomeScreen;
