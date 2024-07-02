@@ -42,9 +42,9 @@ export const PilihPoli = () => {
   const [datas, setDatas] = useState([]);
   const [value, setValue] = useState("Pilih Jam Periksa");
   const [value2, setValue2] = useState("Pilih Poliklinik");
-  const [isFocus, setIsFocus] = useState(false);
-  const [isFocus1, setIsFocus1] = useState(false);
-  const [isFocus2, setIsFocus2] = useState(false);
+  // const [isFocus, setIsFocus] = useState(false);
+  // const [isFocus1, setIsFocus1] = useState(false);
+  // const [isFocus2, setIsFocus2] = useState(false);
   const [hariPoli, setHariPoli] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -57,7 +57,6 @@ export const PilihPoli = () => {
 
   const [subMessMod, setSubMessMod] = useState("");
   const [messMod, setMessMod] = useState("Silahkan Pilih");
-  const [jamPeriksa, setJamPeriksa] = useState("Pilih Jam Periksa");
   const [dokter, setDokter] = useState("Pilih Dokter");
   const [kdDokter, setKdDokter] = useState("Pilih Dokter");
   const [poli, setPoli] = useState();
@@ -70,7 +69,6 @@ export const PilihPoli = () => {
   const [cancMod, setCancMod] = useState("Tidak");
 
   const [modalList, setModalList] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   const extractDay = (dateString) => {
     return dateString.split(" ")[0];
@@ -174,6 +172,7 @@ export const PilihPoli = () => {
   };
 
   const tglPeriksa = new Date(date).toISOString().split("T")[0];
+
   const getCurrentDateTime = () => {
     const now = new Date();
 
@@ -216,8 +215,8 @@ export const PilihPoli = () => {
         .then((response) => {
           navigation.replace("Booking Screen", response.data);
         })
-        .catch((response) => {
-          console.log("response error", response);
+        .catch((error) => {
+          console.error("response error", error);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
@@ -253,8 +252,8 @@ export const PilihPoli = () => {
         .then((response) => {
           navigation.replace("Booking Screen", response.data);
         })
-        .catch((response) => {
-          console.log("response error", response);
+        .catch((error) => {
+          console.error("response error", error);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
