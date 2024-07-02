@@ -4,7 +4,6 @@ import { Card } from "react-native-paper";
 
 const CardComponentArticel = ({ imgSource, title, description }) => {
   const [readMore, setReadMore] = useState(false);
-  const navigate = na;
   return (
     <Card style={styles.card}>
       <Image source={imgSource} style={styles.image} />
