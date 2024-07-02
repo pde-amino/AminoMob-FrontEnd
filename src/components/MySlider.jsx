@@ -1,3 +1,4 @@
+import React from "react";
 import {
   View,
   Image,
@@ -7,14 +8,11 @@ import {
   Linking,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import Carousel from "react-native-reanimated-carousel";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Carousel from "react-native-reanimated-carousel";
-
-const width = Dimensions.get("window");
 
 const dataCarousel = [
   {
@@ -43,36 +41,36 @@ const dataCarousel = [
       "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
-    id: 5,
+    id: 6,
     image:
       "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
 ];
 
 export default function MySlider() {
-  const { width } = useWindowDimensions(); //Agae dinamis sesuai perangkat
+  const { width } = useWindowDimensions();
 
   return (
     <View style={{ alignItems: "center" }}>
       <Carousel
-        // loop
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.98,
-          parallaxScrollingOffset: 100,
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: 60,
         }}
         width={wp(90)}
-        height={hp(25)}
-        // autoPlay={true}
+        height={hp(20)}
+        autoPlay={true}
         data={dataCarousel}
-        scrollAnimationDuration={3000}
+        scrollAnimationDuration={6000}
         onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() =>
               Linking.openURL("https://www.youtube.com/@RSJDDrAminoGondohutomo")
             }
-            style={styles.borderShadow}>
+            style={styles.borderShadow}
+          >
             <Image
               style={styles.imageCarousel}
               source={{
@@ -88,18 +86,17 @@ export default function MySlider() {
 
 const styles = StyleSheet.create({
   borderShadow: {
-    borderRadius: 50,
-    shadowColor: "gray",
+    borderRadius: 20,
+    shadowColor: "#000",
     shadowOffset: {
-      widh: 2,
-      height: 1,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 5,
-    shadowRadius: 2,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     elevation: 5,
-    borderTopWidth: 0,
-    borderLeftWidth: 0.2,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff",
+    marginHorizontal: 10,
   },
   imageCarousel: {
     width: "100%",

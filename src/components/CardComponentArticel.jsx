@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 const CardComponentArticel = ({ imgSource, title, description }) => {
   const [readMore, setReadMore] = useState(false);
@@ -24,8 +25,8 @@ const CardComponentArticel = ({ imgSource, title, description }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 120,
-    height: 200,
+    width: widthPercentageToDP(50),
+    height: widthPercentageToDP(45),
     margin: 10,
     borderRadius: 8,
     overflow: "hidden",

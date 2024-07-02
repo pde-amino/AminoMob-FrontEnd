@@ -50,7 +50,7 @@ export default GlobalStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 1,
     marginHorizontal: 10,
     width: "90%",
   },
