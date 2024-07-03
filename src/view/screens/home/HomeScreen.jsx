@@ -33,6 +33,7 @@ import { BASE_URL } from "../../../contex/Config";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import WebView from "react-native-webview";
 import CardComponentArticel from "../../../components/CardComponentArticel";
+import SendIntentAndroid from "react-native-send-intent";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -44,21 +45,31 @@ const HomeScreen = () => {
     Alert.alert(
       "Maaf",
       "Saat ini pendaftaran Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      [{ text: "OK", onPress: () => checkAndOpenApp() }]
+      [{ text: "OK", onPress: () => openOtherApp() }]
     );
   };
 
-  const checkAndOpenApp = async () => {
-    const packageName = "app.bpjs.mobile";
-    const appLink = `intent://${packageName}#Intent;scheme=package;end`;
-    const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
-
-    try {
-      await Linking.openURL(appLink);
-    } catch (error) {
-      Linking.openURL(playStoreLink);
-    }
+  const openOtherApp = () => {
+    SendIntentAndroid.openApp("app.bpjs.mobile")
+      .then((wasOpened) => {
+        console.log(`App ${wasOpened ? "was" : "was not"} opened`);
+      })
+      .catch((error) => {
+        console.error("Error opening app:", error);
+      });
   };
+
+  // const checkAndOpenApp = async () => {
+  //   const packageName = "app.bpjs.mobile";
+  //   const appLink = `intent://${packageName}#Intent;scheme=package;end`;
+  //   const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
+
+  //   try {
+  //     await Linking.openURL(appLink);
+  //   } catch (error) {
+  //     Linking.openURL(playStoreLink);
+  //   }
+  // };
 
   const Menus = [
     {
@@ -196,17 +207,14 @@ const styles = StyleSheet.create({
     width: "100%",
     position: "absolute",
   },
+  //   container: {
+  //     flex: 1,
+  //     backgroundColor: "#fff",
+  //   },
+  //   scrollView: {
+  //     flexDirection: "row",
+  //     flexWrap: "wrap",
+  //     justifyContent: "center",
+  //   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//   },
-//   scrollView: {
-//     flexDirection: "row",
-//     flexWrap: "wrap",
-//     justifyContent: "center",
-//   },
-// });
 export default HomeScreen;

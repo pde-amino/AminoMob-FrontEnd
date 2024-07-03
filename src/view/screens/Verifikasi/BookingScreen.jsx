@@ -40,19 +40,15 @@ const BookingScreen = () => {
   }, []);
 
   const data = route.params.data;
-  // console.log("ini data rouute:", data);
+  console.log("ini data rouute:", data);
   // console.log("ini data tgl periksa", data.tanggal_periksa);
-
-  const tglFormatted = new Date(data.tanggal_periksa)
-    .toISOString()
-    .split("T")[0];
 
   // Dummy data transaksi
   const transactionData = {
     noRM: data.no_rkm_medis,
     kdBook: data.kode_booking,
     nmPas: data.nm_pasien,
-    tglPeriksa: tglFormatted,
+    tglPeriksa: data.tanggal_periksa,
     jamPeriksa: data.jam_periksa,
     poliPeriksa: data.nm_poli,
     nmDokter: data.nm_dokter,

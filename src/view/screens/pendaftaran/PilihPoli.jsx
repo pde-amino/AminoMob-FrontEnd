@@ -190,81 +190,138 @@ export const PilihPoli = () => {
   };
 
   const postData = async () => {
+    let url, payload;
     if (kunjungan === "Poliklinik") {
-      await axios
-        .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
-          {
-            tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
-            id_pasien: dataPas.id_pasien,
-            no_rkm_medis: dataPas.no_rkm_medis,
-            tanggal_periksa: date.toISOString().split("T")[0],
-            jam_periksa:
-              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
-            kd_dokter: kdDokter,
-            kd_poli: kdPoli,
-            status_reg: "Belum",
-            jns_kunjungan: "Poli",
-            status_byr: "-",
-            jns_pas: dataPas.status_user,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth.user.token}`,
-            },
-          }
-        )
-        .then((response) => {
-          navigation.replace("Booking Screen", response.data);
-        })
-        .catch((error) => {
-          console.error("response error", error);
-          Alert.alert(
-            "Mohon Maaf",
-            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
-              date.toISOString().split("T")[0]
-            } di ${value2}`
-          );
-        });
+      url = `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`;
+      payload = {
+        id_pasien: dataPas.id_pasien,
+        no_rkm_medis: dataPas.no_rkm_medis,
+        tanggal_periksa: date.toISOString().split("T")[0],
+        jam_periksa:
+          value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+        kd_dokter: kdDokter,
+        kd_poli: kdPoli,
+        status_reg: "Belum",
+        jns_kunjungan: "Poli",
+        status_byr: "-",
+        jns_pas: dataPas.status_user,
+      };
     } else if (kunjungan === "Penunjang") {
-      await axios
-        .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/penunjang`,
-          {
-            tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
-            id_pasien: dataPas.id_pasien,
-            no_rkm_medis: dataPas.no_rkm_medis,
-            tanggal_periksa: date.toISOString().split("T")[0],
-            jam_periksa:
-              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
-            kd_dokter: kdDokter,
-            kd_poli: kdPoli,
-            status_reg: "Belum",
-            jns_kunjungan: "Penunjang",
-            status_byr: "-",
-            jns_pas: dataPas.status_user,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth.user.token}`,
-            },
-          }
-        )
-        .then((response) => {
-          navigation.replace("Booking Screen", response.data);
-        })
-        .catch((error) => {
-          console.error("response error", error);
-          Alert.alert(
-            "Mohon Maaf",
-            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
-              date.toISOString().split("T")[0]
-            } di ${value2}`
-          );
-        });
+      url = `${BASE_URL}/bookPeriksa/${auth.user.id}/penunjang`;
+      payload = {
+        id_pasien: dataPas.id_pasien,
+        no_rkm_medis: dataPas.no_rkm_medis,
+        tanggal_periksa: date.toISOString().split("T")[0],
+        jam_periksa:
+          value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+        kd_dokter: kdDokter,
+        kd_poli: kdPoli,
+        status_reg: "Belum",
+        jns_kunjungan: "Penunjang",
+        status_byr: "-",
+        jns_pas: dataPas.status_user,
+      };
     }
+
+    try {
+      const response = await axios.post(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.user.token}`,
+        },
+      });
+
+      console.log("Response data:", response.data.data.tanggal_periksa);
+
+      // Periksa apakah response.data memiliki properti yang diharapkan
+      if (response.data && response.data.data.tanggal_periksa) {
+        navigation.replace("Booking Screen", response.data);
+      } else {
+        throw new Error("Response data does not contain expected properties.");
+      }
+    } catch (error) {
+      console.error("Response error", error);
+      Alert.alert(
+        "Mohon Maaf",
+        `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+          date.toISOString().split("T")[0]
+        } di ${value2}`
+      );
+    }
+
+    // if (kunjungan === "Poliklinik") {
+    //   await axios
+    //     .post(
+    //       `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
+    //       {
+    //         id_pasien: dataPas.id_pasien,
+    //         no_rkm_medis: dataPas.no_rkm_medis,
+    //         tanggal_periksa: date.toISOString().split("T")[0],
+    //         jam_periksa:
+    //           value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+    //         kd_dokter: kdDokter,
+    //         kd_poli: kdPoli,
+    //         status_reg: "Belum",
+    //         jns_kunjungan: "Poli",
+    //         status_byr: "-",
+    //         jns_pas: dataPas.status_user,
+    //       },
+    //       {
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: `Bearer ${auth.user.token}`,
+    //         },
+    //       }
+    //     )
+    //     .then((response) => {
+    //       navigation.replace("Booking Screen", response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("response error", error);
+    //       Alert.alert(
+    //         "Mohon Maaf",
+    //         `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+    //           date.toISOString().split("T")[0]
+    //         } di ${value2}`
+    //       );
+    //     });
+    // } else if (kunjungan === "Penunjang") {
+    //   await axios
+    //     .post(
+    //       `${BASE_URL}/bookPeriksa/${auth.user.id}/penunjang`,
+    //       {
+    //         id_pasien: dataPas.id_pasien,
+    //         no_rkm_medis: dataPas.no_rkm_medis,
+    //         tanggal_periksa: date.toISOString().split("T")[0],
+    //         jam_periksa:
+    //           value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+    //         kd_dokter: kdDokter,
+    //         kd_poli: kdPoli,
+    //         status_reg: "Belum",
+    //         jns_kunjungan: "Penunjang",
+    //         status_byr: "-",
+    //         jns_pas: dataPas.status_user,
+    //       },
+    //       {
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: `Bearer ${auth.user.token}`,
+    //         },
+    //       }
+    //     )
+    //     .then((response) => {
+    //       navigation.replace("Booking Screen", response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("response error", error);
+    //       Alert.alert(
+    //         "Mohon Maaf",
+    //         `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+    //           date.toISOString().split("T")[0]
+    //         } di ${value2}`
+    //       );
+    //     });
+    // }
   };
 
   const pilihJamPeriksa = () => {
