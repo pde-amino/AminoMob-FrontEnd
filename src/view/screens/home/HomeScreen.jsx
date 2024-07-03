@@ -103,28 +103,6 @@ const HomeScreen = () => {
     Linking.openURL("https://wa.me/6281225204301");
   };
 
-  const WebViewCard = () => {
-    return (
-      <ScrollView horizontal={true} style={{ height: 50, width: wp(100) }}>
-        <View style={{ height: 100, width: wp(20), margin: 5 }}>
-          <WebView
-            source={{ uri: "https://www.rajutankoding.com" }}
-            style={{ flex: 1 }}
-          />
-        </View>
-        <View style={{ height: 50, width: wp(20), margin: 5 }}>
-          <WebView
-            source={{
-              uri: "https://www.yukberbudidaya.my.id/2024/01/pakan-ikan-koi-terbaik-memberi-nutrisi.html",
-            }}
-            style={{ flex: 1 }}
-          />
-        </View>
-        {/* Tambahkan lebih banyak View dan WebView jika diperlukan */}
-      </ScrollView>
-    );
-  };
-
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <ScrollView>
@@ -138,7 +116,7 @@ const HomeScreen = () => {
               ></Path>
             </Svg>
           </View>
-          <View style={{ marginVertical: 50 }}>
+          <View style={{ marginTop: 40, marginBottom: 20 }}>
             <View style={GlobalStyles.headerHomeContainer}>
               <Image
                 source={require("../../../../assets/logo-app.png")}
@@ -155,7 +133,14 @@ const HomeScreen = () => {
           </View>
         </View>
 
-        <View style={{ flex: 3 }}>
+        <View
+          style={{
+            flex: 2,
+            width: wp(90),
+            // alignContent: "center",
+            alignSelf: "center",
+          }}
+        >
           <MySlider />
         </View>
 
@@ -177,24 +162,26 @@ const HomeScreen = () => {
               />
             )}
           />
+          <Text style={[GlobalStyles.h3, { paddingTop: 10 }]}>Artikel</Text>
+
+          <ScrollView horizontal={true} style={{ gap: 4 }}>
+            <CardComponentArticel
+              imgSource={{ uri: "https://via.placeholder.com/150" }}
+              title="Sample Title"
+              description="This is a sample description that will be truncated if it's too long. This is a sample description that will be truncated if it's too long."
+            />
+            <CardComponentArticel
+              imgSource={{ uri: "https://via.placeholder.com/150" }}
+              title="Another Title"
+              description="Another sample description that will be truncated."
+            />
+            <CardComponentArticel
+              imgSource={{ uri: "https://via.placeholder.com/150" }}
+              title="Another Title"
+              description="Another sample description that will be truncated."
+            />
+          </ScrollView>
         </View>
-        <ScrollView horizontal={true} style={{ gap: 4 }}>
-          <CardComponentArticel
-            imgSource={{ uri: "https://via.placeholder.com/150" }}
-            title="Sample Title"
-            description="This is a sample description that will be truncated if it's too long. This is a sample description that will be truncated if it's too long."
-          />
-          <CardComponentArticel
-            imgSource={{ uri: "https://via.placeholder.com/150" }}
-            title="Another Title"
-            description="Another sample description that will be truncated."
-          />
-          <CardComponentArticel
-            imgSource={{ uri: "https://via.placeholder.com/150" }}
-            title="Another Title"
-            description="Another sample description that will be truncated."
-          />
-        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
