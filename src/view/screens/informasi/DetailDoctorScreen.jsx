@@ -46,6 +46,8 @@ const getSpecializationText = (doctorName) => {
     return "Spesialis Bedah";
   } else if (doctorName.includes("Sp.JP")) {
     return "Spesialis Jantung & Pembuluh Darah";
+  } else if (doctorName.includes("S. Psi" && "Psi")) {
+    return "Psikolog";
   } else {
     return "Umum";
   }
@@ -73,7 +75,7 @@ export default function DetailDoctorScreen() {
       <View style={styles.containerImage}>
         <Avatar.Image
           source={{ uri: data.image }}
-          size={100}
+          size={180}
           style={{
             backgroundColor: WARNA.primary,
           }}
@@ -103,12 +105,17 @@ export default function DetailDoctorScreen() {
           {/* <AirbnbRating showRating={false} size={18} /> */}
         </View>
       </View>
-      <View style={{ marginTop: 10, gap: 8 }}>
+
+      <View style={{ marginTop: 10 }}>
         <Text style={[GlobalStyles.h3, { paddingHorizontal: 20 }]}>
           Jadwal Praktek
         </Text>
-        <Text style={[GlobalStyles.h4, { paddingHorizontal: 20 }]}>Pagi</Text>
 
+        <Text
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
+          Pagi
+        </Text>
         <FlatList
           style={{ width: "100%", paddingLeft: 15 }}
           data={data.jadwal_praktek.filter((item) => item.waktu === "Pagi")}
@@ -128,8 +135,11 @@ export default function DetailDoctorScreen() {
           keyExtractor={(item, index) => index.toString()}
         />
 
-        <Text style={[GlobalStyles.h4, { paddingHorizontal: 20 }]}>Sore</Text>
-
+        <Text
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
+          Sore
+        </Text>
         <FlatList
           style={{ width: "100%", paddingLeft: 15 }}
           data={data.jadwal_praktek.filter((item) => item.waktu === "Sore")}
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
     width: wp(25),
   },
   containerImage: {
-    height: hp(15),
+    height: hp(25),
     alignItems: "center",
     justifyContent: "flex-end",
     flexDirection: "column",

@@ -184,7 +184,7 @@ export default function HomeTabs() {
   const navigation = useNavigation();
   // console.log("AuthTabs :", data);
 
-  const paksaLogin = () => {
+  const paksaLogout = () => {
     navigation.replace("Login Screen");
   };
 
@@ -207,7 +207,7 @@ export default function HomeTabs() {
         Alert.alert(
           "Maaf",
           "Akun Anda login menggunakan perangkat lain, hanya bisa login dengan satu perangkat",
-          [{ text: "OK", onPress: () => paksaLogin() }]
+          [{ text: "OK", onPress: () => paksaLogout() }]
         );
         return;
       }

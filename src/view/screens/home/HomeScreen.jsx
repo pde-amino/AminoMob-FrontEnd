@@ -18,12 +18,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-import MenuItemComponent from "../../../components/MenuItemComponent";
-import SliderComponent from "../../../components/SliderComponent ";
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
-import BottomSheet from "../../../components/BottomSheet";
-import ConfirmModal from "../../../components/ConfirmModal";
 import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
 import BannerComponent from "../../../components/BannerComponent";
@@ -45,31 +41,51 @@ const HomeScreen = () => {
     Alert.alert(
       "Maaf",
       "Saat ini pendaftaran Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      [{ text: "OK", onPress: () => openOtherApp() }]
+      [{ text: "OK", onPress: () => checkAndOpenApp() }]
     );
   };
 
-  const openOtherApp = () => {
-    SendIntentAndroid.openApp("app.bpjs.mobile")
-      .then((wasOpened) => {
-        console.log(`App ${wasOpened ? "was" : "was not"} opened`);
-      })
-      .catch((error) => {
-        console.error("Error opening app:", error);
-      });
-  };
-
-  // const checkAndOpenApp = async () => {
-  //   const packageName = "app.bpjs.mobile";
-  //   const appLink = `intent://${packageName}#Intent;scheme=package;end`;
-  //   const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
-
+  // const checkMJKN = async () => {
   //   try {
-  //     await Linking.openURL(appLink);
+  //     const isInstalled = await Linking.canOpenURL("app.bpjs.mobile://");
+  //     if (!isInstalled) {
+  //       Linking.openURL(
+  //         "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
+  //       );
+  //     }
   //   } catch (error) {
-  //     Linking.openURL(playStoreLink);
+  //     console.error("Error checking if app is installed:", error);
   //   }
   // };
+
+  // const checkMJKN = () => {
+  //   SendIntentAndroid.isAppInstalled("app.bpjs.mobile")
+  //     .then((isInstalled) => {
+  //       if (!isInstalled) {
+  //         Linking.openURL(
+  //           "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
+  //         );
+  //       } else {
+  //         SendIntentAndroid.openApp("app.bpjs.mobile");
+  //         // .then((wasOpened) => {})
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking if app is installed:", error);
+  //     });
+  // };
+
+  const checkAndOpenApp = async () => {
+    const packageName = "app.bpjs.mobile";
+    const appLink = `intent://${packageName}#Intent;scheme=package;end`;
+    const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
+
+    try {
+      await Linking.openURL(appLink);
+    } catch (error) {
+      Linking.openURL(playStoreLink);
+    }
+  };
 
   const Menus = [
     {
