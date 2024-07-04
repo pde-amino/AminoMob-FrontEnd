@@ -21,7 +21,6 @@ import Svg, { Path } from "react-native-svg";
 import MySlider from "../../../components/MySlider";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import CardComponentArticel from "../../../components/CardComponentArticel";
-import SendIntentAndroid from "react-native-send-intent";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -32,8 +31,6 @@ const HomeScreen = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    // Fetch data dan set state setFilteredData
-    // Setelah fetch selesai, set refreshing ke false
     setRefreshing(false);
   };
 
@@ -194,7 +191,6 @@ const HomeScreen = () => {
           ></Path>
         </Svg>
       </View>
-      {/* <View style={{ flex: 4, alignContent: "center" }}> */}
       <View style={{ flex: 4, alignContent: "center" }}>
         <FlatList
           data={Menus}
@@ -228,7 +224,6 @@ const HomeScreen = () => {
           }
           ListEmptyComponent={renderEmptyComponent}
         />
-        {/* </View> */}
       </View>
     </SafeAreaView>
   );
