@@ -63,7 +63,7 @@ export default function MySlider() {
         autoPlay={true}
         data={dataCarousel}
         scrollAnimationDuration={6000}
-        onSnapToItem={(index) => console.log("current index:", index)}
+        // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() =>

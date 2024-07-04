@@ -21,6 +21,7 @@ import Svg, { Path } from "react-native-svg";
 import MySlider from "../../../components/MySlider";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import CardComponentArticel from "../../../components/CardComponentArticel";
+import SendIntentAndroid from "react-native-send-intent";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -43,6 +44,36 @@ const HomeScreen = () => {
       [{ text: "OK", onPress: () => checkAndOpenApp() }]
     );
   };
+
+  // const checkMJKN = async () => {
+  //   try {
+  //     const isInstalled = await Linking.canOpenURL("app.bpjs.mobile://");
+  //     if (!isInstalled) {
+  //       Linking.openURL(
+  //         "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking if app is installed:", error);
+  //   }
+  // };
+
+  // const checkMJKN = () => {
+  //   SendIntentAndroid.isAppInstalled("app.bpjs.mobile")
+  //     .then((isInstalled) => {
+  //       if (!isInstalled) {
+  //         Linking.openURL(
+  //           "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
+  //         );
+  //       } else {
+  //         SendIntentAndroid.openApp("app.bpjs.mobile");
+  //         // .then((wasOpened) => {})
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error checking if app is installed:", error);
+  //     });
+  // };
 
   const checkAndOpenApp = async () => {
     const packageName = "app.bpjs.mobile";

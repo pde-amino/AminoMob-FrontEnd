@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Dimensions, View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
@@ -32,11 +32,9 @@ const TextInputIconComponent = ({
   password = false,
   value = "",
 }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(value);
   const [error, setError] = useState("");
-  const [secureTextEntry, setSecureTextEntry] = useState(
-    password ? true : false
-  );
+  const [secureTextEntry, setSecureTextEntry] = useState(password);
 
   const handleChange = (input) => {
     setText(input);
@@ -68,7 +66,7 @@ const TextInputIconComponent = ({
         activeUnderlineColor={WARNA.primary}
         label={label}
         placeholder={placeholder}
-        value={value}
+        value={text}
         onChangeText={handleChange}
         secureTextEntry={secureTextEntry}
         right={

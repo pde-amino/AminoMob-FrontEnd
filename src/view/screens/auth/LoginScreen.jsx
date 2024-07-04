@@ -102,13 +102,15 @@ const LoginScreen = () => {
             "Maaf",
             "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
           );
+        } else {
+          Alert.alert("Ups!", "No HP atau password Anda salah");
         }
         setLoading(false);
       } catch (error) {
         Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       }
-      console.log("Login Error:", error);
-      setLoading(false);
+      // console.log("Login Error:", error);
+      // setLoading(false);
     }
   };
 
@@ -121,7 +123,8 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
@@ -129,8 +132,8 @@ const LoginScreen = () => {
           </View>
           <View style={{ gap: 8, marginBottom: 12 }}>
             <TextInputIconComponent
-              label="Nomor HP/ Nama Lengkap"
-              placeholder="Masukkan salah satu"
+              label="Nomor HP"
+              placeholder="Masukkan No HP Anda"
               value={username}
               type={"username"}
               onChangeText={handleUsernameChange}
@@ -158,7 +161,7 @@ const LoginScreen = () => {
           <View style={{ flexDirection: "row" }}>
             <Text style={GlobalStyles.textBiasa}>Belum punya akun?</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-              <Text style={GlobalStyles.textLink}>Daftar Akun Sekarang</Text>
+              <Text style={GlobalStyles.textLink}> Daftar Akun Sekarang</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

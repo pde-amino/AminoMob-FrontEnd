@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   FlatList,
   RefreshControl,
+  ScrollView,
+  Image,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -21,11 +23,13 @@ const Item = ({ item }) => (
     <View style={{ flexDirection: "row", gap: 8 }}>
       <View>
         <Text>No.Telp : </Text>
+        <Text>Hubungan : </Text>
         <Text>Pekerjaan : </Text>
         <Text>Tgl Lahir : </Text>
       </View>
       <View>
         <Text> {item.no_telp}</Text>
+        <Text> {item.status_user}</Text>
         <Text> {item.pekerjaan}</Text>
         <Text> {item.tgl_lahir}</Text>
       </View>
@@ -111,7 +115,7 @@ export default function InfoListPasien() {
             color={WARNA.primary}
             size={"large"}
           />
-        ) : dataPasien.length > 0 ? (
+        ) : dataPasien ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}
@@ -122,7 +126,33 @@ export default function InfoListPasien() {
             }
           />
         ) : (
-          <Text>Belum ada data pasien sebelumnya, silakan tambah data</Text>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <View style={{ alignItems: "center", alignContent: "center" }}>
+              <Image
+                style={{
+                  width: "80%",
+                  resizeMode: "contain",
+                }}
+                source={require("../../../../assets/no-data.png")}
+              />
+              <Text
+                style={[
+                  GlobalStyles.h4,
+                  {
+                    fontWeight: "normal",
+                    maxWidth: "85%",
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                Belum ada data pasien, silakan tambah data atau refresh
+              </Text>
+            </View>
+          </ScrollView>
         )}
       </View>
 

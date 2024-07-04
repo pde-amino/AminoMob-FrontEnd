@@ -184,9 +184,7 @@ export default function HomeTabs() {
   const navigation = useNavigation();
   // console.log("AuthTabs :", data);
 
-  const paksaLogin = () => {
-    AsyncStorage.removeItem("userInfo");
-    logout();
+  const paksaLogout = () => {
     navigation.replace("Login Screen");
   };
 
@@ -202,11 +200,16 @@ export default function HomeTabs() {
       console.log("Fetch cek login data:", response.data);
     } catch (error) {
       console.error("Error fetching user data:", error.message);
-      if (error.message === "Request failed with status code 401") {
+      if (
+        error.message === "Request failed with status code 401" ||
+        error.messages.error === "Token tidak valid atau tidak ditemukan"
+      ) {
+        AsyncStorage.removeItem("userInfo");
+        logout();
         Alert.alert(
           "Maaf",
-          "Ada yang login menggunakan perangkat lain, hanya bisa login dengan satu perangkat",
-          [{ text: "OK", onPress: () => paksaLogin() }]
+          "Akun Anda login menggunakan perangkat lain, hanya bisa login dengan satu perangkat",
+          [{ text: "OK", onPress: () => paksaLogout() }]
         );
         return;
       }
