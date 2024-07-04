@@ -26,7 +26,12 @@ const InformasiTempatTidur = () => {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/infoTT`)
+      .get(`${BASE_URL}/infoTT`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "pd3@mino347",
+        },
+      })
       .then((response) => {
         const data = response.data.data_bed;
         setFilteredData(data);

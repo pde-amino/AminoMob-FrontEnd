@@ -51,6 +51,8 @@ const ProfileScreen = () => {
     try {
       const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
         headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "pd3@mino347",
           Authorization: `Bearer ${auth.user.token}`,
         },
       });
@@ -113,8 +115,7 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -152,6 +153,14 @@ const ProfileScreen = () => {
             )}
           </ScrollView>
         )}
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={GlobalStyles.btnContainer}>
+          <ButtonSecondary
+            title={"Lapor Bos"}
+            onPress={() => navigation.replace("Web View")}
+          />
+        </View>
       </View>
       <View style={{ flex: 1 }}>
         <View style={GlobalStyles.btnContainer}>

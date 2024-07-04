@@ -79,7 +79,12 @@ export const PilihPoli = () => {
   const getPoli = () => {
     if (kunjungan === "Poliklinik") {
       axios
-        .get(`${BASE_URL}/jadwalpoli/${extractDay(hariPoli)}/${value}`)
+        .get(`${BASE_URL}/jadwalpoli/${extractDay(hariPoli)}/${value}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        })
         .then((response) => {
           if (response.data.status === false) {
             setDatas(null);
@@ -104,7 +109,12 @@ export const PilihPoli = () => {
         });
     } else if (kunjungan === "Penunjang") {
       axios
-        .get(`${BASE_URL}/jadwalpenunjang/${extractDay(hariPoli)}/${value}`)
+        .get(`${BASE_URL}/jadwalpenunjang/${extractDay(hariPoli)}/${value}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        })
         .then((response) => {
           if (response.data.status === false) {
             setDatas(null);
@@ -160,20 +170,6 @@ export const PilihPoli = () => {
 
   const handleRegister = () => {
     setButtomSheet(true);
-    // const formattedDate = date.toISOString().split("T")[0];
-    // const hours = date.getHours().toString().padStart(2, "0");
-    // const minutes = date.getMinutes().toString().padStart(2, "0");
-    // const seconds = date.getSeconds().toString().padStart(2, "0");
-    // const formattedTime = `${hours}:${minutes}:${seconds}`;
-    // const tglBooking = new Date();
-    // console.log("Ajukan booking: ", {
-    //   formattedDate: formattedDate,
-    //   formattedTime: formattedTime,
-    //   value: value,
-    //   value1: value1,
-    //   value2: value2,
-    //   tglBooking: tglBooking.toISOString().split("T")[0],
-    // });
   };
 
   const tglPeriksa = new Date(date).toISOString().split("T")[0];
@@ -212,6 +208,7 @@ export const PilihPoli = () => {
           {
             headers: {
               "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
               Authorization: `Bearer ${auth.user.token}`,
             },
           }
@@ -249,6 +246,7 @@ export const PilihPoli = () => {
           {
             headers: {
               "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
               Authorization: `Bearer ${auth.user.token}`,
             },
           }
@@ -282,7 +280,15 @@ Jam Sore (14:00:00 - 18:00:00)`);
   const pilihDokter = () => {
     try {
       axios
-        .get(`${BASE_URL}/jadwaldok/${kdPoli}/${extractDay(hariPoli)}/${value}`)
+        .get(
+          `${BASE_URL}/jadwaldok/${kdPoli}/${extractDay(hariPoli)}/${value}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
+            },
+          }
+        )
         .then((response) => {
           const dokters = response.data.data_dokter.map((item) => {
             return {

@@ -266,6 +266,7 @@ export const TambahPasien = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`,
           },
         }
@@ -327,8 +328,7 @@ export const TambahPasien = () => {
                 width: "100%",
                 marginLeft: 40,
                 // marginVertical: 8,
-              }}
-            >
+              }}>
               <Text style={GlobalStyles.h4}>Isi semuanya lur</Text>
             </View>
             <View style={styles.containerDrop}>

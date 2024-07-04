@@ -194,6 +194,8 @@ export default function HomeTabs() {
     try {
       const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
         headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "pd3@mino347",
           Authorization: `Bearer ${auth.user.token}`,
         },
       });
@@ -230,8 +232,7 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },

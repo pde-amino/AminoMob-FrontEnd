@@ -1,31 +1,39 @@
-import React, { useState } from "react";
-import { ScrollView, RefreshControl } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, BackHandler, Platform } from "react-native";
 import { WebView } from "react-native-webview";
-import { Dimensions } from "react-native";
-
-const { height } = Dimensions.get("window");
+import { useNavigation } from "@react-navigation/native";
 
 const WebViewScreen = () => {
-  const [refreshing, setRefreshing] = useState(false);
+  const webViewRef = useRef(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const navigation = useNavigation();
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    // Logika refresh data di sini
-    setRefreshing(false);
-  };
+  useEffect(() => {
+    const onBackPress = () => {
+      if (canGoBack) {
+        webViewRef.current.goBack();
+        return true;
+      } else {
+        navigation.navigate("Home Screen");
+        return true;
+      }
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    };
+  }, [canGoBack]);
 
   return (
-    // <ScrollView
-    //   refreshControl={
-    //     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    //   }>
-    <WebView
-      style={{ height }}
-      source={{ uri: "http://192.168.5.5:8080" }}
-      // Anda juga dapat menambahkan properti lain untuk WebView di sini
-      // Contoh: onLoadStart, onLoadEnd, onError, dll.
-    />
-    // </ScrollView>
+    <View style={{ flex: 1 }}>
+      <WebView
+        ref={webViewRef}
+        source={{ uri: "http://103.47.60.195:5921/mobileLaporBoss/" }}
+        onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
+      />
+    </View>
   );
 };
 

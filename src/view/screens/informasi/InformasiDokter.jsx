@@ -35,7 +35,12 @@ const InformasiDokter = () => {
     // Fetch initial data
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/poli`);
+        const response = await axios.get(`${BASE_URL}/poli`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        });
         setDataPoli(response.data.daftar_poli || []); // Tambahkan fallback jika daftar_poli undefined
         setFilteredData(response.data.daftar_poli);
         setLoading(false);

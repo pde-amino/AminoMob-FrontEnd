@@ -64,29 +64,34 @@ const LoginScreen = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${BASE_URL}/login`,
-        {
-          // user: "111111111111",
-          // password: "111111",
-          user: username,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "pd3@mino347",
+      const response = await axios
+        .post(
+          `${BASE_URL}/login`,
+          {
+            // user: "111111111111",
+            // password: "111111",
+            user: username,
+            password: password,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
+            },
+          }
+        )
+        .then(async (response) => {
+          const userInfo = response.data;
 
-      const userInfo = response.data;
-
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-      setAuth(userInfo);
-      console.log("ini user info:", userInfo);
-      setLoading(false);
-      navigation.replace("Home Screen");
+          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setAuth(userInfo);
+          console.log("ini user info:", userInfo);
+          setLoading(false);
+          navigation.replace("Home Screen");
+        })
+        .catch(() => {
+          Alert.alert("Maaf", "No HP atau Password salah.");
+        });
     } catch (error) {
       try {
         if (error == "AxiosError: Request failed with status code 500") {
