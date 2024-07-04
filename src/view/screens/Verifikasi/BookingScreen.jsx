@@ -13,8 +13,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AuthContex } from "../../../contex/AuthProvider";
-import axios from "axios";
-import { BASE_URL } from "../../../contex/Config";
 
 const { width } = Dimensions.get("window");
 
@@ -41,9 +39,7 @@ const BookingScreen = () => {
 
   const data = route.params.data;
   console.log("ini data rouute:", data);
-  // console.log("ini data tgl periksa", data.tanggal_periksa);
 
-  // Dummy data transaksi
   const transactionData = {
     noRM: data.no_rkm_medis,
     kdBook: data.kode_booking,
@@ -54,7 +50,6 @@ const BookingScreen = () => {
     nmDokter: data.nm_dokter,
   };
 
-  // Fungsi untuk menangani tombol kembali ke halaman utama
   const handleBackToHome = () => {
     navigation.replace("Home Screen");
   };
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    overflow: "hidden", // Overflow hidden untuk memotong konten yang keluar dari batas container
+    overflow: "hidden",
   },
   detailsContainer: {
     backgroundColor: "white",

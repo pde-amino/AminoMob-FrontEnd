@@ -45,36 +45,6 @@ const HomeScreen = () => {
     );
   };
 
-  // const checkMJKN = async () => {
-  //   try {
-  //     const isInstalled = await Linking.canOpenURL("app.bpjs.mobile://");
-  //     if (!isInstalled) {
-  //       Linking.openURL(
-  //         "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error checking if app is installed:", error);
-  //   }
-  // };
-
-  // const checkMJKN = () => {
-  //   SendIntentAndroid.isAppInstalled("app.bpjs.mobile")
-  //     .then((isInstalled) => {
-  //       if (!isInstalled) {
-  //         Linking.openURL(
-  //           "https://play.google.com/store/apps/details?id=app.bpjs.mobile"
-  //         );
-  //       } else {
-  //         SendIntentAndroid.openApp("app.bpjs.mobile");
-  //         // .then((wasOpened) => {})
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error checking if app is installed:", error);
-  //     });
-  // };
-
   const checkAndOpenApp = async () => {
     const packageName = "app.bpjs.mobile";
     const appLink = `intent://${packageName}#Intent;scheme=package;end`;
@@ -151,21 +121,7 @@ const HomeScreen = () => {
   const ListHeaderComponent = () => (
     <View>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View
-          style={{
-            backgroundColor: WARNA.primary,
-            height: 150,
-            width: "100%",
-            position: "absolute",
-          }}>
-          <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
-            <Path
-              fill="#0a78e2"
-              fill-opacity="1"
-              d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
-          </Svg>
-        </View>
-        <View style={{ marginTop: 40, marginBottom: 20 }}>
+        <View style={{ marginTop: 10, marginBottom: 20 }}>
           <View style={GlobalStyles.headerHomeContainer}>
             <Image
               source={require("../../../../assets/logo-app.png")}
@@ -174,7 +130,8 @@ const HomeScreen = () => {
             />
             <TouchableOpacity
               style={GlobalStyles.btnRedSmall}
-              onPress={darurat}>
+              onPress={darurat}
+            >
               <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
             </TouchableOpacity>
           </View>
@@ -186,7 +143,8 @@ const HomeScreen = () => {
           flex: 2,
           width: wp(90),
           alignSelf: "center",
-        }}>
+        }}
+      >
         <MySlider />
       </View>
 
@@ -197,14 +155,19 @@ const HomeScreen = () => {
   );
 
   const ListFooterComponent = () => (
-    <FlatList
-      data={articles}
-      renderItem={renderArticleItem}
-      keyExtractor={(item, index) => item.id.toString()}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ gap: 4 }}
-    />
+    <>
+      <View style={{ flex: 4, paddingHorizontal: 20, marginTop: 10 }}>
+        <Text style={GlobalStyles.h3}>Artikel</Text>
+      </View>
+      <FlatList
+        data={articles}
+        renderItem={renderArticleItem}
+        keyExtractor={(item, index) => item.id.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ gap: 4 }}
+      />
+    </>
   );
 
   const renderEmptyComponent = () => (
@@ -215,23 +178,49 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 4, paddingHorizontal: 20 }}>
+      <View
+        style={{
+          backgroundColor: WARNA.primary,
+          height: 150,
+          width: "100%",
+          position: "absolute",
+        }}
+      >
+        <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
+          <Path
+            fill="#0a78e2"
+            fill-opacity="1"
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+          ></Path>
+        </Svg>
+      </View>
+      {/* <View style={{ flex: 4, alignContent: "center" }}> */}
+      <View style={{ flex: 4, alignContent: "center" }}>
         <FlatList
           data={Menus}
           ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={ListFooterComponent}
           renderItem={({ item }) => (
-            <CardButtonComponent
-              data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
-              icon={item.icon}
-              title={item.title}
-              description={item.desc}
-              onPress={item.to}
-              colorIcon={item.color}
-              imgSource={item.source}
-              warna={item.warna}
-              alertData={item.alert}
-            />
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CardButtonComponent
+                data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
+                icon={item.icon}
+                title={item.title}
+                description={item.desc}
+                onPress={item.to}
+                colorIcon={item.color}
+                imgSource={item.source}
+                warna={item.warna}
+                alertData={item.alert}
+              />
+            </View>
           )}
           keyExtractor={(item) => item.kd_poli.toString()}
           refreshControl={
@@ -239,6 +228,7 @@ const HomeScreen = () => {
           }
           ListEmptyComponent={renderEmptyComponent}
         />
+        {/* </View> */}
       </View>
     </SafeAreaView>
   );
