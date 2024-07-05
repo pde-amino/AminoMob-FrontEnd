@@ -266,6 +266,7 @@ export const TambahPasien = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`,
           },
         }

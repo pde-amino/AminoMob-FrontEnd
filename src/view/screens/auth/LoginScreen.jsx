@@ -27,7 +27,6 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
   const { auth, setAuth } = useContext(AuthContex);
-  // console.log("Ini Data Auth :", auth);
 
   const handleUsernameChange = (input) => {
     setUsername(input);
@@ -47,53 +46,45 @@ const LoginScreen = () => {
     }
   };
 
-  const [userInfo, setUserInfo] = useState();
-  // const loginData = {
-  //   status: "Sudah",
-  //   // status: "Belum",
-  //   // status: "Proses",
-  //   ids: 7,
-  //   token:
-  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTY5NDM5MzcsImV4cCI6MTcxNzAzMDMzNywidWlkIjoiNSJ9.1OFftMGOGHNhcYVPc57UNROfsH0nte6bftRxtEkMTVg",
-  //   role: "user",
-  // };
-
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${BASE_URL}/login`,
-        {
-          // user: "111111111111",
-          // password: "111111",
-          user: username,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "pd3@mino347",
+      const response = await axios
+        .post(
+          `${BASE_URL}/login`,
+          {
+            user: username,
+            password: password,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
+            },
+          }
+        )
+        .then(async (response) => {
+          const userInfo = response.data;
 
-      const userInfo = response.data;
-
-      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-      setAuth(userInfo);
-      console.log("ini user info:", userInfo);
-      setLoading(false);
-      navigation.replace("Home Screen");
+          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setAuth(userInfo);
+          console.log("ini user info:", userInfo);
+          setLoading(false);
+          navigation.replace("Home Screen");
+        })
+        .catch(() => {
+          Alert.alert("Maaf", "No HP atau Password salah.");
+          setLoading(false);
+        });
     } catch (error) {
       console.log("error login:", error.response.data);
       try {
         if (error == "AxiosError: Request failed with status code 500") {
-          // setAuth(userInfo);
-          // navigation.replace("Amino Care");
           Alert.alert(
             "Maaf",
             "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
           );
+          setLoading(false);
         } else {
           Alert.alert("Ups!", "No HP atau password Anda salah");
         }
@@ -101,8 +92,6 @@ const LoginScreen = () => {
       } catch (error) {
         Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       }
-      // console.log("Login Error:", error);
-      // setLoading(false);
     }
   };
 

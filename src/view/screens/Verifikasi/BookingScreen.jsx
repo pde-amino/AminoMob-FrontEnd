@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,15 +6,17 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
+import { Button } from "react-native-paper";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AuthContex } from "../../../contex/AuthProvider";
-import axios from "axios";
-import { BASE_URL } from "../../../contex/Config";
+import * as MediaLibrary from "expo-media-library";
+import { captureRef } from "react-native-view-shot";
 
 const { width } = Dimensions.get("window");
 
@@ -26,6 +28,7 @@ const BookingScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [adaRM, setAdaRM] = useState(true);
+  const viewRef = useRef();
 
   const { auth } = useContext(AuthContex);
 
@@ -41,9 +44,7 @@ const BookingScreen = () => {
 
   const data = route.params.data;
   console.log("ini data rouute:", data);
-  // console.log("ini data tgl periksa", data.tanggal_periksa);
 
-  // Dummy data transaksi
   const transactionData = {
     noRM: data.no_rkm_medis,
     kdBook: data.kode_booking,
@@ -54,9 +55,33 @@ const BookingScreen = () => {
     nmDokter: data.nm_dokter,
   };
 
-  // Fungsi untuk menangani tombol kembali ke halaman utama
   const handleBackToHome = () => {
     navigation.replace("Home Screen");
+  };
+
+  const saveImageToGallery = async () => {
+    try {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        alert("diperlukan Izin untuk mengakses perpustakaan media!");
+        return;
+      }
+
+      const uri = await captureRef(viewRef, {
+        format: "png",
+        quality: 1.0,
+      });
+
+      const asset = await MediaLibrary.createAssetAsync(uri);
+      await MediaLibrary.createAlbumAsync("Download", asset, false);
+      Alert.alert("Tersimpan", `Gambar berhasil tersimpan di galeri!`);
+    } catch (error) {
+      Alert.alert(
+        "Gagal menyimpan",
+        "Aplikasi tidak memiliki ijin untuk menyimpan gambar di galeri!"
+      );
+      console.error("Error saving image:", error);
+    }
   };
 
   return (
@@ -73,7 +98,7 @@ const BookingScreen = () => {
         {/* Detail transaksi */}
         <View style={styles.container}>
           <ScrollView style={{ flex: 1, borderRadius: 20 }}>
-            <View style={styles.detailsContainer}>
+            <View style={styles.detailsContainer} ref={viewRef}>
               <View style={{ gap: 8 }}>
                 {adaRM ? (
                   <View>
@@ -132,12 +157,26 @@ const BookingScreen = () => {
                   periksa
                 </Text>
               </View>
-              <ButtonPrimary
-                title={"Kembali ke Halaman Utama"}
-                onPress={handleBackToHome}
-              />
             </View>
           </ScrollView>
+        </View>
+
+        <View style={styles.floatingButton}>
+          <Button
+            mode="outlined"
+            title={"Kembali ke Halaman Utama"}
+            onPress={handleBackToHome}
+          >
+            Selesai
+          </Button>
+          <Button
+            mode="contained"
+            icon="camera"
+            title="Simpan Gambar"
+            onPress={saveImageToGallery}
+          >
+            Simpan
+          </Button>
         </View>
       </View>
     </SafeAreaView>
@@ -153,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    overflow: "hidden", // Overflow hidden untuk memotong konten yang keluar dari batas container
+    overflow: "hidden",
   },
   detailsContainer: {
     backgroundColor: "white",
@@ -173,6 +212,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
     fontWeight: "bold",
+  },
+  floatingButton: {
+    gap: 10,
+    position: "absolute",
+    bottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

@@ -98,7 +98,8 @@ const VerifikasiPage = () => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${token}`, // Menambahkan token ke header
           },
         }
@@ -123,8 +124,7 @@ const VerifikasiPage = () => {
           <Text style={GlobalStyles.h4}>Ambil foto Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri1 && styles.cardWithPhoto]}
-            onPress={() => uploadImage("ktp")}
-          >
+            onPress={() => uploadImage("ktp")}>
             {photoUri1 && (
               <Image source={{ uri: photoUri1 }} style={styles.previewImage} />
             )}
@@ -143,8 +143,7 @@ const VerifikasiPage = () => {
           <Text style={GlobalStyles.h4}>Ambil Selfie dengan Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri2 && styles.cardWithPhoto]} // Tambahkan style khusus jika ada foto di state
-            onPress={() => uploadImage("swafoto")}
-          >
+            onPress={() => uploadImage("swafoto")}>
             {photoUri2 && (
               <Image source={{ uri: photoUri2 }} style={styles.previewImage} />
             )}

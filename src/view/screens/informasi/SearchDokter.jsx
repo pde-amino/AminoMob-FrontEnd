@@ -31,6 +31,7 @@ export default function SearchDokter() {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [tanpaDokter, setTanpaDokter] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -38,9 +39,17 @@ export default function SearchDokter() {
 
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/caridokter/${clinicId}/`)
+      .get(`${BASE_URL}/caridokter/${clinicId}/`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "pd3@mino347",
+        },
+      })
       .then((response) => {
         const data = response.data.data_dokter; // Assuming data_dokter contains the array
+        if (data == []) {
+          setTanpaDokter(true);
+        }
         setDataPoli(data);
         setFilteredData(data); // initialize with full data
         setLoading(false);
@@ -96,36 +105,53 @@ export default function SearchDokter() {
           placeholder="Cari dengan Nama Dokter / Hari"
           filterAttribute="nm_dokter"
         />
-      </View>
 
-      {/* {filteredData ? (
+        {/* {filteredData ? (
         <Text style={GlobalStyles.h3}>Daftar Dokter pada {nameClinic}</Text>
       ) : (
         <Text style={GlobalStyles.h3}>
           Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
         </Text>
       )} */}
-      <View style={{ alignItems: "center", marginBottom: 150 }}>
-        <FlatList
-          data={filteredData}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
-          renderItem={({ item }) => (
-            <CardButtonNavComponent
-              title={item.nm_dokter}
-              description={item.nm_poli}
-              imgSource={{ uri: `${item.image}` }}
-              modal={true}
-              onPress={() =>
-                navigation.navigate("Detail Dokter", { doctorData: item })
-              }
-              warna={"#0A78E2"}
-            />
-          )}
-        />
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <FlatList
+            data={filteredData}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
+            renderItem={({ item }) => (
+              <CardButtonNavComponent
+                title={item.nm_dokter}
+                description={item.nm_poli}
+                imgSource={{ uri: `${item.image}` }}
+                modal={true}
+                onPress={() =>
+                  navigation.navigate("Detail Dokter", { doctorData: item })
+                }
+                warna={"#0A78E2"}
+              />
+            )}
+            ListEmptyComponent={
+              <Text
+                style={{
+                  marginTop: 20,
+                  marginHorizontal: 20,
+                  fontSize: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                Tidak ada dokter untuk poli ini, silahkan langsung datang ke RS
+                Amino Gundohutomo
+              </Text>
+            }
+          />
+        </View>
       </View>
     </View>
   );

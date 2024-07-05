@@ -67,6 +67,8 @@ export default function InfoListPasien() {
         `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
         {
           headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
           },
         }
@@ -118,7 +120,7 @@ export default function InfoListPasien() {
             style={{ width: "100%" }}
             data={dataPasien}
             renderItem={renderItem}
-            keyExtractor={(item) => item.no_rkm_medis.toString()}
+            keyExtractor={(item, index) => index.toString()}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

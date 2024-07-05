@@ -88,6 +88,8 @@ export const TambahPasienLama = () => {
       await axios
         .get(`${BASE_URL}/cariPas/${auth.user.id}/${noRm}/${dateOfBirth}`, {
           headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`,
           },
         })
@@ -129,6 +131,7 @@ export const TambahPasienLama = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
             Authorization: `Bearer ${auth.user.token}`,
           },
         }
