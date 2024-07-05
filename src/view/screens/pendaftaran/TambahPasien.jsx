@@ -303,13 +303,6 @@ export const TambahPasien = () => {
     }
   };
 
-  console.log("kamu sekarang ada di screen tambah pasien baru");
-  console.log("ini formatdate: ", formattedDate);
-  console.log("ini date: ", date);
-  console.log("ini dateofbirth: ", dateOfBirth);
-  console.log("ini tgl hari ini: ", tglHariIni);
-  console.log("data value: ", dataValue);
-
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <View style={{ height: hp(10) }}>
@@ -329,7 +322,7 @@ export const TambahPasien = () => {
                 // marginVertical: 8,
               }}
             >
-              <Text style={GlobalStyles.h4}>Isi semuanya lur</Text>
+              <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
             <View style={styles.containerDrop}>
               <Dropdown
@@ -751,7 +744,7 @@ export const TambahPasien = () => {
             <ButtonPrimary
               title="Simpan"
               onPress={postPasienBaru}
-              disabled={!checked || !!hubunganPasien}
+              disabled={!checked || !hubunganPasien}
             />
           </View>
         </View>

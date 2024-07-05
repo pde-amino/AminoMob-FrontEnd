@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, FlatList, Text, RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
-import LoadingContent from "../../../components/LoadingContent";
-import { Button } from "react-native-paper";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -29,10 +27,6 @@ const InformasiUmum = () => {
   ];
 
   const navigation = useNavigation();
-  const [poliklinikData, setPoliklinikData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-
   // useEffect(() => {
   //   fetchData();
   // }, []);
@@ -81,12 +75,14 @@ const InformasiUmum = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <HeaderComponent
-        title="Informasi RS"
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
-      <View style={GlobalStyles.Content}>
+      <View style={{ flex: 1 }}>
+        <HeaderComponent
+          title="Informasi RS"
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <View style={[GlobalStyles.Content, { flex: 9 }]}>
         <FlatList
           contentContainerStyle={{ flexGrow: 1 }}
           // refreshControl={

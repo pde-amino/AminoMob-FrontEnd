@@ -105,7 +105,7 @@ export default function SearchDokter() {
           Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
         </Text>
       )} */}
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center", marginBottom: 150 }}>
         <FlatList
           data={filteredData}
           showsVerticalScrollIndicator={false}
@@ -127,8 +127,6 @@ export default function SearchDokter() {
           )}
         />
       </View>
-
-      <View style={{ height: 100 }}></View>
     </View>
   );
 }

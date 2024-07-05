@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import {
   View,
   FlatList,
@@ -17,19 +17,18 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
 import MySlider from "../../../components/MySlider";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
-import BannerComponent from "../../../components/BannerComponent";
-import { SpeedDial } from "@rneui/themed";
-import axios from "axios";
-import { BASE_URL } from "../../../contex/Config";
 import CardButtonComponent from "../../../components/CardButtonComponent";
-import WebView from "react-native-webview";
 import CardComponentArticel from "../../../components/CardComponentArticel";
-import SendIntentAndroid from "react-native-send-intent";
+// import BannerComponent from "../../../components/BannerComponent";
+// import { SpeedDial } from "@rneui/themed";
+// import axios from "axios";
+// import { BASE_URL } from "../../../contex/Config";
+// import WebView from "react-native-webview";
+// import SendIntentAndroid from "react-native-send-intent";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -152,9 +151,8 @@ const HomeScreen = () => {
         <View
           style={{
             flex: 2,
-            width: wp(90),
-            // alignContent: "center",
-            alignSelf: "center",
+            // width: wp(100),
+            // alignSelf: "center",
           }}
         >
           <MySlider />
@@ -178,6 +176,9 @@ const HomeScreen = () => {
               />
             )}
           />
+        </View>
+
+        <View style={{ marginLeft: 20 }}>
           <Text style={[GlobalStyles.h3, { paddingTop: 10 }]}>Artikel</Text>
 
           <ScrollView horizontal={true} style={{ gap: 4 }}>

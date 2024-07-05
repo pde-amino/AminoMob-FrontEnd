@@ -51,14 +51,14 @@ export default function MySlider() {
   const { width } = useWindowDimensions();
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <View>
       <Carousel
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.9,
           parallaxScrollingOffset: 60,
         }}
-        width={wp(90)}
+        width={wp(100)}
         height={hp(20)}
         autoPlay={true}
         data={dataCarousel}
