@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   FlatList,
@@ -9,6 +9,7 @@ import {
   Image,
   Linking,
   Alert,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -143,15 +144,15 @@ const HomeScreen = () => {
         <MySlider />
       </View>
 
-      <View style={{ flex: 4, paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: 20 }}>
         <Text style={GlobalStyles.h3}>Menu</Text>
       </View>
-    </View>
+    </>
   );
 
   const ListFooterComponent = () => (
     <>
-      <View style={{ flex: 4, paddingHorizontal: 20, marginTop: 10 }}>
+      <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
         <Text style={GlobalStyles.h3}>Artikel</Text>
       </View>
       <FlatList
@@ -187,7 +188,8 @@ const HomeScreen = () => {
             d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
         </Svg>
       </View>
-      <View style={{ flex: 4, alignContent: "center" }}>
+
+      <View style={{ alignContent: "center", marginTop: wp(8) }}>
         <FlatList
           data={Menus}
           ListHeaderComponent={ListHeaderComponent}
@@ -195,9 +197,7 @@ const HomeScreen = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                flex: 1,
                 flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "center",
               }}>
               <CardButtonComponent
@@ -224,4 +224,12 @@ const HomeScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  containerSVG: {
+    backgroundColor: WARNA.primary,
+    height: 150,
+    width: "100%",
+    position: "absolute",
+  },
+});
 export default HomeScreen;

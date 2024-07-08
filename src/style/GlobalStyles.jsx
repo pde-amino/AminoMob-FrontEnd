@@ -49,10 +49,13 @@ export default GlobalStyles = StyleSheet.create({
   headerHomeContainer: {
     flexDirection: "row",
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "space-between",
-    marginBottom: 1,
-    marginHorizontal: 10,
-    width: "90%",
+    // marginBottom: 1,
+    marginHorizontal: 20,
+    marginVertical: 10,
+    width: wp(90),
+    // backgroundColor: "red",
   },
   chipSuccess: {
     borderRadius: 30,
@@ -73,7 +76,7 @@ export default GlobalStyles = StyleSheet.create({
     justifyContent: "center",
   },
   containerLogo: {
-    height: hp(5),
+    height: hp(7),
     width: wp(20),
     // backgroundColor: "pink",
   },

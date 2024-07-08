@@ -116,7 +116,8 @@ export default function SearchDokter() {
         <View
           style={{
             alignItems: "center",
-          }}>
+          }}
+        >
           <FlatList
             data={filteredData}
             showsVerticalScrollIndicator={false}
@@ -143,7 +144,8 @@ export default function SearchDokter() {
                   marginHorizontal: 20,
                   fontSize: 15,
                   fontWeight: "bold",
-                }}>
+                }}
+              >
                 Tidak ada dokter untuk poli ini, silahkan langsung datang ke RS
                 Amino Gundohutomo
               </Text>
@@ -151,8 +153,6 @@ export default function SearchDokter() {
           />
         </View>
       </View>
-
-      <View style={{ height: 100 }}></View>
     </View>
   );
 }

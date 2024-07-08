@@ -3,16 +3,13 @@ import {
   Text,
   View,
   ScrollView,
-  StyleSheet,
   TouchableOpacity,
-  Linking,
   Alert,
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
-import BottomSheet from "../../../components/BottomSheet";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -81,6 +78,7 @@ const LoginScreen = () => {
           setLoading(false);
         });
     } catch (error) {
+      console.log("error login:", error.response.data);
       try {
         if (error == "AxiosError: Request failed with status code 500") {
           Alert.alert(

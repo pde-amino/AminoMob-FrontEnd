@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
-import DateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 import { BASE_URL } from "../../../contex/Config";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
