@@ -1,36 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useCallback, useContext } from "react";
 import { Ionicons } from "react-native-vector-icons";
-import FavoriteScreen from "../view/screens/home/FavoriteScreen";
 import HomeScreen from "../view/screens/home/HomeScreen";
 import { useState, useEffect } from "react";
-import {
-  Button,
-  Text,
-  TextInput,
-  View,
-  ActivityIndicator,
-  FlatList,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { Alert } from "react-native";
 import TestingWeb from "../view/screens/web/TestingWeb";
-import RegistrationScreen from "../view/screens/auth/SignupScreen";
-import KlinikUmum from "../view/screens/poli/KlinikUmum";
-import { IconButton, MD3Colors } from "react-native-paper";
-import LoginScreen from "../view/screens/auth/LoginScreen";
-import OnboardingScreen from "../view/screens/home/OnboardingScreen";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
-import TestingScreen from "../view/screens/home/TestingScreen";
-import { TambahPasien } from "../view/screens/pendaftaran/TambahPasien";
 import { AuthContex } from "../contex/AuthProvider";
-import BookingScreen from "../view/screens/Verifikasi/BookingScreen";
-import Swafoto from "../contex/SwaFoto";
-import VerifikasiPage from "../contex/VerifikasiPage";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
-import ListPasien from "../view/screens/pendaftaran/ListPasien";
 import InfoListPasien from "../view/screens/informasi/InfoListPasien";
-import { PilihPoli } from "../view/screens/pendaftaran/PilihPoli";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -192,8 +170,6 @@ export default function HomeTabs() {
     try {
       const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
         headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "pd3@mino347",
           Authorization: `Bearer ${auth.user.token}`,
         },
       });
@@ -235,7 +211,8 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
@@ -300,7 +277,6 @@ export default function HomeTabs() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
-              // name={focused ? "person" : "person-outline"}
               size={24}
               color="grey"
             />

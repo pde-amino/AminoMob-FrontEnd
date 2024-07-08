@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   FlatList,
@@ -9,6 +9,7 @@ import {
   Image,
   Linking,
   Alert,
+  StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -116,44 +117,36 @@ const HomeScreen = () => {
   };
 
   const ListHeaderComponent = () => (
-    <View>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ marginTop: 10, marginBottom: 20 }}>
-          <View style={GlobalStyles.headerHomeContainer}>
-            <Image
-              source={require("../../../../assets/logo-app.png")}
-              resizeMode="contain"
-              style={GlobalStyles.containerLogo}
-            />
-            <TouchableOpacity
-              style={GlobalStyles.btnRedSmall}
-              onPress={darurat}
-            >
-              <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+    <>
+      <View style={GlobalStyles.headerHomeContainer}>
+        <Image
+          source={require("../../../../assets/logo-app.png")}
+          resizeMode="contain"
+          style={GlobalStyles.containerLogo}
+        />
+        <TouchableOpacity style={GlobalStyles.btnRedSmall} onPress={darurat}>
+          <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
+        </TouchableOpacity>
       </View>
 
       <View
         style={{
           flex: 2,
-          width: wp(90),
-          alignSelf: "center",
+          width: wp(100),
         }}
       >
         <MySlider />
       </View>
 
-      <View style={{ flex: 4, paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: 20 }}>
         <Text style={GlobalStyles.h3}>Menu</Text>
       </View>
-    </View>
+    </>
   );
 
   const ListFooterComponent = () => (
     <>
-      <View style={{ flex: 4, paddingHorizontal: 20, marginTop: 10 }}>
+      <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
         <Text style={GlobalStyles.h3}>Artikel</Text>
       </View>
       <FlatList
@@ -175,14 +168,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View
-        style={{
-          backgroundColor: WARNA.primary,
-          height: 150,
-          width: "100%",
-          position: "absolute",
-        }}
-      >
+      <View style={styles.containerSVG}>
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
             fill="#0a78e2"
@@ -191,7 +177,8 @@ const HomeScreen = () => {
           ></Path>
         </Svg>
       </View>
-      <View style={{ flex: 4, alignContent: "center" }}>
+
+      <View style={{ alignContent: "center", marginTop: wp(8) }}>
         <FlatList
           data={Menus}
           ListHeaderComponent={ListHeaderComponent}
@@ -199,9 +186,7 @@ const HomeScreen = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                flex: 1,
                 flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "center",
               }}
             >
@@ -229,4 +214,12 @@ const HomeScreen = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  containerSVG: {
+    backgroundColor: WARNA.primary,
+    height: 150,
+    width: "100%",
+    position: "absolute",
+  },
+});
 export default HomeScreen;

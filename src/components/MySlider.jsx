@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Image,
@@ -8,7 +8,10 @@ import {
   Linking,
   TouchableOpacity,
 } from "react-native";
-import Carousel from "react-native-reanimated-carousel";
+import Carousel, {
+  ICarouselInstance,
+  Pagination,
+} from "react-native-reanimated-carousel";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -59,8 +62,10 @@ export default function MySlider() {
           parallaxScrollingOffset: 60,
         }}
         width={wp(100)}
-        height={hp(20)}
+        height={hp(25)}
         autoPlay={true}
+        // pagingEnabled={pagingEnabled}
+        // snapEnabled={snapEnabled}
         data={dataCarousel}
         scrollAnimationDuration={6000}
         // onSnapToItem={(index) => console.log("current index:", index)}
