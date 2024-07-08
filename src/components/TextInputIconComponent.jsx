@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, TouchableOpacity, Text } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
@@ -71,13 +71,22 @@ const TextInputIconComponent = ({
         secureTextEntry={secureTextEntry}
         right={
           password ? (
-            <TextInput.Icon
+            <TextInput
               icon={secureTextEntry ? "eye-off" : "eye"}
               onPress={toggleSecureTextEntry}
             />
           ) : null
         }
       />
+      {password ? (
+        <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>
+          {secureTextEntry ? (
+            <Text>Lihat Password</Text>
+          ) : (
+            <Text>Sembunyikan Password</Text>
+          )}
+        </TouchableOpacity>
+      ) : null}
       {error && (
         <HelperText style={{ color: WARNA.red }} type="error" visible={!!error}>
           {error}

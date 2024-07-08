@@ -24,6 +24,7 @@ import { format } from "date-fns";
 import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
 import { AuthContex } from "../../../contex/AuthProvider";
+import TextInputIconComponent from "../../../components/TextInputIconComponent";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -41,7 +42,10 @@ export const PilihPoli = () => {
   const { auth } = useContext(AuthContex);
   const [datas, setDatas] = useState([]);
   const [value, setValue] = useState("Pilih Jam Periksa");
-  const [value2, setValue2] = useState("Pilih Poliklinik");
+  const [value2, setValue2] = useState(
+    kunjungan === "TerangBulan" ? "Pilih Poliklinik" : "Pilih Paket"
+  );
+
   // const [isFocus, setIsFocus] = useState(false);
   // const [isFocus1, setIsFocus1] = useState(false);
   // const [isFocus2, setIsFocus2] = useState(false);
@@ -67,8 +71,17 @@ export const PilihPoli = () => {
   const [visMod, setVisMod] = useState(false);
   const [confMod, setConfMod] = useState("Sore");
   const [cancMod, setCancMod] = useState("Tidak");
+  const [noHpError, setNoHpError] = useState("");
 
   const [modalList, setModalList] = useState(false);
+
+  const [noHp, setNoHp] = useState("");
+
+  const handleNoHp = (input) => {
+    setNoHp(input);
+    const onlyNumbers = /^[0-9]+$/.test(input);
+    setNoHpError(onlyNumbers ? "" : "Cuma boleh pakai angka");
+  };
 
   const extractDay = (dateString) => {
     return dateString.split(" ")[0];
@@ -263,6 +276,47 @@ export const PilihPoli = () => {
             } di ${value2}`
           );
         });
+    } else if (kunjungan === "TerangBulan") {
+      await axios
+        .post(
+          `${BASE_URL}/bookPeriksa/${auth.user.id}/tb`,
+          {
+            no_rkm_medis: dataPas.no_rkm_medis,
+            id_pasien: dataPas.id_pasien,
+            // tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
+            tanggal_periksa: date.toISOString().split("T")[0],
+            jam_periksa:
+              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+            kd_dokter: kdDokter,
+            kd_poli: kdPoli,
+            status_reg: "Belum",
+            jns_kunjungan: "Penunjang",
+            status_byr: "-",
+            jns_pas: dataPas.status_user,
+            kd_paket: "",
+            jml_byr: "80000",
+            wa: noHp,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          navigation.replace("Booking Screen", response.data);
+        })
+        .catch((response) => {
+          console.log("response error", response);
+          Alert.alert(
+            "Mohon Maaf",
+            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+              date.toISOString().split("T")[0]
+            } di ${value2}`
+          );
+        });
     }
   };
 
@@ -304,7 +358,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         "Maaf Poli yang anda pilih sepertinya libur pada Hari yang anda pilih"
       );
     }
-    setMessMod("Silahkan Pilih Dokter");
+    setMessMod("Pilih Dokter");
     setPilihan("dokter");
     setModalList(true);
     setVisMod(true);
@@ -315,7 +369,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
   const poliTujuan = () => {
     getPoli();
     setDataListPoli(datas);
-    setMessMod("Silahkan Pilih Poliklinik");
+    setMessMod("Pilih Poliklinik");
     setPilihan("poli");
     setModalList(true);
     setVisMod(true);
@@ -404,7 +458,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         <Text>Tanggal Periksa</Text>
         <View style={styles.itemList}>
           <Text style={GlobalStyles.h4}>
-            {hariPoli ? hariPoli : "Silahkan Pilih Tanggal"}
+            {hariPoli ? hariPoli : "Pilih Tanggal"}
           </Text>
           <Button title={"Pilih"} onPress={berubah} />
         </View>
@@ -416,25 +470,56 @@ Jam Sore (14:00:00 - 18:00:00)`);
           <Button title={"Pilih"} onPress={pilihJamPeriksa} />
         </View>
       </View>
-      <View style={styles.list}>
-        <Text>Poli Tujuan</Text>
-        <View style={styles.itemList}>
-          <Text style={GlobalStyles.h4}>{value2}</Text>
-          <Button title={"Pilih"} onPress={poliTujuan} />
-        </View>
-      </View>
-      <View style={styles.list}>
-        <Text>Dokter Tujuan</Text>
-        <View style={styles.itemList}>
-          <Text style={GlobalStyles.h4}>{dokter}</Text>
+      {kunjungan == "TerangBulan" ? (
+        <>
+          <View style={styles.list}>
+            <Text>Paket Terang Bulan</Text>
+            <View style={styles.itemList}>
+              <Text style={GlobalStyles.h4}>{value2}</Text>
+              <Button title={"Pilih"} onPress={poliTujuan} />
+            </View>
+          </View>
+          <View style={styles.list}>
+            <Text>Nomor HP yang bisa dihubungi</Text>
+            {noHpError ? (
+              <Text style={{ color: "red" }}>{noHpError}</Text>
+            ) : null}
+            <TextInput
+              label="Nomor HP"
+              placeholder="Masukkan No HP Anda"
+              value={noHp}
+              type={"username"}
+              onChangeText={handleNoHp}
+            />
+            {/* <View style={styles.itemList}> */}
+            {/* <Text style={GlobalStyles.h4}>{value2}</Text> */}
+            {/* <Button title={"Pilih"} onPress={poliTujuan} />
+            </View> */}
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.list}>
+            <Text>Poli Tujuan</Text>
+            <View style={styles.itemList}>
+              <Text style={GlobalStyles.h4}>{value2}</Text>
+              <Button title={"Pilih"} onPress={poliTujuan} />
+            </View>
+          </View>
+          <View style={styles.list}>
+            <Text>Dokter Tujuan</Text>
+            <View style={styles.itemList}>
+              <Text style={GlobalStyles.h4}>{dokter}</Text>
 
-          <Button
-            disabled={value2 == "Pilih Poliklinik" ? true : false}
-            title={"Pilih"}
-            onPress={pilihDokter}
-          />
-        </View>
-      </View>
+              <Button
+                disabled={value2 == "Pilih Poliklinik" ? true : false}
+                title={"Pilih"}
+                onPress={pilihDokter}
+              />
+            </View>
+          </View>
+        </>
+      )}
       <View style={GlobalStyles.Content}>
         {showPicker && Platform.OS === "android" && (
           <DateTimePicker
@@ -447,15 +532,28 @@ Jam Sore (14:00:00 - 18:00:00)`);
       </View>
 
       <View style={GlobalStyles.btnContainer}>
-        <ButtonPrimary
-          title="Ajukan Booking"
-          onPress={handleRegister}
-          disabled={
-            value == "Pilih Jam Periksa" ||
-            value2 == "Pilih Poliklinik" ||
-            dokter == "Pilih Dokter"
-          }
-        />
+        {kunjungan == "TerangBulan" ? (
+          <ButtonPrimary
+            title="Ajukan Booking"
+            onPress={handleRegister}
+            disabled={
+              value == "Pilih Jam Periksa" ||
+              value2 == "Pilih Poliklinik" ||
+              noHpError ||
+              noHp == ""
+            }
+          />
+        ) : (
+          <ButtonPrimary
+            title="Ajukan Booking"
+            onPress={handleRegister}
+            disabled={
+              value == "Pilih Jam Periksa" ||
+              value2 == "Pilih Poliklinik" ||
+              dokter == "Pilih Dokter"
+            }
+          />
+        )}
       </View>
 
       {buttomSheet ? (

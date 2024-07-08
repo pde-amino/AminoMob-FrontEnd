@@ -28,7 +28,7 @@ const dataCarousel = [
   {
     id: 3,
     image:
-      "https://images.unsplash.com/photo-1631679706909-1844bbd07221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+      "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
   },
   {
     id: 4,
@@ -69,8 +69,7 @@ export default function MySlider() {
             onPress={() =>
               Linking.openURL("https://www.youtube.com/@RSJDDrAminoGondohutomo")
             }
-            style={styles.borderShadow}
-          >
+            style={styles.borderShadow}>
             <Image
               style={styles.imageCarousel}
               source={{
