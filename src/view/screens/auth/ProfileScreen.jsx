@@ -20,6 +20,7 @@ import ConfirmModal from "../../../components/ConfirmModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
+import ButtonPrimary from "../../../components/ButtonPrimary";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
@@ -30,22 +31,6 @@ const ProfileScreen = () => {
   const [dataUser, setDataUser] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  // try {
-  //   const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${auth.user.token}`,
-  //     },
-  //   });
-  //   setDataUser(response.data.user);
-  //   console.log("Fetch Response data:", response.data);
-  // } catch (error) {
-  //   console.error("Error fetching user data:", error.message);
-  //   console.error("Error response data:", error);
-  // } finally {
-  //   setLoading(false);
-  //   setRefreshing(false);
-  // }
 
   const fetchData = async () => {
     try {
@@ -125,7 +110,18 @@ const ProfileScreen = () => {
                 {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
               </Text>
             </View>
-
+            {
+              (auth.user.level = 1 ? (
+                <View style={{ flex: 1 }}>
+                  <View style={GlobalStyles.btnContainer}>
+                    <ButtonPrimary
+                      title={"Lapor Bos"}
+                      onPress={() => navigation.replace("Web View")}
+                    />
+                  </View>
+                </View>
+              ) : null)
+            }
             {dataUser ? (
               <View style={{ gap: 12, padding: 20 }}>
                 <View>
@@ -154,14 +150,7 @@ const ProfileScreen = () => {
           </ScrollView>
         )}
       </View>
-      <View style={{ flex: 1 }}>
-        <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary
-            title={"Lapor Bos"}
-            onPress={() => navigation.replace("Web View")}
-          />
-        </View>
-      </View>
+
       <View style={{ flex: 1 }}>
         <View style={GlobalStyles.btnContainer}>
           <ButtonSecondary

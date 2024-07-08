@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, FlatList, SafeAreaView, Alert, Text } from "react-native";
+import {
+  View,
+  FlatList,
+  SafeAreaView,
+  Alert,
+  Text,
+  TouchableOpacityComponent,
+} from "react-native";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
@@ -8,6 +15,7 @@ import HeaderComponent from "../../../components/HeaderComponent";
 import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
+import ModalComponent from "../../../components/ModalComponent";
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function LayananNonBPJS() {
   const navigation = useNavigation();
@@ -18,11 +26,37 @@ export default function LayananNonBPJS() {
   const [btmTerang, setBtmTerang] = useState(false);
   const [kerabat, setKerabat] = useState(false);
   const route = useRoute();
+  const [modal, setModal] = useState(false);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleShowModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleHideModal = () => {
+    setIsModalVisible(false);
+  };
 
   console.log("datapasdsdasdasdasd", route.params);
   const dataKerabat = route.params;
   const { auth } = useContext(AuthContex);
-  console.log("Ini Auth :", auth);
+  console.log("Ini Auth :", dataKerabat.no_rkm_medis);
+
+  const notifNoRawat = () => {
+    <View>
+      <Text>{dataKerabat.nm_pasien} belum memiliki nomor rawat.</Text>
+      <Text>
+        Terang bulah hanya bisa untuk psien yang sudah memiliki nomor rawat.
+      </Text>
+      <TouchableOpacityComponent
+        onPress={() => {
+          Alert.alert("Informasi", "Cara mendapatkan nomor rawat");
+        }}>
+        <Text>Bagaimana cara mendapatkan nomor rawat</Text>
+      </TouchableOpacityComponent>
+    </View>;
+  };
 
   const Menus = [
     {
@@ -83,11 +117,30 @@ export default function LayananNonBPJS() {
       to: "Pilih Poli",
       poli: "Penunjang",
       to: () => {
-        // setJnsMenu("terang");
-        Alert.alert(
-          "Maaf",
-          "Saat ini menu Terang Bulang masih dalam tahap pengembangan"
-        );
+        setJnsMenu("TerangBulan");
+        if (dataKerabat.no_rkm_medis === "") {
+          Alert.alert(
+            "Maaf",
+            `Layanan ini sementara hanya tersedia untuk yang sudah mempunyai Nomor Rekam Medis. "${dataKerabat.nm_pasien}" belum memiliki Nomor Rekam Medis.`,
+            [
+              {
+                text: "cara mendapatkan nomor rawat?",
+                onPress: () => {
+                  Alert.alert(
+                    "Informasi",
+                    "Silahkan mendaftarkan diri di RS untuk mendapatkan Nomor Rekam Medis."
+                  );
+                },
+              },
+              { text: "OK", onPress: () => {} },
+            ]
+          );
+        } else {
+          navigation.navigate("Pilih Poli", {
+            dataKerabat,
+            jnsMenu: "TerangBulan",
+          });
+        }
       },
       // warna: "#A557F3",
       warna: "#9335F0",
