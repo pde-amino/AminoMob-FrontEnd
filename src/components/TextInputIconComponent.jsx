@@ -80,14 +80,11 @@ const TextInputIconComponent = ({
         // }
       />
       {password ? (
-        <TouchableOpacity
-          style={GlobalStyles.textBiasa}
-          onPress={toggleSecureTextEntry}
-        >
+        <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>
           {secureTextEntry ? (
-            <Text>Lihat Password</Text>
+            <Text style={GlobalStyles.textBiasa}>Lihat Password</Text>
           ) : (
-            <Text>Sembunyikan Password</Text>
+            <Text style={GlobalStyles.textBiasa}>Sembunyikan Password</Text>
           )}
         </TouchableOpacity>
       ) : null}

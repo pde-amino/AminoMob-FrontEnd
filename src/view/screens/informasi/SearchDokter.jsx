@@ -1,12 +1,4 @@
-// SearchDokter.js
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Alert,
-  RefreshControl,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, RefreshControl } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
@@ -16,8 +8,6 @@ import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
-import ModalComponent from "../../../components/ModalComponent";
-import BottomSheet from "../../../components/BottomSheet";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -35,51 +25,36 @@ export default function SearchDokter() {
 
   const onRefresh = () => {
     setRefreshing(true);
+    fetchDokter();
+  };
+
+  const fetchDokter = () => {
+    try {
+      axios
+        .get(`${BASE_URL}/caridokter/${clinicId}/`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        })
+        .then((response) => {
+          const data = response.data.data_dokter; // Assuming data_dokter contains the array
+          if (data == []) {
+            setTanpaDokter(true);
+          }
+          setDataPoli(data);
+          setFilteredData(data); // initialize with full data
+          setLoading(false);
+        })
+        .catch((err) => console.log("Error Search Dokter :", err));
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/caridokter/${clinicId}/`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "pd3@mino347",
-        },
-      })
-      .then((response) => {
-        const data = response.data.data_dokter; // Assuming data_dokter contains the array
-        if (data == []) {
-          setTanpaDokter(true);
-        }
-        setDataPoli(data);
-        setFilteredData(data); // initialize with full data
-        setLoading(false);
-      })
-      .catch((err) => console.log("Error Search Dokter :", err));
+    fetchDokter();
   }, []);
-
-  // const detailDokter = () => {
-  //   return (
-  //     <View>
-  //       <Text>Detail Dokter</Text>
-  //     </View>
-  //   );
-  // };
-
-  // if (loading) {
-  //   return (
-  //     <View style={GlobalStyles.Content}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </View>
-  //   );
-  // }
-
-  // if (error) {
-  //   return (
-  //     <View style={GlobalStyles.Content}>
-  //       <Text>Error fetching data: {error.message}</Text>
-  //     </View>
-  //   );
-  // }
 
   const handleSearch = (filteredData) => {
     setFilteredData(filteredData);
@@ -102,28 +77,28 @@ export default function SearchDokter() {
           platform="android"
           data={dataPoli}
           onSearch={handleSearch}
-          placeholder="Cari dengan Nama Dokter / Hari"
+          placeholder="Cari Dokter"
           filterAttribute="nm_dokter"
         />
 
         {/* {filteredData ? (
-        <Text style={GlobalStyles.h3}>Daftar Dokter pada {nameClinic}</Text>
-      ) : (
-        <Text style={GlobalStyles.h3}>
-          Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
-        </Text>
-      )} */}
+          <Text style={GlobalStyles.h3}>Daftar Dokter pada {nameClinic}</Text>
+        ) : (
+          <Text style={GlobalStyles.h3}>
+            Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
+          </Text>
+        )} */}
         <View
           style={{
             alignItems: "center",
           }}
         >
           <FlatList
-            data={filteredData}
-            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
+            data={filteredData}
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
             renderItem={({ item }) => (
               <CardButtonNavComponent
@@ -134,18 +109,11 @@ export default function SearchDokter() {
                 onPress={() =>
                   navigation.navigate("Detail Dokter", { doctorData: item })
                 }
-                warna={"#0A78E2"}
+                warna={WARNA.primary}
               />
             )}
             ListEmptyComponent={
-              <Text
-                style={{
-                  marginTop: 20,
-                  marginHorizontal: 20,
-                  fontSize: 15,
-                  fontWeight: "bold",
-                }}
-              >
+              <Text style={[GlobalStyles.h4, styles.dokterKosong]}>
                 Tidak ada dokter untuk poli ini, silahkan langsung datang ke RS
                 Amino Gundohutomo
               </Text>
@@ -158,8 +126,9 @@ export default function SearchDokter() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
+  dokterKosong: {
+    marginTop: 20,
+    marginHorizontal: 20,
+    textAlign: "center",
   },
 });

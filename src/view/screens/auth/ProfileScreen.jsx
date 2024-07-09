@@ -7,9 +7,10 @@ import {
   RefreshControl,
   ActivityIndicator,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Avatar } from "react-native-paper";
+import { Avatar, Button, Divider } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useContext } from "react";
@@ -21,6 +22,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import ButtonPrimary from "../../../components/ButtonPrimary";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as dp,
+} from "react-native-responsive-screen";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
@@ -42,7 +47,7 @@ const ProfileScreen = () => {
         },
       });
       setDataUser(response.data.user);
-      console.log("Fetch Response data:", response.data);
+      console.log("Fetch Response data dari login:", response.data);
     } catch (error) {
       console.error("Error fetching user data:", error.message);
       console.error("Error response data:", error);
@@ -88,10 +93,10 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View style={{ height: hp(10) }}>
         <HeaderComponent title="Profil" />
       </View>
-      <View style={{ flex: 8 }}>
+      <View style={{ height: hp(90) }}>
         {loading ? (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <ActivityIndicator size="large" color="#0000ff" />
@@ -100,7 +105,8 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -132,6 +138,18 @@ const ProfileScreen = () => {
                   <Text>Tanggal Lahir</Text>
                   <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
                 </View>
+                <Divider />
+                <View>
+                  <Button
+                    icon={"logout"}
+                    labelStyle={GlobalStyles.h3}
+                    style={{ width: 100 }}
+                    onPress={() => setConfirmLogout(true)}
+                  >
+                    Log out
+                  </Button>
+                </View>
+                <Divider />
               </View>
             ) : (
               <Text>Loading...</Text>
@@ -151,14 +169,14 @@ const ProfileScreen = () => {
         )}
       </View>
 
-      <View style={{ flex: 1 }}>
+      {/* <View style={{ flex: 1 }}>
         <View style={GlobalStyles.btnContainer}>
           <ButtonSecondary
             title={"Log Out"}
             onPress={() => setConfirmLogout(true)}
           />
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
