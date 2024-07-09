@@ -138,22 +138,36 @@ const ProfileScreen = () => {
                   <Text>Tanggal Lahir</Text>
                   <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
                 </View>
-                <Divider />
-                <View>
-                  <Button
-                    icon={"logout"}
-                    labelStyle={GlobalStyles.h3}
-                    style={{ width: 100 }}
-                    onPress={() => setConfirmLogout(true)}
-                  >
-                    Log out
-                  </Button>
-                </View>
-                <Divider />
               </View>
             ) : (
               <Text>Loading...</Text>
             )}
+
+            <View style={{ gap: 2 }}>
+              <View style={{ marginHorizontal: 20 }}>
+                <Button
+                  icon={"logout"}
+                  labelStyle={GlobalStyles.h3}
+                  style={{ width: 100 }}
+                  onPress={() => setConfirmLogout(true)}
+                >
+                  Log out
+                </Button>
+              </View>
+              <Divider />
+              <Divider />
+              <View style={{ marginHorizontal: 20 }}>
+                <Button
+                  icon={"logout"}
+                  labelStyle={GlobalStyles.h3}
+                  style={{ width: 100 }}
+                  onPress={() => setConfirmLogout(true)}
+                >
+                  Log out
+                </Button>
+              </View>
+              <Divider />
+            </View>
 
             {confirmLogout && (
               <ConfirmModal
