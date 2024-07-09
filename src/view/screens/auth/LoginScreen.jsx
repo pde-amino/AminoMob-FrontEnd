@@ -88,8 +88,8 @@ const LoginScreen = () => {
           setLoading(false);
         } else {
           Alert.alert("Ups!", "No HP atau password Anda salah");
+          setLoading(false);
         }
-        setLoading(false);
       } catch (error) {
         Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
       }
@@ -105,7 +105,8 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk

@@ -87,29 +87,33 @@ export default function DetailDoctorScreen() {
           style={{
             alignItems: "center",
             paddingVertical: 20,
-          }}>
+          }}
+        >
           <Text
-            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}>
+            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}
+          >
             {data.nm_dokter}
           </Text>
           <Text
             style={[
               GlobalStyles.h3,
               { textAlign: "center", maxWidth: "80%", fontWeight: "normal" },
-            ]}>
+            ]}
+          >
             {getSpecializationText(data.nm_dokter)}
           </Text>
           <AirbnbRating showRating={false} size={18} />
         </View>
       </View>
 
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 30 }}>
         <Text style={[GlobalStyles.h3, { paddingHorizontal: 20 }]}>
           Jadwal Praktek
         </Text>
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
           Pagi
         </Text>
         <FlatList
@@ -132,7 +136,8 @@ export default function DetailDoctorScreen() {
         />
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
           Sore
         </Text>
         <FlatList

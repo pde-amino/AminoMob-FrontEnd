@@ -107,12 +107,12 @@ export const TambahPasien = () => {
   const [goldarPasien, setGoldar] = useState("");
   const [pndPasien, setPendidikan] = useState("");
 
-  const [prov, setProv] = useState([]);
-  const [pilihProv, setPilihProv] = useState();
-  const [provFocus, setProvFocus] = useState(false);
-  const [kab, setKab] = useState([]);
-  const [pilihKab, setPilihKab] = useState();
-  const [kabFocus, setKabFocus] = useState(false);
+  // const [prov, setProv] = useState([]);
+  // const [pilihProv, setPilihProv] = useState();
+  // const [provFocus, setProvFocus] = useState(false);
+  // const [kab, setKab] = useState([]);
+  // const [pilihKab, setPilihKab] = useState();
+  // const [kabFocus, setKabFocus] = useState(false);
 
   const [checked, setChecked] = useState(false);
 
@@ -171,44 +171,6 @@ export const TambahPasien = () => {
   // };
 
   const formattedDate = date ? date.toISOString().split("T")[0] : "";
-
-  const dataValue = {
-    no_rkm_medis: "",
-    nm_pasien: nmLengkap,
-    no_ktp: noKTP,
-    jk: kelaminPasien,
-    tmp_lahir: tempatLahir,
-    tgl_lahir: formattedDate,
-    nm_ibu: "",
-    alamat: alamat,
-    gol_darah: goldarPasien,
-    pekerjaan: "",
-    stts_nikah: statusNikah,
-    agama: agamaPasien,
-    no_tlp: noHP,
-    umur: "",
-    pnd: pndPasien,
-    keluarga: hubunganPasien,
-    namakeluarga: "",
-    kd_pj: "",
-    no_peserta: "",
-    kd_kel: "",
-    kd_kec: "",
-    kd_kab: "",
-    pekerjaanpj: "",
-    alamatpj: "",
-    kelurahanpj: "",
-    kecamatanpj: "",
-    kabupatenpj: "",
-    perusahaan_pasien: "",
-    suku_bangsa: "",
-    bahasa_pasien: "",
-    cacat_fisik: "",
-    email: "",
-    nip: "",
-    kd_prop: "",
-    propinsipj: "",
-  };
 
   const getCurrentDate = () => {
     const now = new Date();
@@ -313,14 +275,13 @@ export const TambahPasien = () => {
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={{ height: hp(80) }}>
+      <View style={{ height: hp(90) }}>
         <ScrollView>
           <View style={{ gap: 8, alignItems: "center" }}>
             <View
               style={{
                 width: "100%",
                 marginLeft: 40,
-                // marginVertical: 8,
               }}
             >
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
@@ -729,26 +690,28 @@ export const TambahPasien = () => {
               />
             </View>
           </View>
-        </ScrollView>
-        <View style={{ height: hp(2), marginVertical: 10 }}>
-          <Checkbox.Item
-            style={GlobalStyles.cekBox}
-            color={WARNA.primary}
-            label="Data yang saya masukkan sudah benar"
-            labelStyle={GlobalStyles.textBiasa}
-            status={checked ? "checked" : "unchecked"}
-            onPress={() => {
-              setChecked(!checked);
-            }}
-          />
-          <View style={GlobalStyles.btnFullContainer}>
-            <ButtonPrimary
-              title="Simpan"
-              onPress={postPasienBaru}
-              disabled={!checked || !hubunganPasien}
+          <View style={{ marginBottom: 20 }}>
+            <Checkbox.Item
+              style={GlobalStyles.cekBox}
+              color={WARNA.primary}
+              label="Data yang saya masukkan sudah benar"
+              labelStyle={GlobalStyles.textBiasa}
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked(!checked);
+              }}
             />
+            <View style={GlobalStyles.btnFullContainer}>
+              <ButtonPrimary
+                title="Simpan"
+                onPress={postPasienBaru}
+                disabled={
+                  !checked || !hubunganPasien || !nmLengkap || !noKTP || !noHP
+                }
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

@@ -13,6 +13,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { BASE_URL } from "../contex/Config";
+import { Icon } from "react-native-paper";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -217,9 +218,9 @@ export default function HomeTabs() {
         options={{
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              size={24}
+            <Icon
+              source={focused ? "home" : "home-outline"}
+              size={28}
               color="grey"
             />
           ),
@@ -247,8 +248,8 @@ export default function HomeTabs() {
         options={{
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "book" : "book-outline"}
+            <Icon
+              source={focused ? "book" : "book-outline"}
               size={24}
               color="grey"
             />
@@ -261,8 +262,8 @@ export default function HomeTabs() {
         options={{
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "document-text" : "document-text-outline"}
+            <Icon
+              source={focused ? "text-box" : "text-box-outline"}
               size={24}
               color="grey"
             />
@@ -275,9 +276,9 @@ export default function HomeTabs() {
         options={{
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "person" : "person-outline"}
-              size={24}
+            <Icon
+              source={focused ? "account" : "account-outline"}
+              size={28}
               color="grey"
             />
           ),
