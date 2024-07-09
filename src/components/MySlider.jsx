@@ -22,31 +22,37 @@ const dataCarousel = [
     id: 1,
     image:
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
   {
     id: 2,
     image:
       "https://images.pexels.com/photos/776087/pexels-photo-776087.jpeg?auto=compress&cs=tinysrgb&w=600",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
   {
     id: 3,
     image:
       "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
   {
     id: 4,
     image:
       "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
   {
     id: 5,
     image:
       "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
   {
     id: 6,
     image:
       "https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600",
+    to: "https://www.youtube.com/@RSJDDrAminoGondohutomo",
   },
 ];
 
@@ -71,9 +77,7 @@ export default function MySlider() {
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() =>
-              Linking.openURL("https://www.youtube.com/@RSJDDrAminoGondohutomo")
-            }
+            onPress={() => Linking.openURL(item.to)}
             style={styles.borderShadow}>
             <Image
               style={styles.imageCarousel}

@@ -35,6 +35,7 @@ import InfoListPasien from "../view/screens/informasi/InfoListPasien";
 import OTPInputScreen from "../view/screens/auth/OTPInputScreen";
 import SplashScreen from "../view/screens/home/SplashScreen";
 import DetailDoctorScreen from "../view/screens/informasi/DetailDoctorScreen";
+import ArticleKesehatan from "../view/screens/web/ArticleKesehatan";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,8 +47,7 @@ export default function Routes() {
         initialRouteName="Splash"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
@@ -87,6 +87,15 @@ export default function Routes() {
             component={ProfileScreen}
             options={{
               title: "Profile",
+            }}
+          />
+
+          <Stack.Screen
+            name="Article"
+            screenOptions={{ headerShown: true }}
+            component={ArticleKesehatan}
+            options={{
+              title: "Artikel",
             }}
           />
 

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
@@ -5,21 +6,25 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 
 const CardComponentArticel = ({ imgSource, title, description }) => {
   const [readMore, setReadMore] = useState(false);
+  const navigation = useNavigation();
+
   return (
-    <Card style={styles.card}>
-      <Image source={imgSource} style={styles.image} />
-      <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>
-          {readMore ? description : `${description.slice(0, 50)}... `}
-          <TouchableOpacity onPress={() => setReadMore(!readMore)}>
-            <Text style={styles.readMore}>
-              {readMore ? "Read less" : "Read more"}
-            </Text>
-          </TouchableOpacity>
-        </Text>
-      </View>
-    </Card>
+    <TouchableOpacity onPress={() => navigation.navigate("Article")}>
+      <Card style={styles.card}>
+        <Image source={imgSource} style={styles.image} />
+        <View style={styles.content}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>
+            {readMore ? description : `${description.slice(0, 50)}... `}
+            <TouchableOpacity onPress={() => setReadMore(!readMore)}>
+              <Text style={styles.readMore}>
+                {readMore ? "Read less" : "Read more"}
+              </Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

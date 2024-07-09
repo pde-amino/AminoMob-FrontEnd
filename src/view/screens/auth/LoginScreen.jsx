@@ -15,6 +15,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { BASE_URL } from "../../../contex/Config";
+import * as Network from "expo-network";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -50,12 +51,15 @@ const LoginScreen = () => {
     try {
       await AsyncStorage.removeItem("userInfo");
       setLoading(true);
+      const ip = await Network.getIpAddressAsync();
+
       const response = await axios
         .post(
           `${BASE_URL}/login`,
           {
             user: username,
             password: password,
+            ip: ip,
           },
           {
             headers: {

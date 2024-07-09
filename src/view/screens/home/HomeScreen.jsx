@@ -119,7 +119,7 @@ const HomeScreen = () => {
   const ListHeaderComponent = () => (
     <View style={GlobalStyles.safeAreaStyle}>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ marginTop: 10, marginBottom: 20 }}>
+        <View style={{ marginBottom: 5 }}>
           <View style={GlobalStyles.headerHomeContainer}>
             <Image
               source={require("../../../../assets/logo-app.png")}
@@ -147,7 +147,7 @@ const HomeScreen = () => {
       <View style={{ paddingHorizontal: 20 }}>
         <Text style={GlobalStyles.h3}>Menu</Text>
       </View>
-    </>
+    </View>
   );
 
   const ListFooterComponent = () => (

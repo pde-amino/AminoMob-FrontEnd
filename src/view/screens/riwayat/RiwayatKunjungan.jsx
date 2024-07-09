@@ -128,7 +128,7 @@ export default function RiwayatKunjungan() {
   // console.log('ini status')
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
+    <SafeAreaView style={[GlobalStyles.safeAreaStyle, GlobalStyles.utama]}>
       <View style={{ flex: 1 }}>
         <HeaderComponent title={"Riwayat Periksa"} />
       </View>
