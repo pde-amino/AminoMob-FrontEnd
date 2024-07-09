@@ -1,15 +1,12 @@
+import React, { useContext, useEffect } from "react";
 import {
   View,
   SafeAreaView,
   FlatList,
   RefreshControl,
-  TouchableOpacity,
-  StyleSheet,
   Text,
-  Button,
   ScrollView,
 } from "react-native";
-import React, { useContext, useEffect } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -36,7 +33,7 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function RiwayatKunjungan() {
   const { auth } = useContext(AuthContex);
   const [refreshing, setRefreshing] = useState(false);
-  const [dataRiwayat, setDataRiwayat] = useState();
+  const [dataRiwayat, setDataRiwayat] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lihatQR, setLihatQR] = useState(false);
   const [selectedKodeBooking, setSelectedKodeBooking] = useState(null);
@@ -135,7 +132,7 @@ export default function RiwayatKunjungan() {
       <View style={{ flex: 9 }}>
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
-        ) : dataRiwayat ? (
+        ) : dataRiwayat.length > 0 ? (
           <View>
             <FlatList
               style={{ width: "100%" }}
@@ -151,7 +148,8 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -160,8 +158,17 @@ export default function RiwayatKunjungan() {
                 }}
                 source={require("../../../../assets/no-data.png")}
               />
-              <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>
-                Belum ada riwayat periksa pasien
+              <Text
+                style={[
+                  GlobalStyles.h4,
+                  {
+                    fontWeight: "normal",
+                    maxWidth: "85%",
+                    textAlign: "center",
+                  },
+                ]}
+              >
+                Belum ada data riwayat, silakan mendaftar poli
               </Text>
             </View>
           </ScrollView>
@@ -177,16 +184,19 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}>
+          }}
+        >
           <Dialog.Title
-            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content
             style={{
               alignContent: "center",
               justifyContent: "center",
               marginTop: 10,
               height: "70%",
-            }}>
+            }}
+          >
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
         </Dialog>

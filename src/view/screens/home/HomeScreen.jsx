@@ -119,27 +119,22 @@ const HomeScreen = () => {
   const ListHeaderComponent = () => (
     <View style={GlobalStyles.safeAreaStyle}>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ marginBottom: 5 }}>
-          <View style={GlobalStyles.headerHomeContainer}>
-            <Image
-              source={require("../../../../assets/logo-app.png")}
-              resizeMode="contain"
-              style={GlobalStyles.containerLogo}
-            />
-            <TouchableOpacity
-              style={GlobalStyles.btnRedSmall}
-              onPress={darurat}>
-              <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={GlobalStyles.headerHomeContainer}>
+          <Image
+            source={require("../../../../assets/logo-app.png")}
+            resizeMode="contain"
+            style={GlobalStyles.containerLogo}
+          />
+          <TouchableOpacity style={GlobalStyles.btnRedSmall} onPress={darurat}>
+            <Text style={GlobalStyles.textButtonSmall}>IGD AMINO</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
       <View
         style={{
-          flex: 2,
-          width: wp(90),
-          alignSelf: "center",
+          flex: 4,
+          width: wp(100),
         }}>
         <MySlider />
       </View>
@@ -152,7 +147,7 @@ const HomeScreen = () => {
 
   const ListFooterComponent = () => (
     <>
-      <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
+      <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
         <Text style={GlobalStyles.h3}>Artikel</Text>
       </View>
       <FlatList
@@ -161,7 +156,7 @@ const HomeScreen = () => {
         keyExtractor={(item, index) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 4 }}
+        // contentContainerStyle={{ gap: 0 }}
       />
     </>
   );
@@ -174,13 +169,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View
-        style={{
-          backgroundColor: WARNA.primary,
-          height: 150,
-          width: "100%",
-          position: "absolute",
-        }}>
+      <View style={styles.containerSVG}>
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
             fill="#0a78e2"

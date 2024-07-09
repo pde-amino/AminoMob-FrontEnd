@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -67,9 +67,9 @@ export default function InfoListPasien() {
         `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
         {
           headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
             "Content-Type": "application/json",
             "x-api-key": "pd3@mino347",
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
           },
         }
       );
@@ -78,20 +78,16 @@ export default function InfoListPasien() {
       setDataPasien(data);
     } catch (error) {
       console.error("Error fetching kerabat data:", error.message);
-      console.error("Error response data:", error.response?.data);
+      console.error("Error response data:", error.response.data);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-      // Add any cleanup logic here if needed
-      return () => {};
-    }, [])
-  );
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return <Item item={item} />;
@@ -115,7 +111,7 @@ export default function InfoListPasien() {
             color={WARNA.primary}
             size={"large"}
           />
-        ) : dataPasien ? (
+        ) : dataPasien.length > 0 ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}

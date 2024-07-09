@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Dimensions, TouchableOpacity, Text } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
+import GlobalStyles from "../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 const { width } = Dimensions.get("window");
@@ -69,17 +70,20 @@ const TextInputIconComponent = ({
         value={text}
         onChangeText={handleChange}
         secureTextEntry={secureTextEntry}
-        right={
-          password ? (
-            <TextInput
-              icon={secureTextEntry ? "eye-off" : "eye"}
-              onPress={toggleSecureTextEntry}
-            />
-          ) : null
-        }
+        // right={
+        //   password ? (
+        //     <TextInput
+        //       icon={secureTextEntry ? "eye-off" : "eye"}
+        //       onPress={toggleSecureTextEntry}
+        //     />
+        //   ) : null
+        // }
       />
       {password ? (
-        <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>
+        <TouchableOpacity
+          style={GlobalStyles.textBiasa}
+          onPress={toggleSecureTextEntry}
+        >
           {secureTextEntry ? (
             <Text>Lihat Password</Text>
           ) : (

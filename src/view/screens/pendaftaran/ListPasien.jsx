@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -30,6 +30,7 @@ const Item = ({ item, onPress }) => (
 const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 
 export default function ListPasien() {
+  const { auth } = useContext(AuthContex);
   const navigation = useNavigation();
   const [btmTambah, setBtmtambah] = useState(false);
   const [btmMenu, setBtmMenu] = useState(false);
@@ -37,9 +38,8 @@ export default function ListPasien() {
   const [pilihPasien, setPilihPasien] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const { auth } = useContext(AuthContex);
 
-  console.log("id user dari screen listpasien", auth.user.id);
+  console.log("auth   dari screen listpasien", auth.user.id);
 
   const pasienLama = () => {
     navigation.navigate("Tambah Pasien Lama");
@@ -56,36 +56,35 @@ export default function ListPasien() {
         `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
         {
           headers: {
+            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
             "Content-Type": "application/json",
             "x-api-key": "pd3@mino347",
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
           },
         }
       );
       console.log("Respon data kerabat:", response.data); // Logging response data
       const data = response.data.data_kerabat;
-
       setDataPasien(data);
     } catch (error) {
       console.error("Error fetching kerabat data:", error.message);
-      console.error("Error response data:", error.response?.data);
+      console.error("Error response data:", error.response.data);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-      // Add any cleanup logic here if needed
-      return () => {};
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchData();
+  //     // Add any cleanup logic here if needed
+  //     return () => {};
+  //   }, [])
+  // );
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -93,8 +92,6 @@ export default function ListPasien() {
         item={item}
         onPress={() => {
           setPilihPasien(item);
-          // console.log("Item pilihpasien:", item);
-          // setBtmMenu(true);
           navigation.navigate(
             "LayananNonBPJS",
             item
@@ -132,7 +129,7 @@ export default function ListPasien() {
             color={WARNA.primary}
             size={"large"}
           />
-        ) : dataPasien ? (
+        ) : dataPasien.length > 0 ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}
@@ -146,7 +143,8 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -163,7 +161,8 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
+                ]}
+              >
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>
