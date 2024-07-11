@@ -1,6 +1,13 @@
 import { yearsToDays } from "date-fns";
 import React from "react";
-import { View, ScrollView, Text, Image, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 import { Card } from "react-native-paper";
 
 const ArticleKesehatan = () => {
@@ -33,16 +40,15 @@ Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan ber
 
   return (
     <ScrollView style={styles.container}>
-      <Card style={[styles.card, { paddingTop: 5 }]}>
-        <Image source={{ uri: article.imageUrl }} style={styles.image} />
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{article.title}</Text>
-          <Text style={styles.category}>{article.category}</Text>
-          {/* <Text style={styles.category}>{article.publishDate}</Text> */}
-          <Text style={styles.content}>{article.content}</Text>
-          <Text style={styles.copyright}>{article.copyright}</Text>
-        </View>
-      </Card>
+      <Image source={{ uri: article.imageUrl }} style={styles.image} />
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}>{article.title}</Text>
+        <Text style={styles.category}>{article.category}</Text>
+        {/* <Text style={styles.category}>{article.publishDate}</Text> */}
+        <Text style={styles.content}>{article.content}</Text>
+        <Text style={styles.copyright}>{article.copyright}</Text>
+      </View>
+      {/* </Card> */}
     </ScrollView>
   );
 };
@@ -51,11 +57,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
-    padding: 16,
+    padding: 20,
   },
   card: {
     borderRadius: 10,
-    overflow: "hidden",
+    // overflow: "hidden",
     marginBottom: 16,
   },
   image: {
@@ -79,6 +85,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     marginBottom: 16,
+    textAlign: "justify",
   },
   copyright: {
     fontSize: 14,

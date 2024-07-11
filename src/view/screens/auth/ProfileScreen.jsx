@@ -10,7 +10,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Avatar, Button, Divider } from "react-native-paper";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Icon,
+  TouchableRipple,
+} from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useContext } from "react";
@@ -77,11 +83,22 @@ const ProfileScreen = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userInfo");
-      navigation.navigate("Login Screen");
+      logout();
+      navigation.replace("Login Screen");
       Alert.alert("Logout", "Anda telah berhasil logout.");
     } catch (error) {
-      Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
-      console.error("Error removing userInfo from AsyncStorage", error);
+      if (error.includes("Cannot read property")) {
+        logout();
+        navigation.replace("Login Screen");
+        Alert.alert(
+          "Maaf",
+          "Akun Anda login menggunakan perangkat lain, hanya bisa login dengan satu perangkat",
+          [{ text: "OK", onPress: () => paksaLogout() }]
+        );
+      } else {
+        Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
+        console.error("Error removing userInfo from AsyncStorage", error);
+      }
     }
   };
 
@@ -116,7 +133,7 @@ const ProfileScreen = () => {
                 {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
               </Text>
             </View>
-            {
+            {/* {
               (auth.user.level = 1 ? (
                 <View style={{ flex: 1 }}>
                   <View style={GlobalStyles.btnContainer}>
@@ -127,7 +144,7 @@ const ProfileScreen = () => {
                   </View>
                 </View>
               ) : null)
-            }
+            } */}
             {dataUser ? (
               <View style={{ gap: 12, padding: 20 }}>
                 <View>
@@ -143,29 +160,31 @@ const ProfileScreen = () => {
               <Text>Loading...</Text>
             )}
 
-            <View style={{ gap: 2 }}>
-              <View style={{ marginHorizontal: 20 }}>
-                <Button
-                  icon={"logout"}
-                  labelStyle={GlobalStyles.h3}
-                  style={{ width: 100 }}
-                  onPress={() => setConfirmLogout(true)}
-                >
-                  Log out
-                </Button>
-              </View>
+            <View style={{ gap: 12 }}>
               <Divider />
+
+              {dataUser.level === "1" ? (
+                <>
+                  <TouchableOpacity
+                    style={styles.containerMenu}
+                    onPress={() => navigation.replace("Web View")}
+                  >
+                    <Icon source="chat-alert" size={30} />
+                    <Text style={GlobalStyles.h4}>Lapor Amino</Text>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+
               <Divider />
-              <View style={{ marginHorizontal: 20 }}>
-                <Button
-                  icon={"logout"}
-                  labelStyle={GlobalStyles.h3}
-                  style={{ width: 100 }}
-                  onPress={() => setConfirmLogout(true)}
-                >
-                  Log out
-                </Button>
-              </View>
+
+              <TouchableOpacity
+                style={styles.containerMenu}
+                onPress={() => setConfirmLogout(true)}
+              >
+                <Icon source={"logout"} size={30} />
+                <Text style={GlobalStyles.h4}> Logout</Text>
+              </TouchableOpacity>
+
               <Divider />
             </View>
 
@@ -201,6 +220,13 @@ const styles = StyleSheet.create({
     margin: 20,
     flexDirection: "row",
     gap: 16,
+  },
+  containerMenu: {
+    marginHorizontal: 20,
+    height: 40,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
   },
 });
 

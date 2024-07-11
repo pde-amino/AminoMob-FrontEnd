@@ -54,7 +54,7 @@ export default function InfoListPasien() {
   const navigation = useNavigation();
   const [btmTambah, setBtmtambah] = useState(false);
   const [adaKerabat, setAdaKerabat] = useState(false);
-  const [dataPasien, setDataPasien] = useState([]);
+  const [dataPasien, setDataPasien] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { auth } = useContext(AuthContex);
@@ -111,7 +111,7 @@ export default function InfoListPasien() {
             color={WARNA.primary}
             size={"large"}
           />
-        ) : dataPasien.length > 0 ? (
+        ) : dataPasien ? (
           <FlatList
             style={{ width: "100%" }}
             data={dataPasien}

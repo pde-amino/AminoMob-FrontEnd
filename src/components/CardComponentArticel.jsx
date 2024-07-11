@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, TouchableRipple } from "react-native-paper";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 
 const CardComponentArticel = ({ imgSource, title, description }) => {
@@ -9,22 +9,22 @@ const CardComponentArticel = ({ imgSource, title, description }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Article")}>
+    <TouchableRipple onPress={() => navigation.navigate("Article")}>
       <Card style={styles.card}>
         <Image source={imgSource} style={styles.image} />
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>
             {readMore ? description : `${description.slice(0, 50)}... `}
-            <TouchableOpacity onPress={() => setReadMore(!readMore)}>
+            <TouchableRipple onPress={() => setReadMore(!readMore)}>
               <Text style={styles.readMore}>
                 {readMore ? "Read less" : "Read more"}
               </Text>
-            </TouchableOpacity>
+            </TouchableRipple>
           </Text>
         </View>
       </Card>
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 };
 

@@ -33,7 +33,7 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function RiwayatKunjungan() {
   const { auth } = useContext(AuthContex);
   const [refreshing, setRefreshing] = useState(false);
-  const [dataRiwayat, setDataRiwayat] = useState([]);
+  const [dataRiwayat, setDataRiwayat] = useState();
   const [loading, setLoading] = useState(true);
   const [lihatQR, setLihatQR] = useState(false);
   const [selectedKodeBooking, setSelectedKodeBooking] = useState(null);
