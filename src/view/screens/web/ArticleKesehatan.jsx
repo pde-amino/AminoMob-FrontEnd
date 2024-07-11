@@ -1,18 +1,24 @@
-import { yearsToDays } from "date-fns";
 import React from "react";
-import { View, ScrollView, Text, Image, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
 import { Card } from "react-native-paper";
+import RenderHTML from "react-native-render-html";
 
-const ArticleKesehatan = (data) => {
-  console.log("data Web", data.route.params.item.title);
-  //   const dateUpload = new Date();
+const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
+  const { width } = useWindowDimensions();
+  const { item } = route.params;
   const year = new Date().getFullYear();
   const article = {
-    imageUrl: "https://via.placeholder.com/150", // Ganti dengan URL gambar utama
-    title: data.route.params.item.title,
-    category: data.route.params.item.category,
-    // publishDate: { dateUpload },
-    content: data.route.params.item.content,
+    imageUrl: "https://via.placeholder.com/150",
+    title: item.title || "Default Title",
+    category: item.category || "Default Category",
+    content: item.content || "<p>Default Content</p>",
     copyright: `© ${year} Amino Hospital`,
   };
 
@@ -23,8 +29,7 @@ const ArticleKesehatan = (data) => {
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{article.title}</Text>
           <Text style={styles.category}>{article.category}</Text>
-          {/* <Text style={styles.category}>{article.publishDate}</Text> */}
-          <Text style={styles.content}>{article.content}</Text>
+          <RenderHTML contentWidth={width} source={{ html: article.content }} />
           <Text style={styles.copyright}>{article.copyright}</Text>
         </View>
       </Card>
