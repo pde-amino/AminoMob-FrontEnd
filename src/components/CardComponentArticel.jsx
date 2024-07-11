@@ -4,12 +4,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Card } from "react-native-paper";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 
-const CardComponentArticel = ({ imgSource, title, description }) => {
+const CardComponentArticel = ({ imgSource, title, description, data }) => {
   const [readMore, setReadMore] = useState(false);
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Article")}>
+    <TouchableOpacity onPress={() => navigation.navigate("Article", data)}>
       <Card style={styles.card}>
         <Image source={imgSource} style={styles.image} />
         <View style={styles.content}>

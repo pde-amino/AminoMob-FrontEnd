@@ -3,31 +3,16 @@ import React from "react";
 import { View, ScrollView, Text, Image, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 
-const ArticleKesehatan = () => {
+const ArticleKesehatan = (data) => {
+  console.log("data Web", data.route.params.item.title);
   //   const dateUpload = new Date();
   const year = new Date().getFullYear();
   const article = {
     imageUrl: "https://via.placeholder.com/150", // Ganti dengan URL gambar utama
-    title: "Judul Artikel",
-    category: "Kategori Artikel",
+    title: data.route.params.item.title,
+    category: data.route.params.item.category,
     // publishDate: { dateUpload },
-    content: `Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-    Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-    Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-              `,
+    content: data.route.params.item.content,
     copyright: `© ${year} Amino Hospital`,
   };
 
