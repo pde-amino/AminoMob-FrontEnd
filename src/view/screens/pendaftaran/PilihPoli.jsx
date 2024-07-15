@@ -151,6 +151,39 @@ export const PilihPoli = () => {
             "Coba pilih jam periksa atau tanggal periksa lain."
           );
         });
+    } else if (kunjungan === "TeleKonseling") {
+      axios
+        .get(`${BASE_URL}/pakettk`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "pd3@mino347",
+          },
+        })
+        .then((response) => {
+          if (response.data.status === false) {
+            setDatas(null);
+            Alert.alert(
+              "Pemberitahuan",
+              "Tidak ada Dokter Penunjang yang bertugas Pada Hari yang dipilih."
+            );
+          } else {
+            const poli = response.data.data_poli.map((item, index) => {
+              return {
+                key: index,
+                label: item.nm_perawatan,
+                value: item.kd_jenis_prw,
+              };
+            });
+            setDatas(poli);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          Alert.alert(
+            "Poli Tutup",
+            "Coba pilih jam periksa atau tanggal periksa lain."
+          );
+        });
     }
   };
 
@@ -280,6 +313,47 @@ export const PilihPoli = () => {
       await axios
         .post(
           `${BASE_URL}/bookPeriksa/${auth.user.id}/tb`,
+          {
+            no_rkm_medis: dataPas.no_rkm_medis,
+            id_pasien: dataPas.id_pasien,
+            // tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
+            tanggal_periksa: date.toISOString().split("T")[0],
+            jam_periksa:
+              value == "Pagi" ? "07:00:00 - 14:00:00" : "14:00:00 - 18:00:00",
+            kd_dokter: kdDokter,
+            kd_poli: kdPoli,
+            status_reg: "Belum",
+            jns_kunjungan: "Penunjang",
+            status_byr: "-",
+            jns_pas: dataPas.status_user,
+            kd_paket: "",
+            jml_byr: "80000",
+            wa: noHp,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "pd3@mino347",
+              Authorization: `Bearer ${auth.user.token}`,
+            },
+          }
+        )
+        .then((response) => {
+          navigation.replace("Booking Screen", response.data);
+        })
+        .catch((response) => {
+          console.log("response error", response);
+          Alert.alert(
+            "Mohon Maaf",
+            `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
+              date.toISOString().split("T")[0]
+            } di ${value2}`
+          );
+        });
+    } else if (kunjungan === "TeleKonseling") {
+      await axios
+        .post(
+          `${BASE_URL}/bookPeriksa/${auth.user.id}/tk`,
           {
             no_rkm_medis: dataPas.no_rkm_medis,
             id_pasien: dataPas.id_pasien,
@@ -470,10 +544,11 @@ Jam Sore (14:00:00 - 18:00:00)`);
           <Button title={"Pilih"} onPress={pilihJamPeriksa} />
         </View>
       </View>
+
       {kunjungan == "TerangBulan" ? (
         <>
           <View style={styles.list}>
-            <Text>Paket Terang Bulan</Text>
+            <Text>Paket Terang</Text>
             <View style={styles.itemList}>
               <Text style={GlobalStyles.h4}>{value2}</Text>
               <Button title={"Pilih"} onPress={poliTujuan} />

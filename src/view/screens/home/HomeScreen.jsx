@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -17,21 +17,25 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import GlobalStyles from "../../../style/GlobalStyles";
-import { AuthContex } from "../../../contex/AuthProvider";
 import Svg, { Path } from "react-native-svg";
 import MySlider from "../../../components/MySlider";
 import CardButtonComponent from "../../../components/CardButtonComponent";
+import axios from "axios";
+import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const HomeScreen = () => {
-  const { logout, auth } = useContext(AuthContex);
+  const { logout, auth } = useContext(AuthContex); // Pastikan penulisan AuthContex sesuai dengan nama yang benar
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true); // Tambahkan state loading
 
   const onRefresh = () => {
     setRefreshing(true);
+    fetchArticles(); // Panggil kembali fungsi fetchArticles saat refresh
     setRefreshing(false);
   };
 
@@ -82,33 +86,52 @@ const HomeScreen = () => {
     },
   ];
 
-  const articles = [
-    {
-      id: 0,
-      imgUri: "https://via.placeholder.com/150",
-      title: "Sample Title",
-      description:
-        "This is a sample description that will be truncated if it's too long. This is a sample description that will be truncated if it's too long.",
-    },
-    {
-      id: 1,
-      imgUri: "https://via.placeholder.com/150",
-      title: "Another Title",
-      description: "Another sample description that will be truncated.",
-    },
-    {
-      id: 2,
-      imgUri: "https://via.placeholder.com/150",
-      title: "Another Title",
-      description: "Another sample description that will be truncated.",
-    },
-  ];
+  const getArticles = async () => {
+    try {
+      const response = await axios.get("http://192.168.5.3:8000/api/articles");
+      return response.data; // Mengembalikan data dari respons
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      throw error; // Melempar error agar dapat ditangani di tempat lain
+    }
+  };
+
+  const fetchArticles = async () => {
+    try {
+      const articlesData = await getArticles();
+      setArticles(articlesData);
+      setLoading(false); // Setelah selesai loading, set loading menjadi false
+      console.log("Get Article", articlesData);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setLoading(false); // Set loading menjadi false jika terjadi error
+    }
+  };
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await axios.get(
+          "http://192.168.5.3:8000/api/articles"
+        );
+        setArticles(response.data); // Set state articles dengan data dari respons
+        setLoading(false);
+        console.log("fetch data article", response.data);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        setLoading(false); // Set loading menjadi false jika terjadi error
+      }
+    };
+
+    fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
+  }, []);
 
   const renderArticleItem = ({ item }) => (
-    <CardComponentArticel
-      imgSource={{ uri: item.imgUri }}
+    <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
+      imgSource={{ uri: item.image }} // Sesuaikan dengan data artikel yang sesungguhnya
       title={item.title}
-      description={item.description}
+      description={item.content}
+      data={{ item }}
     />
   );
 
@@ -131,12 +154,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View
-        style={{
-          flex: 4,
-          width: wp(100),
-        }}
-      >
+      <View style={{ flex: 4, width: wp(100) }}>
         <MySlider />
       </View>
 
@@ -154,10 +172,9 @@ const HomeScreen = () => {
       <FlatList
         data={articles}
         renderItem={renderArticleItem}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()} // Ganti menjadi index.toString() jika id tidak tersedia
         horizontal
         showsHorizontalScrollIndicator={false}
-        // contentContainerStyle={{ gap: 0 }}
       />
     </>
   );
@@ -174,7 +191,7 @@ const HomeScreen = () => {
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
             fill="#0a78e2"
-            fill-opacity="1"
+            fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
             d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
           ></Path>
         </Svg>
@@ -187,12 +204,7 @@ const HomeScreen = () => {
           ListFooterComponent={ListFooterComponent}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <CardButtonComponent
                 data={{ clinicId: item.kd_poli, nameClinic: item.desc }}
                 icon={item.icon}
@@ -225,4 +237,5 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 });
+
 export default HomeScreen;

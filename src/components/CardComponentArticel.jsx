@@ -1,27 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Card, TouchableRipple } from "react-native-paper";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
+import { Card } from "react-native-paper";
+import RenderHTML from "react-native-render-html";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-const CardComponentArticel = ({ imgSource, title, description }) => {
+const CardComponentArticle = ({ imgSource, title, description, data }) => {
   const [readMore, setReadMore] = useState(false);
   const navigation = useNavigation();
+  const { width } = useWindowDimensions();
 
   return (
-    <TouchableRipple onPress={() => navigation.navigate("Article")}>
+    <TouchableOpacity onPress={() => navigation.navigate("Article", data)}>
       <Card style={styles.card}>
         <Image source={imgSource} style={styles.image} />
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>
-            {readMore ? description : `${description.slice(0, 50)}... `}
-            <TouchableRipple onPress={() => setReadMore(!readMore)}>
-              <Text style={styles.readMore}>
-                {readMore ? "Read less" : "Read more"}
-              </Text>
-            </TouchableRipple>
-          </Text>
+          <RenderHTML
+            contentWidth={width}
+            source={{
+              html: readMore ? description : `${description.slice(0, 50)}...`,
+            }}
+          />
+          <TouchableOpacity onPress={() => setReadMore(!readMore)}>
+            <Text style={styles.readMore}>
+              {readMore ? "Read less" : "Read more"}
+            </Text>
+          </TouchableOpacity>
         </View>
       </Card>
     </TouchableRipple>
@@ -30,8 +42,8 @@ const CardComponentArticel = ({ imgSource, title, description }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: widthPercentageToDP(50),
-    height: widthPercentageToDP(45),
+    width: wp(40),
+    height: wp(55),
     margin: 10,
     borderRadius: 8,
     overflow: "hidden",
@@ -57,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardComponentArticel;
+export default CardComponentArticle;

@@ -148,8 +148,7 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -166,8 +165,7 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data riwayat, silakan mendaftar poli
               </Text>
             </View>
@@ -184,19 +182,16 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}
-        >
+          }}>
           <Dialog.Title
-            style={GlobalStyles.h2}
-          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content
             style={{
               alignContent: "center",
               justifyContent: "center",
               marginTop: 10,
               height: "70%",
-            }}
-          >
+            }}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
         </Dialog>

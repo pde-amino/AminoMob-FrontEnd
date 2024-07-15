@@ -1,4 +1,3 @@
-import { yearsToDays } from "date-fns";
 import React from "react";
 import {
   View,
@@ -6,49 +5,34 @@ import {
   Text,
   Image,
   StyleSheet,
-  SafeAreaView,
+  useWindowDimensions,
 } from "react-native";
 import { Card } from "react-native-paper";
+import RenderHTML from "react-native-render-html";
 
-const ArticleKesehatan = () => {
-  //   const dateUpload = new Date();
+const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
+  const { width } = useWindowDimensions();
+  const { item } = route.params;
   const year = new Date().getFullYear();
   const article = {
-    imageUrl: "https://via.placeholder.com/150", // Ganti dengan URL gambar utama
-    title: "Judul Artikel",
-    category: "Kategori Artikel",
-    // publishDate: { dateUpload },
-    content: `Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-    Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-    Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-    Ini adalah isi artikel. Artikel ini berisi informasi yang sangat menarik dan bermanfaat bagi pembaca. 
-              Anda dapat menambahkan teks lebih banyak lagi sesuai dengan konten artikel yang Anda miliki.
-              `,
+    imageUrl: "https://via.placeholder.com/150",
+    title: item.title || "Default Title",
+    category: item.category || "Default Category",
+    content: item.content || "<p>Default Content</p>",
     copyright: `© ${year} Amino Hospital`,
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: article.imageUrl }} style={styles.image} />
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>{article.title}</Text>
-        <Text style={styles.category}>{article.category}</Text>
-        {/* <Text style={styles.category}>{article.publishDate}</Text> */}
-        <Text style={styles.content}>{article.content}</Text>
-        <Text style={styles.copyright}>{article.copyright}</Text>
-      </View>
-      {/* </Card> */}
+      <Card style={[styles.card, { paddingTop: 5 }]}>
+        <Image source={{ uri: article.imageUrl }} style={styles.image} />
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>{article.title}</Text>
+          <Text style={styles.category}>{article.category}</Text>
+          <RenderHTML contentWidth={width} source={{ html: article.content }} />
+          <Text style={styles.copyright}>{article.copyright}</Text>
+        </View>
+      </Card>
     </ScrollView>
   );
 };

@@ -100,10 +100,16 @@ export default function LayananNonBPJS() {
       to: "Pilih Poli",
       poli: "Penunjang",
       to: () => {
-        Alert.alert(
-          "Maaf",
-          "Saat ini menu Telekonseling masih dalam tahap pengembangan"
-        );
+        setJnsMenu("TerangBulan");
+        navigation.navigate("Pilih Poli", {
+          dataKerabat,
+          jnsMenu: "TerangBulan",
+        });
+        // () => {
+        //   Alert.alert(
+        //     "Maaf",
+        //     "Saat ini menu Telekonseling masih dalam tahap pengembangan"
+        //   );
         // setJnsMenu("tele");
       },
       // warna: "#09A0CF",

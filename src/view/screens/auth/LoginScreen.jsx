@@ -109,8 +109,7 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
               Masuk
