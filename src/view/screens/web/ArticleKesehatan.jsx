@@ -15,7 +15,7 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
   const { item } = route.params;
   const year = new Date().getFullYear();
   const article = {
-    imageUrl: "https://via.placeholder.com/150",
+    imageUrl: item.image_url || "https://via.placeholder.com/150",
     title: item.title || "Default Title",
     category: item.category || "Default Category",
     content: item.content || "<p>Default Content</p>",
@@ -29,7 +29,7 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{article.title}</Text>
           <Text style={styles.category}>{article.category}</Text>
-          <RenderHTML contentWidth={width} source={{ html: article.content }} />
+          <RenderHTML contentWidth={width} source={{ html: item.content }} />
           <Text style={styles.copyright}>{article.copyright}</Text>
         </View>
       </Card>

@@ -128,7 +128,7 @@ const HomeScreen = () => {
 
   const renderArticleItem = ({ item }) => (
     <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
-      imgSource={{ uri: item.image }} // Sesuaikan dengan data artikel yang sesungguhnya
+      imgSource={{ uri: item.image_url }} // Sesuaikan dengan data artikel yang sesungguhnya
       title={item.title}
       description={item.content}
       data={{ item }}
