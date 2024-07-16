@@ -32,6 +32,7 @@ const TextInputIconComponent = ({
   onChangeText,
   password = false,
   value = "",
+  inputMode = "text",
 }) => {
   const [text, setText] = useState(value);
   const [error, setError] = useState("");
@@ -70,14 +71,7 @@ const TextInputIconComponent = ({
         value={text}
         onChangeText={handleChange}
         secureTextEntry={secureTextEntry}
-        // right={
-        //   password ? (
-        //     <TextInput
-        //       icon={secureTextEntry ? "eye-off" : "eye"}
-        //       onPress={toggleSecureTextEntry}
-        //     />
-        //   ) : null
-        // }
+        inputMode={inputMode}
       />
       {password ? (
         <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>

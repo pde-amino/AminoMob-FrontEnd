@@ -36,6 +36,7 @@ import OTPInputScreen from "../view/screens/auth/OTPInputScreen";
 import SplashScreen from "../view/screens/home/SplashScreen";
 import DetailDoctorScreen from "../view/screens/informasi/DetailDoctorScreen";
 import ArticleKesehatan from "../view/screens/web/ArticleKesehatan";
+import AllArticle from "../view/screens/web/AllArticle";
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,15 @@ export default function Routes() {
             component={ArticleKesehatan}
             options={{
               title: "Artikel",
+            }}
+          />
+
+          <Stack.Screen
+            name="AllArticle"
+            screenOptions={{ headerShown: true }}
+            component={AllArticle}
+            options={{
+              title: "Artikel Amino",
             }}
           />
 

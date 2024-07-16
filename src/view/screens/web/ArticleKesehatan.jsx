@@ -18,7 +18,7 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
     imageUrl: item.image_url || "https://via.placeholder.com/150",
     title: item.title || "Default Title",
     category: item.category || "Default Category",
-    content: item.content || "<p>Default Content</p>",
+    content: item.content || "Default Content",
     copyright: `© ${year} Amino Hospital`,
   };
 

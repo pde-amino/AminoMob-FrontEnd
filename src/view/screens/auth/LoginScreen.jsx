@@ -121,6 +121,7 @@ const LoginScreen = () => {
               placeholder="Masukkan No HP Anda"
               value={username}
               type={"username"}
+              inputMode={"numeric"}
               onChangeText={handleUsernameChange}
             />
 
