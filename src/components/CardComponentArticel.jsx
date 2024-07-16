@@ -1,21 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from "react-native";
-import { Card } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Card, TouchableRipple } from "react-native-paper";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import GlobalStyles from "../style/GlobalStyles";
 
 const CardComponentArticel = ({ imgSource, title, description, data }) => {
-  const { width } = useWindowDimensions();
+  // const { width } = useWindowDimensions();
   const [readMore, setReadMore] = useState(false);
   const navigation = useNavigation();
   console.log("testing image", data.item);
@@ -25,8 +17,8 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
       <Card style={styles.card}>
         <Image source={{ uri: data.item.image_url }} style={styles.image} />
         <View style={styles.content}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>
+          <Text style={GlobalStyles.h4}>{title}</Text>
+          <Text style={GlobalStyles.textBiasa}>
             {/* <RenderHTML
               contentWidth={width}
               source={{
@@ -64,19 +56,10 @@ const styles = StyleSheet.create({
   content: {
     padding: 10,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  description: {
-    fontSize: 14,
-    color: "gray",
-  },
   readMore: {
     color: "blue",
     marginTop: 5,
   },
 });
 
-export default CardComponentArticel;
 export default CardComponentArticel;

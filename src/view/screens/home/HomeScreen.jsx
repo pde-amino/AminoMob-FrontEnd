@@ -16,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
   widthPercentageToDP,
+  heightPercentageToDP,
 } from "react-native-responsive-screen";
 import GlobalStyles from "../../../style/GlobalStyles";
 import Svg, { Path } from "react-native-svg";
@@ -24,7 +25,7 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
-import { Button } from "react-native-paper";
+import { Button, Icon } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -168,22 +169,21 @@ const HomeScreen = () => {
 
   const showAllArticle = () => (
     <TouchableOpacity onPress={() => navigation.navigate("AllArticle")}>
-      {console.log("testingsasdas :")}
       <View
         style={[
           // (height = widthPercentageToDP(20)),
           {
-            height: widthPercentageToDP(50),
             width: widthPercentageToDP(40),
+            height: widthPercentageToDP(50),
             alignItems: "center",
             justifyContent: "center",
-            // backgroundColor: "black",
-            // borderBlockColor: "black",
-            // borderWidth: 1,
-            // borderRadius: 8,
+            borderRadius: 10,
+            gap: 12,
           },
-        ]}>
-        <Text>{"Lihat Lebih Banyak Artikel".slice(0, 50)}...</Text>
+        ]}
+      >
+        <Text style={GlobalStyles.textBiasa}>Artikel Lainnya</Text>
+        <Icon size={32} source={"arrow-right"} />
       </View>
     </TouchableOpacity>
   );
