@@ -19,7 +19,7 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
   console.log("testing image", data.item);
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Article", data)}>
+    <TouchableRipple onPress={() => navigation.navigate("Article")}>
       <Card style={styles.card}>
         <Image source={{ uri: data.item.image_url }} style={styles.image} />
         <View style={styles.content}>
@@ -43,7 +43,7 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
           </Text>
         </View>
       </Card>
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 };
 
@@ -76,4 +76,5 @@ const styles = StyleSheet.create({
   },
 });
 
+export default CardComponentArticel;
 export default CardComponentArticel;

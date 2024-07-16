@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
-    padding: 16,
+    padding: 20,
   },
   card: {
     borderRadius: 10,
-    overflow: "hidden",
+    // overflow: "hidden",
     marginBottom: 16,
   },
   image: {
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     marginBottom: 16,
+    textAlign: "justify",
   },
   copyright: {
     fontSize: 14,

@@ -51,7 +51,8 @@ const ConfirmModal = ({
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onCancel}>
+      onRequestClose={onCancel}
+    >
       {list ? (
         <TouchableWithoutFeedback onPress={onCancel}>
           <View style={styles.modalBackground}>
@@ -92,11 +93,17 @@ const ConfirmModal = ({
                 <Button
                   mode="contained"
                   style={styles.btnYes}
+                  labelStyle={{ color: "white" }}
                   onPress={onConfirm} // Memanggil handleConfirmPress saat tombol ditekan
                 >
                   {confirmButtonText}
                 </Button>
-                <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
+                <Button
+                  mode="outlined"
+                  labelStyle={{ color: "#0A78E2" }}
+                  style={styles.btnNo}
+                  onPress={onCancel}
+                >
                   {cancelButtonText}
                 </Button>
               </View>
@@ -143,13 +150,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     justifyContent: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#0A78E2",
   },
   btnNo: {
     flex: 1,
     marginRight: 10,
     borderRadius: 10,
     justifyContent: "center",
+    borderColor: "#0A78E2",
   },
 });
 
