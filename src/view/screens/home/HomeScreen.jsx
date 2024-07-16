@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  widthPercentageToDP,
 } from "react-native-responsive-screen";
 import GlobalStyles from "../../../style/GlobalStyles";
 import Svg, { Path } from "react-native-svg";
@@ -23,6 +24,7 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
+import { Button } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -128,7 +130,7 @@ const HomeScreen = () => {
 
   const renderArticleItem = ({ item }) => (
     <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
-      imgSource={{ uri: item.image }} // Sesuaikan dengan data artikel yang sesungguhnya
+      imgSource={{ uri: item.image_url }} // Sesuaikan dengan data artikel yang sesungguhnya
       title={item.title}
       description={item.content}
       data={{ item }}
@@ -164,6 +166,28 @@ const HomeScreen = () => {
     </View>
   );
 
+  const showAllArticle = () => (
+    <TouchableOpacity onPress={() => navigation.navigate("AllArticle")}>
+      {console.log("testingsasdas :")}
+      <View
+        style={[
+          // (height = widthPercentageToDP(20)),
+          {
+            height: widthPercentageToDP(50),
+            width: widthPercentageToDP(40),
+            alignItems: "center",
+            justifyContent: "center",
+            // backgroundColor: "black",
+            // borderBlockColor: "black",
+            // borderWidth: 1,
+            // borderRadius: 8,
+          },
+        ]}>
+        <Text>{"Lihat Lebih Banyak Artikel".slice(0, 50)}...</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   const ListFooterComponent = () => (
     <>
       <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
@@ -171,8 +195,9 @@ const HomeScreen = () => {
       </View>
       <FlatList
         data={articles}
+        ListFooterComponent={showAllArticle()}
         renderItem={renderArticleItem}
-        keyExtractor={(item, index) => index.toString()} // Ganti menjadi index.toString() jika id tidak tersedia
+        keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
       />
