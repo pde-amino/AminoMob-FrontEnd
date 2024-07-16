@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import { Card, TouchableRipple } from "react-native-paper";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 

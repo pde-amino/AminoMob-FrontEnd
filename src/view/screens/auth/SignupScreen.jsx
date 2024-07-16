@@ -8,8 +8,6 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
-  Pressable,
-  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";

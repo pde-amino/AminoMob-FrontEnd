@@ -6,7 +6,6 @@ import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 
 export default function SearchDokter() {

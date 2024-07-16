@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import React from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
