@@ -13,6 +13,7 @@ import RenderHTML from "react-native-render-html";
 const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
   const { width } = useWindowDimensions();
   const { item } = route.params;
+  console.log("testingUsersss", item);
   const year = new Date().getFullYear();
   const article = {
     imageUrl: item.image_url || "https://via.placeholder.com/150",

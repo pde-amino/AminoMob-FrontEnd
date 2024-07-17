@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import { Card } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
@@ -60,16 +61,18 @@ const AllArticle = () => {
 
   return (
     // <ScrollView style={styles.container}>
-    <View style={[GlobalStyles.safeAreaStyle, { alignItems: "center" }]}>
-      <FlatList
-        horizontal={false}
-        numColumns={2}
-        data={articles}
-        renderItem={renderArticleItem}
-        keyExtractor={(item) => item.id}
-        // onRefresh={<RefreshControl refreshing={loading} />}
-      />
-    </View>
+    <SafeAreaView style={GlobalStyles.safeAreaStyle}>
+      <View style={[GlobalStyles.safeAreaStyle, { alignItems: "center" }]}>
+        <FlatList
+          horizontal={false}
+          numColumns={2}
+          data={articles}
+          renderItem={renderArticleItem}
+          keyExtractor={(item) => item.id}
+          // onRefresh={<RefreshControl refreshing={loading} />}
+        />
+      </View>
+    </SafeAreaView>
 
     // </ScrollView>
   );
