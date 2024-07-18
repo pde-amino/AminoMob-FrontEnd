@@ -112,31 +112,38 @@ export default function LayananNonBPJS() {
       to: "Pilih Poli",
       poli: "Penunjang",
       to: () => {
-        setJnsMenu("TerangBulan");
-        if (dataKerabat.no_rkm_medis === "") {
-          Alert.alert(
-            "Maaf",
-            `Layanan ini sementara hanya tersedia untuk yang sudah mempunyai Nomor Rekam Medis. "${dataKerabat.nm_pasien}" belum memiliki Nomor Rekam Medis.`,
-            [
-              {
-                text: "cara mendapatkan nomor rawat?",
-                onPress: () => {
-                  Alert.alert(
-                    "Informasi",
-                    "Silahkan mendaftarkan diri di RS untuk mendapatkan Nomor Rekam Medis."
-                  );
-                },
-              },
-              { text: "OK", onPress: () => {} },
-            ]
-          );
-        } else {
-          navigation.navigate("Pilih Poli", {
-            dataKerabat,
-            jnsMenu: "TerangBulan",
-          });
-        }
+        Alert.alert(
+          "Maaf",
+          "Saat ini menu Terang Bulan masih dalam tahap pengembangan"
+        );
+        setJnsMenu("tele");
       },
+      // () => {
+      //   setJnsMenu("TerangBulan");
+      //   if (dataKerabat.no_rkm_medis === "") {
+      //     Alert.alert(
+      //       "Maaf",
+      //       `Layanan ini sementara hanya tersedia untuk yang sudah mempunyai Nomor Rekam Medis. "${dataKerabat.nm_pasien}" belum memiliki Nomor Rekam Medis.`,
+      //       [
+      //         {
+      //           text: "cara mendapatkan nomor rawat?",
+      //           onPress: () => {
+      //             Alert.alert(
+      //               "Informasi",
+      //               "Silahkan mendaftarkan diri di RS untuk mendapatkan Nomor Rekam Medis."
+      //             );
+      //           },
+      //         },
+      //         { text: "OK", onPress: () => {} },
+      //       ]
+      //     );
+      //   } else {
+      //     navigation.navigate("Pilih Poli", {
+      //       dataKerabat,
+      //       jnsMenu: "TerangBulan",
+      //     });
+      //   }
+      // },
       // warna: "#A557F3",
       warna: "#9335F0",
       img: require("../../../../assets/icon44.png"),
