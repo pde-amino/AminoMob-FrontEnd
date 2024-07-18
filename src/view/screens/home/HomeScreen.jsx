@@ -15,8 +15,6 @@ import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-  widthPercentageToDP,
-  heightPercentageToDP,
 } from "react-native-responsive-screen";
 import GlobalStyles from "../../../style/GlobalStyles";
 import Svg, { Path } from "react-native-svg";
@@ -25,7 +23,7 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
-import { Button, Icon } from "react-native-paper";
+import { Icon, TouchableRipple } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -114,9 +112,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get(
-          "http://192.168.5.3:8000/api/articles"
-        );
+        const response = await axios.get("http://192.168.5.3:8000/api/article");
         setArticles(response.data); // Set state articles dengan data dari respons
         setLoading(false);
         console.log("fetch data article", response.data);
@@ -170,24 +166,12 @@ const HomeScreen = () => {
   );
 
   const showAllArticle = () => (
-    <TouchableOpacity onPress={() => navigation.navigate("AllArticle")}>
-      <View
-        style={[
-          // (height = widthPercentageToDP(20)),
-          {
-            width: widthPercentageToDP(40),
-            height: widthPercentageToDP(50),
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 10,
-            gap: 12,
-          },
-        ]}
-      >
+    <TouchableRipple onPress={() => navigation.navigate("AllArticle")}>
+      <View style={styles.containerNext}>
         <Text style={GlobalStyles.textBiasa}>Artikel Lainnya</Text>
-        <Icon size={32} source={"arrow-right"} />
+        <Icon size={32} source={"arrow-right-circle"} color="#3e3e3e" />
       </View>
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 
   const ListFooterComponent = () => (
@@ -219,7 +203,8 @@ const HomeScreen = () => {
           <Path
             fill="#0a78e2"
             fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
-            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+          ></Path>
         </Svg>
       </View>
 
@@ -260,6 +245,15 @@ const styles = StyleSheet.create({
     height: 150,
     width: "100%",
     position: "absolute",
+  },
+  containerNext: {
+    width: wp(40),
+    height: wp(50),
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    gap: 8,
+    // backgroundColor: "red",
   },
 });
 

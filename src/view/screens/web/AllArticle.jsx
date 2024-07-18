@@ -16,11 +16,15 @@ import CardComponentArticel from "../../../components/CardComponentArticel";
 import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { RefreshControl } from "react-native-gesture-handler";
+import HeaderComponent from "../../../components/HeaderComponent";
+import { useNavigation } from "@react-navigation/native";
 
 const AllArticle = () => {
   const { width } = useWindowDimensions();
   //   const { item } = route.params;
   const year = new Date().getFullYear();
+
+  const navigation = useNavigation();
 
   const [articles, setArticles] = useState("");
   const [loading, setLoading] = useState("");
@@ -60,8 +64,14 @@ const AllArticle = () => {
   );
 
   return (
-    // <ScrollView style={styles.container}>
-    <SafeAreaView style={GlobalStyles.safeAreaStyle}>
+    <View style={GlobalStyles.utama}>
+      <View>
+        <HeaderComponent
+          title={"Artikel"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
       <View style={[GlobalStyles.safeAreaStyle, { alignItems: "center" }]}>
         <FlatList
           horizontal={false}
@@ -72,9 +82,7 @@ const AllArticle = () => {
           // onRefresh={<RefreshControl refreshing={loading} />}
         />
       </View>
-    </SafeAreaView>
-
-    // </ScrollView>
+    </View>
   );
 };
 

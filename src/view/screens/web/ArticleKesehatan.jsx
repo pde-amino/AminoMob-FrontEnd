@@ -7,10 +7,42 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import { Card } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
+import GlobalStyles from "../../../style/GlobalStyles";
+import HeaderComponent from "../../../components/HeaderComponent";
+import { useNavigation } from "@react-navigation/native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
+const tagsStyles = {
+  p: {
+    fontSize: hp(1.8),
+    textAlign: "justify",
+    backgroundColor: "none",
+  },
+  li: {
+    fontSize: hp(1.8),
+    textAlign: "justify",
+    backgroundColor: "none",
+  },
+  h3: {
+    fontSize: hp(2),
+    fontWeight: "bold",
+    color: "#3E3E3E",
+  },
+};
+
+const classesStyles = {
+  customClass: {
+    fontSize: 20,
+    color: "purple",
+  },
+};
 
 const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
+  const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const { item } = route.params;
   console.log("testingUsersss", item);
@@ -20,63 +52,59 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
     title: item.title || "Default Title",
     category: item.category || "Default Category",
     content: item.content || "Default Content",
+    updates: item.updated_at,
     copyright: `© ${year} Amino Hospital`,
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Card style={[styles.card, { paddingTop: 5 }]}>
+    <View style={GlobalStyles.utama}>
+      <View>
+        <HeaderComponent
+          title={article.title}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+      <ScrollView style={styles.container}>
         <Image source={{ uri: article.imageUrl }} style={styles.image} />
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{article.title}</Text>
-          <Text style={styles.category}>{article.category}</Text>
-          <RenderHTML contentWidth={width} source={{ html: item.content }} />
+        <View>
+          <Text style={[GlobalStyles.h1, { marginBottom: 8 }]}>
+            {article.title}
+          </Text>
+          <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>
+            {article.category}
+          </Text>
+          <RenderHTML
+            tagsStyles={tagsStyles}
+            classesStyles={classesStyles}
+            contentWidth={width}
+            source={{ html: item.content }}
+          />
           <Text style={styles.copyright}>{article.copyright}</Text>
         </View>
-      </Card>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
     padding: 20,
-  },
-  card: {
-    borderRadius: 10,
-    // overflow: "hidden",
-    marginBottom: 16,
   },
   image: {
     width: "100%",
     height: 200,
     resizeMode: "cover",
-  },
-  contentContainer: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  category: {
-    fontSize: 16,
-    color: "#888",
-    marginBottom: 16,
-  },
-  content: {
-    fontSize: 16,
-    marginBottom: 16,
-    textAlign: "justify",
+    borderRadius: 10,
+    marginBottom: 20,
   },
   copyright: {
-    fontSize: 14,
+    fontSize: hp(1.6),
     color: "#888",
     textAlign: "center",
-    marginTop: 16,
+    paddingTop: 100,
+    justifyContent: "flex-end",
   },
 });
 

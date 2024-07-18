@@ -23,8 +23,7 @@ const dataCarousel = [
   {
     id: 2,
     link: "https://youtu.be/lYVULhq-BOM",
-    image:
-      "https://i.ytimg.com/vi/lYVULhq-BOM/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG\u0026rs=AOn4CLCSOXcBWGOUqrwvZY-Q9KVtynFdvA",
+    image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
   },
   {
     id: 3,
@@ -35,8 +34,7 @@ const dataCarousel = [
   {
     id: 4,
     link: "https://youtu.be/175fi-dh6X4",
-    image:
-      "https://i.ytimg.com/vi/175fi-dh6X4/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG\u0026rs=AOn4CLBgQaQ5YaAsW10S3-d0YUHwGESSEw",
+    image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
   },
 ];
 
@@ -68,7 +66,8 @@ export default function MySlider() {
         renderItem={({ item }) => (
           <TouchableRipple
             onPress={() => handlePress(item.link)}
-            style={styles.borderShadow}>
+            style={styles.borderShadow}
+          >
             <Image
               style={styles.imageCarousel}
               source={{

@@ -1,17 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from "react-native";
 import { Card, TouchableRipple } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Card, TouchableRipple } from "react-native-paper";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import GlobalStyles from "../style/GlobalStyles";
 
@@ -38,11 +29,11 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
             {readMore
               ? data.item.shortDesc
               : `${data.item.shortDesc.slice(0, 50)}... `}
-            <TouchableOpacity onPress={() => setReadMore(!readMore)}>
-              {/* <Text style={styles.readMore}>
+            {/* <TouchableOpacity onPress={() => setReadMore(!readMore)}> */}
+            {/* <Text style={styles.readMore}>
                 {readMore ? "Read less" : "Read more"}
               </Text> */}
-            </TouchableOpacity>
+            {/* </TouchableOpacity> */}
           </Text>
         </View>
       </Card>
@@ -65,10 +56,10 @@ const styles = StyleSheet.create({
   content: {
     padding: 10,
   },
-  readMore: {
-    color: "blue",
-    marginTop: 5,
-  },
+  // readMore: {
+  //   color: "blue",
+  //   marginTop: 5,
+  // },
 });
 
 export default CardComponentArticel;

@@ -17,7 +17,6 @@ export default function SearchDokter() {
   const [dataPoli, setDataPoli] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [tanpaDokter, setTanpaDokter] = useState(false);
@@ -117,6 +116,9 @@ export default function SearchDokter() {
                 Amino Gundohutomo
               </Text>
             }
+            contentContainerStyle={{
+              paddingBottom: 200,
+            }}
           />
         </View>
       </View>
