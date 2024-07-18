@@ -60,7 +60,7 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
     <View style={GlobalStyles.utama}>
       <View>
         <HeaderComponent
-          title={article.title}
+          // title={article.title}
           icon={"arrow-back"}
           onPress={() => navigation.goBack()}
         />
