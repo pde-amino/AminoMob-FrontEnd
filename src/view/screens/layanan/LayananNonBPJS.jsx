@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   FlatList,
@@ -7,15 +7,13 @@ import {
   Text,
   TouchableOpacityComponent,
 } from "react-native";
-import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
-import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
-import ModalComponent from "../../../components/ModalComponent";
+
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function LayananNonBPJS() {
   const navigation = useNavigation();
@@ -27,16 +25,6 @@ export default function LayananNonBPJS() {
   const [kerabat, setKerabat] = useState(false);
   const route = useRoute();
   const [modal, setModal] = useState(false);
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleShowModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleHideModal = () => {
-    setIsModalVisible(false);
-  };
 
   console.log("datapasdsdasdasdasd", route.params);
   const dataKerabat = route.params;
@@ -52,7 +40,8 @@ export default function LayananNonBPJS() {
       <TouchableOpacityComponent
         onPress={() => {
           Alert.alert("Informasi", "Cara mendapatkan nomor rawat");
-        }}>
+        }}
+      >
         <Text>Bagaimana cara mendapatkan nomor rawat</Text>
       </TouchableOpacityComponent>
     </View>;

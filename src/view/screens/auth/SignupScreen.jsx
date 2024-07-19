@@ -8,8 +8,6 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
-  Pressable,
-  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -152,6 +150,7 @@ const SignupScreen = () => {
             />
             <TextInputIconComponent
               label={"No Handphone"}
+              // placeholder={"Pastikan nomor tersambung dengan WhatsApp"}
               type={"nomor"}
               value={noHP}
               onChangeText={setHP}

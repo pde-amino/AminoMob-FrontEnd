@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../style/GlobalStyles";
+import { TouchableRipple } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -37,7 +30,7 @@ const CardButtonNavComponent = ({
   };
 
   return (
-    <TouchableOpacity
+    <TouchableRipple
       style={[styles.button, { backgroundColor: warna }]}
       onPress={modal ? onPress : handlePress}
     >
@@ -50,7 +43,7 @@ const CardButtonNavComponent = ({
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 };
 

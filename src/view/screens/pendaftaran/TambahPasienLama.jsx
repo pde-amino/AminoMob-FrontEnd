@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   TextInput,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   Pressable,
   Platform,
   Text,
 } from "react-native";
-import { Divider } from "react-native-paper";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";

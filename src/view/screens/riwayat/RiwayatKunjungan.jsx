@@ -13,20 +13,12 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
 import axios from "axios";
 import { useState } from "react";
-import {
-  ActivityIndicator,
-  Icon,
-  List,
-  Dialog,
-  Portal,
-} from "react-native-paper";
+import { ActivityIndicator, Dialog, Portal } from "react-native-paper";
 import CardColapse from "../../../components/CardColapse";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import ConfirmModal from "../../../components/ConfirmModal";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
-import BottomSheet from "../../../components/BottomSheet";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -148,7 +140,8 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -165,7 +158,8 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
+                ]}
+              >
                 Belum ada data riwayat, silakan mendaftar poli
               </Text>
             </View>
@@ -182,16 +176,19 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}>
+          }}
+        >
           <Dialog.Title
-            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content
             style={{
               alignContent: "center",
               justifyContent: "center",
               marginTop: 10,
               height: "70%",
-            }}>
+            }}
+          >
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
         </Dialog>

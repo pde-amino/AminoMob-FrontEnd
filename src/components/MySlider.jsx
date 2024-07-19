@@ -66,7 +66,8 @@ export default function MySlider() {
         renderItem={({ item }) => (
           <TouchableRipple
             onPress={() => handlePress(item.link)}
-            style={styles.borderShadow}>
+            style={styles.borderShadow}
+          >
             <Image
               style={styles.imageCarousel}
               source={{

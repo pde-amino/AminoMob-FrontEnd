@@ -6,7 +6,6 @@ import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ActivityIndicator } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 
 export default function SearchDokter() {
@@ -18,7 +17,6 @@ export default function SearchDokter() {
   const [dataPoli, setDataPoli] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [tanpaDokter, setTanpaDokter] = useState(false);
@@ -118,6 +116,9 @@ export default function SearchDokter() {
                 Amino Gundohutomo
               </Text>
             }
+            contentContainerStyle={{
+              paddingBottom: 200,
+            }}
           />
         </View>
       </View>

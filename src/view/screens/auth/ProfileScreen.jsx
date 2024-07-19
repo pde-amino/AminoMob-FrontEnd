@@ -30,7 +30,7 @@ import { BASE_URL } from "../../../contex/Config";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import {
   heightPercentageToDP as hp,
-  widthPercentageToDP as dp,
+  widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 
 const ProfileScreen = () => {

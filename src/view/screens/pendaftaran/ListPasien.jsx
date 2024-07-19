@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -33,7 +33,6 @@ export default function ListPasien() {
   const { auth } = useContext(AuthContex);
   const navigation = useNavigation();
   const [btmTambah, setBtmtambah] = useState(false);
-  const [btmMenu, setBtmMenu] = useState(false);
   const [dataPasien, setDataPasien] = useState([]);
   const [pilihPasien, setPilihPasien] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -100,11 +99,6 @@ export default function ListPasien() {
         }}
       />
     );
-  };
-
-  const handleMenuPress = (menuItem) => {
-    setBtmMenu(false);
-    navigation.navigate(menuItem.to, { no_rkm_medis: pilihPasien });
   };
 
   const onRefresh = () => {
