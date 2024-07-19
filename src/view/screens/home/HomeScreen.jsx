@@ -113,9 +113,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get(
-          "http://192.168.5.3:8000/api/articles"
-        );
+        const response = await axios.get("http://192.168.5.3:8000/api/article");
         setArticles(response.data); // Set state articles dengan data dari respons
         setLoading(false);
         console.log("fetch data article", response.data);
@@ -173,16 +171,11 @@ const HomeScreen = () => {
       {console.log("testingsasdas :")}
       <View
         style={[
-          // (height = widthPercentageToDP(20)),
           {
             height: widthPercentageToDP(50),
             width: widthPercentageToDP(40),
             alignItems: "center",
             justifyContent: "center",
-            // backgroundColor: "black",
-            // borderBlockColor: "black",
-            // borderWidth: 1,
-            // borderRadius: 8,
           },
         ]}>
         <Text>{"Lihat Lebih Banyak Artikel".slice(0, 50)}...</Text>

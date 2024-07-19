@@ -22,7 +22,7 @@ import { ActivityIndicator, Icon } from "react-native-paper";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>
-    <Text style={GlobalStyles.textBiasa}>{item.nm_pasien}</Text>
+    <Text style={GlobalStyles.textBold}>{item.nm_pasien}</Text>
     <Icon source="chevron-right" size={24} />
   </TouchableOpacity>
 );
@@ -143,8 +143,7 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -161,8 +160,7 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>

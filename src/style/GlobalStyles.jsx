@@ -111,6 +111,12 @@ export default GlobalStyles = StyleSheet.create({
     fontSize: hp(1.6),
     color: "#3E3E3E",
   },
+  textBold: {
+    fontSize: hp(1.6),
+    fontWeight: "bold",
+    color: "#3E3E3E",
+    letterSpacing: 0.5,
+  },
   textLink: {
     fontSize: hp(1.6),
     color: WARNA.primary,

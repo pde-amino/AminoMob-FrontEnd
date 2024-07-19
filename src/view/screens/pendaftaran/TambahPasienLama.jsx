@@ -104,10 +104,7 @@ export const TambahPasienLama = () => {
           }
         })
         .catch((error) => {
-          Alert.alert(
-            "Peringatan",
-            "Pastikan data yang anda input adalah data pasien yang pernah periksa di Amino Hospital"
-          );
+          Alert.alert("Peringatan", "Data Tidak Ditemukan.");
           // console.error("Error fetching data: ", error);
         });
 
@@ -174,7 +171,8 @@ export const TambahPasienLama = () => {
       <View style={styles.containerMid}>
         <View style={{ gap: 8 }}>
           <Text style={[GlobalStyles.h4, { maxWidth: "85%" }]}>
-            Untuk pengecekan data pasien, mohon masukkan data dengan benar
+            Untuk pengecekan data pasien, masukan nomor Rekam Medis dan tanggal
+            lahir milik pasien.
           </Text>
 
           <TextInputIconComponent
