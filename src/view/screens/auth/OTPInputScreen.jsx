@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
   Alert,
   TouchableOpacity,
 } from "react-native";
@@ -24,8 +23,8 @@ const OTPInputScreen = () => {
   const { auth, setAuth } = useContext(AuthContex);
   const navigation = useNavigation();
 
-  const [counter, setCounter] = useState(60); // Mulai hitung mundur dari 60 detik
-  const [isCounting, setIsCounting] = useState(false);
+  const [counter, setCounter] = useState(30); // Mulai hitung mundur dari 30 detik
+  const [isCounting, setIsCounting] = useState(true); // Mulai dengan status counting true
 
   useEffect(() => {
     let timer;
@@ -35,7 +34,7 @@ const OTPInputScreen = () => {
           if (prevCounter <= 1) {
             clearInterval(timer);
             setIsCounting(false);
-            return 180;
+            return 30;
           }
           return prevCounter - 1;
         });
@@ -45,9 +44,9 @@ const OTPInputScreen = () => {
   }, [isCounting]);
 
   const handleSendOtp = () => {
-    // Logika pengiriman OTP Anda di sini
     console.log("OTP dikirim!");
-    setIsCounting(true);
+    setCounter(10); // Setel ulang counter ke 30 detik setiap kali OTP dikirim
+    setIsCounting(true); // Mulai hitung mundur
   };
 
   const handleOTPSubmit = async () => {
@@ -78,7 +77,7 @@ const OTPInputScreen = () => {
           "Success",
           "Kode OTP valid. Silahkan Login menggunakan nomor yang anda daftarkan.",
           [{ text: "OK", onPress: () => navigation.navigate("Login Screen") }]
-        ); // Navigasi ke layar Home
+        );
       } catch (error) {
         console.error("Error saving userInfo to AsyncStorage", error);
         Alert.alert(
@@ -112,8 +111,10 @@ const OTPInputScreen = () => {
           styles.resendButton,
           isCounting && styles.resendButtonDisabled,
         ]}>
-        <Text style={styles.resendButtonText}>
-          {isCounting ? `Kirim OTP dalam ${counter}d` : "Kirim Ulang OTP"}
+        <Text style={GlobalStyles.h4}>
+          {isCounting
+            ? `Kirim ulang OTP dalam ${counter}detik`
+            : "Kirim Ulang OTP"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -135,18 +136,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   resendButton: {
-    marginTop: 20,
-    padding: 15,
-    borderRadius: 5,
-    width: "80%",
+    marginTop: 40,
+    padding: 5,
+    // borderRadius: 5,
+    width: "auto",
     alignItems: "center",
-    backgroundColor: "#0A78E2",
+    // borderBottomColor: "#0A78E2",
+    borderBottomWidth: 1,
+    // backgroundColor: "#0A78E2",
   },
   resendButtonDisabled: {
-    backgroundColor: "#A0A0A0",
+    borderBottomWidth: 1,
+    color: "black",
+    // backgroundColor: "#A0A0A0",
   },
   resendButtonText: {
-    color: "#fff",
+    color: "black",
+    fontWeight: "bold",
     fontSize: 16,
   },
 });
