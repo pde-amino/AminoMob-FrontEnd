@@ -25,6 +25,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import * as Network from "expo-network";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -185,6 +186,7 @@ export const TambahPasien = () => {
   const tglHariIni = getCurrentDate();
 
   const postPasienBaru = async () => {
+    const ip = await Network.getIpAddressAsync();
     try {
       const response = await axios.post(
         `${BASE_URL}/insertPas/${auth.user.id}`,
@@ -224,6 +226,7 @@ export const TambahPasien = () => {
           nip: "",
           kd_prop: "",
           propinsipj: "",
+          ip: ip,
         },
         {
           headers: {
@@ -282,8 +285,7 @@ export const TambahPasien = () => {
               style={{
                 width: "100%",
                 marginLeft: 40,
-              }}
-            >
+              }}>
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
             <View style={styles.containerDrop}>

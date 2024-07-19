@@ -24,6 +24,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import * as Network from "expo-network";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -115,6 +116,7 @@ export const TambahPasienLama = () => {
   };
 
   const addKerabat = async () => {
+    const ip = await Network.getIpAddressAsync();
     await axios
       .post(
         `${BASE_URL}/tambahKerabat/${auth.user.id}`,
@@ -122,6 +124,7 @@ export const TambahPasienLama = () => {
           no_rkm_medis: dataGet.no_rkm_medis,
           status_user: hubunganPasien,
           id_pasien: dataGet.id_pasien,
+          ip: ip,
         },
         {
           headers: {
