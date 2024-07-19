@@ -44,9 +44,9 @@ const OTPInputScreen = () => {
 
         Alert.alert(
           "Success",
-          "Kode OTP valid. Silahkan Login menggunakan nomor yang anda daftarkan."
-        );
-        navigation.navigate("Login Screen"); // Navigasi ke layar Home
+          "Kode OTP valid. Silahkan Login menggunakan nomor yang anda daftarkan.",
+          [{ text: "OK", onPress: () => navigation.navigate("Login Screen") }]
+        ); // Navigasi ke layar Home
       } catch (error) {
         console.error("Error saving userInfo to AsyncStorage", error);
         Alert.alert(
@@ -61,7 +61,9 @@ const OTPInputScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Masukkan Kode OTP</Text>
+      <Text style={[GlobalStyles.h1, { marginBottom: 20 }]}>
+        Masukkan Kode OTP
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Kode OTP"
@@ -80,19 +82,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
   input: {
-    width: "80%",
+    width: "60%",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 5,
+    borderColor: "#0A78E2",
+    borderRadius: 10,
     marginBottom: 20,
   },
 });

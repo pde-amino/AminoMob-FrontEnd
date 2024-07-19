@@ -186,6 +186,13 @@ const HomeScreen = () => {
         keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
+        ListEmptyComponent={
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Text style={GlobalStyles.textBiasa}>Belum ada artikel</Text>
+          </View>
+        }
       />
     </>
   );

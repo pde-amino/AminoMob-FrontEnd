@@ -150,6 +150,7 @@ const SignupScreen = () => {
             />
             <TextInputIconComponent
               label={"No Handphone"}
+              // placeholder={"Pastikan nomor tersambung dengan WhatsApp"}
               type={"nomor"}
               value={noHP}
               onChangeText={setHP}
