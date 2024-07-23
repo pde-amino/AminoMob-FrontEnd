@@ -122,7 +122,8 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -132,18 +133,7 @@ const ProfileScreen = () => {
                 {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
               </Text>
             </View>
-            {/* {
-              (auth.user.level = 1 ? (
-                <View style={{ flex: 1 }}>
-                  <View style={GlobalStyles.btnContainer}>
-                    <ButtonPrimary
-                      title={"Lapor Bos"}
-                      onPress={() => navigation.replace("Web View")}
-                    />
-                  </View>
-                </View>
-              ) : null)
-            } */}
+
             {dataUser ? (
               <View style={{ gap: 12, padding: 20 }}>
                 <View>
@@ -166,9 +156,10 @@ const ProfileScreen = () => {
                 <>
                   <TouchableOpacity
                     style={styles.containerMenu}
-                    onPress={() => navigation.replace("Web View")}>
-                    <Icon source="chat-alert" size={30} />
-                    <Text style={GlobalStyles.h4}>Lapor Amino</Text>
+                    onPress={() => navigation.replace("Web View")}
+                  >
+                    <Icon source="chat-alert" size={24} />
+                    <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
                   </TouchableOpacity>
                 </>
               ) : null}
@@ -177,10 +168,10 @@ const ProfileScreen = () => {
 
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}>
-                <Icon source={"logout"} color="#430D09" size={30} />
-                <Text style={[GlobalStyles.h4, { color: "#430D09" }]}>
-                  {" "}
+                onPress={() => setConfirmLogout(true)}
+              >
+                <Icon source={"logout"} color="#430D09" size={24} />
+                <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
                   Logout
                 </Text>
               </TouchableOpacity>
@@ -223,10 +214,10 @@ const styles = StyleSheet.create({
   },
   containerMenu: {
     marginHorizontal: 20,
-    height: 40,
+    height: 32,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: 10,
   },
 });
 

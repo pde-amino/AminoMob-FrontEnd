@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -110,18 +110,6 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await axios.get("http://192.168.5.3:8000/api/article");
-        setArticles(response.data); // Set state articles dengan data dari respons
-        setLoading(false);
-        console.log("fetch data article", response.data);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setLoading(false); // Set loading menjadi false jika terjadi error
-      }
-    };
-
     fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
   }, []);
 
@@ -137,12 +125,13 @@ const HomeScreen = () => {
   );
 
   const darurat = () => {
-    Linking.openURL("https://wa.me/6281225204301");
+    // Linking.openURL("https://wa.me/6281225204301");
+    Linking.openURL("whatsapp://send?text=hello&phone=6281225204301");
   };
 
   const ListHeaderComponent = () => (
-    <View style={GlobalStyles.safeAreaStyle}>
-      <View style={{ flex: 1, alignItems: "center" }}>
+    <View>
+      <View style={{ alignItems: "center" }}>
         <View style={GlobalStyles.headerHomeContainer}>
           <Image
             source={require("../../../../assets/logo-app.png")}
@@ -155,7 +144,7 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      <View style={{ flex: 4, width: wp(100) }}>
+      <View style={{ width: wp(100) }}>
         <MySlider />
       </View>
 
@@ -173,6 +162,21 @@ const HomeScreen = () => {
       </View>
     </TouchableRipple>
   );
+  const emptyArtikel = useCallback(
+    () => (
+      <View
+        style={{
+          paddingLeft: 20,
+          marginTop: 20,
+        }}
+      >
+        <Text style={GlobalStyles.textBiasa}>
+          Maaf, belum ada artikel tersedia
+        </Text>
+      </View>
+    ),
+    []
+  );
 
   const ListFooterComponent = () => (
     <>
@@ -181,23 +185,20 @@ const HomeScreen = () => {
       </View>
       <FlatList
         data={articles}
-        ListFooterComponent={showAllArticle()}
+        ListFooterComponent={
+          articles && articles.length ? showAllArticle : null
+        }
         renderItem={renderArticleItem}
         keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text style={GlobalStyles.textBiasa}>Belum ada artikel</Text>
-          </View>
-        }
+        ListEmptyComponent={emptyArtikel}
       />
     </>
   );
 
   const renderEmptyComponent = () => (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Text style={GlobalStyles.textBiasa}>No data available</Text>
     </View>
   );
@@ -209,7 +210,8 @@ const HomeScreen = () => {
           <Path
             fill="#0a78e2"
             fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
-            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+          ></Path>
         </Svg>
       </View>
 

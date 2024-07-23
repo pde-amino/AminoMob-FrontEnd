@@ -1,10 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useCallback, useContext } from "react";
-import { Ionicons } from "react-native-vector-icons";
 import HomeScreen from "../view/screens/home/HomeScreen";
 import { useState, useEffect } from "react";
 import { Alert } from "react-native";
-import TestingWeb from "../view/screens/web/TestingWeb";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import { AuthContex } from "../contex/AuthProvider";
 import RiwayatKunjungan from "../view/screens/riwayat/RiwayatKunjungan";
@@ -14,6 +12,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { BASE_URL } from "../contex/Config";
 import { Icon } from "react-native-paper";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 // const InputForm = () => {
 //   const [formData, setFormData] = useState({
@@ -159,7 +161,7 @@ const Tabs = createBottomTabNavigator();
 
 export default function HomeTabs() {
   const { logout, auth } = useContext(AuthContex);
-  const [dataUser, setDataUser] = useState(null);
+  // const [dataUser, setDataUser] = useState(null);
   const navigation = useNavigation();
   // console.log("AuthTabs :", data);
 
@@ -211,13 +213,15 @@ export default function HomeTabs() {
           height: 60,
           borderTopWidth: 1,
           elevation: 2,
+          // backgroundColor: "red",
+          padding: 10,
         },
       }}
     >
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Icon
               source={focused ? "home" : "home-outline"}
               size={28}

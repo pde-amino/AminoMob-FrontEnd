@@ -124,13 +124,18 @@ const SignupScreen = () => {
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
-            flex: 1,
+            // flex: 1,
             justifyContent: "center",
             alignContent: "center",
           }}
         >
           <View style={{ alignItems: "center" }}>
-            <Text style={[GlobalStyles.h1, { color: WARNA.primary }]}>
+            <Text
+              style={[
+                GlobalStyles.h1,
+                { color: WARNA.primary, marginBottom: 40 },
+              ]}
+            >
               Daftar Akun
             </Text>
           </View>

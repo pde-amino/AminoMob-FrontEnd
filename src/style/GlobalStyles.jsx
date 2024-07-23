@@ -120,6 +120,7 @@ export default GlobalStyles = StyleSheet.create({
   textLink: {
     fontSize: hp(1.6),
     color: WARNA.primary,
+    fontWeight: "bold",
     textDecorationLine: "underline",
   },
   textWajib: {

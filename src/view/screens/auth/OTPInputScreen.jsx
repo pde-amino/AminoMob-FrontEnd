@@ -14,6 +14,7 @@ import GlobalStyles from "../../../style/GlobalStyles";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
+import * as Network from "expo-network";
 
 const OTPInputScreen = () => {
   const route = useRoute();
@@ -45,12 +46,13 @@ const OTPInputScreen = () => {
 
   const handleSendOtp = () => {
     console.log("OTP dikirim!");
-    setCounter(10); // Setel ulang counter ke 30 detik setiap kali OTP dikirim
+    setCounter(90); // Setel ulang counter ke 30 detik setiap kali OTP dikirim
     setIsCounting(true); // Mulai hitung mundur
   };
 
   const handleOTPSubmit = async () => {
     const validOTP = dataUser.otp;
+    const ip = await Network.getIpAddressAsync();
     if (otp === validOTP) {
       try {
         await axios.post(
@@ -58,6 +60,7 @@ const OTPInputScreen = () => {
           {
             telp: dataUser.telp,
             otp: dataUser.otp,
+            ip: ip,
           },
           {
             headers: {
@@ -95,6 +98,11 @@ const OTPInputScreen = () => {
       <Text style={[GlobalStyles.h1, { marginBottom: 20 }]}>
         Masukkan Kode OTP
       </Text>
+      <Text
+        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "80%" }]}
+      >
+        OTP akan dikirim ke nomor yang anda daftarkan sebelumnya
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Kode OTP"
@@ -103,20 +111,27 @@ const OTPInputScreen = () => {
         keyboardType="numeric"
         maxLength={6}
       />
-      <ButtonPrimary title="Verifikasi OTP" onPress={handleOTPSubmit} />
-      <TouchableOpacity
-        onPress={handleSendOtp}
-        disabled={isCounting}
-        style={[
-          styles.resendButton,
-          isCounting && styles.resendButtonDisabled,
-        ]}>
-        <Text style={GlobalStyles.h4}>
-          {isCounting
-            ? `Kirim ulang OTP dalam ${counter}detik`
-            : "Kirim Ulang OTP"}
-        </Text>
-      </TouchableOpacity>
+
+      <View style={GlobalStyles.btnFullContainer}>
+        <ButtonPrimary title="Verifikasi" onPress={handleOTPSubmit} />
+      </View>
+      <View style={{ flexDirection: "row", marginTop: 20 }}>
+        <Text style={GlobalStyles.textBiasa}>Belum dapat OTP? </Text>
+        <TouchableOpacity
+          onPress={handleSendOtp}
+          disabled={isCounting}
+          // style={[
+          //   styles.resendButton,
+          //   isCounting && styles.resendButtonDisabled,
+          // ]}
+        >
+          <Text
+            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}
+          >
+            {isCounting ? ` Kirim ulang OTP dalam ${counter}` : " Kirim Ulang"}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -133,27 +148,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#0A78E2",
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 100,
   },
-  resendButton: {
-    marginTop: 40,
-    padding: 5,
-    // borderRadius: 5,
-    width: "auto",
-    alignItems: "center",
-    // borderBottomColor: "#0A78E2",
-    borderBottomWidth: 1,
-    // backgroundColor: "#0A78E2",
-  },
-  resendButtonDisabled: {
-    borderBottomWidth: 1,
-    color: "black",
-    // backgroundColor: "#A0A0A0",
-  },
-  resendButtonText: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 16,
+  linkDisabled: {
+    color: "#6F9FCC",
+    textDecorationLine: "none",
   },
 });
 

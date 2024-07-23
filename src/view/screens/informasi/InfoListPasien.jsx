@@ -22,13 +22,13 @@ const Item = ({ item }) => (
   <CardColapse title={item.id_pasien} subtitle={item.nm_pasien}>
     <View style={{ flexDirection: "row", gap: 8 }}>
       <View>
-        <Text>No.Telp : </Text>
-        <Text>Hubungan : </Text>
-        <Text>Pekerjaan : </Text>
-        <Text>Tgl Lahir : </Text>
+        <Text>No.Telp </Text>
+        <Text>Hubungan </Text>
+        <Text>Pekerjaan </Text>
+        <Text>Tgl Lahir </Text>
       </View>
       <View>
-        <Text> {item.no_telp}</Text>
+        <Text> {item.no_tlp}</Text>
         <Text> {item.status_user}</Text>
         <Text> {item.pekerjaan}</Text>
         <Text> {item.tgl_lahir}</Text>
@@ -53,13 +53,13 @@ const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 export default function InfoListPasien() {
   const navigation = useNavigation();
   const [btmTambah, setBtmtambah] = useState(false);
-  const [adaKerabat, setAdaKerabat] = useState(false);
+  // const [adaKerabat, setAdaKerabat] = useState(false);
   const [dataPasien, setDataPasien] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { auth } = useContext(AuthContex);
 
-  console.log("ini adalah id auth", auth.user.id);
+  console.log("ini adalah id auth dari info data pasien", auth.user.id);
 
   const fetchData = async () => {
     try {

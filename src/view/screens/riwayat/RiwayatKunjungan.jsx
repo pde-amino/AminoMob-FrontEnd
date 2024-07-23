@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Text,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -66,9 +67,9 @@ export default function RiwayatKunjungan() {
     <CardColapse title={item.kode_booking} subtitle={item.nm_pasien}>
       <View style={{ flexDirection: "row", gap: 8 }}>
         <View>
-          <Text>Poliklinik : </Text>
-          <Text>Tanggal periksa : </Text>
-          <Text>Dokter : </Text>
+          <Text>Poliklinik </Text>
+          <Text>Tanggal periksa </Text>
+          <Text>Dokter </Text>
         </View>
         <View>
           <Text> {item.nm_poli}</Text>
@@ -124,7 +125,7 @@ export default function RiwayatKunjungan() {
       <View style={{ flex: 9 }}>
         {loading ? (
           <ActivityIndicator animating={true} color={WARNA.primary} />
-        ) : dataRiwayat.length > 0 ? (
+        ) : dataRiwayat ? (
           <View>
             <FlatList
               style={{ width: "100%" }}
@@ -181,14 +182,7 @@ export default function RiwayatKunjungan() {
           <Dialog.Title
             style={GlobalStyles.h2}
           >{`QR ${selectedKodeBooking}`}</Dialog.Title>
-          <Dialog.Content
-            style={{
-              alignContent: "center",
-              justifyContent: "center",
-              marginTop: 10,
-              height: "70%",
-            }}
-          >
+          <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
         </Dialog>
@@ -196,3 +190,12 @@ export default function RiwayatKunjungan() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  dialogContentContainer: {
+    alignContent: "center",
+    justifyContent: "center",
+    marginTop: 10,
+    height: "70%",
+  },
+});

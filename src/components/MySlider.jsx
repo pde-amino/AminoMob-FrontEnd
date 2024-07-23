@@ -1,10 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
   useWindowDimensions,
   StyleSheet,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
@@ -13,39 +15,65 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const dataCarousel = [
-  {
-    id: 1,
-    link: "https://rs-amino.jatengprov.go.id/persalinan-caesar-metode-eracs-di-amino-hospital/",
-    image:
-      "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
-  },
-  {
-    id: 2,
-    link: "https://youtu.be/lYVULhq-BOM",
-    image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
-  },
-  {
-    id: 3,
-    link: "https://rs-amino.jatengprov.go.id/say-no-to-suicide/",
-    image:
-      "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/05/SAY-NO-TO-SUICIDE.png",
-  },
-  {
-    id: 4,
-    link: "https://youtu.be/175fi-dh6X4",
-    image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
-  },
-];
+// const dataCarousel = [
+//   {
+//     id: 1,
+//     link: "https://rs-amino.jatengprov.go.id/persalinan-caesar-metode-eracs-di-amino-hospital/",
+//     image:
+//       "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
+//   },
+//   {
+//     id: 2,
+//     link: "https://youtu.be/lYVULhq-BOM",
+//     image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
+//   },
+//   {
+//     id: 3,
+//     link: "https://rs-amino.jatengprov.go.id/say-no-to-suicide/",
+//     image:
+//       "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/05/SAY-NO-TO-SUICIDE.png",
+//   },
+//   {
+//     id: 4,
+//     link: "https://youtu.be/175fi-dh6X4",
+//     image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
+//   },
+// ];
 
 export default function MySlider() {
-  const { width } = useWindowDimensions();
+  // const { width } = useWindowDimensions();
+  const [dataBanner, setDataBanner] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const getBanner = async () => {
+    try {
+      const response = await axios.get("http://192.168.5.3:8000/api/banners");
+      // console.log("ini banner datanya", response.data);
+      setDataBanner(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("ini errornya", error);
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBanner();
+  }, []);
 
   const handlePress = (link) => {
     if (link) {
       Linking.openURL(link);
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -58,9 +86,7 @@ export default function MySlider() {
         width={wp(100)}
         height={hp(25)}
         autoPlay={true}
-        // pagingEnabled={pagingEnabled}
-        // snapEnabled={snapEnabled}
-        data={dataCarousel}
+        data={dataBanner}
         scrollAnimationDuration={6000}
         // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
@@ -71,7 +97,7 @@ export default function MySlider() {
             <Image
               style={styles.imageCarousel}
               source={{
-                uri: item.image,
+                uri: item.link_image,
               }}
             />
           </TouchableRipple>
