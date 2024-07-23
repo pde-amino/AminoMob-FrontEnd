@@ -25,6 +25,7 @@ import BottomSheet from "../../../components/BottomSheet";
 import ConfirmModal from "../../../components/ConfirmModal";
 import { AuthContex } from "../../../contex/AuthProvider";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
+import * as Network from "expo-network";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -233,6 +234,8 @@ export const PilihPoli = () => {
 
   const postData = async () => {
     let url, payload;
+    const ip = await Network.getIpAddressAsync();
+
     if (kunjungan === "Poliklinik") {
       await axios
         .post(
@@ -250,6 +253,7 @@ export const PilihPoli = () => {
             jns_kunjungan: "Poli",
             status_byr: "-",
             jns_pas: dataPas.status_user,
+            ip: ip,
           },
           {
             headers: {
@@ -288,6 +292,7 @@ export const PilihPoli = () => {
             jns_kunjungan: "Penunjang",
             status_byr: "-",
             jns_pas: dataPas.status_user,
+            ip: ip,
           },
           {
             headers: {
@@ -329,6 +334,7 @@ export const PilihPoli = () => {
             kd_paket: "",
             jml_byr: "80000",
             wa: noHp,
+            ip: ip,
           },
           {
             headers: {
@@ -370,6 +376,7 @@ export const PilihPoli = () => {
             kd_paket: "",
             jml_byr: "80000",
             wa: noHp,
+            ip: ip,
           },
           {
             headers: {

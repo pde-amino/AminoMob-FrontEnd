@@ -17,6 +17,7 @@ import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 // import DateTimePicker from "@react-native-community/datetimepicker";
 import { BASE_URL } from "../../../contex/Config";
+import * as Network from "expo-network";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -81,6 +82,7 @@ const SignupScreen = () => {
   };
 
   const simpanData = async () => {
+    const ip = await Network.getIpAddressAsync();
     if (passwordError || confPasswordError) {
       Alert.alert("Maaf, mohon pastikan password benar");
       return;
@@ -94,6 +96,7 @@ const SignupScreen = () => {
           nik: noKTP,
           password: password,
           confirm_password: confirmPassword,
+          ip: ip,
         },
         {
           headers: {
@@ -127,8 +130,7 @@ const SignupScreen = () => {
             // flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
@@ -227,8 +229,7 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}
-              >
+                }}>
                 Masuk disini
               </Text>
             </TouchableOpacity>
