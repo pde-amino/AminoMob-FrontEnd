@@ -34,17 +34,17 @@ const ConfirmModal = ({
   };
 
   // Handler untuk tombol konfirmasi
-  const handleConfirmPress = () => {
-    if (selectedItem) {
-      // Hanya memanggil onConfirm jika ada item yang dipilih
-      if (onConfirm) {
-        onConfirm(selectedItem); // Memanggil onConfirm dengan item yang dipilih
-      }
-    } else {
-      // Menampilkan pesan kesalahan jika tidak ada item yang dipilih
-      console.warn("Pilih item terlebih dahulu.");
-    }
-  };
+  // const handleConfirmPress = () => {
+  //   if (selectedItem) {
+  //     // Hanya memanggil onConfirm jika ada item yang dipilih
+  //     if (onConfirm) {
+  //       onConfirm(selectedItem); // Memanggil onConfirm dengan item yang dipilih
+  //     }
+  //   } else {
+  //     // Menampilkan pesan kesalahan jika tidak ada item yang dipilih
+  //     console.warn("Pilih item terlebih dahulu.");
+  //   }
+  // };
 
   return (
     <Modal

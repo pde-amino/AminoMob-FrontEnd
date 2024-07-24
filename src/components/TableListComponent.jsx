@@ -7,7 +7,6 @@ const TableListComponent = ({ data }) => {
   const [itemsPerPage, setItemsPerPage] = useState(numberOfItemsPerPageList[0]);
   const [items, setItems] = useState([]);
 
-  console.log("ksjdksjdk :", data);
   useEffect(() => {
     // Mapping data dari parent component ke format yang sesuai
     const mappedData = data.map((item, index) => ({
