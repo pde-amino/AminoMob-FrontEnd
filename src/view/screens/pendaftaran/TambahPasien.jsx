@@ -237,31 +237,26 @@ export const TambahPasien = () => {
         }
       );
 
-      // Jika respons berhasil, tambahkan logika atau navigasi yang sesuai
-      console.log("Response:", response.data);
       Alert.alert("Berhasil", "Pasien berhasil ditambahkan");
-
-      // Jika Anda ingin melakukan navigasi ke layar lain, gunakan navigation.navigate di sini
-      // navigation.navigate("Booking Screen", response.data);
     } catch (error) {
       // Tangani kesalahan yang terjadi selama permintaan POST
       if (error.response) {
         // Server merespon dengan status code yang di luar rentang 2xx
-        console.error("Error response A:", error.response.data);
+
         Alert.alert(
           "Error",
           `Error: ${error.response.data || "Something went wrong"}`
         );
       } else if (error.request) {
         // Permintaan telah dibuat tetapi tidak ada respons yang diterima
-        console.error("Error request B:", error.request);
+
         Alert.alert(
           "Error",
           "No response received from the server. Please try again later."
         );
       } else {
         // Kesalahan dalam mengatur permintaan
-        console.error("Error C:", error.message);
+
         Alert.alert("Error", `Error: ${error.message}`);
       }
     } finally {
@@ -285,7 +280,8 @@ export const TambahPasien = () => {
               style={{
                 width: "100%",
                 marginLeft: 40,
-              }}>
+              }}
+            >
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
             <View style={styles.containerDrop}>

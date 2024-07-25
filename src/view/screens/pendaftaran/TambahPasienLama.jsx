@@ -7,6 +7,7 @@ import {
   Pressable,
   Platform,
   Text,
+  Alert,
 } from "react-native";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -18,7 +19,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
-import { Alert } from "react-native";
 import BottomSheet from "../../../components/BottomSheet";
 import {
   widthPercentageToDP as wp,
@@ -101,17 +101,9 @@ export const TambahPasienLama = () => {
             //   idPasien: response.data[0].id,
             // });
           }
-        })
-        .catch((error) => {
-          Alert.alert("Peringatan", "Data Tidak Ditemukan.");
-          // console.error("Error fetching data: ", error);
         });
-
-      // console.log("No Rekam Medis: ", noRm);
-      // console.log("Tanggal Lahir: ", dateOfBirth);
-      // console.log("No Handphone: ", value);
     } catch (error) {
-      console.error("Error in try-catch: ", error);
+      Alert.alert("Peringatan", "Data tidak ditemukan!");
     }
   };
 
@@ -287,10 +279,6 @@ const styles = StyleSheet.create({
     color: "black",
     padding: 14,
   },
-  inputan: {
-    marginBottom: 16,
-    marginTop: 24,
-  },
   containerDrop: {
     backgroundColor: "white",
   },
@@ -302,7 +290,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 12,
   },
-
   placeholderStyle: {
     fontSize: hp(1.6),
   },

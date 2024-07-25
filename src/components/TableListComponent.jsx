@@ -19,7 +19,7 @@ const TableListComponent = ({ data }) => {
 
     setItems(mappedData);
   }, [data]);
-  //   console.log("Dari Table Component :", data);
+
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, items.length);
 

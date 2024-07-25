@@ -56,7 +56,7 @@ export default function HomeTabs() {
         );
         return;
       } else {
-        console.error(error);
+        // console.error(error);
         Alert.alert(
           "Maaf",
           "Terjadi kesalahan saat pengecekan Token, ulangi beberapa saat lagi"

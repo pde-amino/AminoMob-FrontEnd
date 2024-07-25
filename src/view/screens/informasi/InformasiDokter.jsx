@@ -62,7 +62,6 @@ const InformasiDokter = () => {
     };
 
     eventSource.onerror = (error) => {
-      console.error("EventSource error:", error);
       eventSource.close();
     };
 

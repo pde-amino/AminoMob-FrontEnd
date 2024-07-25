@@ -9,6 +9,7 @@ import {
   RefreshControl,
   ScrollView,
   Image,
+  Alert,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -65,8 +66,11 @@ export default function ListPasien() {
       const data = response.data.data_kerabat;
       setDataPasien(data);
     } catch (error) {
-      console.error("Error fetching kerabat data:", error.message);
-      console.error("Error response data:", error.response.data);
+      Alert.alert(
+        "Maaf",
+        "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
+          error
+      );
     } finally {
       setLoading(false);
       setRefreshing(false);

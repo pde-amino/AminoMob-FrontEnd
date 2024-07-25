@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import { Card } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
@@ -36,21 +37,22 @@ const AllArticle = () => {
   //     copyright: `© ${year} Amino Hospital`,
   //   };
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.5.3:8000/api/articles"
-        );
-        setArticles(response.data); // Set state articles dengan data dari respons
-        setLoading(false);
-        console.log("fetch data article", response.data);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setLoading(false); // Set loading menjadi false jika terjadi error
-      }
-    };
+  const fetchArticles = async () => {
+    try {
+      const response = await axios.get("http://192.168.5.3:8000/api/articles");
+      setArticles(response.data); // Set state articles dengan data dari respons
+      setLoading(false);
+    } catch (error) {
+      Alert.alert(
+        "Maaf",
+        "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi"
+      );
 
+      setLoading(false); // Set loading menjadi false jika terjadi error
+    }
+  };
+
+  useEffect(() => {
     fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
   }, []);
 

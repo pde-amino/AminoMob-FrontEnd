@@ -81,7 +81,6 @@ const BookingScreen = () => {
         "Gagal menyimpan",
         "Aplikasi tidak memiliki ijin untuk menyimpan gambar di galeri!"
       );
-      console.error("Error saving image:", error);
     }
   };
 

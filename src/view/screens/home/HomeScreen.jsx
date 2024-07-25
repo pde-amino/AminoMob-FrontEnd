@@ -92,7 +92,6 @@ const HomeScreen = () => {
       const response = await axios.get("http://192.168.5.3:8000/api/article");
       return response.data; // Mengembalikan data dari respons
     } catch (error) {
-      console.error("Error fetching articles:", error);
       throw error; // Melempar error agar dapat ditangani di tempat lain
     }
   };
@@ -102,9 +101,13 @@ const HomeScreen = () => {
       const articlesData = await getArticles();
       setArticles(articlesData);
       setLoading(false); // Setelah selesai loading, set loading menjadi false
-      console.log("Get Article", articlesData);
     } catch (error) {
-      console.error("Error fetching articles:", error);
+      Alert.alert(
+        "Maaf",
+        "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi " +
+          error
+      );
+
       setLoading(false); // Set loading menjadi false jika terjadi error
     }
   };
@@ -125,8 +128,8 @@ const HomeScreen = () => {
   );
 
   const darurat = () => {
-    // Linking.openURL("https://wa.me/6281225204301");
-    Linking.openURL("whatsapp://send?text=hello&phone=6281225204301");
+    Linking.openURL("https://wa.me/6281225204301");
+    // Linking.openURL("whatsapp://send?text=hello&phone=6281225204301");
   };
 
   const ListHeaderComponent = () => (

@@ -53,7 +53,6 @@ export default function DetailDoctorScreen() {
   const navigation = useNavigation();
 
   const data = route.params.doctorData;
-  console.log("datadok:", data.jadwal_praktek); // Debugging log
 
   return (
     <View style={GlobalStyles.utama}>
