@@ -531,77 +531,80 @@ Jam Sore (14:00:00 - 18:00:00)`);
         onPress={() => navigation.goBack()}
       />
 
-      <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
-        <Text>Nama</Text>
-        <Text style={GlobalStyles.h3}>{dataPas.nm_pasien}</Text>
-      </View>
-      <View style={styles.list}>
-        <Text>Tanggal Periksa</Text>
-        <View style={styles.itemList}>
-          <Text style={GlobalStyles.h4}>
-            {hariPoli ? hariPoli : "Pilih Tanggal"}
-          </Text>
-          <Button title={"Pilih"} onPress={berubah} />
+      <View style={{ paddingHorizontal: 10 }}>
+        <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+          <Text>Nama</Text>
+          <Text style={GlobalStyles.h3}>{dataPas.nm_pasien}</Text>
         </View>
-      </View>
-      <View style={styles.list}>
-        <Text>Jam Periksa</Text>
-        <View style={styles.itemList}>
-          <Text style={GlobalStyles.h4}>{value}</Text>
-          <Button title={"Pilih"} onPress={pilihJamPeriksa} />
+        <View style={styles.list}>
+          <Text>Tanggal Periksa</Text>
+          <View style={styles.itemList}>
+            <Text style={GlobalStyles.h4}>
+              {hariPoli ? hariPoli : "Pilih Tanggal"}
+            </Text>
+            <Button title={"Pilih"} onPress={berubah} />
+          </View>
         </View>
-      </View>
+        <View style={styles.list}>
+          <Text>Jam Periksa</Text>
+          <View style={styles.itemList}>
+            <Text style={GlobalStyles.h4}>{value}</Text>
+            <Button title={"Pilih"} onPress={pilihJamPeriksa} />
+          </View>
+        </View>
 
-      {kunjungan == "TerangBulan" ? (
-        <>
-          <View style={styles.list}>
-            <Text>Paket Terang</Text>
-            <View style={styles.itemList}>
-              <Text style={GlobalStyles.h4}>{value2}</Text>
-              <Button title={"Pilih"} onPress={poliTujuan} />
+        {kunjungan == "TerangBulan" ? (
+          <>
+            <View style={styles.list}>
+              <Text>Paket Terang</Text>
+              <View style={styles.itemList}>
+                <Text style={GlobalStyles.h4}>{value2}</Text>
+                <Button title={"Pilih"} onPress={poliTujuan} />
+              </View>
             </View>
-          </View>
-          <View style={styles.list}>
-            <Text>Nomor HP yang bisa dihubungi</Text>
-            {noHpError ? (
-              <Text style={{ color: "red" }}>{noHpError}</Text>
-            ) : null}
-            <TextInput
-              label="Nomor HP"
-              placeholder="Masukkan No HP Anda"
-              value={noHp}
-              type={"username"}
-              onChangeText={handleNoHp}
-            />
-            {/* <View style={styles.itemList}> */}
-            {/* <Text style={GlobalStyles.h4}>{value2}</Text> */}
-            {/* <Button title={"Pilih"} onPress={poliTujuan} />
-            </View> */}
-          </View>
-        </>
-      ) : (
-        <>
-          <View style={styles.list}>
-            <Text>Poli Tujuan</Text>
-            <View style={styles.itemList}>
-              <Text style={GlobalStyles.h4}>{value2}</Text>
-              <Button title={"Pilih"} onPress={poliTujuan} />
-            </View>
-          </View>
-          <View style={styles.list}>
-            <Text>Dokter Tujuan</Text>
-            <View style={styles.itemList}>
-              <Text style={GlobalStyles.h4}>{dokter}</Text>
-
-              <Button
-                disabled={value2 == "Pilih Poliklinik" ? true : false}
-                title={"Pilih"}
-                onPress={pilihDokter}
+            <View style={styles.list}>
+              <Text>Nomor HP yang bisa dihubungi</Text>
+              {noHpError ? (
+                <Text style={{ color: "red" }}>{noHpError}</Text>
+              ) : null}
+              <TextInput
+                label="Nomor HP"
+                placeholder="Masukkan No HP Anda"
+                value={noHp}
+                type={"username"}
+                onChangeText={handleNoHp}
               />
+              {/* <View style={styles.itemList}> */}
+              {/* <Text style={GlobalStyles.h4}>{value2}</Text> */}
+              {/* <Button title={"Pilih"} onPress={poliTujuan} />
+            </View> */}
             </View>
-          </View>
-        </>
-      )}
+          </>
+        ) : (
+          <>
+            <View style={styles.list}>
+              <Text>Poli Tujuan</Text>
+              <View style={styles.itemList}>
+                <Text style={GlobalStyles.h4}>{value2}</Text>
+                <Button title={"Pilih"} onPress={poliTujuan} />
+              </View>
+            </View>
+            <View style={styles.list}>
+              <Text>Dokter Tujuan</Text>
+              <View style={styles.itemList}>
+                <Text style={GlobalStyles.h4}>{dokter}</Text>
+
+                <Button
+                  disabled={value2 == "Pilih Poliklinik" ? true : false}
+                  title={"Pilih"}
+                  onPress={pilihDokter}
+                />
+              </View>
+            </View>
+          </>
+        )}
+      </View>
+
       <View style={GlobalStyles.Content}>
         {showPicker && Platform.OS === "android" && (
           <DateTimePicker

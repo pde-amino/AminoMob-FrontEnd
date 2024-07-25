@@ -73,7 +73,6 @@ const LoginScreen = () => {
 
           await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
           setAuth(userInfo);
-          console.log("ini user info:", userInfo);
           setLoading(false);
           navigation.replace("Home Screen");
         })
@@ -82,7 +81,6 @@ const LoginScreen = () => {
           setLoading(false);
         });
     } catch (error) {
-      console.log("error login:", error.response.data);
       try {
         if (error == "AxiosError: Request failed with status code 500") {
           Alert.alert(

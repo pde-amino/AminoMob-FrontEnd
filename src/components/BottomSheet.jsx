@@ -30,7 +30,7 @@ const BottomSheet = ({
 }) => {
   const navigation = useNavigation();
   const slide = React.useRef(new Animated.Value(300)).current;
-  // console.log("data kerabat :", dataList);
+
   const slideUp = () => {
     // Will change slide up the bottom sheet
     Animated.timing(slide, {

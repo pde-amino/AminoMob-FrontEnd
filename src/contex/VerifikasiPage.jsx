@@ -90,8 +90,6 @@ const VerifikasiPage = () => {
     try {
       const token =
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2dpbi1hcGktcHJvamVjdCIsInN1YiI6ImxvZ2ludG9rZW4iLCJpYXQiOjE3MTU5MTUyMDUsImV4cCI6MTcxNjAwMTYwNSwidWlkIjoiNCIsIm5vX3JrbV9tZWRpcyI6bnVsbH0.KRcCvT9tXZsYr0Q-d-ThXq8W5xKcgEFT0v-WiPFILz4"; // Ganti dengan token autentikasi yang valid
-      console.log("Token:", data.token); // Log token
-      console.log("FormData:", formData); // Log FormData
 
       const response = await axios.post(
         `${BASE_URL}/uploadVerifikasi/${data.ids}`,
@@ -107,7 +105,6 @@ const VerifikasiPage = () => {
       const verivData = response.data;
       Alert.alert("Success", "Data berhasil dikirim!");
     } catch (error) {
-      console.log("Error response:", error.response); // Log error response
       Alert.alert("Error", "Gagal mengirim data: " + error.message);
     }
   };
@@ -124,7 +121,8 @@ const VerifikasiPage = () => {
           <Text style={GlobalStyles.h4}>Ambil foto Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri1 && styles.cardWithPhoto]}
-            onPress={() => uploadImage("ktp")}>
+            onPress={() => uploadImage("ktp")}
+          >
             {photoUri1 && (
               <Image source={{ uri: photoUri1 }} style={styles.previewImage} />
             )}
@@ -143,7 +141,8 @@ const VerifikasiPage = () => {
           <Text style={GlobalStyles.h4}>Ambil Selfie dengan Kartu KTP</Text>
           <TouchableOpacity
             style={[styles.card, photoUri2 && styles.cardWithPhoto]} // Tambahkan style khusus jika ada foto di state
-            onPress={() => uploadImage("swafoto")}>
+            onPress={() => uploadImage("swafoto")}
+          >
             {photoUri2 && (
               <Image source={{ uri: photoUri2 }} style={styles.previewImage} />
             )}

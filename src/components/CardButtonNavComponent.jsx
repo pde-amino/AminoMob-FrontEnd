@@ -23,7 +23,6 @@ const CardButtonNavComponent = ({
         name: onPress,
         params: { dataString: onPress.data },
       });
-      console.log("OnPress Data :", onPress);
     } else {
       Alert.alert(alertData.title, alertData.desc);
     }

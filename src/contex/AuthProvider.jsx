@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 const AuthContex = createContext();
 
@@ -11,7 +12,10 @@ const AuthProvider = ({ children }) => {
       await AsyncStorage.removeItem("userInfo");
       setAuth(null);
     } catch (error) {
-      console.error("Error removing userInfo from AsyncStorage", error);
+      Alert.alert(
+        "Maaf",
+        "Terjadi kesalahan saat proses logout, mohon ulangi sesaat lagi"
+      );
     }
   };
 

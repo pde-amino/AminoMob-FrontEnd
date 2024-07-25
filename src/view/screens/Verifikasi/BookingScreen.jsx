@@ -17,6 +17,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { AuthContex } from "../../../contex/AuthProvider";
 import * as MediaLibrary from "expo-media-library";
 import { captureRef } from "react-native-view-shot";
+import ButtonSecondary from "../../../components/ButtonSecondary";
 
 const { width } = Dimensions.get("window");
 
@@ -146,7 +147,7 @@ const BookingScreen = () => {
                 <GenerateQRCode value={transactionData.kdBook} size={150} />
                 <Text style={GlobalStyles.h2}>{transactionData.kdBook}</Text>
               </View>
-              <View style={{ marginBottom: 80, gap: 20 }}>
+              <View style={{ marginBottom: 40, gap: 20 }}>
                 {adaRM ? null : (
                   <Text style={{ fontSize: 16 }}>
                     <B>Tunjukkan KTP/KK pendaftar saat daftar ulang.</B>
@@ -156,27 +157,20 @@ const BookingScreen = () => {
                   Terima Kasih. Mohon datang minimal <B>30 menit</B> sebelum jam
                   periksa
                 </Text>
+                <View style={styles.floatingButton}>
+                  <View style={{ flex: 1 }}>
+                    <ButtonPrimary title="Selesai" onPress={handleBackToHome} />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <ButtonSecondary
+                      title="Simpan Gambar"
+                      onPress={saveImageToGallery}
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </ScrollView>
-        </View>
-
-        <View style={styles.floatingButton}>
-          <Button
-            mode="outlined"
-            title={"Kembali ke Halaman Utama"}
-            onPress={handleBackToHome}
-          >
-            Selesai
-          </Button>
-          <Button
-            mode="contained"
-            icon="camera"
-            title="Simpan Gambar"
-            onPress={saveImageToGallery}
-          >
-            Simpan
-          </Button>
         </View>
       </View>
     </SafeAreaView>
@@ -215,10 +209,9 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     gap: 10,
-    position: "absolute",
-    bottom: 20,
+    justifyContent: "center",
+    alignContent: "center",
     flexDirection: "row",
-    alignItems: "center",
   },
 });
 

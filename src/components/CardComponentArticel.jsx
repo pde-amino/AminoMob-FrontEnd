@@ -10,7 +10,6 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
   // const { width } = useWindowDimensions();
   const [readMore, setReadMore] = useState(false);
   const navigation = useNavigation();
-  console.log("testing image", data.item);
 
   return (
     <TouchableRipple onPress={() => navigation.navigate("Article", data)}>
