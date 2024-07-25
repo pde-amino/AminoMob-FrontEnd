@@ -1,8 +1,9 @@
 {
-    "vscode-pets.theme": "beach",
-    "vscode-pets.petSize": "small",
-    "vscode-pets.throwBallWithMouse": true,
-    "vscode-pets.position": "explorer",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+  "vscode-pets.theme": "beach",
+  "vscode-pets.petSize": "small",
+  "vscode-pets.throwBallWithMouse": true,
+  "vscode-pets.position": "explorer",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
