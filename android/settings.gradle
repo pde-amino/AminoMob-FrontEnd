@@ -1,4 +1,4 @@
-rootProject.name = 'my-apps'
+rootProject.name = 'amino-mobile'
 
 dependencyResolutionManagement {
   versionCatalogs {
