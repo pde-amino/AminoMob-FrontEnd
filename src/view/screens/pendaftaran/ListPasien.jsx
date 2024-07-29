@@ -57,7 +57,8 @@ export default function ListPasien() {
           headers: {
             Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
             "Content-Type": "application/json",
-            "x-api-key": "pd3@mino347",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
         }
       );
@@ -137,8 +138,7 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -155,8 +155,7 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>

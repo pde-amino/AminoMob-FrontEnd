@@ -15,22 +15,59 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { BASE_URL } from "../contex/Config";
 
 export default function MySlider() {
-  // const { width } = useWindowDimensions();
-  const [dataBanner, setDataBanner] = useState();
+  const [dataBanner, setDataBanner] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const dataCarousel = [
+    // {
+    //   id: 1,
+    //   link: "https://rs-amino.jatengprov.go.id/persalinan-caesar-metode-eracs-di-amino-hospital/",
+    //   link_image:
+    //     "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
+    // },
+    // {
+    //   id: 2,
+    //   link: "https://youtu.be/lYVULhq-BOM",
+    //   link_image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
+    // },
+    // {
+    //   id: 3,
+    //   link: "https://rs-amino.jatengprov.go.id/say-no-to-suicide/",
+    //   link_image:
+    //     "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/05/SAY-NO-TO-SUICIDE.png",
+    // },
+    // {
+    //   id: 4,
+    //   link: "https://youtu.be/175fi-dh6X4",
+    //   link_image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
+    // },
+  ];
 
   const getBanner = async () => {
     try {
-      const response = await axios.get("http://192.168.5.3:8000/api/banners");
-      setDataBanner(response.data);
-      setLoading(false);
+      const response = await axios.get(`${BASE_URL}/banners`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+        },
+      });
+      if (response.data && response.data.length > 0) {
+        setDataBanner(response.data);
+      } else {
+        setDataBanner(dataCarousel);
+      }
     } catch (error) {
       Alert.alert(
         "Maaf",
         "Terjadi kesalahan saat mengambil data banner. Mohon tunggu sebentar"
       );
+      setDataBanner(dataCarousel);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,12 +102,10 @@ export default function MySlider() {
         autoPlay={true}
         data={dataBanner}
         scrollAnimationDuration={6000}
-        // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
           <TouchableRipple
             onPress={() => handlePress(item.link)}
-            style={styles.borderShadow}
-          >
+            style={styles.borderShadow}>
             <Image
               style={styles.imageCarousel}
               source={{
@@ -85,6 +120,11 @@ export default function MySlider() {
 }
 
 const styles = StyleSheet.create({
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   borderShadow: {
     borderRadius: 20,
     shadowColor: "#000",

@@ -43,7 +43,8 @@ export default function RiwayatKunjungan() {
           headers: {
             Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
             "Content-Type": "application/json",
-            "x-api-key": "pd3@mino347",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
         }
       );
@@ -141,8 +142,7 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -159,8 +159,7 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data riwayat, silakan mendaftar poli
               </Text>
             </View>
@@ -177,11 +176,9 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}
-        >
+          }}>
           <Dialog.Title
-            style={GlobalStyles.h2}
-          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
