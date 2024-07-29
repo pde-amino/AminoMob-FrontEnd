@@ -19,7 +19,6 @@ import * as Network from "expo-network";
 const OTPInputScreen = () => {
   const route = useRoute();
   const dataUser = route.params;
-  console.log("Ini data user di OTP Screen :", dataUser);
   const [otp, setOtp] = useState("");
   const { auth, setAuth } = useContext(AuthContex);
   const navigation = useNavigation();
@@ -45,7 +44,6 @@ const OTPInputScreen = () => {
   }, [isCounting]);
 
   const handleSendOtp = () => {
-    console.log("OTP dikirim!");
     setCounter(90); // Setel ulang counter ke 30 detik setiap kali OTP dikirim
     setIsCounting(true); // Mulai hitung mundur
   };
@@ -83,7 +81,6 @@ const OTPInputScreen = () => {
           [{ text: "OK", onPress: () => navigation.navigate("Login Screen") }]
         );
       } catch (error) {
-        console.error("Error saving userInfo to AsyncStorage", error);
         Alert.alert(
           "Error",
           "Gagal menyimpan data pengguna. Silakan coba lagi."

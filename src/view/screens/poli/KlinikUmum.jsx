@@ -23,9 +23,7 @@ const KlinikUmum = () => {
       );
       const data = await response.json();
       setDoctors(data);
-    } catch (error) {
-      console.error("Error fetching doctors:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -42,14 +40,16 @@ const KlinikUmum = () => {
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 20,
-      }}>
+      }}
+    >
       <Text style={{ fontSize: 20, marginBottom: 20 }}>
         Pilih Dokter dan Klinik
       </Text>
       <Picker
         selectedValue={selectedClinic}
         onValueChange={(itemValue) => setSelectedClinic(itemValue)}
-        style={{ height: 50, width: 200, marginBottom: 20 }}>
+        style={{ height: 50, width: 200, marginBottom: 20 }}
+      >
         <Picker.Item label="Select Clinic" value="" />
         {clinics.map((clinic) => (
           <Picker.Item key={clinic.id} label={clinic.name} value={clinic.id} />
@@ -59,7 +59,8 @@ const KlinikUmum = () => {
         <Picker
           selectedValue={selectedDoctor}
           onValueChange={(itemValue) => setSelectedDoctor(itemValue)}
-          style={{ height: 50, width: 200 }}>
+          style={{ height: 50, width: 200 }}
+        >
           <Picker.Item label="Select Doctor" value="" />
           {doctors.map((doctor) => (
             <Picker.Item

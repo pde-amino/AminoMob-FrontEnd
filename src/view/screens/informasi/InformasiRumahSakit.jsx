@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl } from "react-native";
+import { View, FlatList, Text, RefreshControl, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
@@ -61,13 +61,21 @@ const InformasiRumahSakit = () => {
         if (data.message === "success") {
           setPoliklinikData(data.data_poli);
         } else {
-          console.error("Error fetching data:", data.message);
+          Alert.alert(
+            "Maaf",
+            "Ada kesalahan saat mengambil data informasi RS, mohon ulangi beberapa saat lagi " +
+              error
+          );
           setError(true); // Mengatur error menjadi true saat terjadi kesalahan
         }
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        Alert.alert(
+          "Maaf",
+          "Ada kesalahan saat mengambil data informasi RS, mohon ulangi beberapa saat lagi " +
+            error
+        );
         setError(true); // Mengatur error menjadi true saat terjadi kesalahan
         setIsLoading(false);
       });
@@ -105,7 +113,8 @@ const InformasiRumahSakit = () => {
           alignItems: "center",
           marginTop: 10,
         })
-      }>
+      }
+    >
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         // refreshControl={

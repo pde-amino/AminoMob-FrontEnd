@@ -112,9 +112,7 @@ const SignupScreen = () => {
 
       const userData = response.data;
       navigation.navigate("OTPInputScreen", userData);
-      console.log("alksdlkjasldkjlaksdjklasj", userData);
     } catch (error) {
-      console.log("Error response", error.response);
       Alert.alert(
         "Gagal Mendaftar",
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"
@@ -131,7 +129,8 @@ const SignupScreen = () => {
             // flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
@@ -229,7 +228,8 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}>
+                }}
+              >
                 Masuk disini
               </Text>
             </TouchableOpacity>

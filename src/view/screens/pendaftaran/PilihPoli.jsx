@@ -117,7 +117,6 @@ export const PilihPoli = () => {
           }
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
           Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
         });
     } else if (kunjungan === "Penunjang") {
@@ -148,7 +147,6 @@ export const PilihPoli = () => {
           }
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
           Alert.alert(
             "Poli Tutup",
             "Coba pilih jam periksa atau tanggal periksa lain."
@@ -182,10 +180,9 @@ export const PilihPoli = () => {
           }
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
           Alert.alert(
             "Poli Tutup",
-            "Coba pilih jam periksa atau tanggal periksa lain."
+            "Coba pilih jam periksa atau tanggal periksa lain. " + error
           );
         });
     }

@@ -54,10 +54,7 @@ const ProfileScreen = () => {
         },
       });
       setDataUser(response.data.user);
-      console.log("Fetch Response data dari login:", response.data);
     } catch (error) {
-      console.error("Error fetching user data:", error.message);
-      console.error("Error response data:", error);
       // if (error.message === "Request failed with status code 401") {
       //   AsyncStorage.removeItem("userInfo");
       //   logout();
@@ -98,7 +95,6 @@ const ProfileScreen = () => {
         );
       } else {
         Alert.alert("Error", "Logout gagal. Silakan coba lagi.");
-        console.error("Error removing userInfo from AsyncStorage", error);
       }
     }
   };

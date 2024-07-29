@@ -52,8 +52,10 @@ export default function RiwayatKunjungan() {
       const data = response.data.data_user;
       setDataRiwayat(data);
     } catch (error) {
-      console.error("Error fetching riwayat data:", error.message);
-      console.error("Error response data:", error.response.data);
+      Alert.alert(
+        "Maaf",
+        "Ada kesalahan saat mengambil data riwayat, mohon ulangi beberapa saat lagi"
+      );
     } finally {
       setLoading(false);
       setRefreshing(false);
