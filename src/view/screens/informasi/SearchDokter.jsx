@@ -32,7 +32,8 @@ export default function SearchDokter() {
         .get(`${BASE_URL}/caridokter/${clinicId}/`, {
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": "pd3@mino347",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
         })
         .then((response) => {

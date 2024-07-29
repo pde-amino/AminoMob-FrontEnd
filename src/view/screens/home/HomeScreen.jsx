@@ -102,11 +102,11 @@ const HomeScreen = () => {
       setArticles(articlesData);
       setLoading(false); // Setelah selesai loading, set loading menjadi false
     } catch (error) {
-      Alert.alert(
-        "Maaf",
-        "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi " +
-          error
-      );
+      // Alert.alert(
+      //   "Maaf",
+      //   "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi " +
+      //     error
+      // );
 
       setLoading(false); // Set loading menjadi false jika terjadi error
     }
