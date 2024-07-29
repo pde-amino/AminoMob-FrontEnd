@@ -170,26 +170,30 @@ const HomeScreen = () => {
 
   const ListFooterComponent = () => (
     <>
-      {emptyArticle ? (
+      {console.log("ARTICLE", articles)}
+      {articles.length === 0 ? (
         <View style={styles.containerNext}>
           <Text style={GlobalStyles.textBiasa}>AMINO HOSPITAL</Text>
         </View>
       ) : (
-        <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
-          <Text style={GlobalStyles.h3}>Artikel</Text>
-        </View>
+        <>
+          <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
+            <Text style={GlobalStyles.h3}>Artikel</Text>
+          </View>
+
+          <FlatList
+            data={articles}
+            ListFooterComponent={
+              articles && articles.length ? showAllArticle : null
+            }
+            renderItem={renderArticleItem}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={emptyArtikel}
+          />
+        </>
       )}
-      <FlatList
-        data={articles}
-        ListFooterComponent={
-          articles && articles.length ? showAllArticle : null
-        }
-        renderItem={renderArticleItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={emptyArtikel}
-      />
     </>
   );
 
