@@ -17,28 +17,28 @@ import {
 import { BASE_URL } from "../contex/Config";
 
 const dataCarousel = [
-  // {
-  //   id: 1,
-  //   link: "https://rs-amino.jatengprov.go.id/persalinan-caesar-metode-eracs-di-amino-hospital/",
-  //   link_image:
-  //     "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
-  // },
-  // {
-  //   id: 2,
-  //   link: "https://youtu.be/lYVULhq-BOM",
-  //   link_image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
-  // },
-  // {
-  //   id: 3,
-  //   link: "https://rs-amino.jatengprov.go.id/say-no-to-suicide/",
-  //   link_image:
-  //     "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/05/SAY-NO-TO-SUICIDE.png",
-  // },
-  // {
-  //   id: 4,
-  //   link: "https://youtu.be/175fi-dh6X4",
-  //   link_image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
-  // },
+  {
+    id: 1,
+    link: "https://rs-amino.jatengprov.go.id/persalinan-caesar-metode-eracs-di-amino-hospital/",
+    link_image:
+      "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/06/ERACS.png",
+  },
+  {
+    id: 2,
+    link: "https://youtu.be/lYVULhq-BOM",
+    link_image: "https://img.youtube.com/vi/lYVULhq-BOM/maxresdefault.jpg",
+  },
+  {
+    id: 3,
+    link: "https://rs-amino.jatengprov.go.id/say-no-to-suicide/",
+    link_image:
+      "https://rs-amino.jatengprov.go.id/wp-content/uploads/2024/05/SAY-NO-TO-SUICIDE.png",
+  },
+  {
+    id: 4,
+    link: "https://youtu.be/175fi-dh6X4",
+    link_image: "https://img.youtube.com/vi/175fi-dh6X4/maxresdefault.jpg",
+  },
 ];
 
 export default function MySlider() {
@@ -73,43 +73,11 @@ export default function MySlider() {
         setDataBanner(dataCarousel);
       }
     } catch (error) {
-      console.log("Terjadi kesalahan:", error); // Log tambahan untuk kesalahan
       setDataBanner(dataCarousel);
-      Alert.alert(
-        "Maaf",
-        "Terjadi kesalahan saat mengambil data banner. Mohon tunggu sebentar"
-      );
     } finally {
       setLoading(false);
     }
   };
-
-  // const getBanner = async () => {
-  //   try {
-  //     const response = await axios.get(`http://192.168.5.5:8000/banners`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "x-api-key": "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-  //       },
-  //     });
-  //     console.log("ini respon data dari myslider home", response.data);
-  //     if (response.data && response.data.length > 0) {
-  //       setDataBanner(response.data);
-  //     } else {
-  //       setDataBanner(dataCarousel);
-  //     }
-  //     setLoading(false);
-  //     // setDataBanner(response.data);
-  //     // setLoading(false);
-  //   } catch (error) {
-  //     setDataBanner(dataCarousel);
-  //     Alert.alert(
-  //       "Maaf",
-  //       "Terjadi kesalahan saat mengambil data banner. Mohon tunggu sebentar"
-  //     );
-  //     setLoading(false);
-  //   }
-  // };
 
   useEffect(() => {
     getBanner();
