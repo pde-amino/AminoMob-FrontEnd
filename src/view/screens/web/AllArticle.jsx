@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  ScrollView,
-  Text,
-  Image,
   StyleSheet,
   useWindowDimensions,
   ActivityIndicator,
