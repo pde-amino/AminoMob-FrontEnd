@@ -57,7 +57,6 @@ const OTPInputScreen = () => {
       setSendOTP(response.data.otp);
       await resend(response.data.otp);
     } catch (error) {
-      console.error("Failed to send OTP:", error);
       Alert.alert("Error", "Gagal mengirim OTP. Silakan coba lagi.");
     }
   };
@@ -81,7 +80,6 @@ const OTPInputScreen = () => {
         }
       );
     } catch (error) {
-      console.error("Failed to resend OTP:", error);
       Alert.alert("Error", "Gagal mengirim ulang OTP. Silakan coba lagi.");
     }
   };
