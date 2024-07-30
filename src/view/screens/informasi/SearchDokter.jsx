@@ -90,8 +90,7 @@ export default function SearchDokter() {
         <View
           style={{
             alignItems: "center",
-          }}
-        >
+          }}>
           <FlatList
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

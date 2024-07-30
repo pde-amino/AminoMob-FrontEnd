@@ -33,6 +33,7 @@ const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Tambahkan state loading
+  const [emptyArticle, setEmptyArticle] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -165,38 +166,34 @@ const HomeScreen = () => {
       </View>
     </TouchableRipple>
   );
-  const emptyArtikel = useCallback(
-    () => (
-      <View
-        style={{
-          paddingLeft: 20,
-          marginTop: 20,
-        }}
-      >
-        <Text style={GlobalStyles.textBiasa}>
-          Maaf, belum ada artikel tersedia
-        </Text>
-      </View>
-    ),
-    []
-  );
+  const emptyArtikel = useCallback(() => setEmptyArticle(true));
 
   const ListFooterComponent = () => (
     <>
-      <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
-        <Text style={GlobalStyles.h3}>Artikel</Text>
-      </View>
-      <FlatList
-        data={articles}
-        ListFooterComponent={
-          articles && articles.length ? showAllArticle : null
-        }
-        renderItem={renderArticleItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={emptyArtikel}
-      />
+      {console.log("ARTICLE", articles)}
+      {articles.length === 0 ? (
+        <View style={styles.containerNext}>
+          <Text style={GlobalStyles.textBiasa}>AMINO HOSPITAL</Text>
+        </View>
+      ) : (
+        <>
+          <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
+            <Text style={GlobalStyles.h3}>Artikel</Text>
+          </View>
+
+          <FlatList
+            data={articles}
+            ListFooterComponent={
+              articles && articles.length ? showAllArticle : null
+            }
+            renderItem={renderArticleItem}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={emptyArtikel}
+          />
+        </>
+      )}
     </>
   );
 
@@ -213,8 +210,7 @@ const HomeScreen = () => {
           <Path
             fill="#0a78e2"
             fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
-            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></Path>
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
         </Svg>
       </View>
 

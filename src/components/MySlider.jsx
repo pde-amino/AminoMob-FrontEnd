@@ -108,12 +108,10 @@ export default function MySlider() {
         autoPlay={true}
         data={dataBanner}
         scrollAnimationDuration={6000}
-        // onSnapToItem={(index) => console.log("current index:", index)}
         renderItem={({ item }) => (
           <TouchableRipple
             onPress={() => handlePress(item.link)}
-            style={styles.borderShadow}
-          >
+            style={styles.borderShadow}>
             <Image
               style={styles.imageCarousel}
               source={{
@@ -128,6 +126,11 @@ export default function MySlider() {
 }
 
 const styles = StyleSheet.create({
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   borderShadow: {
     borderRadius: 20,
     shadowColor: "#000",

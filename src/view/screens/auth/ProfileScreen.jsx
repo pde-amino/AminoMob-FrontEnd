@@ -119,8 +119,7 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -153,8 +152,7 @@ const ProfileScreen = () => {
                 <>
                   <TouchableOpacity
                     style={styles.containerMenu}
-                    onPress={() => navigation.replace("Web View")}
-                  >
+                    onPress={() => navigation.replace("Web View")}>
                     <Icon source="chat-alert" size={24} />
                     <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
                   </TouchableOpacity>
@@ -165,8 +163,7 @@ const ProfileScreen = () => {
 
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}
-              >
+                onPress={() => setConfirmLogout(true)}>
                 <Icon source={"logout"} color="#430D09" size={24} />
                 <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
                   Logout

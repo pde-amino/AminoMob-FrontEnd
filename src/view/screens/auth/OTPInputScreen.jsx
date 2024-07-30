@@ -97,8 +97,7 @@ const OTPInputScreen = () => {
         Masukkan Kode OTP
       </Text>
       <Text
-        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "80%" }]}
-      >
+        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "80%" }]}>
         OTP akan dikirim ke nomor yang anda daftarkan sebelumnya
       </Text>
       <TextInput
@@ -124,8 +123,7 @@ const OTPInputScreen = () => {
           // ]}
         >
           <Text
-            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}
-          >
+            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}>
             {isCounting ? ` Kirim ulang OTP dalam ${counter}` : " Kirim Ulang"}
           </Text>
         </TouchableOpacity>

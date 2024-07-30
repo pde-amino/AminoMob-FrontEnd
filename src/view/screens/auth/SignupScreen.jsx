@@ -136,8 +136,7 @@ const SignupScreen = () => {
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}
-            >
+              ]}>
               Daftar Akun
             </Text>
           </View>
