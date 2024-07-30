@@ -15,8 +15,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-import { BASE_URL } from "../../../contex/Config";
+import {
+  BASE_URL,
+  OTP_DIVISION,
+  OTP_ID,
+  OTP_PASS,
+  OTP_SENDER,
+  SEND_OTP,
+} from "../../../contex/Config";
 import * as Network from "expo-network";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -52,12 +58,7 @@ const SignupScreen = () => {
   const [noHP, setHP] = useState("");
   const [noKTP, setKTP] = useState("");
   const [nmLengkap, setNama] = useState("");
-  // const data = {
-  //   telp: noHP,
-  //   nik: noKTP,
-  //   password: password,
-  //   confirm_password: confirmPassword,
-  // };
+
   useEffect(() => {
     validatePasswords();
   }, [password, confirmPassword]);
@@ -81,6 +82,24 @@ const SignupScreen = () => {
     }
   };
 
+  const sendOTP = async (otp) => {
+    await axios.post(
+      `${SEND_OTP}`,
+      {
+        userid: OTP_ID,
+        password: OTP_PASS,
+        msisdn: noHP,
+        message: otp,
+        sender: OTP_SENDER,
+        division: OTP_DIVISION,
+      },
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+  };
   const simpanData = async () => {
     const ip = await Network.getIpAddressAsync();
     if (passwordError || confPasswordError) {
@@ -106,13 +125,14 @@ const SignupScreen = () => {
           },
         }
       );
-      const userInfo = response.data;
 
-      await AsyncStorage.setItem("user", JSON.stringify(userInfo));
+      await AsyncStorage.setItem("noHp", JSON.stringify(noHP));
 
       const userData = response.data;
+      await sendOTP((otp = response.data.otp));
       navigation.navigate("OTPInputScreen", userData);
     } catch (error) {
+      console.error("OTP", error);
       Alert.alert(
         "Gagal Mendaftar",
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"
@@ -129,8 +149,7 @@ const SignupScreen = () => {
             // flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
@@ -156,35 +175,10 @@ const SignupScreen = () => {
             />
             <TextInputIconComponent
               label={"No Handphone"}
-              // placeholder={"Pastikan nomor tersambung dengan WhatsApp"}
               type={"nomor"}
               value={noHP}
               onChangeText={setHP}
             />
-
-            {/* <View>
-              {showPicker && (
-                <DateTimePicker
-                  mode="date"
-                  onChange={berubah}
-                  value={date}
-                  minimumDate={new Date(1935, 12, 31)}
-                  maximumDate={new Date()}
-                />
-              )}
-
-              {!showPicker && (
-                <Pressable onPress={toggleShowDate}>
-                  <TextInput
-                    style={styles.tglPilihan}
-                    editable={false}
-                    placeholder={"Tanggal Lahir*"}
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                  />
-                </Pressable>
-              )}
-            </View> */}
 
             <TextInputIconComponent
               label={"Buat Kata Sandi"}
@@ -217,7 +211,7 @@ const SignupScreen = () => {
             <ButtonPrimary
               title="Daftar"
               onPress={simpanData}
-              disabled={passwordError || confPasswordError}
+              disabled={!!passwordError || !!confPasswordError}
             />
           </View>
 
@@ -228,8 +222,7 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}
-              >
+                }}>
                 Masuk disini
               </Text>
             </TouchableOpacity>
