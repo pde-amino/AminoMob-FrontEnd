@@ -60,6 +60,7 @@ const TextInputIconComponent = ({
           fontSize: 14,
         }}
         mode="outlined"
+        textColor="black"
         selectionColor={WARNA.primary}
         outlineColor={WARNA.primary}
         outlineStyle={{ borderRadius: 10 }}

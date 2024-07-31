@@ -6,8 +6,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const { height, width } = Dimensions.get("window");
-
 const ButtonPrimary = ({ title, disabled, onPress }) => (
   <Button
     buttonColor="#0A78E2"
@@ -24,6 +22,7 @@ const ButtonPrimary = ({ title, disabled, onPress }) => (
 const styles = StyleSheet.create({
   labelStyle: {
     fontSize: hp(1.8),
+    color: "#fff",
   },
   buttonStyle: {
     justifyContent: "center",
