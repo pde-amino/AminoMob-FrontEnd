@@ -45,52 +45,42 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const { item } = route.params;
-  console.log("testingUsersss", item);
   const year = new Date().getFullYear();
-  const article = {
-    imageUrl: item.image_url || "https://via.placeholder.com/150",
-    title: item.title || "Default Title",
-    category: item.category || "Default Category",
-    content: item.content || "Default Content",
-    updates: item.updated_at,
-    copyright: `© ${year} Amino Hospital`,
-  };
+  const copyright = `© ${year} Amino Hospital`;
 
   return (
-    <View style={GlobalStyles.utama}>
-      <View>
-        <HeaderComponent
-          // title={article.title}
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
+    <>
+      <HeaderComponent
+        // title={article.title}
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
       <ScrollView style={styles.container}>
-        <Image source={{ uri: article.imageUrl }} style={styles.image} />
-        <View>
-          <Text style={[GlobalStyles.h1, { marginBottom: 8 }]}>
-            {article.title}
-          </Text>
-          <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>
-            {article.category}
-          </Text>
-          <RenderHTML
-            tagsStyles={tagsStyles}
-            classesStyles={classesStyles}
-            contentWidth={width}
-            source={{ html: item.content }}
-          />
-          <Text style={styles.copyright}>{article.copyright}</Text>
-        </View>
+        <Image source={{ uri: item.image_url }} style={styles.image} />
+
+        <Text style={[GlobalStyles.h1, { marginBottom: 8 }]}>{item.title}</Text>
+        <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>
+          {item.category}
+        </Text>
+        <RenderHTML
+          tagsStyles={tagsStyles}
+          classesStyles={classesStyles}
+          contentWidth={width}
+          source={{ html: item.content }}
+        />
+
+        <Text>Dipublikasi pada : {item.created_at}</Text>
+        <Text style={styles.copyright}>{copyright}</Text>
       </ScrollView>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   image: {
     width: "100%",

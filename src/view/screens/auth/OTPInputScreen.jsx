@@ -34,8 +34,6 @@ const OTPInputScreen = () => {
   const [counter, setCounter] = useState(30);
   const [isCounting, setIsCounting] = useState(true);
 
-  console.log("Data", dataUser);
-
   const handleSendOtp = async () => {
     setCounter(10);
     setIsCounting(true);

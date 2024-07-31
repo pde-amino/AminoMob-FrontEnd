@@ -188,12 +188,7 @@ export const PilihPoli = () => {
     }
   };
 
-  console.log("iniroute : ", dataPas);
-  console.log("route params: ", kunjungan);
-
-  const jadwalDok = (param) => {
-    console.log("Ini Params JadwalDok :", param);
-  };
+  const jadwalDok = (param) => {};
 
   const toggleShowDate = () => {
     setShowPicker(!showPicker);
@@ -268,7 +263,6 @@ export const PilihPoli = () => {
           navigation.replace("Booking Screen", response.data);
         })
         .catch((response) => {
-          console.log("response error", response);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
@@ -308,7 +302,6 @@ export const PilihPoli = () => {
           navigation.replace("Booking Screen", response.data);
         })
         .catch((response) => {
-          console.log("response error", response);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
@@ -351,7 +344,6 @@ export const PilihPoli = () => {
           navigation.replace("Booking Screen", response.data);
         })
         .catch((response) => {
-          console.log("response error", response);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
@@ -394,7 +386,6 @@ export const PilihPoli = () => {
           navigation.replace("Booking Screen", response.data);
         })
         .catch((response) => {
-          console.log("response error", response);
           Alert.alert(
             "Mohon Maaf",
             `Sepertinya ${dataPas.nm_pasien} sudah terdaftar pada Tanggal ${
@@ -504,7 +495,6 @@ Jam Sore (14:00:00 - 18:00:00)`);
         message={messMod}
         submessage={subMessMod}
         onData={(item) => {
-          console.log("iniconsole", item);
           {
             if (pilihan == "poli") {
               setValue2(item.label);

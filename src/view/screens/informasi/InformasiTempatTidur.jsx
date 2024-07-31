@@ -39,10 +39,8 @@ const InformasiTempatTidur = () => {
         setLoading(false);
         setData(data);
       })
-      .catch((err) => console.log("Error Dari Informasi TT :" + err));
+      .catch((err) => console.log("Informasi TT :" + err));
   }, []);
-
-  console.log("Dari Informasi Tempat Tidur", filteredData);
 
   const handleSearch = (filteredData) => {
     setFilteredData(filteredData);

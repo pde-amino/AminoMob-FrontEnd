@@ -35,8 +35,6 @@ import {
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
-  console.log("auth yang muncul dari screen profilescreen", auth);
-
   const navigation = useNavigation();
   const [confirmLogout, setConfirmLogout] = useState(false);
   const [dataUser, setDataUser] = useState(null);

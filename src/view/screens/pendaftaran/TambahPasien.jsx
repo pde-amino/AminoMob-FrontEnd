@@ -92,8 +92,6 @@ export const TambahPasien = () => {
   const route = useRoute(); // Gunakan useRoute untuk mengambil parameter
   const { auth } = useContext(AuthContex);
 
-  console.log("ini auth", auth);
-
   //value yang akan diambil post
   const [hubunganPasien, setHubungan] = useState("");
   const [nmLengkap, setnmLengkap] = useState("");
@@ -281,8 +279,7 @@ export const TambahPasien = () => {
               style={{
                 width: "100%",
                 marginLeft: 40,
-              }}
-            >
+              }}>
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
             <View style={styles.containerDrop}>

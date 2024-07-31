@@ -26,10 +26,8 @@ export default function LayananNonBPJS() {
   const route = useRoute();
   const [modal, setModal] = useState(false);
 
-  console.log("datapasdsdasdasdasd", route.params);
   const dataKerabat = route.params;
   const { auth } = useContext(AuthContex);
-  console.log("Ini Auth :", dataKerabat.no_rkm_medis);
 
   const notifNoRawat = () => {
     <View>
@@ -40,8 +38,7 @@ export default function LayananNonBPJS() {
       <TouchableOpacityComponent
         onPress={() => {
           Alert.alert("Informasi", "Cara mendapatkan nomor rawat");
-        }}
-      >
+        }}>
         <Text>Bagaimana cara mendapatkan nomor rawat</Text>
       </TouchableOpacityComponent>
     </View>;

@@ -19,25 +19,15 @@ import { useNavigation } from "@react-navigation/native";
 
 const AllArticle = () => {
   const { width } = useWindowDimensions();
-  //   const { item } = route.params;
   const year = new Date().getFullYear();
-
   const navigation = useNavigation();
-
   const [articles, setArticles] = useState("");
   const [loading, setLoading] = useState("");
-  //   const article = {
-  //     imageUrl: item.image_url || "https://via.placeholder.com/150",
-  //     title: item.title || "Default Title",
-  //     category: item.category || "Default Category",
-  //     content: item.content || "Default Content",
-  //     copyright: `© ${year} Amino Hospital`,
-  //   };
 
   const fetchArticles = async () => {
     try {
       const response = await axios.get("http://192.168.5.3:8000/api/articles");
-      setArticles(response.data); // Set state articles dengan data dari respons
+      setArticles(response.data);
       setLoading(false);
     } catch (error) {
       Alert.alert(
@@ -45,17 +35,17 @@ const AllArticle = () => {
         "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi"
       );
 
-      setLoading(false); // Set loading menjadi false jika terjadi error
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
+    fetchArticles();
   }, []);
 
   const renderArticleItem = ({ item }) => (
-    <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
-      imgSource={{ uri: item.image_url }} // Sesuaikan dengan data artikel yang sesungguhnya
+    <CardComponentArticel
+      imgSource={{ uri: item.image_url }}
       title={item.title}
       description={item.content}
       data={{ item }}
@@ -78,7 +68,6 @@ const AllArticle = () => {
           data={articles}
           renderItem={renderArticleItem}
           keyExtractor={(item) => item.id}
-          // onRefresh={<RefreshControl refreshing={loading} />}
         />
       </View>
     </View>
