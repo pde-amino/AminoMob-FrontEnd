@@ -23,12 +23,12 @@ export default function MySlider() {
 
   const getBanner = async () => {
     try {
-      const response = await axios.get(`http://192.168.5.5:8080/bannerss`, {
+      const response = await axios.get(`http://192.168.5.5:8080/banners`, {
         headers: {
           "x-api-key":
             "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
         },
-        timeout: 10000, // Set timeout to 10 seconds
+        timeout: 10000,
       });
 
       if (response.data && response.data.data) {

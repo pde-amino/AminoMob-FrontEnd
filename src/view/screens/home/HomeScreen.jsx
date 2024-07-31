@@ -170,7 +170,6 @@ const HomeScreen = () => {
 
   const ListFooterComponent = () => (
     <>
-      {console.log("ARTICLE", articles)}
       {articles.length === 0 ? (
         <View style={styles.containerNext}>
           <Text style={GlobalStyles.textBiasa}>AMINO HOSPITAL</Text>
