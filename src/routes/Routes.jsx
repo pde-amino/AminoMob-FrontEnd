@@ -46,7 +46,6 @@ export default function Routes() {
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
         // initialRouteName="Onboarding"
         initialRouteName="Splash"
-        // initialRouteName="OTPInputScreen"
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
         }}

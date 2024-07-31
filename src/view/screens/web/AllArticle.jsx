@@ -5,21 +5,37 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   FlatList,
-  SafeAreaView,
+  RefreshControl,
   Alert,
+  Image,
+  Text,
 } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, TouchableRipple } from "react-native-paper";
 import RenderHTML from "react-native-render-html";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
-import { RefreshControl } from "react-native-gesture-handler";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { useNavigation } from "@react-navigation/native";
 
+const Item = ({ item, onPress }) => (
+  <TouchableRipple style={{ backgroundColor: "red" }}>
+    <Text>INI CEK ITEM</Text>
+    {/* <Image
+      source={{ uri: item.link_image }}
+      style={{ resizeMode: "contain" }}
+    /> */}
+    <View>
+      <Text>{item.title}</Text>
+      <Text>{item.title}</Text>
+      <Text>{item.title}</Text>s
+    </View>
+  </TouchableRipple>
+);
+
 const AllArticle = () => {
   const { width } = useWindowDimensions();
-  //   const { item } = route.params;
+  const [refreshing, setRefreshing] = useState(false);
   const year = new Date().getFullYear();
 
   const navigation = useNavigation();
@@ -39,13 +55,16 @@ const AllArticle = () => {
       const response = await axios.get("http://192.168.5.3:8000/api/articles");
       setArticles(response.data); // Set state articles dengan data dari respons
       setLoading(false);
+      console.log("tes artikel", response.data);
     } catch (error) {
       Alert.alert(
         "Maaf",
         "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi"
       );
-
-      setLoading(false); // Set loading menjadi false jika terjadi error
+      setLoading(false);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -62,6 +81,27 @@ const AllArticle = () => {
     />
   );
 
+  const renderItem = ({ item }) => {
+    return (
+      <Item
+        item={item}
+        // onPress={() => {
+        //   setPilihPasien(item);
+        //   navigation.navigate(
+        //     "LayananNonBPJS",
+        //     item
+        //     // (selectedItem = item)
+        //   );
+        // }}
+      />
+    );
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchArticles();
+  };
+
   return (
     <View style={GlobalStyles.utama}>
       <View>
@@ -71,14 +111,17 @@ const AllArticle = () => {
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={[GlobalStyles.safeAreaStyle, { alignItems: "center" }]}>
+      <View style={{ alignItems: "center" }}>
         <FlatList
-          horizontal={false}
-          numColumns={2}
+          // horizontal={false}
+          // numColumns={2}
           data={articles}
+          // renderItem={renderItem}
           renderItem={renderArticleItem}
           keyExtractor={(item) => item.id}
-          // onRefresh={<RefreshControl refreshing={loading} />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </View>
     </View>
