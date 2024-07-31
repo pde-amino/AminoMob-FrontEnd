@@ -227,7 +227,6 @@ export const TambahPasienLama = () => {
               onBlur={() => setIsFocus1(false)}
               onChange={(item) => {
                 setHubungan(item.value);
-                console.log(hubunganPasien);
                 setIsFocus1(false);
               }}
             />

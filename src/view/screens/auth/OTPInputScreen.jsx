@@ -13,7 +13,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import axios from "axios";
-import { BASE_URL } from "../../../contex/Config";
+import {
+  BASE_URL,
+  OTP_DIVISION,
+  OTP_ID,
+  OTP_PASS,
+  OTP_SENDER,
+  SEND_OTP,
+} from "../../../contex/Config";
 import * as Network from "expo-network";
 
 const OTPInputScreen = () => {
@@ -21,10 +28,59 @@ const OTPInputScreen = () => {
   const dataUser = route.params;
   const [otp, setOtp] = useState("");
   const { auth, setAuth } = useContext(AuthContex);
+  const [sendOTP, setSendOTP] = useState("");
   const navigation = useNavigation();
 
-  const [counter, setCounter] = useState(30); // Mulai hitung mundur dari 30 detik
-  const [isCounting, setIsCounting] = useState(true); // Mulai dengan status counting true
+  const [counter, setCounter] = useState(30);
+  const [isCounting, setIsCounting] = useState(true);
+
+  const handleSendOtp = async () => {
+    setCounter(10);
+    setIsCounting(true);
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/ulangOtp`,
+        {
+          telp: dataUser.telp,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+          },
+        }
+      );
+      setSendOTP(response.data.otp);
+      await resend(response.data.otp);
+    } catch (error) {
+      Alert.alert("Error", "Gagal mengirim OTP. Silakan coba lagi.");
+    }
+  };
+
+  const resend = async (otp) => {
+    try {
+      await axios.post(
+        `${SEND_OTP}`,
+        {
+          userid: OTP_ID,
+          password: OTP_PASS,
+          msisdn: dataUser.telp,
+          message: otp,
+          sender: OTP_SENDER,
+          division: OTP_DIVISION,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+    } catch (error) {
+      Alert.alert("Error", "Gagal mengirim ulang OTP. Silakan coba lagi.");
+    }
+  };
 
   useEffect(() => {
     let timer;
@@ -43,51 +99,38 @@ const OTPInputScreen = () => {
     return () => clearInterval(timer);
   }, [isCounting]);
 
-  const handleSendOtp = () => {
-    setCounter(90); // Setel ulang counter ke 30 detik setiap kali OTP dikirim
-    setIsCounting(true); // Mulai hitung mundur
-  };
-
   const handleOTPSubmit = async () => {
-    const validOTP = dataUser.otp;
     const ip = await Network.getIpAddressAsync();
-    if (otp === validOTP) {
-      try {
-        await axios.post(
-          `${BASE_URL}/otp`,
-          {
-            telp: dataUser.telp,
-            otp: dataUser.otp,
-            ip: ip,
+    try {
+      await axios.post(
+        `${BASE_URL}/otp`,
+        {
+          telp: dataUser.telp,
+          otp: otp,
+          ip: ip,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key":
-                "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            },
-          }
-        );
-        const userInfo = {
-          ...auth,
-          otpVerified: true,
-        };
-        await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setAuth(userInfo);
+        }
+      );
+      const userInfo = {
+        ...auth,
+        otpVerified: true,
+      };
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setAuth(userInfo);
 
-        Alert.alert(
-          "Success",
-          "Kode OTP valid. Silahkan Login menggunakan nomor yang anda daftarkan.",
-          [{ text: "OK", onPress: () => navigation.navigate("Login Screen") }]
-        );
-      } catch (error) {
-        Alert.alert(
-          "Error",
-          "Gagal menyimpan data pengguna. Silakan coba lagi."
-        );
-      }
-    } else {
-      Alert.alert("Error", "Kode OTP tidak valid. Silakan coba lagi.");
+      Alert.alert(
+        "Success",
+        "Kode OTP valid. Silahkan Login menggunakan nomor yang anda daftarkan.",
+        [{ text: "OK", onPress: () => navigation.navigate("Login Screen") }]
+      );
+    } catch (error) {
+      Alert.alert("Error", "Gagal menyimpan data pengguna. Silakan coba lagi.");
     }
   };
 
@@ -113,20 +156,30 @@ const OTPInputScreen = () => {
         <ButtonPrimary title="Verifikasi" onPress={handleOTPSubmit} />
       </View>
       <View style={{ flexDirection: "row", marginTop: 20 }}>
-        <Text style={GlobalStyles.textBiasa}>Belum dapat OTP? </Text>
-        <TouchableOpacity
-          onPress={handleSendOtp}
-          disabled={isCounting}
-          // style={[
-          //   styles.resendButton,
-          //   isCounting && styles.resendButtonDisabled,
-          // ]}
-        >
+        {isCounting ? (
           <Text
             style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}>
-            {isCounting ? ` Kirim ulang OTP dalam ${counter}` : " Kirim Ulang"}
+            Coba lagi dalam {counter} detik
           </Text>
-        </TouchableOpacity>
+        ) : (
+          <>
+            <Text style={GlobalStyles.textBiasa}>Belum dapat OTP? </Text>
+            <TouchableOpacity
+              onPress={handleSendOtp}
+              disabled={isCounting}
+              style={{
+                alignItems: "center",
+              }}>
+              <Text
+                style={[
+                  GlobalStyles.textLink,
+                  isCounting && styles.linkDisabled,
+                ]}>
+                "Kirim Ulang"
+              </Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </View>
   );

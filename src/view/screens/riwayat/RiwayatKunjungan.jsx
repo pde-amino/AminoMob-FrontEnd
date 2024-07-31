@@ -30,9 +30,6 @@ export default function RiwayatKunjungan() {
   const [loading, setLoading] = useState(true);
   const [lihatQR, setLihatQR] = useState(false);
   const [selectedKodeBooking, setSelectedKodeBooking] = useState(null);
-
-  console.log("auth dari riwayat:", auth.user.id);
-
   const hideDialog = () => setLihatQR(false);
 
   const ambilDataRiwayat = async () => {
@@ -41,14 +38,13 @@ export default function RiwayatKunjungan() {
         `${BASE_URL}/riwayatbooking/${auth.user.id}`,
         {
           headers: {
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+            Authorization: `Bearer ${auth.user.token}`,
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
         }
       );
-      console.log("Response data riwayat:", response.data); // Logging response data
       const data = response.data.data_user;
       setDataRiwayat(data);
     } catch (error) {
@@ -104,10 +100,7 @@ export default function RiwayatKunjungan() {
         item={item}
         onPress={() => {
           setSelectedKodeBooking(item.kode_booking);
-          console.log("Item pilihpasien:", selectedKodeBooking);
-          // , item.kode_booking);
           setLihatQR(true);
-          // navigation.navigate("Booking Screen", item);
         }}
       />
     );
@@ -117,8 +110,6 @@ export default function RiwayatKunjungan() {
     setRefreshing(true);
     ambilDataRiwayat();
   };
-
-  // console.log('ini status')
 
   return (
     <SafeAreaView style={[GlobalStyles.safeAreaStyle, GlobalStyles.utama]}>

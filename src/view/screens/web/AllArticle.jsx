@@ -37,23 +37,14 @@ const AllArticle = () => {
   const { width } = useWindowDimensions();
   const [refreshing, setRefreshing] = useState(false);
   const year = new Date().getFullYear();
-
   const navigation = useNavigation();
-
   const [articles, setArticles] = useState("");
   const [loading, setLoading] = useState("");
-  //   const article = {
-  //     imageUrl: item.image_url || "https://via.placeholder.com/150",
-  //     title: item.title || "Default Title",
-  //     category: item.category || "Default Category",
-  //     content: item.content || "Default Content",
-  //     copyright: `© ${year} Amino Hospital`,
-  //   };
 
   const fetchArticles = async () => {
     try {
       const response = await axios.get("http://192.168.5.3:8000/api/articles");
-      setArticles(response.data); // Set state articles dengan data dari respons
+      setArticles(response.data);
       setLoading(false);
       console.log("tes artikel", response.data);
     } catch (error) {
@@ -69,12 +60,12 @@ const AllArticle = () => {
   };
 
   useEffect(() => {
-    fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
+    fetchArticles();
   }, []);
 
   const renderArticleItem = ({ item }) => (
-    <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
-      imgSource={{ uri: item.image_url }} // Sesuaikan dengan data artikel yang sesungguhnya
+    <CardComponentArticel
+      imgSource={{ uri: item.image_url }}
       title={item.title}
       description={item.content}
       data={{ item }}

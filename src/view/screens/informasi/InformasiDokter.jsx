@@ -46,7 +46,6 @@ const InformasiDokter = () => {
         setFilteredData(response.data.daftar_poli);
         setLoading(false);
       } catch (err) {
-        console.log("Error Informasi Dokter", err);
         setError(err);
         setLoading(false);
       }

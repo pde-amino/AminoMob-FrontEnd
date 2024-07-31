@@ -12,8 +12,6 @@ export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
   const route = useRoute();
   const { nameClinic, clinicId } = route.params;
-  console.log("nameClinic", nameClinic);
-  console.log("nameClinic", clinicId);
   const [dataPoli, setDataPoli] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,8 +56,6 @@ export default function SearchDokter() {
   const handleSearch = (filteredData) => {
     setFilteredData(filteredData);
   };
-
-  console.log("Filtered Data:", filteredData); // Debugging log
 
   return (
     <View style={GlobalStyles.utama}>

@@ -39,8 +39,6 @@ export default function ListPasien() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  console.log("auth   dari screen listpasien", auth.user.id);
-
   const pasienLama = () => {
     navigation.navigate("Tambah Pasien Lama");
     setBtmtambah(false);
@@ -63,7 +61,6 @@ export default function ListPasien() {
           },
         }
       );
-      console.log("Respon data kerabat:", response.data); // Logging response data
       const data = response.data.data_kerabat;
       setDataPasien(data);
     } catch (error) {

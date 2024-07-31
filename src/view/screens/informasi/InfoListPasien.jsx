@@ -60,8 +60,6 @@ export default function InfoListPasien() {
   const [refreshing, setRefreshing] = useState(false);
   const { auth } = useContext(AuthContex);
 
-  console.log("ini adalah id auth dari info data pasien", auth.user.id);
-
   const fetchData = async () => {
     try {
       const response = await axios.get(

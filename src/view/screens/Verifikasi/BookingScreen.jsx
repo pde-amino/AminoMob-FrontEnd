@@ -44,7 +44,6 @@ const BookingScreen = () => {
   }, []);
 
   const data = route.params.data;
-  console.log("ini data rouute:", data);
 
   const transactionData = {
     noRM: data.no_rkm_medis,
@@ -141,8 +140,7 @@ const BookingScreen = () => {
                   marginVertical: 12,
                   padding: 20,
                   gap: 24,
-                }}
-              >
+                }}>
                 <GenerateQRCode value={transactionData.kdBook} size={150} />
                 <Text style={GlobalStyles.h2}>{transactionData.kdBook}</Text>
               </View>
