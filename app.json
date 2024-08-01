@@ -4,7 +4,7 @@
     "slug": "my-apps",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "assets/icon.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -13,7 +13,7 @@
     "android": {
       "adaptiveIcon": {
         "usesCleartextTraffic": true,
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.amino.mobile",

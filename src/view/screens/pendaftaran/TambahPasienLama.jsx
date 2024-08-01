@@ -41,7 +41,7 @@ const hubungan = [
   { label: "Suami", value: "SUAMI" },
   { label: "Saudara", value: "SAUDARA" },
   { label: "Anak", value: "ANAK" },
-  { label: "Diri Dendiri", value: "DIRI SENDIRI" },
+  { label: "Diri Sendiri", value: "DIRI SENDIRI" },
   { label: "Lain - Lain", value: "LAIN-LAIN" },
 ];
 
