@@ -24,6 +24,7 @@ import {
   SEND_OTP,
 } from "../../../contex/Config";
 import * as Network from "expo-network";
+import { Checkbox } from "react-native-paper";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -58,6 +59,7 @@ const SignupScreen = () => {
   const [noHP, setHP] = useState("");
   const [noKTP, setKTP] = useState("");
   const [nmLengkap, setNama] = useState("");
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     validatePasswords();
@@ -102,10 +104,6 @@ const SignupScreen = () => {
   };
   const simpanData = async () => {
     const ip = await Network.getIpAddressAsync();
-    if (passwordError || confPasswordError) {
-      Alert.alert("Maaf, mohon pastikan password benar");
-      return;
-    }
     try {
       const response = await axios.post(
         `${BASE_URL}/register`,
@@ -132,7 +130,7 @@ const SignupScreen = () => {
       await sendOTP((otp = response.data.otp));
       navigation.navigate("OTPInputScreen", userData);
     } catch (error) {
-      console.error("OTP", error);
+      // console.error("OTP", error);
       Alert.alert(
         "Gagal Mendaftar",
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"
@@ -146,16 +144,17 @@ const SignupScreen = () => {
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
-            // flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}>
+              ]}
+            >
               Daftar Akun
             </Text>
           </View>
@@ -171,17 +170,20 @@ const SignupScreen = () => {
               label={"No KTP"}
               type={"ktp"}
               value={noKTP}
+              inputMode={"numeric"}
               onChangeText={setKTP}
             />
             <TextInputIconComponent
               label={"No Handphone"}
               type={"nomor"}
+              placeholder="Pastikan nomor dapat dihubungi"
+              inputMode={"numeric"}
               value={noHP}
               onChangeText={setHP}
             />
 
             <TextInputIconComponent
-              label={"Buat Kata Sandi"}
+              label={"Kata Sandi"}
               placeholder={"Buat Kata Sandi"}
               type={"password"}
               value={password}
@@ -194,8 +196,8 @@ const SignupScreen = () => {
             ) : null}
 
             <TextInputIconComponent
-              label={"Masukan Ulang Kata Sandi"}
-              placeholder={"Masukan kata sandi lagi"}
+              label={"Ulang Kata Sandi"}
+              placeholder={"Ulangi kata sandi"}
               type={"password"}
               value={confirmPassword}
               onChangeText={setConfPassword}
@@ -208,21 +210,43 @@ const SignupScreen = () => {
           </View>
 
           <View style={{ paddingTop: 8 }}>
+            <Checkbox.Item
+              style={GlobalStyles.cekBox}
+              color={WARNA.primary}
+              label="Data yang Saya masukkan sudah benar"
+              labelStyle={GlobalStyles.textBiasa}
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => {
+                setChecked(!checked);
+              }}
+            />
             <ButtonPrimary
               title="Daftar"
-              onPress={simpanData}
-              disabled={!!passwordError || !!confPasswordError}
+              onPress={() => {
+                Alert.alert(
+                  "Peringatan",
+                  "Pastikan nomor HP yang Anda input adalah nomor pribadi dan dapat dihubungi",
+                  [
+                    {
+                      text: "Cek Lagi",
+                    },
+                    { text: "Sudah", onPress: simpanData },
+                  ]
+                );
+              }}
+              disabled={!!passwordError || !!confPasswordError || !checked}
             />
           </View>
 
           <View style={{ flexDirection: "row" }}>
-            <Text style={GlobalStyles.textBiasa}>Sudah Punya akun?</Text>
+            <Text style={GlobalStyles.textBiasa}>Sudah punya akun? </Text>
             <TouchableOpacity>
               <Text
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}>
+                }}
+              >
                 Masuk disini
               </Text>
             </TouchableOpacity>

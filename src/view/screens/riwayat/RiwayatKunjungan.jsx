@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -16,7 +17,6 @@ import axios from "axios";
 import { useState } from "react";
 import { ActivityIndicator, Dialog, Portal } from "react-native-paper";
 import CardColapse from "../../../components/CardColapse";
-import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
@@ -48,10 +48,12 @@ export default function RiwayatKunjungan() {
       const data = response.data.data_user;
       setDataRiwayat(data);
     } catch (error) {
-      Alert.alert(
-        "Maaf",
-        "Ada kesalahan saat mengambil data riwayat, mohon ulangi beberapa saat lagi"
-      );
+      if (error.message != "Request failed with status code 404") {
+        Alert.alert(
+          "Maaf",
+          "Ada kesalahan saat mengambil data riwayat, mohon ulangi beberapa saat lagi"
+        );
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -125,7 +127,6 @@ export default function RiwayatKunjungan() {
               style={{ width: "100%" }}
               data={dataRiwayat}
               renderItem={renderItem}
-              // keyExtractor={(item) => item.kode_booking.toString()}
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
@@ -135,11 +136,12 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
-                  width: "80%",
+                  width: "70%",
                   resizeMode: "contain",
                 }}
                 source={require("../../../../assets/no-data.png")}
@@ -152,8 +154,9 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
-                Belum ada data riwayat, silakan mendaftar poli
+                ]}
+              >
+                Belum ada riwayat periksa, silakan mendaftar
               </Text>
             </View>
           </ScrollView>
@@ -169,9 +172,11 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}>
+          }}
+        >
           <Dialog.Title
-            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>

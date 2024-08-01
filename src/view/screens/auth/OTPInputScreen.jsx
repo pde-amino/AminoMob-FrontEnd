@@ -140,8 +140,9 @@ const OTPInputScreen = () => {
         Masukkan Kode OTP
       </Text>
       <Text
-        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "80%" }]}>
-        OTP akan dikirim ke nomor yang anda daftarkan sebelumnya
+        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "90%" }]}
+      >
+        OTP akan dikirim melalui SMS, silakan tunggu beberapa saat.
       </Text>
       <TextInput
         style={styles.input}
@@ -158,7 +159,8 @@ const OTPInputScreen = () => {
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         {isCounting ? (
           <Text
-            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}>
+            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}
+          >
             Coba lagi dalam {counter} detik
           </Text>
         ) : (
@@ -169,13 +171,15 @@ const OTPInputScreen = () => {
               disabled={isCounting}
               style={{
                 alignItems: "center",
-              }}>
+              }}
+            >
               <Text
                 style={[
                   GlobalStyles.textLink,
                   isCounting && styles.linkDisabled,
-                ]}>
-                "Kirim Ulang"
+                ]}
+              >
+                Kirim Ulang
               </Text>
             </TouchableOpacity>
           </>

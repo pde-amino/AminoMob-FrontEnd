@@ -279,7 +279,8 @@ export const TambahPasien = () => {
               style={{
                 width: "100%",
                 marginLeft: 40,
-              }}>
+              }}
+            >
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
             <View style={styles.containerDrop}>

@@ -1,12 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  FlatList,
-  SafeAreaView,
-  Alert,
-  Text,
-  TouchableOpacityComponent,
-} from "react-native";
+import { View, FlatList, SafeAreaView, Alert, Text } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -18,38 +11,32 @@ const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function LayananNonBPJS() {
   const navigation = useNavigation();
   const [jnsMenu, setJnsMenu] = useState(null);
-  const [btmPoli, setBtmPoli] = useState(false);
-  const [btmPenunjang, setBtmPenunjang] = useState(false);
-  const [btmTele, setBtmTele] = useState(false);
-  const [btmTerang, setBtmTerang] = useState(false);
-  const [kerabat, setKerabat] = useState(false);
   const route = useRoute();
-  const [modal, setModal] = useState(false);
 
   const dataKerabat = route.params;
   const { auth } = useContext(AuthContex);
 
-  const notifNoRawat = () => {
-    <View>
-      <Text>{dataKerabat.nm_pasien} belum memiliki nomor rawat.</Text>
-      <Text>
-        Terang bulah hanya bisa untuk psien yang sudah memiliki nomor rawat.
-      </Text>
-      <TouchableOpacityComponent
-        onPress={() => {
-          Alert.alert("Informasi", "Cara mendapatkan nomor rawat");
-        }}>
-        <Text>Bagaimana cara mendapatkan nomor rawat</Text>
-      </TouchableOpacityComponent>
-    </View>;
-  };
+  // const notifNoRawat = () => {
+  //   <View>
+  //     <Text>{dataKerabat.nm_pasien} belum memiliki nomor rawat.</Text>
+  //     <Text>
+  //       Terang bulah hanya bisa untuk psien yang sudah memiliki nomor rawat.
+  //     </Text>
+  //     <TouchableOpacityComponent
+  //       onPress={() => {
+  //         Alert.alert("Informasi", "Cara mendapatkan nomor rawat");
+  //       }}
+  //     >
+  //       <Text>Bagaimana cara mendapatkan nomor rawat</Text>
+  //     </TouchableOpacityComponent>
+  //   </View>;
+  // };
 
   const Menus = [
     {
       kd_poli: "1",
       title: "Poliklinik",
       desc: "Pendaftaran online poliklinik rawat jalan",
-      // to: "Pilih Poli",
       poli: "Klinik",
       to: () => {
         setJnsMenu("Poliklinik");
@@ -58,7 +45,6 @@ export default function LayananNonBPJS() {
           jnsMenu: "Poliklinik",
         });
       },
-      // warna: "#E79903",
       warna: "#DC9203",
       img: require("../../../../assets/icon41.png"),
     },
@@ -86,19 +72,18 @@ export default function LayananNonBPJS() {
       to: "Pilih Poli",
       poli: "Penunjang",
       to: () => {
-        setJnsMenu("TerangBulan");
-        navigation.navigate("Pilih Poli", {
-          dataKerabat,
-          jnsMenu: "TerangBulan",
-        });
+        // setJnsMenu("TerangBulan");
+        // navigation.navigate("Pilih Poli", {
+        //   dataKerabat,
+        //   jnsMenu: "TerangBulan",
+        // });
         // () => {
-        //   Alert.alert(
-        //     "Maaf",
-        //     "Saat ini menu Telekonseling masih dalam tahap pengembangan"
-        //   );
+        Alert.alert(
+          "Maaf",
+          "Saat ini menu Telekonseling masih dalam tahap pengembangan"
+        );
         // setJnsMenu("tele");
       },
-      // warna: "#09A0CF",
       warna: "#0293C0",
       img: require("../../../../assets/icon43.png"),
     },
@@ -113,35 +98,8 @@ export default function LayananNonBPJS() {
           "Maaf",
           "Saat ini menu Terang Bulan masih dalam tahap pengembangan"
         );
-        setJnsMenu("tele");
+        // setJnsMenu("tele");
       },
-      // () => {
-      //   setJnsMenu("TerangBulan");
-      //   if (dataKerabat.no_rkm_medis === "") {
-      //     Alert.alert(
-      //       "Maaf",
-      //       `Layanan ini sementara hanya tersedia untuk yang sudah mempunyai Nomor Rekam Medis. "${dataKerabat.nm_pasien}" belum memiliki Nomor Rekam Medis.`,
-      //       [
-      //         {
-      //           text: "cara mendapatkan nomor rawat?",
-      //           onPress: () => {
-      //             Alert.alert(
-      //               "Informasi",
-      //               "Silahkan mendaftarkan diri di RS untuk mendapatkan Nomor Rekam Medis."
-      //             );
-      //           },
-      //         },
-      //         { text: "OK", onPress: () => {} },
-      //       ]
-      //     );
-      //   } else {
-      //     navigation.navigate("Pilih Poli", {
-      //       dataKerabat,
-      //       jnsMenu: "TerangBulan",
-      //     });
-      //   }
-      // },
-      // warna: "#A557F3",
       warna: "#9335F0",
       img: require("../../../../assets/icon44.png"),
     },

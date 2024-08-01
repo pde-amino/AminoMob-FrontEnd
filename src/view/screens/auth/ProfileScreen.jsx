@@ -10,13 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Divider,
-  Icon,
-  TouchableRipple,
-} from "react-native-paper";
+import { Avatar, Divider, Icon } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useContext } from "react";
@@ -57,10 +51,11 @@ const ProfileScreen = () => {
       //   AsyncStorage.removeItem("userInfo");
       //   logout();
       //   navigation.replace("Login Screen");
-      //   Alert.alert(
-      //     "Maaf",
-      //     "Hanya bisa login di satu perangkat, silakan logout di perangkat yang lain"
-      //   );
+      Alert.alert(
+        "Maaf",
+        "Terjadi kesalahan saat mengambil data, silakan logout di perangkat yang lain" +
+          error
+      );
       //   return;
       // }
     } finally {
@@ -117,7 +112,8 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -145,23 +141,23 @@ const ProfileScreen = () => {
 
             <View style={{ gap: 12 }}>
               <Divider />
-
               {dataUser.level === "1" ? (
-                <>
+                <View style={{ gap: 12 }}>
                   <TouchableOpacity
                     style={styles.containerMenu}
-                    onPress={() => navigation.replace("Web View")}>
+                    onPress={() => navigation.replace("Web View")}
+                  >
                     <Icon source="chat-alert" size={24} />
                     <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
                   </TouchableOpacity>
-                </>
+                  <Divider />
+                </View>
               ) : null}
-
-              <Divider />
 
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}>
+                onPress={() => setConfirmLogout(true)}
+              >
                 <Icon source={"logout"} color="#430D09" size={24} />
                 <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
                   Logout
