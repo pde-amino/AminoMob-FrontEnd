@@ -8,7 +8,6 @@ import {
 
 const ButtonSecondary = ({ title, onPress }) => (
   <Button
-    // textColor="blue"
     mode="outlined"
     labelStyle={styles.labelStyle}
     style={styles.buttonStyle}
