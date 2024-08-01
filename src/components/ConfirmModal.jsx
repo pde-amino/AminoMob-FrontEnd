@@ -51,8 +51,7 @@ const ConfirmModal = ({
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onCancel}
-    >
+      onRequestClose={onCancel}>
       {list ? (
         <TouchableWithoutFeedback onPress={onCancel}>
           <View style={styles.modalBackground}>
@@ -102,8 +101,7 @@ const ConfirmModal = ({
                   mode="outlined"
                   labelStyle={{ color: "#0A78E2" }}
                   style={styles.btnNo}
-                  onPress={onCancel}
-                >
+                  onPress={onCancel}>
                   {cancelButtonText}
                 </Button>
               </View>
