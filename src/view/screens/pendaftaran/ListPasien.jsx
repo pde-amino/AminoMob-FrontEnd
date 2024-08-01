@@ -64,11 +64,13 @@ export default function ListPasien() {
       const data = response.data.data_kerabat;
       setDataPasien(data);
     } catch (error) {
-      Alert.alert(
-        "Maaf",
-        "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
-          error
-      );
+      if (error.message != "Request failed with status code 404") {
+        Alert.alert(
+          "Maaf",
+          "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
+            error
+        );
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -139,7 +141,8 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -156,7 +159,8 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
+                ]}
+              >
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>

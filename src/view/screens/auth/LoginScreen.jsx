@@ -32,7 +32,7 @@ const LoginScreen = () => {
   const handleUsernameChange = (input) => {
     setUsername(input);
     const onlyNumbers = /^[0-9]+$/.test(input);
-    setUsernameError(onlyNumbers ? "" : "Cuma boleh pakai angka");
+    setUsernameError(onlyNumbers ? "" : "Hanya boleh pakai angka");
   };
 
   const handlePasswordChange = (input) => {
@@ -108,20 +108,22 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, paddingBottom: 40 },
-              ]}>
+              ]}
+            >
               Masuk
             </Text>
           </View>
           <View style={{ gap: 8, marginBottom: 12 }}>
             <TextInputIconComponent
-              label="Nomor HP"
-              placeholder="Masukkan No HP Anda"
+              label="Nomor HP/NIK"
+              placeholder="Masukkan salah satu"
               value={username}
               type={"username"}
               inputMode={"numeric"}
@@ -130,7 +132,7 @@ const LoginScreen = () => {
 
             <TextInputIconComponent
               label="Kata Sandi"
-              placeholder="Masukkan kata sandi di sini"
+              placeholder="Masukkan kata sandi Anda"
               password={true}
               value={password}
               onChangeText={handlePasswordChange}

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,17 +20,15 @@ import { ActivityIndicator } from "react-native-paper";
 import CardColapse from "../../../components/CardColapse";
 
 const Item = ({ item }) => (
-  <CardColapse title={item.id_pasien} subtitle={item.nm_pasien}>
+  <CardColapse title={item.status_user} subtitle={item.nm_pasien}>
     <View style={{ flexDirection: "row", gap: 8 }}>
       <View>
         <Text>No.Telp </Text>
-        <Text>Hubungan </Text>
         <Text>Pekerjaan </Text>
         <Text>Tgl Lahir </Text>
       </View>
       <View>
         <Text> {item.no_tlp}</Text>
-        <Text> {item.status_user}</Text>
         <Text> {item.pekerjaan}</Text>
         <Text> {item.tgl_lahir}</Text>
       </View>
@@ -54,7 +52,6 @@ const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 export default function InfoListPasien() {
   const navigation = useNavigation();
   const [btmTambah, setBtmtambah] = useState(false);
-  // const [adaKerabat, setAdaKerabat] = useState(false);
   const [dataPasien, setDataPasien] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -77,11 +74,13 @@ export default function InfoListPasien() {
       const data = response.data.data_kerabat;
       setDataPasien(data);
     } catch (error) {
-      Alert.alert(
-        "Maaf",
-        "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
-          error
-      );
+      if (error.message != "Request failed with status code 404") {
+        Alert.alert(
+          "Maaf",
+          "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
+            error
+        );
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -107,7 +106,7 @@ export default function InfoListPasien() {
         <HeaderComponent title={"Informasi Data Pasien"} />
       </View>
 
-      <View style={{ flex: 9, alignItems: "center" }}>
+      <View style={{ flex: 9 }}>
         {loading ? (
           <ActivityIndicator
             animating={true}
@@ -128,11 +127,12 @@ export default function InfoListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
-                  width: "80%",
+                  width: "70%",
                   resizeMode: "contain",
                 }}
                 source={require("../../../../assets/no-data.png")}
@@ -145,8 +145,10 @@ export default function InfoListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
-                Belum ada data pasien, silakan tambah data atau refresh
+                ]}
+              >
+                Belum ada data pasien, silakan tambah data lewat menu layanan di
+                Home atau refresh
               </Text>
             </View>
           </ScrollView>
