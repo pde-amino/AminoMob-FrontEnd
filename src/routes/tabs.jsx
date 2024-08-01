@@ -42,10 +42,7 @@ export default function HomeTabs() {
     } catch (error) {
       if (
         error.message === "Request failed with status code 401" ||
-        (error.response && error.response.status === 401) ||
-        (error.response.data &&
-          error.response.data.error ===
-            "Token tidak valid atau tidak ditemukan")
+        error.response.status === 401
       ) {
         AsyncStorage.removeItem("userInfo");
         logout();
@@ -56,11 +53,8 @@ export default function HomeTabs() {
         );
         return;
       } else {
-        // console.error(error);
-        Alert.alert(
-          "Maaf",
-          "Terjadi kesalahan saat pengecekan Token, ulangi beberapa saat lagi"
-        );
+        console.error(error);
+        Alert.alert("Maaf", error);
       }
     }
   };

@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeTabs from "./tabs";
 import FavoriteScreen from "../view/screens/home/FavoriteScreen";
 import Poli2 from "../view/screens/poli/Poli2";
@@ -37,15 +37,39 @@ import SplashScreen from "../view/screens/home/SplashScreen";
 import DetailDoctorScreen from "../view/screens/informasi/DetailDoctorScreen";
 import ArticleKesehatan from "../view/screens/web/ArticleKesehatan";
 import AllArticle from "../view/screens/web/AllArticle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
+  const [initialRoute, setInitialRoute] = useState("Splash");
+
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const isFirstLaunch = await AsyncStorage.getItem("isFirstLaunch");
+        if (isFirstLaunch === null) {
+          await AsyncStorage.setItem("isFirstLaunch", "false");
+          setInitialRoute("Onboarding");
+        } else {
+          setInitialRoute("Splash");
+        }
+      } catch (error) {
+        console.error("Error checking if first launch:", error);
+      }
+    };
+
+    checkFirstLaunch();
+  }, []);
+
+  if (initialRoute === null) {
+    return null; // or some kind of loading indicator
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
-        // initialRouteName="Onboarding"
-        initialRouteName="Splash"
+        initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
         }}
