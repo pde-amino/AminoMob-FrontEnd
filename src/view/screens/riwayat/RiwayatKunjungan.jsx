@@ -70,11 +70,13 @@ export default function RiwayatKunjungan() {
         <View>
           <Text>Poliklinik </Text>
           <Text>Tanggal periksa </Text>
+          <Text>Jam periksa </Text>
           <Text>Dokter </Text>
         </View>
         <View>
           <Text> {item.nm_poli}</Text>
           <Text> {item.tanggal_periksa}</Text>
+          <Text> {item.jam_periksa}</Text>
           <Text> {item.nm_dokter}</Text>
         </View>
       </View>

@@ -35,7 +35,7 @@ const OTPInputScreen = () => {
   const [isCounting, setIsCounting] = useState(true);
 
   const handleSendOtp = async () => {
-    setCounter(10);
+    setCounter(120);
     setIsCounting(true);
 
     try {
@@ -140,10 +140,14 @@ const OTPInputScreen = () => {
         Masukkan Kode OTP
       </Text>
       <Text
-        style={[GlobalStyles.textBiasa, { marginBottom: 20, maxWidth: "90%" }]}
+        style={[
+          GlobalStyles.textBiasa,
+          { marginBottom: 20, maxWidth: "80%", alignItems: "center" },
+        ]}
       >
         OTP akan dikirim melalui SMS, silakan tunggu beberapa saat.
       </Text>
+
       <TextInput
         style={styles.input}
         placeholder="Kode OTP"
