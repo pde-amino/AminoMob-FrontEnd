@@ -10,6 +10,9 @@
         "buildType": "apk"
       }
     },
+    "development1": {
+      "android": { "image": "latest", "buildType": "apk" }
+    },
     "preview": {
       "distribution": "internal",
       "android": {

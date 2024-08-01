@@ -17,6 +17,7 @@ import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_ARTICLE_ALL } from "../../../contex/Config";
 
 const Item = ({ item, onPress }) => (
   <TouchableRipple style={{ backgroundColor: "red" }}>
@@ -43,7 +44,7 @@ const AllArticle = () => {
 
   const fetchArticles = async () => {
     try {
-      const response = await axios.get("http://192.168.5.3:8000/api/articles");
+      const response = await axios.get(BASE_ARTICLE_ALL);
       setArticles(response.data);
       setLoading(false);
       console.log("tes artikel", response.data);

@@ -24,19 +24,20 @@ import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 import { Icon, TouchableRipple } from "react-native-paper";
+import { BASE_ARTICLE } from "../../../contex/Config";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 const HomeScreen = () => {
-  const { logout, auth } = useContext(AuthContex); // Pastikan penulisan AuthContex sesuai dengan nama yang benar
+  const { logout, auth } = useContext(AuthContex);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true); // Tambahkan state loading
+  const [loading, setLoading] = useState(true);
 
   const onRefresh = () => {
     setRefreshing(true);
-    fetchArticles(); // Panggil kembali fungsi fetchArticles saat refresh
+    fetchArticles();
     setRefreshing(false);
   };
 
@@ -89,10 +90,10 @@ const HomeScreen = () => {
 
   const getArticles = async () => {
     try {
-      const response = await axios.get("http://192.168.5.3:8000/api/article");
-      return response.data; // Mengembalikan data dari respons
+      const response = await axios.get(BASE_ARTICLE);
+      return response.data;
     } catch (error) {
-      throw error; // Melempar error agar dapat ditangani di tempat lain
+      throw error;
     }
   };
 
@@ -100,27 +101,19 @@ const HomeScreen = () => {
     try {
       const articlesData = await getArticles();
       setArticles(articlesData);
-      setLoading(false); // Setelah selesai loading, set loading menjadi false
+      setLoading(false);
     } catch (error) {
-      // Alert.alert(
-      //   "Maaf",
-      //   "Ada kesalahan saat mengambil data artikel, mohon ulangi beberapa saat lagi " +
-      //     error
-      // );
-
-      setLoading(false); // Set loading menjadi false jika terjadi error
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchArticles(); // Panggil fungsi fetchArticles saat komponen dimuat
+    fetchArticles();
   }, []);
 
   const renderArticleItem = ({ item }) => (
-    // console.log("testing app", item),
-    <CardComponentArticel // Pastikan penulisan CardComponentArticle sesuai dengan nama yang benar
-      // onPress={() => navigation.navigate("Article")}
-      imgSource={{ uri: item.image_url }} // Sesuaikan dengan data artikel yang sesungguhnya
+    <CardComponentArticel
+      imgSource={{ uri: item.image_url }}
       title={item.title}
       description={item.content}
       data={{ item }}
@@ -129,7 +122,6 @@ const HomeScreen = () => {
 
   const darurat = () => {
     Linking.openURL("https://wa.me/6281225204301");
-    // Linking.openURL("whatsapp://send?text=hello&phone=6281225204301");
   };
 
   const ListHeaderComponent = () => (
@@ -171,8 +163,7 @@ const HomeScreen = () => {
         style={{
           paddingLeft: 20,
           marginTop: 20,
-        }}
-      >
+        }}>
         <Text style={GlobalStyles.textBiasa}>
           Maaf, belum ada artikel tersedia
         </Text>
@@ -222,8 +213,7 @@ const HomeScreen = () => {
           <Path
             fill="#0a78e2"
             fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
-            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></Path>
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
         </Svg>
       </View>
 
@@ -272,7 +262,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     gap: 8,
-    // backgroundColor: "red",
   },
 });
 
