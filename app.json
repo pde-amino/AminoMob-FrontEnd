@@ -11,6 +11,11 @@
       "supportsTablet": true
     },
     "android": {
+      "adaptiveIcon": {
+        "usesCleartextTraffic": true,
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
       "package": "com.amino.mobile",
       "permissions": [
         "android.permission.RECORD_AUDIO",
