@@ -41,6 +41,10 @@ const getSpecializationText = (doctorName) => {
     return "Spesialis Jantung & Pembuluh Darah";
   } else if (doctorName.includes("S. Psi" && "Psi")) {
     return "Psikolog";
+  } else if (doctorName.includes("Sp.DVE")) {
+    return "Spesialis Dermatologi dan Venereologi";
+  } else if (doctorName.includes("Sp.A")) {
+    return "Spesialis Anak";
   } else {
     return "Umum";
   }
@@ -94,7 +98,12 @@ export default function DetailDoctorScreen() {
           >
             {getSpecializationText(data.nm_dokter)}
           </Text>
-          <AirbnbRating showRating={false} size={18} />
+          <AirbnbRating
+            showRating={false}
+            size={20}
+            defaultRating={5}
+            isDisabled={true}
+          />
         </View>
       </View>
 

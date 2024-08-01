@@ -508,6 +508,9 @@ Jam Sore (14:00:00 - 18:00:00)`);
           }
           setVisMod(false);
         }}
+        cancel={() => {
+          setVisMod(false);
+        }}
         onCancel={() => {
           setValue("Pagi");
           setVisMod(false);

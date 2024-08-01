@@ -5,18 +5,16 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
-  FlatList,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { Button } from "react-native-paper";
-import CardButtonNavComponent from "./CardButtonNavComponent";
-import CardButtonComponent from "./CardButtonComponent";
 
 const ConfirmModal = ({
   visible,
   onConfirm,
   onCancel,
+  cancel,
   onData,
   message,
   submessage,
@@ -51,9 +49,9 @@ const ConfirmModal = ({
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onCancel}>
+      onRequestClose={cancel}>
       {list ? (
-        <TouchableWithoutFeedback onPress={onCancel}>
+        <TouchableWithoutFeedback onPress={cancel}>
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
               <Text style={styles.title}>{message}</Text>
@@ -67,23 +65,11 @@ const ConfirmModal = ({
                     </TouchableOpacity>
                   ))}
               </ScrollView>
-              {/* <View style={[styles.buttonContainer, { marginTop: 12 }]}>
-                <Button
-                  mode="contained"
-                  style={styles.btnYes}
-                  onPress={handleConfirmPress} // Memanggil handleConfirmPress saat tombol ditekan
-                >
-                  {confirmButtonText}
-                </Button>
-                <Button mode="outlined" style={styles.btnNo} onPress={onCancel}>
-                  {cancelButtonText}
-                </Button>
-              </View> */}
             </View>
           </View>
         </TouchableWithoutFeedback>
       ) : (
-        <TouchableWithoutFeedback onPress={onCancel}>
+        <TouchableWithoutFeedback onPress={cancel}>
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
               <Text style={styles.title}>{message}</Text>
