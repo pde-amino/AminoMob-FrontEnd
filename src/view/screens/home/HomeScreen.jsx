@@ -177,11 +177,7 @@ const HomeScreen = () => {
 
   const ListFooterComponent = () => (
     <>
-      {articles.length === 0 ? (
-        <View style={styles.containerNext}>
-          <Text style={GlobalStyles.textBiasa}>AMINO HOSPITAL</Text>
-        </View>
-      ) : (
+      {articles.length === 0 ? null : (
         <>
           <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
             <Text style={GlobalStyles.h3}>Artikel</Text>
