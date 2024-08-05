@@ -3,12 +3,15 @@
     "version": ">= 7.6.2"
   },
   "build": {
-    "development": {
+    "oldDevelopment": {
       "developmentClient": true,
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
+    },
+    "development": {
+      "distribution": "internal"
     },
     "development1": {
       "android": { "image": "latest", "buildType": "apk" }
