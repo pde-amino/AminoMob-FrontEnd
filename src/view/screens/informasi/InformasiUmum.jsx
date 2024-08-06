@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl } from "react-native";
+import { View, FlatList, Text, RefreshControl, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -9,11 +9,11 @@ import HeaderComponent from "../../../components/HeaderComponent";
 const InformasiUmum = () => {
   const Menus = [
     {
-      kd_poli: "2",
+      kd_poli: "1",
       nm_poli: "Jadwal Dokter Poli",
       icon: "local-hospital",
       title: "Account",
-      to: "Informasi Dokter",
+      to: () => navigation.navigate("Informasi Dokter"),
       color: "pink",
     },
     {
@@ -21,7 +21,15 @@ const InformasiUmum = () => {
       nm_poli: "Informasi Tempat Tidur",
       icon: "hotel",
       title: "Information",
-      to: "InfoTT",
+      to: () => navigation.navigate("infoTT"),
+      color: "green",
+    },
+    {
+      kd_poli: "3",
+      nm_poli: "Permintaan Informasi",
+      icon: "support-agent",
+      title: "Information",
+      to: () => Linking.openURL("https://wa.me/6281225204301"),
       color: "green",
     },
   ];
@@ -51,9 +59,9 @@ const InformasiUmum = () => {
   //     });
   // };
 
-  const handleClinicSelection = (screen, params) => {
-    navigation.navigate(screen, params);
-  };
+  // const handleClinicSelection = (screen, params) => {
+  //   navigation.navigate(screen, params);
+  // };
 
   // if (isLoading) {
   //   return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
@@ -93,12 +101,7 @@ const InformasiUmum = () => {
           data={Menus}
           renderItem={({ item }) => (
             <MenuItemComponent
-              onPress={() =>
-                handleClinicSelection(item.to, {
-                  clinicId: item.kd_poli,
-                  nameClinic: item.nm_poli,
-                })
-              }
+              onPress={item.to}
               data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
               icon={item.icon}
               title={item.nm_poli}
