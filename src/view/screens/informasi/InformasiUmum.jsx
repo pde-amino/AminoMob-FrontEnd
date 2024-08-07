@@ -21,7 +21,7 @@ const InformasiUmum = () => {
       nm_poli: "Informasi Tempat Tidur",
       icon: "hotel",
       title: "Information",
-      to: () => navigation.navigate("infoTT"),
+      to: () => navigation.navigate("InfoTT"),
       color: "green",
     },
     {
