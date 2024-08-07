@@ -54,9 +54,7 @@ export default function Routes() {
         } else {
           setInitialRoute("Splash");
         }
-      } catch (error) {
-        console.error("Error checking if first launch:", error);
-      }
+      } catch (error) {}
     };
 
     checkFirstLaunch();
@@ -72,8 +70,7 @@ export default function Routes() {
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />

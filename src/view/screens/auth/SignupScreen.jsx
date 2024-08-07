@@ -130,7 +130,6 @@ const SignupScreen = () => {
       await sendOTP((otp = response.data.otp));
       navigation.navigate("OTPInputScreen", userData);
     } catch (error) {
-      // console.error("OTP", error);
       Alert.alert(
         "Gagal Mendaftar",
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"

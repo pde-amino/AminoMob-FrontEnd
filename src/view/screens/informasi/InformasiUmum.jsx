@@ -35,51 +35,6 @@ const InformasiUmum = () => {
   ];
 
   const navigation = useNavigation();
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // const fetchData = () => {
-  //   setIsLoading(true);
-  //   fetch("http://192.168.5.5:8080/poliklinik")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message === "success") {
-  //         setPoliklinikData(data.data_poli);
-  //       } else {
-  //         console.error("Error fetching data:", data.message);
-  //         setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       }
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setError(true); // Mengatur error menjadi true saat terjadi kesalahan
-  //       setIsLoading(false);
-  //     });
-  // };
-
-  // const handleClinicSelection = (screen, params) => {
-  //   navigation.navigate(screen, params);
-  // };
-
-  // if (isLoading) {
-  //   return <LoadingContent />; // Menampilkan komponen loading saat sedang memuat data
-  // }
-
-  // if (error || poliklinikData.length === 0) {
-  //   // Menampilkan screen kosong atau error jika ada error atau data kosong
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <Text>
-  //         {error ? "Error occurred" : "Sepertinya tidak ada sesuatu disini"}
-  //       </Text>
-  //       <Button title="Retry" onPress={fetchData}>
-  //         Coba Lagi
-  //       </Button>
-  //     </View>
-  //   );
-  // }
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>

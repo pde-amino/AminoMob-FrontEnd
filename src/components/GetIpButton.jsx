@@ -9,11 +9,8 @@ const GetIPButton = () => {
     try {
       const state = await NetInfo.fetch();
       const ipLocal = state.details.ipAddress;
-      console.log(ipLocal);
       setIpAddress(ipLocal);
-    } catch (error) {
-      console.error("Error getting IP address:", error);
-    }
+    } catch (error) {}
   };
 
   return (
