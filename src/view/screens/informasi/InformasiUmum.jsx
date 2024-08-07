@@ -29,7 +29,7 @@ const InformasiUmum = () => {
       nm_poli: "Permintaan Informasi",
       icon: "support-agent",
       title: "Information",
-      to: () => Linking.openURL("https://wa.me/6281225204301"),
+      to: () => Linking.openURL("https://wa.me/6289515636878"),
       color: "green",
     },
   ];

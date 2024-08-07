@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -105,6 +106,11 @@ const LoginScreen = () => {
 
   return (
     <View style={GlobalStyles.utama}>
+      <StatusBar
+        hidden={false}
+        barStyle="dark-content"
+        backgroundColor={"white"}
+      />
       <View style={GlobalStyles.Content}>
         <ScrollView
           keyboardShouldPersistTaps="handled"
