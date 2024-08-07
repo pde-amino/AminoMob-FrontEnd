@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   box: {
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
     borderRadius: 20,
     overflow: "hidden", // Ensures the image stays within the rounded corners
     justifyContent: "center", // Centers the image within the box

@@ -51,7 +51,8 @@ export default function RiwayatKunjungan() {
       if (error.message != "Request failed with status code 404") {
         Alert.alert(
           "Maaf",
-          "Ada kesalahan saat mengambil data riwayat, mohon ulangi beberapa saat lagi"
+          "Ada kesalahan saat mengambil data riwayat, mohon ulangi beberapa saat lagi" +
+            error
         );
       }
     } finally {

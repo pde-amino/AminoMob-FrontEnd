@@ -10,6 +10,7 @@ import {
   Linking,
   Alert,
   StyleSheet,
+  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -206,7 +207,12 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
+    <View style={GlobalStyles.utama}>
+      <StatusBar
+        hidden={false}
+        barStyle="light-content"
+        backgroundColor={"black"}
+      />
       <View style={styles.containerSVG}>
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
@@ -250,7 +256,7 @@ const HomeScreen = () => {
         icon={{ name: "support-agent", color: "#fff" }}
         onOpen={() => Linking.openURL("https://wa.me/6289515636878")}
       ></SpeedDial> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -140,6 +141,11 @@ const SignupScreen = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
+      <StatusBar
+        hidden={false}
+        barStyle="dark-content"
+        backgroundColor={"white"}
+      />
       <View style={GlobalStyles.Content}>
         <ScrollView
           keyboardShouldPersistTaps="handled"

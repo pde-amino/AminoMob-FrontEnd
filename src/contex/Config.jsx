@@ -1,5 +1,5 @@
-// export const BASE_URL = "http://103.47.60.195:5922/aminomobile/index.php";
-export const BASE_URL = "http://103.47.60.195:5458";
+export const BASE_URL = "http://103.47.60.195:5923/aminomobile";
+// export const BASE_URL = "http://103.47.60.195:5458";
 export const SEND_OTP = "http://api.jatismobile.com/index.ashx/";
 export const OTP_ID = "testingamino";
 export const OTP_PASS = "Amino_rs32";
