@@ -1,4 +1,4 @@
-package com.PDE.DaftarOnline
+package com.MDSI.aminomobile
 
 import android.app.Application
 import android.content.res.Configuration

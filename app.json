@@ -16,7 +16,7 @@
         "foregroundImage": "assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amino.mobile",
+      "package": "com.MDSI.aminomobile",
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_EXTERNAL_STORAGE",
