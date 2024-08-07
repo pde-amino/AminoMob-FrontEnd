@@ -53,7 +53,6 @@ export default function HomeTabs() {
         );
         return;
       } else {
-        console.error(error);
         Alert.alert("Maaf", error);
       }
     }
@@ -79,8 +78,7 @@ export default function HomeTabs() {
           elevation: 2,
           padding: 10,
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },

@@ -23,26 +23,11 @@ const ConfirmModal = ({
   list,
   listData,
 }) => {
-  // State untuk menyimpan item yang dipilih
   const [selectedItem, setSelectedItem] = useState(null);
 
-  // Handler untuk saat item ditekan
   const handleItemPress = (item) => {
-    setSelectedItem(item); // Menyimpan item yang dipilih dalam state
+    setSelectedItem(item);
   };
-
-  // Handler untuk tombol konfirmasi
-  // const handleConfirmPress = () => {
-  //   if (selectedItem) {
-  //     // Hanya memanggil onConfirm jika ada item yang dipilih
-  //     if (onConfirm) {
-  //       onConfirm(selectedItem); // Memanggil onConfirm dengan item yang dipilih
-  //     }
-  //   } else {
-  //     // Menampilkan pesan kesalahan jika tidak ada item yang dipilih
-  //     console.warn("Pilih item terlebih dahulu.");
-  //   }
-  // };
 
   return (
     <Modal

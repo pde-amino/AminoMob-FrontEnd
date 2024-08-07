@@ -92,7 +92,7 @@ const SignupScreen = () => {
         userid: OTP_ID,
         password: OTP_PASS,
         msisdn: noHP,
-        message: otp,
+        message: `Jangan Bagikan Kode OTP Anda, Kode Ini Untuk Validasi Amino Mobile ${otp}, Berlaku 2 Menit.`,
         sender: OTP_SENDER,
         division: OTP_DIVISION,
       },
@@ -131,7 +131,6 @@ const SignupScreen = () => {
       await sendOTP((otp = response.data.otp));
       navigation.navigate("OTPInputScreen", userData);
     } catch (error) {
-      // console.error("OTP", error);
       Alert.alert(
         "Gagal Mendaftar",
         "Sepertinya Nomor HP atau NIK sudah didaftarkan"
@@ -152,15 +151,13 @@ const SignupScreen = () => {
           contentContainerStyle={{
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}
-            >
+              ]}>
               Daftar Akun
             </Text>
           </View>
@@ -251,8 +248,7 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}
-              >
+                }}>
                 Masuk disini
               </Text>
             </TouchableOpacity>

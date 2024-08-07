@@ -17,6 +17,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { BASE_URL } from "../../../contex/Config";
 import * as Network from "expo-network";
+import NetInfo from "@react-native-community/netinfo";
+import GetIPButton from "../../../components/GetIpButton";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -33,7 +35,7 @@ const LoginScreen = () => {
   const handleUsernameChange = (input) => {
     setUsername(input);
     const onlyNumbers = /^[0-9]+$/.test(input);
-    setUsernameError(onlyNumbers ? "" : "Hanya boleh pakai angka");
+    setUsernameError(onlyNumbers ? "" : "Cuma boleh pakai angka");
   };
 
   const handlePasswordChange = (input) => {
@@ -52,7 +54,9 @@ const LoginScreen = () => {
     try {
       await AsyncStorage.removeItem("userInfo");
       setLoading(true);
-      const ip = await Network.getIpAddressAsync();
+      const ip = await Network.getIpAddressAsync(
+        Network.NetworkStateType.CELLULAR
+      );
 
       const response = await axios
         .post(
@@ -114,22 +118,20 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, paddingBottom: 40 },
-              ]}
-            >
+              ]}>
               Masuk
             </Text>
           </View>
           <View style={{ gap: 8, marginBottom: 12 }}>
             <TextInputIconComponent
-              label="Nomor HP/NIK"
-              placeholder="Masukkan salah satu"
+              label="Nomor HP"
+              placeholder="Masukkan No HP Anda"
               value={username}
               type={"username"}
               inputMode={"numeric"}
@@ -138,7 +140,7 @@ const LoginScreen = () => {
 
             <TextInputIconComponent
               label="Kata Sandi"
-              placeholder="Masukkan kata sandi Anda"
+              placeholder="Masukkan kata sandi di sini"
               password={true}
               value={password}
               onChangeText={handlePasswordChange}
@@ -148,11 +150,14 @@ const LoginScreen = () => {
           {loading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : (
-            <ButtonPrimary
-              title="Masuk"
-              disabled={!!usernameError || !!passwordError}
-              onPress={handleSubmit}
-            />
+            <>
+              <ButtonPrimary
+                title="Masuk"
+                disabled={!!usernameError || !!passwordError}
+                onPress={handleSubmit}
+              />
+              {/* <GetIPButton /> */}
+            </>
           )}
 
           <View style={{ flexDirection: "row" }}>

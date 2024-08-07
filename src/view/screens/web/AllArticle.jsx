@@ -47,7 +47,6 @@ const AllArticle = () => {
       const response = await axios.get(BASE_ARTICLE_ALL);
       setArticles(response.data);
       setLoading(false);
-      console.log("tes artikel", response.data);
     } catch (error) {
       Alert.alert(
         "Maaf",

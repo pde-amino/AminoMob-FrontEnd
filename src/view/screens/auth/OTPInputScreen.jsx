@@ -67,7 +67,7 @@ const OTPInputScreen = () => {
           userid: OTP_ID,
           password: OTP_PASS,
           msisdn: dataUser.telp,
-          message: otp,
+          message: `Jangan Bagikan Kode OTP Anda, Kode Ini Untuk Validasi Amino Mobile ${otp}, Berlaku 2 Menit.`,
           sender: OTP_SENDER,
           division: OTP_DIVISION,
         },
@@ -143,8 +143,7 @@ const OTPInputScreen = () => {
         style={[
           GlobalStyles.textBiasa,
           { marginBottom: 20, maxWidth: "80%", alignItems: "center" },
-        ]}
-      >
+        ]}>
         OTP akan dikirim melalui SMS, silakan tunggu beberapa saat.
       </Text>
 
@@ -163,8 +162,7 @@ const OTPInputScreen = () => {
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         {isCounting ? (
           <Text
-            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}
-          >
+            style={[GlobalStyles.textLink, isCounting && styles.linkDisabled]}>
             Coba lagi dalam {counter} detik
           </Text>
         ) : (
@@ -175,14 +173,12 @@ const OTPInputScreen = () => {
               disabled={isCounting}
               style={{
                 alignItems: "center",
-              }}
-            >
+              }}>
               <Text
                 style={[
                   GlobalStyles.textLink,
                   isCounting && styles.linkDisabled,
-                ]}
-              >
+                ]}>
                 Kirim Ulang
               </Text>
             </TouchableOpacity>
