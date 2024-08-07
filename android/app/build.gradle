@@ -83,12 +83,12 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.rajutankoding.myapps'
+    namespace 'com.PDE.DaftarOnline'
     defaultConfig {
-        applicationId 'com.rajutankoding.myapps'
+        applicationId 'com.PDE.DaftarOnline'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 1
         versionName "1.0.0"
     }
     signingConfigs {
