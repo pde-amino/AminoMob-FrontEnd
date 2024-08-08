@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -24,6 +25,17 @@ export default function SplashScreen() {
     transform: [{ translateX: offset.value }],
   }));
 
+  const LoginOfLogout = () => {
+    AsyncStorage.setItem("@MySuperStore:key", "I like to save it.");
+    const kondisi = AsyncStorage.getItem("@MySuperStore:key");
+    console.log("Kondisi :", kondisi);
+    if (!kondisi) {
+      return navigation.navigate("Home Screen");
+    } else {
+      return navigation.navigate("Login Screen");
+    }
+  };
+
   React.useEffect(() => {
     // Animate the box to the center position
     offset.value = withSpring(centerPosition, {
@@ -34,9 +46,7 @@ export default function SplashScreen() {
       restDisplacementThreshold: 0.01,
       restSpeedThreshold: 2,
     });
-    setTimeout(() => {
-      navigation.dispatch(StackActions.replace("Login Screen"));
-    }, 4000);
+    setTimeout(LoginOfLogout, 4000);
   }, [centerPosition]);
 
   return (
