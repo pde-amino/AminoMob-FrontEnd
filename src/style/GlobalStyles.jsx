@@ -79,7 +79,6 @@ export default GlobalStyles = StyleSheet.create({
   containerLogo: {
     height: hp(7),
     width: wp(20),
-    // backgroundColor: "pink",
   },
 
   //TEXT

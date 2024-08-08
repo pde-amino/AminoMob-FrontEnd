@@ -165,9 +165,19 @@ export const TambahPasienLama = () => {
       </View>
       <View style={styles.containerMid}>
         <View style={{ gap: 8 }}>
-          <Text style={[GlobalStyles.h4, { maxWidth: "85%" }]}>
+          <Text style={[GlobalStyles.h4, { maxWidth: "90%" }]}>
             Untuk pengecekan data pasien, masukan nomor Rekam Medis dan tanggal
             lahir milik pasien.
+          </Text>
+          <Text
+            style={[
+              GlobalStyles.textBiasa,
+              { maxWidth: "90%", textAlign: "justify" },
+            ]}
+          >
+            Bila mengalami kesulitan, seperti lupa nomor RM, silakan hubungi
+            customer service dengan mengakses menu Layanan Informasi RS dan
+            Permintaan Informasi
           </Text>
 
           <TextInputIconComponent

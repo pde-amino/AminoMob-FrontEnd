@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -20,6 +21,8 @@ import CardColapse from "../../../components/CardColapse";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
+import ButtonSecondary from "../../../components/ButtonSecondary";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -31,6 +34,7 @@ export default function RiwayatKunjungan() {
   const [lihatQR, setLihatQR] = useState(false);
   const [selectedKodeBooking, setSelectedKodeBooking] = useState(null);
   const hideDialog = () => setLihatQR(false);
+  const [batalBook, setBatalBook] = useState(false);
 
   const ambilDataRiwayat = async () => {
     try {
@@ -61,11 +65,36 @@ export default function RiwayatKunjungan() {
     }
   };
 
+  const batalBooking = async () => {
+    try {
+      await axios.put(
+        `http://192.168.5.5:8080/bookPeriksa/${auth.user.id}`,
+        {
+          kd_booking: selectedKodeBooking,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      Alert.alert(
+        "Maaf",
+        "Gagal membatalkan booking, silakan coba beberapa saat lagi" + error
+      );
+    } finally {
+      setBatalBook(false);
+      onRefresh();
+    }
+  };
+
   useEffect(() => {
     ambilDataRiwayat();
   }, []);
 
-  const Item = ({ item, onPress }) => (
+  const Item = ({ item, onPress, onPressBatal }) => (
     <CardColapse title={item.kode_booking} subtitle={item.nm_pasien}>
       <View style={{ flexDirection: "row", gap: 8 }}>
         <View>
@@ -83,7 +112,17 @@ export default function RiwayatKunjungan() {
       </View>
       <View style={{ marginTop: 10 }}>
         {item.status_reg == "Belum" && (
-          <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
+          <View style={styles.containerBtn}>
+            <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
+            <TouchableOpacity
+              onPress={onPressBatal}
+              style={styles.containerButton}
+            >
+              <Text style={[GlobalStyles.h4, { color: "#CA0101" }]}>
+                Batalkan
+              </Text>
+            </TouchableOpacity>
+          </View>
         )}
         {item.status_reg == "Terdaftar" && (
           <View style={GlobalStyles.chipSuccess}>
@@ -106,6 +145,10 @@ export default function RiwayatKunjungan() {
         onPress={() => {
           setSelectedKodeBooking(item.kode_booking);
           setLihatQR(true);
+        }}
+        onPressBatal={() => {
+          setSelectedKodeBooking(item.kode_booking);
+          setBatalBook(true);
         }}
       />
     );
@@ -185,6 +228,17 @@ export default function RiwayatKunjungan() {
           </Dialog.Content>
         </Dialog>
       </Portal>
+
+      {batalBook && (
+        <ConfirmModal
+          visible={batalBook}
+          message={`Apakah anda yakin ingin membatalkan ${selectedKodeBooking}?`}
+          onCancel={() => setBatalBook(false)}
+          onConfirm={batalBooking}
+          confirmButtonText={"Ya"}
+          cancelButtonText={"Tidak"}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -195,5 +249,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 10,
     height: "70%",
+  },
+  containerButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#CA0101",
+    borderRadius: 10,
+    width: 120,
+    height: 48,
+  },
+  containerBtn: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-between",
   },
 });

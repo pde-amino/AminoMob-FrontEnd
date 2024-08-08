@@ -15,7 +15,6 @@ import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import HeaderComponent from "../../../components/HeaderComponent";
-import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
@@ -47,9 +46,6 @@ export const PilihPoli = () => {
     kunjungan === "TerangBulan" ? "Pilih Poliklinik" : "Pilih Paket"
   );
 
-  // const [isFocus, setIsFocus] = useState(false);
-  // const [isFocus1, setIsFocus1] = useState(false);
-  // const [isFocus2, setIsFocus2] = useState(false);
   const [hariPoli, setHariPoli] = useState("");
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
