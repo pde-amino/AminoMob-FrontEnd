@@ -67,7 +67,7 @@ const OTPInputScreen = () => {
           userid: OTP_ID,
           password: OTP_PASS,
           msisdn: dataUser.telp,
-          message: `Jangan Bagikan Kode OTP Anda, Kode Ini Untuk Validasi Amino Mobile ${otp}, Berlaku 2 Menit.`,
+          message: `Kode OTP Anda ${otp}. Jangan Bagikan Kode OTP Anda, OTP Berlaku 2 Menit.`,
           sender: OTP_SENDER,
           division: OTP_DIVISION,
         },

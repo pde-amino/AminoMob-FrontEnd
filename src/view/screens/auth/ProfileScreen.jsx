@@ -63,17 +63,11 @@ const ProfileScreen = () => {
       });
       setDataUser(response.data.user);
     } catch (error) {
-      // if (error.message === "Request failed with status code 401") {
-      //   AsyncStorage.removeItem("userInfo");
-      //   logout();
-      //   navigation.replace("Login Screen");
       Alert.alert(
         "Maaf",
         "Terjadi kesalahan saat mengambil data, silakan logout di perangkat yang lain" +
           error
       );
-      //   return;
-      // }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -82,7 +76,7 @@ const ProfileScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setLoading(true); // Set loading true before fetching data
+      setLoading(true);
       fetchData();
     }, [])
   );
@@ -125,7 +119,7 @@ const ProfileScreen = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    setLoading(true); // Set loading true before refreshing data
+    setLoading(true);
     fetchData();
   };
 
@@ -152,13 +146,8 @@ const ProfileScreen = () => {
               <Text style={GlobalStyles.h2}>
                 {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
               </Text>
-              <TouchableOpacity
-                // style={styles.containerMenu}
-                onPress={() => setDellAccount(true)}>
+              <TouchableOpacity onPress={() => setDellAccount(true)}>
                 <Icon source={"cog-outline"} color="gray" size={24} />
-                {/* <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
-                  Logout
-                </Text> */}
               </TouchableOpacity>
             </View>
 
@@ -234,15 +223,6 @@ const ProfileScreen = () => {
           </ScrollView>
         )}
       </View>
-
-      {/* <View style={{ flex: 1 }}>
-        <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary
-            title={"Log Out"}
-            onPress={() => setConfirmLogout(true)}
-          />
-        </View>
-      </View> */}
     </SafeAreaView>
   );
 };

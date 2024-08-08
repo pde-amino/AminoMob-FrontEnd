@@ -6,6 +6,7 @@ import { AuthContex } from "../contex/AuthProvider";
 import { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../contex/Config";
 
 const AlertFormComponent = ({ visible, onClose, onSubmit, user, telp }) => {
   const [password, setPassword] = useState("");
@@ -14,7 +15,7 @@ const AlertFormComponent = ({ visible, onClose, onSubmit, user, telp }) => {
 
   const handleSubmit = async () => {
     try {
-      await axios.delete(`http://192.168.5.5:8080/user/${user}`, {
+      await axios.delete(`${BASE_URL}/user/${user}`, {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
