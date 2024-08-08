@@ -42,9 +42,7 @@ export const PilihPoli = () => {
   const { auth } = useContext(AuthContex);
   const [datas, setDatas] = useState([]);
   const [value, setValue] = useState("Pilih Jam Periksa");
-  const [value2, setValue2] = useState(
-    kunjungan === "TerangBulan" ? "Pilih Poliklinik" : "Pilih Paket"
-  );
+  const [value2, setValue2] = useState("Pilih Poliklinik");
 
   const [hariPoli, setHariPoli] = useState("");
   const [date, setDate] = useState(new Date());

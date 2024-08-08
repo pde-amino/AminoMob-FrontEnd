@@ -26,14 +26,30 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import AlertFormComponent from "../../../components/AlertFormComponent";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
   const navigation = useNavigation();
   const [confirmLogout, setConfirmLogout] = useState(false);
+  const [dellAccount, setDellAccount] = useState(false);
   const [dataUser, setDataUser] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAlertVisible, setAlertVisible] = useState(false);
+
+  const handleOpenAlert = () => {
+    setAlertVisible(true);
+  };
+
+  const handleCloseAlert = () => {
+    setAlertVisible(false);
+  };
+
+  const handlePasswordSubmit = (password) => {
+    console.log("Password entered:", password);
+    handleCloseAlert();
+  };
 
   const fetchData = async () => {
     try {
@@ -47,17 +63,11 @@ const ProfileScreen = () => {
       });
       setDataUser(response.data.user);
     } catch (error) {
-      // if (error.message === "Request failed with status code 401") {
-      //   AsyncStorage.removeItem("userInfo");
-      //   logout();
-      //   navigation.replace("Login Screen");
       Alert.alert(
         "Maaf",
         "Terjadi kesalahan saat mengambil data, silakan logout di perangkat yang lain" +
           error
       );
-      //   return;
-      // }
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -66,10 +76,25 @@ const ProfileScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setLoading(true); // Set loading true before fetching data
+      setLoading(true);
       fetchData();
     }, [])
   );
+
+  const HapusAkun = () => {
+    Alert.alert("Hapus Akun", "Apakah Anda yakin ingin menghapus akun?", [
+      {
+        text: "Tidak",
+        style: "cancel",
+      },
+      {
+        text: "Ya",
+        onPress: () => {
+          handleOpenAlert();
+        },
+      },
+    ]);
+  };
 
   const handleLogout = async () => {
     try {
@@ -94,7 +119,7 @@ const ProfileScreen = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    setLoading(true); // Set loading true before refreshing data
+    setLoading(true);
     fetchData();
   };
 
@@ -112,8 +137,7 @@ const ProfileScreen = () => {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={styles.containerAvatar}>
               <Avatar.Image
                 size={80}
@@ -122,6 +146,9 @@ const ProfileScreen = () => {
               <Text style={GlobalStyles.h2}>
                 {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
               </Text>
+              <TouchableOpacity onPress={() => setDellAccount(true)}>
+                <Icon source={"cog-outline"} color="gray" size={24} />
+              </TouchableOpacity>
             </View>
 
             {dataUser ? (
@@ -145,8 +172,7 @@ const ProfileScreen = () => {
                 <View style={{ gap: 12 }}>
                   <TouchableOpacity
                     style={styles.containerMenu}
-                    onPress={() => navigation.replace("Web View")}
-                  >
+                    onPress={() => navigation.replace("Web View")}>
                     <Icon source="chat-alert" size={24} />
                     <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
                   </TouchableOpacity>
@@ -156,8 +182,7 @@ const ProfileScreen = () => {
 
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}
-              >
+                onPress={() => setConfirmLogout(true)}>
                 <Icon source={"logout"} color="#430D09" size={24} />
                 <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
                   Logout
@@ -177,18 +202,27 @@ const ProfileScreen = () => {
                 cancelButtonText={"Tidak"}
               />
             )}
+            {dellAccount && (
+              <ConfirmModal
+                visible={dellAccount}
+                message={"Hapus Akun"}
+                submessage={`Apakah Anda ingin menghapus akun ${dataUser.telp}`}
+                onCancel={() => setDellAccount(false)}
+                onConfirm={HapusAkun}
+                confirmButtonText={"Ya"}
+                cancelButtonText={"Tidak"}
+              />
+            )}
+            <AlertFormComponent
+              visible={isAlertVisible}
+              onClose={handleCloseAlert}
+              onSubmit={handlePasswordSubmit}
+              user={dataUser.id}
+              telp={dataUser.telp}
+            />
           </ScrollView>
         )}
       </View>
-
-      {/* <View style={{ flex: 1 }}>
-        <View style={GlobalStyles.btnContainer}>
-          <ButtonSecondary
-            title={"Log Out"}
-            onPress={() => setConfirmLogout(true)}
-          />
-        </View>
-      </View> */}
     </SafeAreaView>
   );
 };
