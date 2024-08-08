@@ -26,9 +26,7 @@ export default function SplashScreen() {
   }));
 
   const LoginOfLogout = () => {
-    AsyncStorage.setItem("@MySuperStore:key", "I like to save it.");
-    const kondisi = AsyncStorage.getItem("@MySuperStore:key");
-    console.log("Kondisi :", kondisi);
+    const kondisi = AsyncStorage.getItem("userInfo");
     if (!kondisi) {
       return navigation.navigate("Home Screen");
     } else {
