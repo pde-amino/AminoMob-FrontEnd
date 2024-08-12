@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -77,17 +77,17 @@ export default function ListPasien() {
     }
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     fetchData();
-  //     // Add any cleanup logic here if needed
-  //     return () => {};
-  //   }, [])
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      // Add any cleanup logic here
+      return () => {};
+    }, [])
+  );
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -132,7 +132,7 @@ export default function ListPasien() {
             style={{ width: "100%" }}
             data={dataPasien}
             renderItem={renderItem}
-            keyExtractor={(item) => item.no_ktp.toString()}
+            keyExtractor={(item) => item.no_rkm_medis.toString()}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

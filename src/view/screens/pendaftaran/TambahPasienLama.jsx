@@ -175,9 +175,8 @@ export const TambahPasienLama = () => {
               { maxWidth: "90%", textAlign: "justify" },
             ]}
           >
-            Bila mengalami kesulitan, seperti lupa nomor RM, silakan hubungi
-            customer service dengan mengakses menu Layanan Informasi RS dan
-            Permintaan Informasi
+            Bila lupa nomor RM, silakan hubungi customer service dengan
+            mengakses menu Layanan Informasi RS dan Permintaan Informasi.
           </Text>
 
           <TextInputIconComponent

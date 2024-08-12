@@ -68,7 +68,7 @@ export default function RiwayatKunjungan() {
   const batalBooking = async () => {
     try {
       await axios.put(
-        `http://192.168.5.5:8080/bookPeriksa/${auth.user.id}`,
+        `${BASE_URL}/bookPeriksa/${auth.user.id}`,
         {
           kd_booking: selectedKodeBooking,
         },
