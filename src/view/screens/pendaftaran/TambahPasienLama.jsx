@@ -130,7 +130,7 @@ export const TambahPasienLama = () => {
       )
       .then((response) => {
         Alert.alert("Berhasil", "Data berhasil disimpan");
-        navigation.navigate("List Pasien");
+        navigation.navigate("Home Screen");
       })
       .catch((error) => {
         Alert.alert("Gagal", "Data gagal disimpansss");

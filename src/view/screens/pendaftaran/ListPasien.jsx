@@ -37,7 +37,7 @@ export default function ListPasien() {
   const [dataPasien, setDataPasien] = useState();
   const [pilihPasien, setPilihPasien] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
 
   const pasienLama = () => {
     navigation.navigate("Tambah Pasien Lama");
@@ -77,17 +77,17 @@ export default function ListPasien() {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-      // Add any cleanup logic here
-      return () => {};
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     fetchData();
+  //     // Add any cleanup logic here
+  //     return () => {};
+  //   }, [])
+  // );
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
