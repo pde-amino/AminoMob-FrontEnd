@@ -102,11 +102,11 @@ export default function InfoListPasien() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1.4 }}>
         <HeaderComponent title={"Informasi Data Pasien"} />
       </View>
 
-      <View style={{ flex: 9 }}>
+      <View style={{ flex: 10 }}>
         {loading ? (
           <ActivityIndicator
             animating={true}

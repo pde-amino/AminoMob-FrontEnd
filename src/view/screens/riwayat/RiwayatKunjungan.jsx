@@ -160,13 +160,13 @@ export default function RiwayatKunjungan() {
   };
 
   return (
-    <SafeAreaView style={[GlobalStyles.safeAreaStyle, GlobalStyles.utama]}>
-      <View style={{ flex: 1 }}>
+    <SafeAreaView style={GlobalStyles.utama}>
+      <View style={{ flex: 1.4 }}>
         <HeaderComponent title={"Riwayat Periksa"} />
       </View>
-      <View style={{ flex: 9 }}>
+      <View style={{ flex: 10 }}>
         {loading ? (
-          <ActivityIndicator animating={true} color={WARNA.primary} />
+          <ActivityIndicator animating={true} color={WARNA.pr2imary} />
         ) : dataRiwayat ? (
           <View>
             <FlatList

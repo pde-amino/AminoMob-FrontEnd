@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl, Linking } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  RefreshControl,
+  Linking,
+  StatusBar,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -38,6 +45,7 @@ const InformasiUmum = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
+      <StatusBar translucent="true" />
       <View style={{ flex: 1 }}>
         <HeaderComponent
           title="Informasi RS"
@@ -47,7 +55,7 @@ const InformasiUmum = () => {
       </View>
       <View style={[GlobalStyles.Content, { flex: 9 }]}>
         <FlatList
-          contentContainerStyle={{ flexGrow: 1 }}
+          // contentContainerStyle={{ flexGrow: 1 }}
           // refreshControl={
           //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
           // }

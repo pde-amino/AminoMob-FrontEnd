@@ -97,10 +97,6 @@ export const TambahPasienLama = () => {
           if (response.data.status == true) {
             setDataGet(response.data.user);
             setBs(true);
-
-            // navigation.navigate("TambahPasienLamaDetail", {
-            //   idPasien: response.data[0].id,
-            // });
           }
         });
     } catch (error) {
@@ -130,7 +126,7 @@ export const TambahPasienLama = () => {
       )
       .then((response) => {
         Alert.alert("Berhasil", "Data berhasil disimpan");
-        navigation.navigate("Home Screen");
+        navigation.navigate("List Pasien");
       })
       .catch((error) => {
         Alert.alert("Gagal", "Data gagal disimpansss");

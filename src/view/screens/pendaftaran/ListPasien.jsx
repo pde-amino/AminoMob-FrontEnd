@@ -77,17 +77,15 @@ export default function ListPasien() {
     }
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     fetchData();
-  //     // Add any cleanup logic here
-  //     return () => {};
-  //   }, [])
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -112,7 +110,7 @@ export default function ListPasien() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1.4 }}>
         <HeaderComponent
           title={"Daftar Pasien"}
           icon={"arrow-back"}
