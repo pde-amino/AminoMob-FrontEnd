@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import HomeTabs from "./tabs";
 import FavoriteScreen from "../view/screens/home/FavoriteScreen";
 import Poli2 from "../view/screens/poli/Poli2";
@@ -38,30 +38,68 @@ import DetailDoctorScreen from "../view/screens/informasi/DetailDoctorScreen";
 import ArticleKesehatan from "../view/screens/web/ArticleKesehatan";
 import AllArticle from "../view/screens/web/AllArticle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, View } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { AuthContex } from "../contex/AuthProvider";
+import GetUserData from "../view/screens/auth/GetUserData";
 
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
-  const [initialRoute, setInitialRoute] = useState("Splash");
+  const { auth, setAuth } = useContext(AuthContex);
+  const [initialRoute, setInitialRoute] = useState(null); // Ubah default menjadi null
+  const [loading, setLoading] = useState(true);
+  const getDataUser = async () => {
+    const user = await GetUserData();
+
+    if (user) {
+      // Lakukan sesuatu dengan data pengguna
+      await AsyncStorage.setItem("userInfo", JSON.stringify(user));
+      setAuth(user);
+      console.log("User ID:", user);
+    } else {
+      // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
+      navigation.replace("Login Screen");
+    }
+  };
 
   useEffect(() => {
-    const checkFirstLaunch = async () => {
+    getDataUser();
+    const initialize = async () => {
       try {
+        // Cek jika aplikasi pertama kali diluncurkan
         const isFirstLaunch = await AsyncStorage.getItem("isFirstLaunch");
         if (isFirstLaunch === null) {
           await AsyncStorage.setItem("isFirstLaunch", "false");
           setInitialRoute("Onboarding");
         } else {
-          setInitialRoute("Splash");
+          // Cek status login
+          const token = await SecureStore.getItemAsync("userToken");
+          if (token) {
+            // Token ditemukan, pengguna dianggap masih login
+            setInitialRoute("HomeScreen");
+          } else {
+            // Token tidak ditemukan, pengguna harus login lagi
+            setInitialRoute("LoginScreen");
+          }
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log("Gagal memuat data:", error);
+        setInitialRoute("LoginScreen"); // Default ke LoginScreen jika ada kesalahan
+      } finally {
+        setLoading(false);
+      }
     };
 
-    checkFirstLaunch();
+    initialize();
   }, []);
 
-  if (initialRoute === null) {
-    return null; // or some kind of loading indicator
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
   return (

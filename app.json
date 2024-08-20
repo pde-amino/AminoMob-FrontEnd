@@ -6,7 +6,9 @@
     "orientation": "portrait",
     "icon": "assets/icon1024x1024.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -37,7 +39,9 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ]
-    ]
+      ],
+      "expo-secure-store"
+    ],
+    "owner": "mdsi_amino"
   }
 }

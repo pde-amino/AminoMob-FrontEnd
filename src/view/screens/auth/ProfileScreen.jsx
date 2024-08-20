@@ -47,39 +47,38 @@ const ProfileScreen = () => {
   };
 
   const handlePasswordSubmit = (password) => {
-    console.log("Password entered:", password);
+    // console.log("Password entered:", password);
     handleCloseAlert();
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-          Authorization: `Bearer ${auth.user.token}`,
-        },
-      });
-      setDataUser(response.data.user);
-    } catch (error) {
-      Alert.alert(
-        "Maaf",
-        "Terjadi kesalahan saat mengambil data, silakan logout di perangkat yang lain" +
-          error
-      );
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/cariId/${auth.id}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "x-api-key":
+  //           "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+  //         Authorization: `Bearer ${auth.token}`,
+  //       },
+  //     });
+  //     setDataUser(response.data.user);
+  //   } catch (error) {
+  //     Alert.alert(
+  //       "Maaf",
+  //       "Terjadi kesalahan saat mengambil data, silakan silahkan Login ulang"
+  //     );
+  //   } finally {
+  //     setLoading(false);
+  //     setRefreshing(false);
+  //   }
+  // };
 
-  useFocusEffect(
-    useCallback(() => {
-      setLoading(true);
-      fetchData();
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setLoading(true);
+  //     // fetchData();
+  //   }, [])
+  // );
 
   const HapusAkun = () => {
     Alert.alert("Hapus Akun", "Apakah Anda yakin ingin menghapus akun?", [
@@ -117,11 +116,11 @@ const ProfileScreen = () => {
     }
   };
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    setLoading(true);
-    fetchData();
-  };
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   setLoading(true);
+  //   // fetchData();
+  // };
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
@@ -129,99 +128,101 @@ const ProfileScreen = () => {
         <HeaderComponent title="Profil" />
       </View>
       <View style={{ height: hp(90) }}>
-        {loading ? (
+        {/* {loading ? (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
-        ) : (
-          <ScrollView
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-            <View style={styles.containerAvatar}>
-              <Avatar.Image
-                size={80}
-                source={require("../../../../assets/avatar.png")}
-              />
-              <Text style={GlobalStyles.h2}>
-                {dataUser.nama ? dataUser.nama : "Hai, ini data kamu"}
-              </Text>
-              <TouchableOpacity onPress={() => setDellAccount(true)}>
-                <Icon source={"cog-outline"} color="gray" size={24} />
-              </TouchableOpacity>
-            </View>
-
-            {dataUser ? (
-              <View style={{ gap: 12, padding: 20 }}>
-                <View>
-                  <Text>Nomor Telepon</Text>
-                  <Text style={GlobalStyles.h4}>{dataUser.telp}</Text>
-                </View>
-                <View>
-                  <Text>Tanggal Lahir</Text>
-                  <Text style={GlobalStyles.h4}>{dataUser.tgl_lahir}</Text>
-                </View>
-              </View>
-            ) : (
-              <Text>Loading...</Text>
-            )}
-
-            <View style={{ gap: 12 }}>
-              <Divider />
-              {dataUser.level === "1" ? (
-                <View style={{ gap: 12 }}>
-                  <TouchableOpacity
-                    style={styles.containerMenu}
-                    onPress={() => navigation.replace("Web View")}>
-                    <Icon source="chat-alert" size={24} />
-                    <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
-                  </TouchableOpacity>
-                  <Divider />
-                </View>
-              ) : null}
-
-              <TouchableOpacity
-                style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}>
-                <Icon source={"logout"} color="#430D09" size={24} />
-                <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
-                  Logout
-                </Text>
-              </TouchableOpacity>
-
-              <Divider />
-            </View>
-
-            {confirmLogout && (
-              <ConfirmModal
-                visible={confirmLogout}
-                message={"Apakah anda yakin ingin keluar?"}
-                onCancel={() => setConfirmLogout(false)}
-                onConfirm={handleLogout}
-                confirmButtonText={"Ya"}
-                cancelButtonText={"Tidak"}
-              />
-            )}
-            {dellAccount && (
-              <ConfirmModal
-                visible={dellAccount}
-                message={"Hapus Akun"}
-                submessage={`Apakah Anda ingin menghapus akun ${dataUser.telp}`}
-                onCancel={() => setDellAccount(false)}
-                onConfirm={HapusAkun}
-                confirmButtonText={"Ya"}
-                cancelButtonText={"Tidak"}
-              />
-            )}
-            <AlertFormComponent
-              visible={isAlertVisible}
-              onClose={handleCloseAlert}
-              onSubmit={handlePasswordSubmit}
-              user={dataUser.id}
-              telp={dataUser.telp}
+        ) : ( */}
+        <ScrollView
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
+        >
+          <View style={styles.containerAvatar}>
+            <Avatar.Image
+              size={80}
+              source={require("../../../../assets/avatar.png")}
             />
-          </ScrollView>
-        )}
+            <Text style={GlobalStyles.h2}>
+              {auth.nama ? auth.nama : "Hai, Apakah kamu sudah login?"}
+            </Text>
+            <TouchableOpacity onPress={() => setDellAccount(true)}>
+              <Icon source={"cog-outline"} color="gray" size={24} />
+            </TouchableOpacity>
+          </View>
+
+          {auth ? (
+            <View style={{ gap: 12, padding: 20 }}>
+              <View>
+                <Text>Nomor Telepon</Text>
+                <Text style={GlobalStyles.h4}>{auth.hp}</Text>
+              </View>
+              {/* <View>
+                <Text>Tanggal Lahir</Text>
+                <Text style={GlobalStyles.h4}>{auth.tgl_lahir}</Text>
+              </View> */}
+            </View>
+          ) : (
+            <Text>Loading...</Text>
+          )}
+
+          <View style={{ gap: 12 }}>
+            <Divider />
+            {auth.level === "1" ? (
+              <View style={{ gap: 12 }}>
+                <TouchableOpacity
+                  style={styles.containerMenu}
+                  onPress={() => navigation.replace("Web View")}>
+                  <Icon source="chat-alert" size={24} />
+                  <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
+                </TouchableOpacity>
+                <Divider />
+              </View>
+            ) : null}
+
+            <TouchableOpacity
+              style={styles.containerMenu}
+              onPress={() => setConfirmLogout(true)}>
+              <Icon source={"logout"} color="#430D09" size={24} />
+              <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
+                Logout
+              </Text>
+            </TouchableOpacity>
+
+            <Divider />
+          </View>
+
+          {confirmLogout && (
+            <ConfirmModal
+              visible={confirmLogout}
+              message={"Apakah anda yakin ingin keluar?"}
+              onCancel={() => setConfirmLogout(false)}
+              onConfirm={handleLogout}
+              confirmButtonText={"Ya"}
+              cancelButtonText={"Tidak"}
+            />
+          )}
+          {dellAccount && (
+            <ConfirmModal
+              visible={dellAccount}
+              message={"Hapus Akun"}
+              submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
+              onCancel={() => setDellAccount(false)}
+              onConfirm={HapusAkun}
+              confirmButtonText={"Ya"}
+              cancelButtonText={"Tidak"}
+            />
+          )}
+          <AlertFormComponent
+            visible={isAlertVisible}
+            onClose={handleCloseAlert}
+            onSubmit={handlePasswordSubmit}
+            user={auth.id}
+            telp={auth.hp}
+            token={auth.token}
+          />
+        </ScrollView>
+        {/* )} */}
       </View>
     </SafeAreaView>
   );

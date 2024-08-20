@@ -28,15 +28,16 @@ export default function HomeTabs() {
     navigation.replace("Login Screen");
   };
 
+  console.log("Testing", auth);
   const fetchData = async () => {
-    if (!auth || !auth.user || !auth.user.id) {
+    if (!auth || !auth.hp || !auth.id) {
       // return; // Exit early if auth or auth.user is not defined
-      coansole.log("tidak ada auth", auth);
+      // coansole.log("tidak ada auth", auth);
     }
     try {
-      await axios.get(`${BASE_URL}/cariId/${auth.user.id}`, {
+      await axios.get(`${BASE_URL}/cariId/${auth.id}`, {
         headers: {
-          Authorization: `Bearer ${auth.user.token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
       });
     } catch (error) {
@@ -61,7 +62,7 @@ export default function HomeTabs() {
   useFocusEffect(
     useCallback(() => {
       const intervalId = setInterval(() => {
-        fetchData();
+        // fetchData();
       }, 10000); // 30000 ms = 30 seconds
 
       return () => clearInterval(intervalId); // Clear interval on component unmount

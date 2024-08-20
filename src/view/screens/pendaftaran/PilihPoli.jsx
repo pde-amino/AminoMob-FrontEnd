@@ -228,7 +228,7 @@ export const PilihPoli = () => {
     if (kunjungan === "Poliklinik") {
       await axios
         .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/poli`,
+          `${BASE_URL}/bookPeriksa/${auth.id}/poli`,
           {
             tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
             id_pasien: dataPas.id_pasien,
@@ -249,7 +249,7 @@ export const PilihPoli = () => {
               "Content-Type": "application/json",
               "x-api-key":
                 "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-              Authorization: `Bearer ${auth.user.token}`,
+              Authorization: `Bearer ${auth.token}`,
             },
           }
         )
@@ -267,7 +267,7 @@ export const PilihPoli = () => {
     } else if (kunjungan === "Penunjang") {
       await axios
         .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/penunjang`,
+          `${BASE_URL}/bookPeriksa/${auth.id}/penunjang`,
           {
             tanggal_booking: new Date().toISOString().split("T")[0], // memastikan format tanggal
             id_pasien: dataPas.id_pasien,
@@ -288,7 +288,7 @@ export const PilihPoli = () => {
               "Content-Type": "application/json",
               "x-api-key":
                 "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-              Authorization: `Bearer ${auth.user.token}`,
+              Authorization: `Bearer ${auth.token}`,
             },
           }
         )
@@ -306,7 +306,7 @@ export const PilihPoli = () => {
     } else if (kunjungan === "TerangBulan") {
       await axios
         .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/tb`,
+          `${BASE_URL}/bookPeriksa/${auth.id}/tb`,
           {
             no_rkm_medis: dataPas.no_rkm_medis,
             id_pasien: dataPas.id_pasien,
@@ -330,7 +330,7 @@ export const PilihPoli = () => {
               "Content-Type": "application/json",
               "x-api-key":
                 "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-              Authorization: `Bearer ${auth.user.token}`,
+              Authorization: `Bearer ${auth.token}`,
             },
           }
         )
@@ -348,7 +348,7 @@ export const PilihPoli = () => {
     } else if (kunjungan === "TeleKonseling") {
       await axios
         .post(
-          `${BASE_URL}/bookPeriksa/${auth.user.id}/tk`,
+          `${BASE_URL}/bookPeriksa/${auth.id}/tk`,
           {
             no_rkm_medis: dataPas.no_rkm_medis,
             id_pasien: dataPas.id_pasien,
@@ -372,7 +372,7 @@ export const PilihPoli = () => {
               "Content-Type": "application/json",
               "x-api-key":
                 "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-              Authorization: `Bearer ${auth.user.token}`,
+              Authorization: `Bearer ${auth.token}`,
             },
           }
         )

@@ -8,7 +8,14 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../contex/Config";
 
-const AlertFormComponent = ({ visible, onClose, onSubmit, user, telp }) => {
+const AlertFormComponent = ({
+  visible,
+  onClose,
+  onSubmit,
+  user,
+  token,
+  telp,
+}) => {
   const [password, setPassword] = useState("");
   const { auth } = useContext(AuthContex);
   const navigation = useNavigation();
@@ -20,7 +27,7 @@ const AlertFormComponent = ({ visible, onClose, onSubmit, user, telp }) => {
           "Content-Type": "application/json",
           "x-api-key":
             "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-          Authorization: `Bearer ${auth.user.token}`,
+          Authorization: `Bearer ${token}`,
         },
         data: {
           telp: telp,
