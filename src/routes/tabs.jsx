@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useCallback, useContext } from "react";
 import HomeScreen from "../view/screens/home/HomeScreen";
-import { useState, useEffect } from "react";
 import { Alert } from "react-native";
 import ProfileScreen from "../view/screens/auth/ProfileScreen";
 import { AuthContex } from "../contex/AuthProvider";
@@ -94,21 +93,6 @@ export default function HomeTabs() {
         name="Home"
         component={HomeScreen}
       />
-      {/* {auth.role === "admin" ? ( */}
-      {/* <Tabs.Screen
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name={focused ? "calendar" : "calendar-outline"}
-              size={24}
-              color="grey"
-            />
-          ),
-        }}
-        name="DUMMY "
-        component={BookingScreen}
-      /> */}
-      {/* ) : null} */}
 
       <Tabs.Screen
         options={{

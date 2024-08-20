@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   useWindowDimensions,
-  ActivityIndicator,
   FlatList,
   RefreshControl,
   Alert,
@@ -105,7 +104,7 @@ const AllArticle = () => {
       <View style={{ alignItems: "center" }}>
         <FlatList
           // horizontal={false}
-          // numColumns={2}
+          numColumns={3}
           data={articles}
           // renderItem={renderItem}
           renderItem={renderArticleItem}

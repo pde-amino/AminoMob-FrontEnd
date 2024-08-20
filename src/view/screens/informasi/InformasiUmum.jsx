@@ -1,12 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { View, FlatList, Text, RefreshControl, Linking } from "react-native";
+import React from "react";
+import { View, FlatList, RefreshControl, Linking, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "../../../components/HeaderComponent";
 
-const InformasiUmum = () => {
+export default function InformasiUmum() {
+  const navigation = useNavigation();
+
+  const showAlert = () =>
+    Alert.alert(
+      "Informasi",
+      "Menu ini menyambungkan Anda langsung ke Whatsapp Humas Amino Hospital",
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            Linking.openURL("https://wa.me/6289515636878");
+          },
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+
   const Menus = [
     {
       kd_poli: "1",
@@ -29,25 +48,23 @@ const InformasiUmum = () => {
       nm_poli: "Permintaan Informasi",
       icon: "support-agent",
       title: "Information",
-      to: () => Linking.openURL("https://wa.me/6289515636878"),
+      to: () => showAlert(),
       color: "green",
     },
   ];
 
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1.4 }}>
         <HeaderComponent
           title="Informasi RS"
           icon={"arrow-back"}
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={[GlobalStyles.Content, { flex: 9 }]}>
+      <View style={{ flex: 10, alignItems: "center" }}>
         <FlatList
-          contentContainerStyle={{ flexGrow: 1 }}
+          // contentContainerStyle={{ flexGrow: 1 }}
           // refreshControl={
           //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
           // }
@@ -68,6 +85,4 @@ const InformasiUmum = () => {
       </View>
     </SafeAreaView>
   );
-};
-
-export default InformasiUmum;
+}

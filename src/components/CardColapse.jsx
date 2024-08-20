@@ -54,9 +54,9 @@ const CardColapse = ({ title, subtitle, children }) => {
           <Text style={GlobalStyles.h4}>{subtitle}</Text>
         </View>
         {isExpanded ? (
-          <Icon source="chevron-up" size={24} />
+          <Icon source="chevron-up" color="#3E3E3E" size={24} />
         ) : (
-          <Icon source="chevron-down" size={24} />
+          <Icon source="chevron-down" color="#3E3E3E" size={24} />
         )}
       </TouchableOpacity>
       <Animated.View style={[styles.content, { height: animatedHeight }]}>
@@ -64,9 +64,6 @@ const CardColapse = ({ title, subtitle, children }) => {
           {children}
         </View>
       </Animated.View>
-      {/* <Animated.View style={[styles.content, { height: animatedHeight }]}>
-        {isExpanded && <View style={styles.innerContent}>{children}</View>}
-      </Animated.View> */}
     </View>
   );
 };
@@ -82,7 +79,6 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 15,
-    // backgroundColor: "#C5E1FC",
     backgroundColor: "#E1F0FF",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",

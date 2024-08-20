@@ -97,10 +97,6 @@ export const TambahPasienLama = () => {
           if (response.data.status == true) {
             setDataGet(response.data.user);
             setBs(true);
-
-            // navigation.navigate("TambahPasienLamaDetail", {
-            //   idPasien: response.data[0].id,
-            // });
           }
         });
     } catch (error) {
@@ -174,9 +170,8 @@ export const TambahPasienLama = () => {
               GlobalStyles.textBiasa,
               { maxWidth: "90%", textAlign: "justify" },
             ]}>
-            Bila mengalami kesulitan, seperti lupa nomor RM, silakan hubungi
-            customer service dengan mengakses menu Layanan Informasi RS dan
-            Permintaan Informasi
+            Bila lupa nomor RM, silakan hubungi customer service dengan
+            mengakses menu Layanan Informasi RS dan Permintaan Informasi.
           </Text>
 
           <TextInputIconComponent

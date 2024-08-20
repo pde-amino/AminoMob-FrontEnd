@@ -177,6 +177,7 @@ const HomeScreen = () => {
       </View>
     </TouchableRipple>
   );
+
   const emptyArtikel = useCallback(
     () => (
       <View
@@ -203,7 +204,7 @@ const HomeScreen = () => {
           <FlatList
             data={articles}
             ListFooterComponent={
-              articles && articles.length ? showAllArticle : null
+              articles && articles.length > 4 ? showAllArticle : null
             }
             renderItem={renderArticleItem}
             keyExtractor={(item, index) => index.toString()}
