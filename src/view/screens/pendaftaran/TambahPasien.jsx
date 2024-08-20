@@ -272,17 +272,19 @@ export const TambahPasien = () => {
           onPress={() => navigation.goBack()}
         />
       </View>
-      <View style={{ height: hp(90) }}>
+
+      <View style={{ flex: 1, marginTop: 10 }}>
         <ScrollView>
           <View style={{ gap: 8, alignItems: "center" }}>
             <View
               style={{
-                width: "100%",
-                marginLeft: 40,
+                alignContent: "flex-start",
+                marginLeft: 20,
               }}
             >
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
+
             <View style={styles.containerDrop}>
               <Dropdown
                 style={[
@@ -317,6 +319,7 @@ export const TambahPasien = () => {
                 }}
               />
             </View>
+
             <Divider />
 
             <TextInputIconComponent
@@ -431,11 +434,13 @@ export const TambahPasien = () => {
               )}
 
               {!showPicker && (
-                <Pressable onPress={toggleShowDate}>
+                <Pressable
+                  style={{ width: wp(100), alignItems: "center" }}
+                  onPress={toggleShowDate}
+                >
                   <TextInput
                     style={styles.tglPilihan}
                     editable={false}
-                    // label={"Tgl Lahir"}
                     placeholder={"Tanggal Lahir"}
                     value={
                       dateOfBirth
@@ -443,8 +448,6 @@ export const TambahPasien = () => {
                         : ""
                     }
                     onChangeText={setDateOfBirth}
-                    // type={"username"}
-                    // onPress={() => setShowDate(true)}
                   />
                 </Pressable>
               )}
@@ -725,16 +728,14 @@ const styles = StyleSheet.create({
   },
   tglPilihan: {
     height: 50,
+    width: "90%",
     borderWidth: 1,
     borderRadius: 10,
     borderColor: WARNA.primary,
-    // justifyContent: "center",
-    width: 370,
     backgroundColor: "white",
     color: "black",
     padding: 14,
     fontSize: 14,
-    // backgroundColor: "red",
   },
   inputan: {
     marginBottom: 16,
@@ -743,7 +744,6 @@ const styles = StyleSheet.create({
   containerDrop: {
     backgroundColor: "white",
     width: "90%",
-    // padding: 16,
   },
   dropdown: {
     height: 50,

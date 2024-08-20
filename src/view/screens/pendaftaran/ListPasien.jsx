@@ -83,10 +83,6 @@ export default function ListPasien() {
     }, [])
   );
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const renderItem = ({ item }) => {
     return (
       <Item
