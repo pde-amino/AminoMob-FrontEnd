@@ -187,7 +187,7 @@ export const TambahPasien = () => {
     const ip = await Network.getIpAddressAsync();
     try {
       const response = await axios.post(
-        `${BASE_URL}/insertPas/${auth.user.id}`,
+        `${BASE_URL}/insertPas/${auth.id}`,
         {
           no_rkm_medis: "",
           nm_pasien: nmLengkap,
@@ -231,7 +231,7 @@ export const TambahPasien = () => {
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            Authorization: `Bearer ${auth.user.token}`,
+            Authorization: `Bearer ${auth.token}`,
           },
         }
       );
@@ -259,7 +259,7 @@ export const TambahPasien = () => {
         Alert.alert("Error", `Error: ${error.message}`);
       }
     } finally {
-      navigation.navigate("List Pasien");
+      navigation.navigate("Home Screen");
     }
   };
 
@@ -280,8 +280,7 @@ export const TambahPasien = () => {
               style={{
                 alignContent: "flex-start",
                 marginLeft: 20,
-              }}
-            >
+              }}>
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
 
@@ -436,8 +435,7 @@ export const TambahPasien = () => {
               {!showPicker && (
                 <Pressable
                   style={{ width: wp(100), alignItems: "center" }}
-                  onPress={toggleShowDate}
-                >
+                  onPress={toggleShowDate}>
                   <TextInput
                     style={styles.tglPilihan}
                     editable={false}

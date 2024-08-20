@@ -48,21 +48,21 @@ export default function ListPasien() {
     setBtmtambah(false);
   };
 
+  console.log("ListPasien", auth);
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/daftarKerabat/${auth.user.id}/`,
-        {
+      const response = await axios
+        .get(`${BASE_URL}/daftarKerabat/${auth.id}/`, {
           headers: {
-            Authorization: `Bearer ${auth.user.token}`, // Pastikan token disertakan dalam header jika diperlukan
+            Authorization: `Bearer ${auth.token}`, // Pastikan token disertakan dalam header jika diperlukan
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
-        }
-      );
-      const data = response.data.data_kerabat;
-      setDataPasien(data);
+        })
+        .then((response) => {
+          setDataPasien(response.data.data_kerabat);
+        });
     } catch (error) {
       if (error.message != "Request failed with status code 404") {
         Alert.alert(
@@ -89,11 +89,7 @@ export default function ListPasien() {
         item={item}
         onPress={() => {
           setPilihPasien(item);
-          navigation.navigate(
-            "LayananNonBPJS",
-            item
-            // (selectedItem = item)
-          );
+          navigation.navigate("LayananNonBPJS", item);
         }}
       />
     );
@@ -135,8 +131,7 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -153,8 +148,7 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>

@@ -38,19 +38,20 @@ export default function RiwayatKunjungan() {
 
   const ambilDataRiwayat = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/riwayatbooking/${auth.user.id}`,
-        {
+      const response = await axios
+        .get(`${BASE_URL}/riwayatbooking/${auth.id}`, {
           headers: {
-            Authorization: `Bearer ${auth.user.token}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
-        }
-      );
-      const data = response.data.data_user;
-      setDataRiwayat(data);
+        })
+        .then((response) => {
+          setDataRiwayat(response.data.data_user);
+        });
+      // const data = response.data.data_user;
+      // setDataRiwayat(data);
     } catch (error) {
       if (error.message != "Request failed with status code 404") {
         Alert.alert(
@@ -68,13 +69,13 @@ export default function RiwayatKunjungan() {
   const batalBooking = async () => {
     try {
       await axios.put(
-        `${BASE_URL}/bookPeriksa/${auth.user.id}`,
+        `${BASE_URL}/bookPeriksa/${auth.id}`,
         {
           kd_booking: selectedKodeBooking,
         },
         {
           headers: {
-            Authorization: `Bearer ${auth.user.token}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "application/json",
           },
         }
@@ -116,8 +117,7 @@ export default function RiwayatKunjungan() {
             <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
             <TouchableOpacity
               onPress={onPressBatal}
-              style={styles.containerButton}
-            >
+              style={styles.containerButton}>
               <Text style={[GlobalStyles.h4, { color: "#CA0101" }]}>
                 Batalkan
               </Text>
@@ -182,8 +182,7 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -200,8 +199,7 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada riwayat periksa, silakan mendaftar
               </Text>
             </View>
@@ -218,11 +216,9 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}
-        >
+          }}>
           <Dialog.Title
-            style={GlobalStyles.h2}
-          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>

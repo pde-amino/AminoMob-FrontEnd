@@ -5,6 +5,7 @@ import MenuItemComponent from "../../../components/MenuItemComponent";
 import LoadingContent from "../../../components/LoadingContent";
 import { Button } from "react-native-paper";
 import GlobalStyles from "../../../style/GlobalStyles";
+import { BASE_URL } from "../../../contex/Config";
 
 const InformasiRumahSakit = () => {
   const Menus = [
@@ -55,7 +56,7 @@ const InformasiRumahSakit = () => {
 
   const fetchData = () => {
     setIsLoading(true);
-    fetch("http://192.168.5.5:8080/poliklinik")
+    fetch(`${BASE_URL}/poliklinik`)
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "success") {
@@ -113,8 +114,7 @@ const InformasiRumahSakit = () => {
           alignItems: "center",
           marginTop: 10,
         })
-      }
-    >
+      }>
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         // refreshControl={

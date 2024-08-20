@@ -26,7 +26,10 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 import { Icon, TouchableRipple } from "react-native-paper";
 import { BASE_ARTICLE } from "../../../contex/Config";
+import * as SecureStore from "expo-secure-store";
 import { SpeedDial } from "@rneui/themed";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import GetUserData from "../auth/GetUserData";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -37,6 +40,7 @@ const HomeScreen = () => {
   const [articles, setArticles] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dataUser, setDataUser] = useState("");
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -113,7 +117,20 @@ const HomeScreen = () => {
     }
   };
 
+  const getDataUser = async () => {
+    const user = await GetUserData();
+
+    if (user) {
+      // Lakukan sesuatu dengan data pengguna
+      console.log("User ID:", user.id);
+    } else {
+      // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
+      navigation.replace("Login Screen");
+    }
+  };
+
   useEffect(() => {
+    getDataUser();
     fetchArticles();
   }, []);
 
@@ -170,8 +187,7 @@ const HomeScreen = () => {
         style={{
           paddingLeft: 20,
           marginTop: 20,
-        }}
-      >
+        }}>
         <Text style={GlobalStyles.textBiasa}>
           Maaf, belum ada artikel tersedia
         </Text>
@@ -222,8 +238,7 @@ const HomeScreen = () => {
           <Path
             fill="#0a78e2"
             fillOpacity="1" // Ubah menjadi fillOpacity karena properti fillOpacity
-            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></Path>
+            d="M0,288L48,256C96,224,192,160,288,160C384,160,480,224,576,256C672,288,768,288,864,261.3C960,235,1056,181,1152,144C1248,107,1344,85,1392,74.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></Path>
         </Svg>
       </View>
 
