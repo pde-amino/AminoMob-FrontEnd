@@ -1,10 +1,9 @@
 import {
-  View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
   StatusBar,
+  SafeAreaView,
 } from "react-native";
 import React from "react";
 import { Header, Icon } from "@rneui/themed";
@@ -16,13 +15,15 @@ import {
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
 export default function HeaderComponent({ title, icon, onPress }) {
+  const HEADER_HEIGHT =
+    Platform.OS === "android" ? hp(8) + StatusBar.currentHeight : hp(9);
+
   return (
-    <View>
-      <StatusBar barStyle="light-content" translucent="true" />
+    <SafeAreaView>
       <Header
         containerStyle={{
           width: wp(100),
-          height: Platform.OS === "android" ? hp(10) : hp(9), // Adjust based on platform
+          height: HEADER_HEIGHT, // Adjust based on platform
           paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           marginBottom: hp(12),
         }}
@@ -34,7 +35,7 @@ export default function HeaderComponent({ title, icon, onPress }) {
         }
         centerComponent={{ text: title, style: styles.heading }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
