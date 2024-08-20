@@ -48,7 +48,10 @@ const HomeScreen = () => {
     Alert.alert(
       "Maaf",
       "Saat ini pendaftaran Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      [{ text: "OK", onPress: () => checkAndOpenApp() }]
+      [{ text: "OK", onPress: () => checkAndOpenApp() }],
+      {
+        cancelable: true,
+      }
     );
   };
 
