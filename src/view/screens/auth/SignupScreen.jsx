@@ -106,24 +106,29 @@ const SignupScreen = () => {
   const simpanData = async () => {
     const ip = await Network.getIpAddressAsync();
     try {
-      const response = await axios.post(
-        `${BASE_URL}/register`,
-        {
-          nama: nmLengkap,
-          telp: noHP,
-          nik: noKTP,
-          password: password,
-          confirm_password: confirmPassword,
-          ip: ip,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key":
-              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+      const response = await axios
+        .post(
+          `${BASE_URL}/register`,
+          {
+            nama: nmLengkap,
+            telp: noHP,
+            nik: noKTP,
+            password: password,
+            confirm_password: confirmPassword,
+            ip: ip,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key":
+                "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Daftar", response.data);
+          // if(response)
+        });
 
       await AsyncStorage.setItem("noHp", JSON.stringify(noHP));
 
@@ -151,13 +156,15 @@ const SignupScreen = () => {
           contentContainerStyle={{
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}>
+              ]}
+            >
               Daftar Akun
             </Text>
           </View>
@@ -248,7 +255,8 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}>
+                }}
+              >
                 Masuk disini
               </Text>
             </TouchableOpacity>
