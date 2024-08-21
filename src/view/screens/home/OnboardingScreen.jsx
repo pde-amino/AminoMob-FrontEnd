@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  ImageBackground,
   FlatList,
   View,
   Image,
@@ -11,10 +10,6 @@ import {
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-import HomeScreen from "./HomeScreen";
-import LoginScreen from "../auth/LoginScreen";
-import { useNavigation } from "@react-navigation/native";
-import ConfirmModal from "../../../components/ConfirmModal";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,20 +19,20 @@ const slides = [
   {
     id: "1",
     image: require("../../../../assets/onboard1.png"),
-    title: "Selamat Datang di Amino Apps",
+    title: "Selamat Datang di Amino Mobile",
     subtitle: "Satu aplikasi untuk semua keperluan di Amino Hospital",
   },
   {
     id: "2",
     image: require("../../../../assets/onboard2.png"),
-    title: "Pusat Kesehatan Jiwa Provinsi Jawa Tengah",
-    subtitle: "Amino Hospital cgvgherbesar di Semarang",
+    title: "Pusat Kesehatan Jiwa di Jawa Tengah",
+    subtitle: "Pendaftaran, tombol darurat, informasi RS dalam satu aplikasi",
   },
   {
     id: "3",
     image: require("../../../../assets/onboard3.png"),
     title: "Buat Akun Sekarang",
-    subtitle: "Untuk menggunakan aplikasi silakan Login terlebih dulu",
+    subtitle: "Untuk menggunakan aplikasi silakan daftar akun lebih dulu",
   },
 ];
 
@@ -105,7 +100,7 @@ const OnboardingScreen = ({ navigation }) => {
               <View style={{ height: 48, marginBottom: 8 }}>
                 <TouchableOpacity
                   style={[styles.btn]}
-                  onPress={() => navigation.replace("Login Screen")}
+                  onPress={() => navigation.replace("Signup")}
                 >
                   <Text
                     style={{
