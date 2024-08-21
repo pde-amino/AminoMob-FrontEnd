@@ -17,7 +17,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { BASE_URL } from "../../../contex/Config";
 import * as Network from "expo-network";
-import * as SecureStore from "expo-secure-store";
 import NetInfo from "@react-native-community/netinfo";
 import GetIPButton from "../../../components/GetIpButton";
 
@@ -52,14 +51,6 @@ const LoginScreen = () => {
   };
 
   const handleSubmit = async () => {
-    const storeToken = async (token) => {
-      try {
-        await SecureStore.setItemAsync("userData", JSON.stringify(token));
-        console.log("Token berhasil disimpan");
-      } catch (error) {
-        console.log("Gagal menyimpan token:", error);
-      }
-    };
     try {
       await AsyncStorage.removeItem("userInfo");
       setLoading(true);
@@ -86,18 +77,8 @@ const LoginScreen = () => {
         .then(async (response) => {
           const userInfo = response.data;
 
-          const userData = {
-            id: userInfo.user.id,
-            status: userInfo.user.status,
-            token: userInfo.user.token,
-            nama: userInfo.user.nama,
-            hp: userInfo.user.hp,
-            level: userInfo.user.level,
-          };
-
-          storeToken(userData);
           await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-          setAuth(userData);
+          setAuth(userInfo);
           setLoading(false);
           navigation.replace("Home Screen");
         })

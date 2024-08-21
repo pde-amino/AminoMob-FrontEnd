@@ -108,7 +108,8 @@ export default function Routes() {
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
