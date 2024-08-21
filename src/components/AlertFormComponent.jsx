@@ -45,12 +45,40 @@ const AlertFormComponent = ({
         },
       ]);
     } catch (error) {
-      console.error(error);
-      Alert.alert("Gagal", "Akun gagal dihapus", [
-        {
-          text: "OK",
-        },
-      ]);
+      if (error.response) {
+        // Menangani error yang dikembalikan oleh server
+        const errorMessage =
+          error.response.data.messages.error || "Unknown error";
+
+        if (error.response.status === 401) {
+          // Alert.alert("Perhatian", errorMessage);
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
+        } else {
+          // Menangani error lain yang mungkin terjadi
+          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+        }
+
+        console.log("Error Response Data:", error.response.data);
+        console.log("Error Response Status:", error.response.status);
+      } else if (error.request) {
+        // Jika tidak ada respons dari server
+        console.log("No Response Received:", error.request);
+        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+      } else {
+        // Error lainnya
+        console.log("Error Message:", error.message);
+        Alert.alert(
+          "Peringatan",
+          `Terdapat kesalahan data mohon lakukan login ulang`
+        );
+        navigation.replace("Login Screen");
+      }
+    } finally {
+      return;
     }
   };
 

@@ -47,45 +47,37 @@ const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   const { auth, setAuth } = useContext(AuthContex);
-  const [initialRoute, setInitialRoute] = useState(null); // Ubah default menjadi null
+  const [initialRoute, setInitialRoute] = useState("Splash"); // Pastikan ada default yang aman
   const [loading, setLoading] = useState(true);
-  const getDataUser = async () => {
-    const user = await GetUserData();
-
-    if (user) {
-      // Lakukan sesuatu dengan data pengguna
-      await AsyncStorage.setItem("userInfo", JSON.stringify(user));
-      setAuth(user);
-      console.log("User ID:", user);
-    } else {
-      // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
-      navigation.replace("Login Screen");
-    }
-  };
 
   useEffect(() => {
-    getDataUser();
     const initialize = async () => {
       try {
-        // Cek jika aplikasi pertama kali diluncurkan
+        const user = await GetUserData();
+
+        if (user) {
+          await AsyncStorage.setItem("userInfo", JSON.stringify(user));
+          setAuth(user);
+          console.log("User ID:", user);
+        } else {
+          setInitialRoute("LoginScreen");
+        }
+
         const isFirstLaunch = await AsyncStorage.getItem("isFirstLaunch");
         if (isFirstLaunch === null) {
           await AsyncStorage.setItem("isFirstLaunch", "false");
           setInitialRoute("Onboarding");
         } else {
-          // Cek status login
           const token = await SecureStore.getItemAsync("userToken");
           if (token) {
-            // Token ditemukan, pengguna dianggap masih login
             setInitialRoute("HomeScreen");
           } else {
-            // Token tidak ditemukan, pengguna harus login lagi
             setInitialRoute("LoginScreen");
           }
         }
       } catch (error) {
         console.log("Gagal memuat data:", error);
-        setInitialRoute("LoginScreen"); // Default ke LoginScreen jika ada kesalahan
+        setInitialRoute("LoginScreen");
       } finally {
         setLoading(false);
       }
@@ -104,7 +96,7 @@ export default function Routes() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator //Untuk mengatur screen yang ingin ditampilkan pertama
+      <Stack.Navigator
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
@@ -122,29 +114,16 @@ export default function Routes() {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
         {/* Pendaftaran */}
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="OTPInputScreen"
-          component={OTPInputScreen}
-        />
+        <Stack.Screen name="OTPInputScreen" component={OTPInputScreen} />
         <Stack.Screen name="Tambah Pasien Baru" component={TambahPasien} />
         <Stack.Screen name="Tambah Pasien Lama" component={TambahPasienLama} />
         <Stack.Screen name="Detail Dokter" component={DetailDoctorScreen} />
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="Pilih Poli"
-          component={PilihPoli}
-        />
-        <Stack.Screen
-          screenOptions={{ headerShown: true }}
-          name="List Pasien"
-          component={ListPasien}
-        />
+        <Stack.Screen name="Pilih Poli" component={PilihPoli} />
+        <Stack.Screen name="List Pasien" component={ListPasien} />
         {/* Niat */}
         <Stack.Group>
           <Stack.Screen
             name="Profile Screen"
-            screenOptions={{ headerShown: true }}
             component={ProfileScreen}
             options={{
               title: "Profile",
@@ -153,7 +132,6 @@ export default function Routes() {
 
           <Stack.Screen
             name="Article"
-            screenOptions={{ headerShown: true }}
             component={ArticleKesehatan}
             options={{
               title: "Artikel",
@@ -162,7 +140,6 @@ export default function Routes() {
 
           <Stack.Screen
             name="AllArticle"
-            screenOptions={{ headerShown: true }}
             component={AllArticle}
             options={{
               title: "Artikel Amino",
@@ -230,7 +207,6 @@ export default function Routes() {
         <Stack.Screen name="Poli Information" component={PoliInformation} />
         <Stack.Screen name="Booking Screen" component={BookingScreen} />
         <Stack.Screen name="Search Poli" component={SearchDokter} />
-        {/* <Stack.Screen name="Poli1" component={Poli1} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

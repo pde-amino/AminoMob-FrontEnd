@@ -111,7 +111,10 @@ export const PilihPoli = () => {
           }
         })
         .catch((error) => {
-          Alert.alert("Error", "Terjadi kesalahan saat mengambil data.");
+          Alert.alert(
+            "Maaf",
+            "Mohon pilih Tanggal dan Jam Periksa terlebih dahulu."
+          );
         });
     } else if (kunjungan === "Penunjang") {
       axios
@@ -578,7 +581,11 @@ Jam Sore (14:00:00 - 18:00:00)`);
               <Text>Poli Tujuan</Text>
               <View style={styles.itemList}>
                 <Text style={GlobalStyles.h4}>{value2}</Text>
-                <Button title={"Pilih"} onPress={poliTujuan} />
+                <Button
+                  disabled={value == "Pilih Jam Periksa" ? true : false}
+                  title={"Pilih"}
+                  onPress={poliTujuan}
+                />
               </View>
             </View>
             <View style={styles.list}>

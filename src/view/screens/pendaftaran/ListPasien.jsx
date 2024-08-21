@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -37,7 +37,7 @@ export default function ListPasien() {
   const [dataPasien, setDataPasien] = useState();
   const [pilihPasien, setPilihPasien] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const pasienLama = () => {
     navigation.navigate("Tambah Pasien Lama");
@@ -64,12 +64,37 @@ export default function ListPasien() {
           setDataPasien(response.data.data_kerabat);
         });
     } catch (error) {
-      if (error.message != "Request failed with status code 404") {
+      if (error.response) {
+        // Menangani error yang dikembalikan oleh server
+        const errorMessage =
+          error.response.data.messages.error || "Unknown error";
+
+        if (error.response.status === 401) {
+          // Alert.alert("Perhatian", errorMessage);
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
+        } else {
+          // Menangani error lain yang mungkin terjadi
+          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+        }
+
+        console.log("Error Response Data:", error.response.data);
+        console.log("Error Response Status:", error.response.status);
+      } else if (error.request) {
+        // Jika tidak ada respons dari server
+        console.log("No Response Received:", error.request);
+        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+      } else {
+        // Error lainnya
+        console.log("Error Message:", error.message);
         Alert.alert(
-          "Maaf",
-          "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
-            error
+          "Peringatan",
+          `Terdapat kesalahan data mohon lakukan login ulang`
         );
+        navigation.replace("Login Screen");
       }
     } finally {
       setLoading(false);
@@ -77,11 +102,9 @@ export default function ListPasien() {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-    }, [])
-  );
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -102,7 +125,7 @@ export default function ListPasien() {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1.4 }}>
+      <View style={{ flex: 1 }}>
         <HeaderComponent
           title={"Daftar Pasien"}
           icon={"arrow-back"}

@@ -74,12 +74,37 @@ export default function InfoListPasien() {
       const data = response.data.data_kerabat;
       setDataPasien(data);
     } catch (error) {
-      if (error.message != "Request failed with status code 404") {
+      if (error.response) {
+        // Menangani error yang dikembalikan oleh server
+        const errorMessage =
+          error.response.data.messages.error || "Unknown error";
+
+        if (error.response.status === 401) {
+          // Alert.alert("Perhatian", errorMessage);
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
+        } else {
+          // Menangani error lain yang mungkin terjadi
+          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+        }
+
+        console.log("Error Response Data:", error.response.data);
+        console.log("Error Response Status:", error.response.status);
+      } else if (error.request) {
+        // Jika tidak ada respons dari server
+        console.log("No Response Received:", error.request);
+        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+      } else {
+        // Error lainnya
+        console.log("Error Message:", error.message);
         Alert.alert(
-          "Maaf",
-          "Ada kesalahan saat mengambil data list pasien, mohon ulangi beberapa saat lagi " +
-            error
+          "Peringatan",
+          `Terdapat kesalahan data mohon lakukan login ulang`
         );
+        navigation.replace("Login Screen");
       }
     } finally {
       setLoading(false);
