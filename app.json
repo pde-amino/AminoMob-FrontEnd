@@ -7,7 +7,6 @@
     "icon": "assets/icon1024x1024.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
-    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
