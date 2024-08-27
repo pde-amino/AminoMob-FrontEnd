@@ -26,10 +26,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 import { Icon, TouchableRipple } from "react-native-paper";
 import { BASE_ARTICLE } from "../../../contex/Config";
-import * as SecureStore from "expo-secure-store";
 import { SpeedDial } from "@rneui/themed";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import GetUserData from "../auth/GetUserData";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -40,7 +37,6 @@ const HomeScreen = () => {
   const [articles, setArticles] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [dataUser, setDataUser] = useState("");
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -130,7 +126,6 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    getDataUser();
     fetchArticles();
   }, []);
 
