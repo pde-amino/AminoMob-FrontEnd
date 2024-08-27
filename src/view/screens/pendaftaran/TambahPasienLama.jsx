@@ -85,12 +85,12 @@ export const TambahPasienLama = () => {
   const searchPass = async () => {
     try {
       await axios
-        .get(`${BASE_URL}/cariPas/${auth.id}/${noRm}/${dateOfBirth}`, {
+        .get(`${BASE_URL}/cariPas/${auth.user.id}/${noRm}/${dateOfBirth}`, {
           headers: {
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            Authorization: `Bearer ${auth.token}`,
+            Authorization: `Bearer ${auth.user.token}`,
           },
         })
         .then((response) => {
@@ -108,7 +108,7 @@ export const TambahPasienLama = () => {
     const ip = await Network.getIpAddressAsync();
     await axios
       .post(
-        `${BASE_URL}/tambahKerabat/${auth.id}`,
+        `${BASE_URL}/tambahKerabat/${auth.user.id}`,
         {
           no_rkm_medis: dataGet.no_rkm_medis,
           status_user: hubunganPasien,
@@ -120,13 +120,13 @@ export const TambahPasienLama = () => {
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            Authorization: `Bearer ${auth.token}`,
+            Authorization: `Bearer ${auth.user.token}`,
           },
         }
       )
       .then((response) => {
         Alert.alert("Berhasil", "Data berhasil disimpan");
-        navigation.navigate("Home Screen");
+        navigation.navigate("List Pasien");
       })
       .catch((error) => {
         Alert.alert("Gagal", "Data gagal disimpansss");
@@ -169,9 +169,10 @@ export const TambahPasienLama = () => {
             style={[
               GlobalStyles.textBiasa,
               { maxWidth: "90%", textAlign: "justify" },
-            ]}>
-            Bila lupa nomor RM, silakan hubungi customer service dengan
-            mengakses menu Layanan Informasi RS dan Permintaan Informasi.
+            ]}
+          >
+            Bila lupa nomor RM, silakan hubungi Humas Amino dengan mengakses
+            menu Layanan Informasi RS dan Permintaan Informasi.
           </Text>
 
           <TextInputIconComponent
