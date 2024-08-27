@@ -55,9 +55,9 @@ const LoginScreen = () => {
     const storeToken = async (token) => {
       try {
         await SecureStore.setItemAsync("userData", JSON.stringify(token));
-        console.log("Token berhasil disimpan");
+        // console.log("Token berhasil disimpan");
       } catch (error) {
-        console.log("Gagal menyimpan token:", error);
+        // console.log("Gagal menyimpan token:", error);
       }
     };
     try {
@@ -101,9 +101,31 @@ const LoginScreen = () => {
           setLoading(false);
           navigation.replace("Home Screen");
         })
-        .catch(() => {
-          Alert.alert("Maaf", "No HP atau Password salah.");
+        .catch((error) => {
           setLoading(false);
+
+          // Jika status 429 (Too Many Requests)
+          if (error.response && error.response.status === 429) {
+            Alert.alert("Peringatan", "Anda telah melebihi batas percobaan.");
+          } else if (error.response && error.response.status === 401) {
+            // Jika error status 401 (Unauthorized)
+            Alert.alert(
+              "Maaf",
+              `${
+                error.response
+                  ? "Sepertinya password atau nomor HP salah"
+                  : error.message
+              }`
+            );
+          } else {
+            // Error umum lainnya
+            Alert.alert("Maaf", "Sepertinya password atau nomor HP salah");
+          }
+
+          // console.log(
+          //   "Error Login:",
+          //   error.response ? error.response.data : error.message
+          // );
         });
     } catch (error) {
       try {

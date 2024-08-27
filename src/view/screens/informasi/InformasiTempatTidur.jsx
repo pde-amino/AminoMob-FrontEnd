@@ -39,7 +39,9 @@ const InformasiTempatTidur = () => {
         setLoading(false);
         setData(data);
       })
-      .catch((err) => console.log("Informasi TT :" + err));
+      .catch((err) => {
+        return;
+      });
   }, []);
 
   const handleSearch = (filteredData) => {

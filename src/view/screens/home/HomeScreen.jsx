@@ -122,7 +122,7 @@ const HomeScreen = () => {
 
     if (user) {
       // Lakukan sesuatu dengan data pengguna
-      console.log("User ID:", user.id);
+      // console.log("User ID:", user.id);
     } else {
       // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
       navigation.replace("Login Screen");

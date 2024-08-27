@@ -43,7 +43,10 @@ export default function SearchDokter() {
           setFilteredData(data); // initialize with full data
           setLoading(false);
         })
-        .catch((err) => console.log("Error Search Dokter :", err));
+        // .catch((err) => console.log("Error Search Dokter :", err));
+        .catch((err) => {
+          return;
+        });
     } finally {
       setRefreshing(false);
     }

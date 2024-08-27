@@ -27,7 +27,7 @@ export default function HomeTabs() {
     navigation.replace("Login Screen");
   };
 
-  console.log("Testing", auth);
+  // console.log("Testing", auth);
   const fetchData = async () => {
     if (!auth || !auth.hp || !auth.id) {
       // return; // Exit early if auth or auth.user is not defined

@@ -58,7 +58,7 @@ export default function Routes() {
         if (user) {
           await AsyncStorage.setItem("userInfo", JSON.stringify(user));
           setAuth(user);
-          console.log("User ID:", user);
+          // console.log("User ID:", user);
         } else {
           setInitialRoute("LoginScreen");
         }
@@ -76,7 +76,7 @@ export default function Routes() {
           }
         }
       } catch (error) {
-        console.log("Gagal memuat data:", error);
+        // console.log("Gagal memuat data:", error);
         setInitialRoute("LoginScreen");
       } finally {
         setLoading(false);
@@ -100,8 +100,7 @@ export default function Routes() {
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}
-      >
+        }}>
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />

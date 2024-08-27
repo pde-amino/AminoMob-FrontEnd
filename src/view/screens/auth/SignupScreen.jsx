@@ -126,15 +126,17 @@ const SignupScreen = () => {
           }
         )
         .then((response) => {
-          console.log("Daftar", response.data);
           // if(response)
+          AsyncStorage.setItem("noHp", JSON.stringify(noHP));
+          const userData = {
+            response: response.data,
+            pasing: password,
+            nik: noKTP,
+          };
+          // console.log("Daftar", userData);
+          sendOTP((otp = response.data.otp));
+          navigation.navigate("OTPInputScreen", userData);
         });
-
-      await AsyncStorage.setItem("noHp", JSON.stringify(noHP));
-
-      const userData = response.data;
-      await sendOTP((otp = response.data.otp));
-      navigation.navigate("OTPInputScreen", userData);
     } catch (error) {
       Alert.alert(
         "Gagal Mendaftar",
@@ -156,15 +158,13 @@ const SignupScreen = () => {
           contentContainerStyle={{
             justifyContent: "center",
             alignContent: "center",
-          }}
-        >
+          }}>
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}
-            >
+              ]}>
               Daftar Akun
             </Text>
           </View>
@@ -235,7 +235,7 @@ const SignupScreen = () => {
               onPress={() => {
                 Alert.alert(
                   "Peringatan",
-                  "Pastikan nomor HP yang Anda input adalah nomor pribadi dan dapat dihubungi",
+                  `Pastikan nomor ${noHP} masih Aktif, dan dapat menerima SMS.`,
                   [
                     {
                       text: "Cek Lagi",
@@ -255,8 +255,7 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}
-              >
+                }}>
                 Masuk disini
               </Text>
             </TouchableOpacity>
