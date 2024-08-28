@@ -15,6 +15,7 @@ import ButtonPrimary from "../../../components/ButtonPrimary";
 import axios from "axios";
 import {
   BASE_URL,
+  CHANGE_NUMB,
   OTP_DIVISION,
   OTP_ID,
   OTP_PASS,
@@ -22,6 +23,8 @@ import {
   SEND_OTP,
 } from "../../../contex/Config";
 import * as Network from "expo-network";
+import ModalComponent from "../../../components/ModalComponent";
+import AlertFormComponent from "../../../components/AlertFormComponent";
 
 const OTPInputScreen = () => {
   const route = useRoute();
@@ -30,9 +33,101 @@ const OTPInputScreen = () => {
   const { auth, setAuth } = useContext(AuthContex);
   const [sendOTP, setSendOTP] = useState("");
   const navigation = useNavigation();
-
+  const [modal, setModal] = useState(false);
   const [counter, setCounter] = useState(30);
   const [isCounting, setIsCounting] = useState(true);
+  const [text, setText] = useState("");
+
+  const handleChangeText = (numb) => {
+    setText(numb);
+  };
+
+  const handleCloseAlert = () => {
+    setModal(false);
+  };
+
+  const submitChangeNumber = async (text) => {
+    try {
+      const change = await axios
+        .put(
+          `${CHANGE_NUMB}`,
+          {
+            user: dataUser.nik,
+            password: dataUser.pasing,
+            telp: text,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key":
+                "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+            },
+          }
+        )
+        .then(async (response) => {
+          // console.log("ResponseAPI", response.data);
+          try {
+            await axios.post(
+              `${SEND_OTP}`,
+              {
+                userid: OTP_ID,
+                password: OTP_PASS,
+                msisdn: response.data.telp,
+                message: `Kode OTP Anda ${response.data.otp}. Jangan Bagikan Kode OTP Anda, OTP Berlaku 2 Menit.`,
+                sender: OTP_SENDER,
+                division: OTP_DIVISION,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              }
+            );
+          } catch (error) {
+            Alert.alert(
+              "Error",
+              "Gagal mengirim ulang OTP. Silakan coba lagi."
+            );
+          }
+          setModal(false);
+          Alert.alert(
+            "Success",
+            "Nomor telepon berhasil diubah, cek SMS untuk melihat kode OTP."
+          );
+        })
+        .catch((error) => {
+          // console.log("ErrorAPI", error.status);
+          setModal(false);
+          Alert.alert(
+            "Gagal",
+            "Nomor telepon gagal diubah pastikan nomor benar dan berbeda dengan nomor sebelumnya atau coba beberapa saat lagi."
+          );
+        });
+      // setModal(false);
+      // Alert.alert("Success", "Nomor telepon berhasil diubah");
+    } catch (error) {
+      try {
+        if (error == "AxiosError: Request failed with status code 500") {
+          Alert.alert(
+            "Maaf",
+            "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
+          );
+          setLoading(false);
+        } else {
+          Alert.alert("Ups!", "No HP atau password Anda salah");
+          setLoading(false);
+        }
+      } catch (error) {
+        Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
+      }
+    }
+  };
+
+  const handlePasswordSubmit = (password) => {
+    // console.log("Password entered:", password);
+
+    handleCloseAlert();
+  };
 
   const handleSendOtp = async () => {
     setCounter(120);
@@ -42,7 +137,7 @@ const OTPInputScreen = () => {
       const response = await axios.post(
         `${BASE_URL}/ulangOtp`,
         {
-          telp: dataUser.telp,
+          telp: dataUser.response.telp,
         },
         {
           headers: {
@@ -66,7 +161,7 @@ const OTPInputScreen = () => {
         {
           userid: OTP_ID,
           password: OTP_PASS,
-          msisdn: dataUser.telp,
+          msisdn: dataUser.response.telp,
           message: `Kode OTP Anda ${otp}. Jangan Bagikan Kode OTP Anda, OTP Berlaku 2 Menit.`,
           sender: OTP_SENDER,
           division: OTP_DIVISION,
@@ -105,7 +200,7 @@ const OTPInputScreen = () => {
       await axios.post(
         `${BASE_URL}/otp`,
         {
-          telp: dataUser.telp,
+          telp: dataUser.response.telp,
           otp: otp,
           ip: ip,
         },
@@ -134,6 +229,12 @@ const OTPInputScreen = () => {
     }
   };
 
+  const formatPhoneNumber = (phoneNumber) => {
+    return phoneNumber.match(/.{1,4}/g).join("-");
+  };
+
+  const formattedNumber = formatPhoneNumber(dataUser.response.telp);
+
   return (
     <View style={styles.container}>
       <Text style={[GlobalStyles.h1, { marginBottom: 20 }]}>
@@ -142,14 +243,34 @@ const OTPInputScreen = () => {
       <Text
         style={[
           GlobalStyles.textBiasa,
-          { marginBottom: 20, maxWidth: "80%", alignItems: "center" },
+          {
+            marginBottom: 20,
+            maxWidth: "80%",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          },
         ]}>
-        OTP akan dikirim melalui SMS, silakan tunggu beberapa saat.
+        Kode OTP akan dikirim melalui SMS ke nomor{" "}
+        <Text style={{ letterSpacing: 1, fontWeight: "bold" }}>
+          {formattedNumber}
+        </Text>
+        , pastikan nomor aktif.
       </Text>
-
+      <Text>Jika nomor diatas salah/tidak aktif silahkan :</Text>
+      <TouchableOpacity onPress={() => setModal(true)}>
+        <Text
+          style={[
+            { marginBottom: "8%" },
+            GlobalStyles.textLink,
+            isCounting && styles.linkDisabled,
+          ]}>
+          Ganti Nomor
+        </Text>
+      </TouchableOpacity>
       <TextInput
         style={styles.input}
-        placeholder="Kode OTP"
+        placeholder="Masukan Kode OTP disini."
         value={otp}
         onChangeText={setOtp}
         keyboardType="numeric"
@@ -185,6 +306,15 @@ const OTPInputScreen = () => {
           </>
         )}
       </View>
+
+      <AlertFormComponent
+        title={"Masukan Nomor Baru"}
+        placeholder={"Nomor Baru"}
+        visible={modal}
+        onClose={handleCloseAlert}
+        onSubmit={() => submitChangeNumber(text)}
+        onChangeText={handleChangeText}
+      />
     </View>
   );
 };

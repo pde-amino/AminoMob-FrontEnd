@@ -9,77 +9,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../contex/Config";
 
 const AlertFormComponent = ({
+  title,
+  placeholder,
   visible,
   onClose,
   onSubmit,
-  user,
-  token,
-  telp,
+  onChangeText,
+  secure,
 }) => {
-  const [password, setPassword] = useState("");
+  const [text, setText] = useState("");
   const { auth } = useContext(AuthContex);
   const navigation = useNavigation();
 
-  const handleSubmit = async () => {
-    try {
-      await axios.delete(`${BASE_URL}/user/${user}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key":
-            "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          telp: telp,
-          password: password,
-        },
-      });
-      await AsyncStorage.removeItem("userInfo");
-
-      Alert.alert("Sukses", "Akun berhasil dihapus", [
-        {
-          text: "OK",
-          onPress: () => {
-            navigation.replace("Login Screen");
-          },
-        },
-      ]);
-    } catch (error) {
-      if (error.response) {
-        // Menangani error yang dikembalikan oleh server
-        const errorMessage =
-          error.response.data.messages.error || "Unknown error";
-
-        if (error.response.status === 401) {
-          // Alert.alert("Perhatian", errorMessage);
-          Alert.alert(
-            "Perhatian",
-            "Sesi Login anda telah berakhir mohon lakukan login ulang"
-          );
-          navigation.replace("Login Screen");
-        } else {
-          // Menangani error lain yang mungkin terjadi
-          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
-        }
-
-        console.log("Error Response Data:", error.response.data);
-        console.log("Error Response Status:", error.response.status);
-      } else if (error.request) {
-        // Jika tidak ada respons dari server
-        console.log("No Response Received:", error.request);
-        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
-      } else {
-        // Error lainnya
-        console.log("Error Message:", error.message);
-        Alert.alert(
-          "Peringatan",
-          `Terdapat kesalahan data mohon lakukan login ulang`
-        );
-        navigation.replace("Login Screen");
-      }
-    } finally {
-      return;
-    }
+  const handleOnChangeText = (text) => {
+    setText(text);
+    onChangeText(text); // Panggil callback untuk mengirim nilai ke parent
   };
 
   return (
@@ -90,19 +34,16 @@ const AlertFormComponent = ({
       onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Enter Password</Text>
+          <Text style={styles.modalTitle}>{title}</Text>
           <TextInput
             style={styles.input}
-            secureTextEntry
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
+            secureTextEntry={secure}
+            placeholder={placeholder}
+            value={text}
+            onChangeText={handleOnChangeText}
           />
           <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              onPress={handleSubmit}
-              style={styles.button}>
+            <Button mode="contained" onPress={onSubmit} style={styles.button}>
               Kirim
             </Button>
             <Button

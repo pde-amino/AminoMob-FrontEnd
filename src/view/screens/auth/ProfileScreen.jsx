@@ -46,9 +46,66 @@ const ProfileScreen = () => {
     setAlertVisible(false);
   };
 
-  const handlePasswordSubmit = (password) => {
-    // console.log("Password entered:", password);
-    handleCloseAlert();
+  const handleSubmit = async () => {
+    try {
+      await axios.delete(`${BASE_URL}/user/${user}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key":
+            "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          telp: telp,
+          password: password,
+        },
+      });
+      await AsyncStorage.removeItem("userInfo");
+
+      Alert.alert("Sukses", "Akun berhasil dihapus", [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.replace("Login Screen");
+          },
+        },
+      ]);
+    } catch (error) {
+      if (error.response) {
+        // Menangani error yang dikembalikan oleh server
+        const errorMessage =
+          error.response.data.messages.error || "Unknown error";
+
+        if (error.response.status === 401) {
+          // Alert.alert("Perhatian", errorMessage);
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
+        } else {
+          // Menangani error lain yang mungkin terjadi
+          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+        }
+
+        // console.log("Error Response Data:", error.response.data);
+        // console.log("Error Response Status:", error.response.status);
+      } else if (error.request) {
+        // Jika tidak ada respons dari server
+        // console.log("No Response Received:", error.request);
+        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+      } else {
+        // Error lainnya
+        // console.log("Error Message:", error.message);
+        Alert.alert(
+          "Peringatan",
+          `Terdapat kesalahan data mohon lakukan login ulang`
+        );
+        navigation.replace("Login Screen");
+      }
+    } finally {
+      return;
+    }
   };
 
   // const fetchData = async () => {
@@ -214,12 +271,12 @@ const ProfileScreen = () => {
             />
           )}
           <AlertFormComponent
+            title={"Masukan Password"}
+            placeholder={"Password"}
             visible={isAlertVisible}
             onClose={handleCloseAlert}
-            onSubmit={handlePasswordSubmit}
-            user={auth.id}
-            telp={auth.hp}
-            token={auth.token}
+            onSubmit={handleSubmit}
+            secure={true}
           />
         </ScrollView>
         {/* )} */}

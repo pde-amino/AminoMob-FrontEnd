@@ -48,7 +48,7 @@ export default function ListPasien() {
     setBtmtambah(false);
   };
 
-  console.log("ListPasien", auth);
+  // console.log("ListPasien", auth);
   const fetchData = async () => {
     try {
       const response = await axios
@@ -78,18 +78,19 @@ export default function ListPasien() {
           navigation.replace("Login Screen");
         } else {
           // Menangani error lain yang mungkin terjadi
-          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+          // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+          return;
         }
 
-        console.log("Error Response Data:", error.response.data);
-        console.log("Error Response Status:", error.response.status);
+        // console.log("Error Response Data:", error.response.data);
+        // console.log("Error Response Status:", error.response.status);
       } else if (error.request) {
         // Jika tidak ada respons dari server
-        console.log("No Response Received:", error.request);
+        // console.log("No Response Received:", error.request);
         Alert.alert("Peringatan", "Silakan coba lagi nanti.");
       } else {
         // Error lainnya
-        console.log("Error Message:", error.message);
+        // console.log("Error Message:", error.message);
         Alert.alert(
           "Peringatan",
           `Terdapat kesalahan data mohon lakukan login ulang`
