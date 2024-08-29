@@ -206,6 +206,7 @@ export const TambahPasienLama = () => {
               </Pressable>
             )}
           </View>
+
           <View style={styles.containerDrop}>
             <Dropdown
               style={[
