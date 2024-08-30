@@ -7,11 +7,11 @@ const WARNA = { primary: "#0A78E2", white: "#fff", red: "#F01F1F" };
 const { width } = Dimensions.get("window");
 
 const validateInput = (input, type) => {
-  const SpecialChar = /[!@#$%^&*()_=+\-\[\]{};':"\\|,.<>\/?]/.test(input);
+  const SpecialChar = /[:;|\\\$%\^&\*\(\)=\+"'\{\}\[\]\/\?\><#]/.test(input);
   const isNumber = /^[0-9]+$/.test(input);
 
   if (type === "password") {
-    return SpecialChar ? "Gak boleh pakai karakter khusus" : "";
+    return SpecialChar ? "Gak boleh pakai karakter tersebut" : "";
   } else if (type === "nama") {
     return isNumber ? "Mohon masukkan nama anda" : "";
   } else if (type === "nomor") {

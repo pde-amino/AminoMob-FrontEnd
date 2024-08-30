@@ -28,9 +28,9 @@ export default function SplashScreen() {
   const LoginOfLogout = () => {
     const kondisi = AsyncStorage.getItem("userInfo");
     if (!kondisi) {
-      return navigation.navigate("Home Screen");
+      return navigation.replace("Home Screen");
     } else {
-      return navigation.navigate("Login Screen");
+      return navigation.replace("Login Screen");
     }
   };
 
