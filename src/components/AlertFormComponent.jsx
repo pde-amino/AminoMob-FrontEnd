@@ -1,12 +1,7 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Modal, Alert } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, TextInput, StyleSheet, Modal } from "react-native";
 import { Button } from "react-native-paper";
 import { AuthContex } from "../contex/AuthProvider";
-import { useContext } from "react";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from "../contex/Config";
 
 const AlertFormComponent = ({
   title,
@@ -15,20 +10,27 @@ const AlertFormComponent = ({
   onClose,
   onSubmit,
   onChangeText,
-  secure,
+  secure = false, // Default value added for secure prop
 }) => {
   const [text, setText] = useState("");
   const { auth } = useContext(AuthContex);
-  const navigation = useNavigation();
 
   const handleOnChangeText = (text) => {
     setText(text);
-    onChangeText(text); // Panggil callback untuk mengirim nilai ke parent
+    if (onChangeText) {
+      onChangeText(text); // Panggil callback jika disediakan oleh parent
+    }
+  };
+
+  const handleSubmit = () => {
+    if (onSubmit) {
+      onSubmit(text); // Kirim teks ke parent saat submit
+    }
   };
 
   return (
     <Modal
-      transparent={true}
+      transparent
       animationType="slide"
       visible={visible}
       onRequestClose={onClose}>
@@ -43,7 +45,10 @@ const AlertFormComponent = ({
             onChangeText={handleOnChangeText}
           />
           <View style={styles.buttonContainer}>
-            <Button mode="contained" onPress={onSubmit} style={styles.button}>
+            <Button
+              mode="contained"
+              onPress={handleSubmit}
+              style={styles.button}>
               Kirim
             </Button>
             <Button
@@ -60,28 +65,7 @@ const AlertFormComponent = ({
   );
 };
 
-export default AlertFormComponent;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-  },
-  openButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 15,
-    backgroundColor: "#0A78E2",
-    borderRadius: 5,
-  },
-  buttonText: {
-    marginLeft: 10,
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
@@ -99,6 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
   },
   input: {
     width: "100%",
@@ -116,9 +101,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 5,
     backgroundColor: "#0A78E2",
+    borderRadius: 5,
   },
   button1: {
     flex: 1,
     marginHorizontal: 5,
+    borderRadius: 5,
   },
 });
+
+export default AlertFormComponent;

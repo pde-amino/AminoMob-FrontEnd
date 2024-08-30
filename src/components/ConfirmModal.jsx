@@ -15,13 +15,15 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
   cancel,
-  onData,
   message,
   submessage,
-  confirmButtonText,
-  cancelButtonText,
+  confirmButtonText = "Confirm",
+  cancelButtonText = "Cancel",
   list,
   listData,
+  onData,
+  children, // Tambahkan children sebagai prop
+  confirm,
 }) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -35,51 +37,52 @@ const ConfirmModal = ({
       transparent={true}
       visible={visible}
       onRequestClose={cancel}>
-      {list ? (
-        <TouchableWithoutFeedback onPress={cancel}>
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.title}>{message}</Text>
+      <TouchableWithoutFeedback onPress={cancel}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.title}>{message}</Text>
+            {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
+
+            {list ? (
               <ScrollView>
                 {listData &&
                   listData.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => onData(item)}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        handleItemPress(item);
+                        onData(item);
+                      }}>
                       <Text>{item.label}</Text>
                       <Text>{item.value}</Text>
                       <Text>{item.jam_layanan}</Text>
                     </TouchableOpacity>
                   ))}
               </ScrollView>
+            ) : (
+              // Render children jika disediakan
+              <View style={styles.contentContainer}>{children}</View>
+            )}
+
+            <View style={styles.buttonContainer}>
+              <Button
+                mode="contained"
+                style={styles.btnYes}
+                labelStyle={{ color: "white" }}
+                onPress={onConfirm}>
+                {confirmButtonText}
+              </Button>
+              <Button
+                mode="outlined"
+                labelStyle={{ color: "#0A78E2" }}
+                style={styles.btnNo}
+                onPress={onCancel}>
+                {cancelButtonText}
+              </Button>
             </View>
           </View>
-        </TouchableWithoutFeedback>
-      ) : (
-        <TouchableWithoutFeedback onPress={cancel}>
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.title}>{message}</Text>
-              <Text style={styles.subtitle}>{submessage}</Text>
-              <View style={styles.buttonContainer}>
-                <Button
-                  mode="contained"
-                  style={styles.btnYes}
-                  labelStyle={{ color: "white" }}
-                  onPress={onConfirm} // Memanggil handleConfirmPress saat tombol ditekan
-                >
-                  {confirmButtonText}
-                </Button>
-                <Button
-                  mode="outlined"
-                  labelStyle={{ color: "#0A78E2" }}
-                  style={styles.btnNo}
-                  onPress={onCancel}>
-                  {cancelButtonText}
-                </Button>
-              </View>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      )}
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -109,6 +112,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 20,
     textAlign: "center",
+  },
+  contentContainer: {
+    marginBottom: 20, // Spacing before the buttons
   },
   buttonContainer: {
     flexDirection: "row-reverse",

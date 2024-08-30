@@ -44,7 +44,7 @@ export default GlobalStyles = StyleSheet.create({
   },
   safeAreaStyle: {
     flex: 1,
-    backgroundColor: WARNA.primary,
+    // backgroundColor: WARNA.primary,
     padding: Platform.OS === "android" ? StatusBar.currentHeight : 0, // Menghindari statusbar android
   },
   headerHomeContainer: {

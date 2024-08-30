@@ -8,9 +8,12 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
+  Button,
+  Platform,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Avatar, Divider, Icon } from "react-native-paper";
+import { Avatar, Divider, Icon, Modal, Portal } from "react-native-paper";
 import HeaderComponent from "../../../components/HeaderComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useContext } from "react";
@@ -27,6 +30,9 @@ import {
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import AlertFormComponent from "../../../components/AlertFormComponent";
+import ModalComponent from "../../../components/ModalComponent";
+import CardButtonComponent from "../../../components/CardButtonComponent";
+import { StatusBar } from "expo-status-bar";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
@@ -37,26 +43,31 @@ const ProfileScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAlertVisible, setAlertVisible] = useState(false);
-
-  const handleOpenAlert = () => {
-    setAlertVisible(true);
-  };
+  const [manages, setManages] = useState(false);
+  const [password, setPassword] = useState(false);
+  const WARNA = { primary: "#0A78E2", white: "#fff" };
+  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   const handleCloseAlert = () => {
     setAlertVisible(false);
   };
 
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
   const handleSubmit = async () => {
     try {
-      await axios.delete(`${BASE_URL}/user/${user}`, {
+      console.log(auth);
+      await axios.delete(`${BASE_URL}/user/${auth.id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-api-key":
             "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
         data: {
-          telp: telp,
+          telp: auth.hp,
           password: password,
         },
       });
@@ -93,7 +104,7 @@ const ProfileScreen = () => {
       } else if (error.request) {
         // Jika tidak ada respons dari server
         // console.log("No Response Received:", error.request);
-        Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+        Alert.alert("Peringatan", "Silahkan coba lagi nanti.");
       } else {
         // Error lainnya
         // console.log("Error Message:", error.message);
@@ -108,35 +119,6 @@ const ProfileScreen = () => {
     }
   };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/cariId/${auth.id}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "x-api-key":
-  //           "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-  //         Authorization: `Bearer ${auth.token}`,
-  //       },
-  //     });
-  //     setDataUser(response.data.user);
-  //   } catch (error) {
-  //     Alert.alert(
-  //       "Maaf",
-  //       "Terjadi kesalahan saat mengambil data, silakan silahkan Login ulang"
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //     setRefreshing(false);
-  //   }
-  // };
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setLoading(true);
-  //     // fetchData();
-  //   }, [])
-  // );
-
   const HapusAkun = () => {
     Alert.alert("Hapus Akun", "Apakah Anda yakin ingin menghapus akun?", [
       {
@@ -146,7 +128,7 @@ const ProfileScreen = () => {
       {
         text: "Ya",
         onPress: () => {
-          handleOpenAlert();
+          setAlertVisible(true);
         },
       },
     ]);
@@ -180,7 +162,11 @@ const ProfileScreen = () => {
   // };
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <View style={{ height: hp(10) }}>
         <HeaderComponent title="Profil" />
       </View>
@@ -206,6 +192,10 @@ const ProfileScreen = () => {
             <TouchableOpacity onPress={() => setDellAccount(true)}>
               <Icon source={"cog-outline"} color="gray" size={24} />
             </TouchableOpacity>
+            {/* <TouchableOpacity
+              onPress={() => navigation.navigate("Edit Profil", auth)}>
+              <Text>Tess</Text>
+            </TouchableOpacity> */}
           </View>
 
           {auth ? (
@@ -260,15 +250,51 @@ const ProfileScreen = () => {
             />
           )}
           {dellAccount && (
-            <ConfirmModal
-              visible={dellAccount}
-              message={"Hapus Akun"}
-              submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
-              onCancel={() => setDellAccount(false)}
-              onConfirm={HapusAkun}
-              confirmButtonText={"Ya"}
-              cancelButtonText={"Tidak"}
-            />
+            <Portal>
+              <Modal
+                visible={dellAccount}
+                onDismiss={() => setDellAccount(false)}
+                contentContainerStyle={containerStyle}>
+                <View>
+                  <Text style={{ marginBottom: 20 }}>Pengaturan Akun</Text>
+                  <ButtonPrimary
+                    title={"Ubah Data"}
+                    onPress={() => {
+                      navigation.navigate("Edit Profil", auth),
+                        setDellAccount(false);
+                    }}
+                  />
+                  <ButtonSecondary
+                    title={"Hapus Akun"}
+                    onPress={() => HapusAkun()}
+                  />
+                </View>
+              </Modal>
+            </Portal>
+
+            // <ConfirmModal
+            //   visible={dellAccount}
+            //   message={"Pengaturan Akun"}
+            //   // submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
+            //   onCancel={() => setDellAccount(false)}
+            //   onConfirm={HapusAkun}
+            //   confirmButtonText={"Ya"}
+            //   cancelButtonText={"Tidak"}>
+            //   <View>
+            //     <ButtonPrimary title={"Atur Akun"} />
+            //     <ButtonSecondary title={"Hapus Akun"} />
+            //   </View>
+            // </ConfirmModal>
+
+            // <ConfirmModal
+            //   visible={dellAccount}
+            //   message={"Hapus Akun"}
+            //   submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
+            //   onCancel={() => setDellAccount(false)}
+            //   onConfirm={HapusAkun}
+            //   confirmButtonText={"Ya"}
+            //   cancelButtonText={"Tidak"}
+            // />
           )}
           <AlertFormComponent
             title={"Masukan Password"}
@@ -277,7 +303,16 @@ const ProfileScreen = () => {
             onClose={handleCloseAlert}
             onSubmit={handleSubmit}
             secure={true}
+            onChangeText={handlePasswordChange}
           />
+          {/* <AlertFormComponent
+            title={"Masukan Password"}
+            placeholder={"Password"}
+            visible={manages}
+            onClose={() => setManages(false)}
+            onSubmit={""}
+            secure={true}
+          /> */}
         </ScrollView>
         {/* )} */}
       </View>

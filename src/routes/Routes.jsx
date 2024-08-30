@@ -42,6 +42,8 @@ import { ActivityIndicator, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { AuthContex } from "../contex/AuthProvider";
 import GetUserData from "../view/screens/auth/GetUserData";
+import ScreenEditProfile from "../view/screens/auth/ScreenEditProfile";
+import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -102,6 +104,11 @@ export default function Routes() {
           headerShown: false, // Menyembunyikan header secara default
         }}>
         <Stack.Screen name="Home Screen" component={HomeTabs} />
+        <Stack.Screen
+          name="ChangePasswordScreen"
+          component={ChangePasswordForm}
+        />
+        <Stack.Screen name="Edit Profiles" component={ScreenEditProfile} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />

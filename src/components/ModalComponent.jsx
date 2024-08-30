@@ -1,44 +1,28 @@
-import React from "react";
-import { Modal, Portal, PaperProvider, Button } from "react-native-paper";
-import { View, Text, StyleSheet } from "react-native";
+import * as React from "react";
+import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
 
-const ModalComponent = ({
-  visible,
-  onDismiss,
-  contentContainerStyle,
-  children,
-  showButtonLabel = "Close",
-  showButtonStyle,
-}) => {
-  const containerStyle = {
-    backgroundColor: "white",
-    padding: 20,
-    ...contentContainerStyle,
-  };
+const ModalComponent = ({ vis }) => {
+  const [visible, setVisible] = React.useState(vis);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   return (
     <PaperProvider>
       <Portal>
         <Modal
           visible={visible}
-          onDismiss={onDismiss}
+          onDismiss={hideModal}
           contentContainerStyle={containerStyle}>
-          {children}
+          <Text>Example Modal. Click outside this area to dismiss.</Text>
         </Modal>
       </Portal>
-      <Button style={{ marginTop: 30, ...showButtonStyle }} onPress={onDismiss}>
-        {showButtonLabel}
+      <Button style={{ marginTop: 30 }} onPress={showModal}>
+        Show
       </Button>
     </PaperProvider>
   );
 };
 
 export default ModalComponent;
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-  },
-});

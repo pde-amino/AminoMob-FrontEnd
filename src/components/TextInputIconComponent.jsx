@@ -26,6 +26,7 @@ const validateInput = (input, type) => {
 };
 
 const TextInputIconComponent = ({
+  disable,
   label = "",
   placeholder = "",
   type,
@@ -73,6 +74,7 @@ const TextInputIconComponent = ({
         onChangeText={handleChange}
         secureTextEntry={secureTextEntry}
         inputMode={inputMode}
+        disabled={disable}
       />
       {password ? (
         <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>
