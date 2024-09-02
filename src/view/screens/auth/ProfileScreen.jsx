@@ -95,8 +95,11 @@ const ProfileScreen = () => {
           );
           navigation.replace("Login Screen");
         } else {
-          // Menangani error lain yang mungkin terjadi
-          Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
         }
 
         // console.log("Error Response Data:", error.response.data);
@@ -186,12 +189,16 @@ const ProfileScreen = () => {
               size={80}
               source={require("../../../../assets/avatar.png")}
             />
-            <Text style={GlobalStyles.h2}>
-              {auth.nama ? auth.nama : "Hai, Apakah kamu sudah login?"}
-            </Text>
-            <TouchableOpacity onPress={() => setDellAccount(true)}>
-              <Icon source={"cog-outline"} color="gray" size={24} />
-            </TouchableOpacity>
+            {auth.nama ? (
+              <>
+                <Text style={GlobalStyles.h2}>{auth.nama}</Text>
+                <TouchableOpacity onPress={() => setDellAccount(true)}>
+                  <Icon source={"cog-outline"} color="gray" size={24} />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <Text style={GlobalStyles.h2}>Hai, Anda belum Login</Text>
+            )}
             {/* <TouchableOpacity
               onPress={() => navigation.navigate("Edit Profil", auth)}>
               <Text>Tess</Text>
@@ -209,9 +216,7 @@ const ProfileScreen = () => {
                 <Text style={GlobalStyles.h4}>{auth.tgl_lahir}</Text>
               </View> */}
             </View>
-          ) : (
-            <Text>Loading...</Text>
-          )}
+          ) : null}
 
           <View style={{ gap: 12 }}>
             <Divider />
@@ -227,14 +232,25 @@ const ProfileScreen = () => {
               </View>
             ) : null}
 
-            <TouchableOpacity
-              style={styles.containerMenu}
-              onPress={() => setConfirmLogout(true)}>
-              <Icon source={"logout"} color="#430D09" size={24} />
-              <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
-                Logout
-              </Text>
-            </TouchableOpacity>
+            {auth ? (
+              <TouchableOpacity
+                style={styles.containerMenu}
+                onPress={() => setConfirmLogout(true)}>
+                <Icon source={"logout"} color="#430D09" size={24} />
+                <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
+                  Logout
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.containerMenu}
+                onPress={() => navigation.replace("Login Screen")}>
+                <Icon source={"login"} color="#0A78E2" size={24} />
+                <Text style={[GlobalStyles.textBold, { color: "#0A78E2" }]}>
+                  Login Sekarang
+                </Text>
+              </TouchableOpacity>
+            )}
 
             <Divider />
           </View>

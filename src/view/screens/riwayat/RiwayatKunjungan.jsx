@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -24,6 +25,7 @@ import { Image } from "react-native";
 import ButtonSecondary from "../../../components/ButtonSecondary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -57,8 +59,8 @@ export default function RiwayatKunjungan() {
     } catch (error) {
       if (error.response) {
         // Menangani error yang dikembalikan oleh server
-        const errorMessage =
-          error.response.data.messages.error || "Unknown error";
+        // const errorMessage =
+        //   error.response.data.messages.error || "Unknown error";
 
         if (error.response.status === 401) {
           // Alert.alert("Perhatian", errorMessage);
@@ -68,9 +70,15 @@ export default function RiwayatKunjungan() {
           );
           navigation.replace("Login Screen");
         } else {
-          // Menangani error lain yang mungkin terjadi
-          // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
-          return;
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
         }
 
         // console.log("Error Response Data:", error.response.data);
@@ -188,7 +196,11 @@ export default function RiwayatKunjungan() {
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { padding: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <View style={{ flex: 1.4 }}>
         <HeaderComponent title={"Riwayat Periksa"} />
       </View>

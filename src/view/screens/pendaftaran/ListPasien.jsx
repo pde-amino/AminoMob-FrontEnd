@@ -66,8 +66,8 @@ export default function ListPasien() {
     } catch (error) {
       if (error.response) {
         // Menangani error yang dikembalikan oleh server
-        const errorMessage =
-          error.response.data.messages.error || "Unknown error";
+        // const errorMessage =
+        //   error.response.data.messages.error || "Unknown error";
 
         if (error.response.status === 401) {
           // Alert.alert("Perhatian", errorMessage);
@@ -79,7 +79,11 @@ export default function ListPasien() {
         } else {
           // Menangani error lain yang mungkin terjadi
           // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
-          return;
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
         }
 
         // console.log("Error Response Data:", error.response.data);
@@ -155,8 +159,7 @@ export default function ListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -173,8 +176,7 @@ export default function ListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data pasien, silakan tambah data atau refresh
               </Text>
             </View>

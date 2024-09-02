@@ -76,8 +76,8 @@ export default function InfoListPasien() {
     } catch (error) {
       if (error.response) {
         // Menangani error yang dikembalikan oleh server
-        const errorMessage =
-          error.response.data.messages.error || "Unknown error";
+        // const errorMessage =
+        //   error.response.data.messages.error || "Unknown error";
 
         if (error.response.status === 401) {
           // Alert.alert("Perhatian", errorMessage);
@@ -89,7 +89,11 @@ export default function InfoListPasien() {
         } else {
           // Menangani error lain yang mungkin terjadi
           // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
-          return;
+          Alert.alert(
+            "Perhatian",
+            "Sesi Login anda telah berakhir mohon lakukan login ulang"
+          );
+          navigation.replace("Login Screen");
         }
 
         // console.log("Error Response Data:", error.response.data);

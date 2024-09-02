@@ -109,17 +109,49 @@ const LoginScreen = () => {
             Alert.alert("Peringatan", "Anda telah melebihi batas percobaan.");
           } else if (error.response && error.response.status === 401) {
             // Jika error status 401 (Unauthorized)
-            Alert.alert(
-              "Maaf",
-              `${
-                error.response
-                  ? "Sepertinya password atau nomor HP salah"
-                  : error.message
-              }`
-            );
+
+            // console.log(error.response.data.messages.error);
+            if (error.response.data.messages.error === "User belum aktif") {
+              Alert.alert(
+                "Upss!",
+                "Status User Anda Belum Aktif, Mohon Ulangi Pendaftaran setelah Jam 12 Malam. Pastikan Anda memasukan kode OTP yang dikirim melalui SMS untuk mengaktifkan Akun.",
+                [
+                  {
+                    text: "Mengerti",
+                  },
+                  // {
+                  //   text: "Masukan Kode Otp",
+                  //   onPress: () =>
+                  //     navigation.navigate("OTPInputScreen"),
+                  // },
+                ],
+                {
+                  cancelable: true,
+                }
+              );
+            } else if (
+              error.response.data.messages.error === "Pengguna tidak ditemukan"
+            ) {
+              Alert.alert("Upss!", "Pengguna tidak ditemukan");
+            } else if (
+              error.response.data.messages.error === "Kata Sandi salah"
+            ) {
+              Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
+            } else {
+              Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
+            }
+
+            // Alert.alert(
+            //   "Maaf",
+            //   `${
+            //     error.response
+            //       ? "Kata Sandi atau Nomor salah"
+            //       : error.message
+            //   }`
+            // );
           } else {
             // Error umum lainnya
-            Alert.alert("Maaf", "Sepertinya password atau nomor HP salah");
+            Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
           }
 
           // console.log(
@@ -131,7 +163,7 @@ const LoginScreen = () => {
       try {
         if (error == "AxiosError: Request failed with status code 500") {
           Alert.alert(
-            "Maaf",
+            "Upss!",
             "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
           );
           setLoading(false);

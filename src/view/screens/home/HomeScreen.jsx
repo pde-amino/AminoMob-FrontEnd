@@ -238,7 +238,7 @@ const HomeScreen = () => {
         </Svg>
       </View>
 
-      <View style={{ alignContent: "center", marginTop: wp(8) }}>
+      <View style={{ alignContent: "center" }}>
         <FlatList
           data={Menus}
           ListHeaderComponent={ListHeaderComponent}
