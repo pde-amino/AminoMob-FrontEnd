@@ -41,8 +41,6 @@ const ConfirmModal = ({
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text style={styles.title}>{message}</Text>
-            {submessage && <Text style={styles.subtitle}>{submessage}</Text>}
-
             {list ? (
               <ScrollView>
                 {listData &&
@@ -61,25 +59,30 @@ const ConfirmModal = ({
               </ScrollView>
             ) : (
               // Render children jika disediakan
-              <View style={styles.contentContainer}>{children}</View>
-            )}
+              <>
+                {submessage && (
+                  <Text style={styles.subtitle}>{submessage}</Text>
+                )}
 
-            <View style={styles.buttonContainer}>
-              <Button
-                mode="contained"
-                style={styles.btnYes}
-                labelStyle={{ color: "white" }}
-                onPress={onConfirm}>
-                {confirmButtonText}
-              </Button>
-              <Button
-                mode="outlined"
-                labelStyle={{ color: "#0A78E2" }}
-                style={styles.btnNo}
-                onPress={onCancel}>
-                {cancelButtonText}
-              </Button>
-            </View>
+                <View style={styles.contentContainer}>{children}</View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    mode="contained"
+                    style={styles.btnYes}
+                    labelStyle={{ color: "white" }}
+                    onPress={onConfirm}>
+                    {confirmButtonText}
+                  </Button>
+                  <Button
+                    mode="outlined"
+                    labelStyle={{ color: "#0A78E2" }}
+                    style={styles.btnNo}
+                    onPress={onCancel}>
+                    {cancelButtonText}
+                  </Button>
+                </View>
+              </>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>

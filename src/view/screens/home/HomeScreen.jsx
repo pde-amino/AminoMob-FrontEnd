@@ -11,6 +11,7 @@ import {
   Alert,
   StyleSheet,
   StatusBar,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -223,12 +224,16 @@ const HomeScreen = () => {
   );
 
   return (
-    <View style={GlobalStyles.utama}>
-      <StatusBar
+    <View
+      style={[
+        GlobalStyles.utama,
+        { padding: Platform === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
+      {/* <StatusBar
         hidden={false}
         barStyle="light-content"
         backgroundColor={"black"}
-      />
+      /> */}
       <View style={styles.containerSVG}>
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
