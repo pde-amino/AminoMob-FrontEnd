@@ -191,13 +191,15 @@ const LoginScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, paddingBottom: 40 },
-              ]}>
+              ]}
+            >
               Masuk
             </Text>
           </View>
@@ -206,7 +208,7 @@ const LoginScreen = () => {
               label="Nomor HP"
               placeholder="Masukkan No HP Anda"
               value={username}
-              type={"username"}
+              type={"nomor"}
               inputMode={"numeric"}
               onChangeText={handleUsernameChange}
             />
@@ -214,10 +216,24 @@ const LoginScreen = () => {
             <TextInputIconComponent
               label="Kata Sandi"
               placeholder="Masukkan kata sandi di sini"
+              type={"password"}
               password={true}
               value={password}
               onChangeText={handlePasswordChange}
             />
+
+            <View
+              style={{
+                alignItems: "flex-end",
+                width: "100%",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => navigation.navigate("LupaPassword")}
+              >
+                <Text style={GlobalStyles.textLink}>Lupa kata sandi</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {loading ? (
@@ -236,7 +252,7 @@ const LoginScreen = () => {
           <View style={{ flexDirection: "row" }}>
             <Text style={GlobalStyles.textBiasa}>Belum punya akun?</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-              <Text style={GlobalStyles.textLink}> Daftar Akun Sekarang</Text>
+              <Text style={GlobalStyles.textLink}> Daftar akun sekarang</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
