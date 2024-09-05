@@ -161,6 +161,7 @@ const SignupScreen = () => {
       />
       <View style={GlobalStyles.Content}>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
             justifyContent: "center",

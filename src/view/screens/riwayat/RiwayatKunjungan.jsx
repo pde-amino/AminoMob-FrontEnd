@@ -63,22 +63,19 @@ export default function RiwayatKunjungan() {
         //   error.response.data.messages.error || "Unknown error";
 
         if (error.response.status === 401) {
-          // Alert.alert("Perhatian", errorMessage);
+          console.error("log1", error.response);
           Alert.alert(
             "Perhatian",
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
           );
-          navigation.replace("Login Screen");
+          // navigation.replace("Login Screen");
         } else {
+          console.error("log2", error.response);
           Alert.alert(
             "Perhatian",
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
           );
-          Alert.alert(
-            "Perhatian",
-            "Sesi Login anda telah berakhir mohon lakukan login ulang"
-          );
-          navigation.replace("Login Screen");
+          // navigation.replace("Login Screen");
         }
 
         // console.log("Error Response Data:", error.response.data);
@@ -87,6 +84,7 @@ export default function RiwayatKunjungan() {
         // Jika tidak ada respons dari server
         // console.log("No Response Received:", error.request);
         Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+        console.error("log3", error.response);
       } else {
         // Error lainnya
         // console.log("Error Message:", error.message);
@@ -94,7 +92,8 @@ export default function RiwayatKunjungan() {
           "Peringatan",
           `Terdapat kesalahan data mohon lakukan login ulang`
         );
-        navigation.replace("Login Screen");
+        console.error("log4", error.response);
+        // navigation.replace("Login Screen");
       }
     } finally {
       setLoading(false);
@@ -153,7 +152,8 @@ export default function RiwayatKunjungan() {
             <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
             <TouchableOpacity
               onPress={onPressBatal}
-              style={styles.containerButton}>
+              style={styles.containerButton}
+            >
               <Text style={[GlobalStyles.h4, { color: "#CA0101" }]}>
                 Batalkan
               </Text>
@@ -200,7 +200,8 @@ export default function RiwayatKunjungan() {
       style={[
         GlobalStyles.utama,
         { padding: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <View style={{ flex: 1.4 }}>
         <HeaderComponent title={"Riwayat Periksa"} />
       </View>
@@ -222,7 +223,8 @@ export default function RiwayatKunjungan() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            }
+          >
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -239,7 +241,8 @@ export default function RiwayatKunjungan() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}>
+                ]}
+              >
                 Belum ada riwayat periksa, silakan mendaftar
               </Text>
             </View>
@@ -256,9 +259,11 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}>
+          }}
+        >
           <Dialog.Title
-            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>

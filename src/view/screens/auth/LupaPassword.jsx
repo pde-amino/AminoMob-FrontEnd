@@ -216,7 +216,19 @@ const LupaPassword = () => {
   //   setmodalPass(true);
   // };
 
-  const maskedUsername = `${username.slice(0, 3)}******${username.slice(-4)}`;
+  const maskedUsername = (username) => {
+    if (username.length < 7) {
+      // Jika kurang dari 7 karakter, kembalikan username apa adanya
+      return username;
+    }
+
+    // Ambil 3 karakter pertama dan 4 karakter terakhir, sembunyikan sisanya
+    const firstPart = username.slice(0, 3);
+    const lastPart = username.slice(-4);
+    const hiddenPart = "*".repeat(username.length - 7); // Sembunyikan sisanya dengan *
+
+    return `${firstPart}${hiddenPart}${lastPart}`;
+  };
 
   return (
     <View style={GlobalStyles.utama}>
@@ -291,7 +303,7 @@ const LupaPassword = () => {
                   OTP akan dikirim lewat SMS ke nomor
                 </Text>
                 <Text style={GlobalStyles.textChipSucces}>
-                  {maskedUsername}
+                  {maskedUsername(username)}
                 </Text>
               </View>
               <TextInput
@@ -338,7 +350,11 @@ const LupaPassword = () => {
               {confNewPassErr ? (
                 <Text style={styles.errorText}>{confNewPassErr}</Text>
               ) : null}
-              <ButtonPrimary title="Ganti" onPress={gantiPass} />
+              <ButtonPrimary
+                title="Ganti"
+                disabled={!!newPassError || !!confNewPassErr}
+                onPress={gantiPass}
+              />
             </View>
           </Modal>
         </Portal>
