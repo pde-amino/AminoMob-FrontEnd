@@ -578,7 +578,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
         ) : (
           <>
             <View style={styles.list}>
-              <Text>Poli Tujuan</Text>
+              <Text>Poliklinik Tujuan</Text>
               <View style={styles.itemList}>
                 <Text style={GlobalStyles.h4}>{value2}</Text>
                 <Button

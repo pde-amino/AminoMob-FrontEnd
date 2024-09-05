@@ -44,6 +44,7 @@ import { AuthContex } from "../contex/AuthProvider";
 import GetUserData from "../view/screens/auth/GetUserData";
 import ScreenEditProfile from "../view/screens/auth/ScreenEditProfile";
 import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
+import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
 import TabHome from "../view/screens/Verifikasi/TabHome";
 
@@ -121,6 +122,7 @@ export default function Routes() {
         <Stack.Screen name="Klinik Umum" component={KlinikUmum} />
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
+        <Stack.Screen name="ChatAI" component={ChatAI} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="LupaPassword" component={LupaPassword} />
         <Stack.Screen name="Profile" component={ProfileScreen} />

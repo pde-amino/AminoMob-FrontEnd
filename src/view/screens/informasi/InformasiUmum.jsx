@@ -1,10 +1,18 @@
 import React from "react";
-import { View, FlatList, RefreshControl, Linking, Alert } from "react-native";
+import {
+  View,
+  FlatList,
+  RefreshControl,
+  Linking,
+  Alert,
+  Platform,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "../../../components/HeaderComponent";
+import { StatusBar } from "expo-status-bar";
 
 export default function InformasiUmum() {
   const navigation = useNavigation();
@@ -54,35 +62,42 @@ export default function InformasiUmum() {
   ];
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1.4 }}>
-        <HeaderComponent
-          title="Informasi RS"
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-      <View style={{ flex: 10, alignItems: "center" }}>
-        <FlatList
-          // contentContainerStyle={{ flexGrow: 1 }}
-          // refreshControl={
-          //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
-          // }
-          horizontal={false}
-          numColumns={3}
-          data={Menus}
-          renderItem={({ item }) => (
-            <MenuItemComponent
-              onPress={item.to}
-              data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
-              icon={item.icon}
-              title={item.nm_poli}
-              colorIcon={item.color}
-            />
-          )}
-          keyExtractor={(item) => item.kd_poli}
-        />
-      </View>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        {
+          padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          alignItems: "center",
+          gap: 4,
+        },
+      ]}>
+      {/* <View style={{ flex: 1.4 }}> */}
+      <HeaderComponent
+        title="Informasi RS"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
+      {/* </View> */}
+
+      <FlatList
+        // contentContainerStyle={{ flexGrow: 1 }}
+        // refreshControl={
+        //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
+        // }
+        horizontal={false}
+        numColumns={3}
+        data={Menus}
+        renderItem={({ item }) => (
+          <MenuItemComponent
+            onPress={item.to}
+            data={{ clinicId: item.kd_poli, nameClinic: item.nm_poli }}
+            icon={item.icon}
+            title={item.nm_poli}
+            colorIcon={item.color}
+          />
+        )}
+        keyExtractor={(item) => item.kd_poli}
+      />
     </SafeAreaView>
   );
 }

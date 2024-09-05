@@ -233,14 +233,26 @@ const ProfileScreen = () => {
             ) : null}
 
             {auth ? (
-              <TouchableOpacity
-                style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}>
-                <Icon source={"logout"} color="#430D09" size={24} />
-                <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
-                  Logout
-                </Text>
-              </TouchableOpacity>
+              <>
+                <View style={{ gap: 12 }}>
+                  <TouchableOpacity
+                    style={styles.containerMenu}
+                    onPress={() => navigation.replace("ChatAI")}>
+                    <Icon source="chat-processing-outline" size={24} />
+                    <Text style={GlobalStyles.textBold}>Chat Otomatis</Text>
+                  </TouchableOpacity>
+                  <Divider />
+                </View>
+
+                <TouchableOpacity
+                  style={styles.containerMenu}
+                  onPress={() => setConfirmLogout(true)}>
+                  <Icon source={"logout"} color="#430D09" size={24} />
+                  <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
+                    Logout
+                  </Text>
+                </TouchableOpacity>
+              </>
             ) : (
               <TouchableOpacity
                 style={styles.containerMenu}
@@ -272,7 +284,9 @@ const ProfileScreen = () => {
                 onDismiss={() => setDellAccount(false)}
                 contentContainerStyle={containerStyle}>
                 <View>
-                  <Text style={{ marginBottom: 20 }}>Pengaturan Akun</Text>
+                  <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
+                    Pengaturan Akun
+                  </Text>
                   <ButtonPrimary
                     title={"Ubah Data"}
                     onPress={() => {
