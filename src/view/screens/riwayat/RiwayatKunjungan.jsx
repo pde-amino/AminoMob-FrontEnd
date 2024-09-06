@@ -22,7 +22,6 @@ import CardColapse from "../../../components/CardColapse";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
-import ButtonSecondary from "../../../components/ButtonSecondary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
