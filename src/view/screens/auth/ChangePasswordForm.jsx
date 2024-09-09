@@ -6,12 +6,15 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  SafeAreaView,
+  Platform,
 } from "react-native";
 import { Button } from "react-native-paper";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 const ChangePasswordForm = ({ onChangePassword }) => {
   const navigation = useNavigation();
@@ -89,7 +92,11 @@ const ChangePasswordForm = ({ onChangePassword }) => {
   };
 
   return (
-    <>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <View style={[{ marginTop: 20 }, styles.header]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.headerText}>Batal</Text>
@@ -146,7 +153,7 @@ const ChangePasswordForm = ({ onChangePassword }) => {
         <Text>Batal</Text>
       </TouchableOpacity> */}
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,4 +1,11 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 import React from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -9,6 +16,7 @@ import {
 } from "react-native-responsive-screen";
 import { AirbnbRating } from "@rneui/themed";
 import { Avatar } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
 
 const getSpecializationText = (doctorName) => {
   if (doctorName.includes("Sp.KJ")) {
@@ -59,7 +67,11 @@ export default function DetailDoctorScreen() {
   const data = route.params.doctorData;
 
   return (
-    <View style={GlobalStyles.utama}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <View style={{ height: hp(8) }}>
         <HeaderComponent
           title="Detail Dokter"
@@ -83,19 +95,16 @@ export default function DetailDoctorScreen() {
           style={{
             alignItems: "center",
             paddingVertical: 20,
-          }}
-        >
+          }}>
           <Text
-            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}
-          >
+            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}>
             {data.nm_dokter}
           </Text>
           <Text
             style={[
               GlobalStyles.h3,
               { textAlign: "center", maxWidth: "80%", fontWeight: "normal" },
-            ]}
-          >
+            ]}>
             {getSpecializationText(data.nm_dokter)}
           </Text>
           <AirbnbRating
@@ -113,8 +122,7 @@ export default function DetailDoctorScreen() {
         </Text>
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
-        >
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
           Pagi
         </Text>
         <FlatList
@@ -137,8 +145,7 @@ export default function DetailDoctorScreen() {
         />
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
-        >
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
           Sore
         </Text>
         <FlatList
@@ -160,7 +167,7 @@ export default function DetailDoctorScreen() {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

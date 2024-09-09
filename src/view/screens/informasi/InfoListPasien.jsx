@@ -81,11 +81,15 @@ export default function InfoListPasien() {
 
         if (error.response.status === 401) {
           // Alert.alert("Perhatian", errorMessage);
+
           Alert.alert(
             "Perhatian",
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
           );
           navigation.replace("Login Screen");
+        } else if (error.response.status === 404) {
+          // Alert.alert("Perhatian", errorMessage);
+          return;
         } else {
           // Menangani error lain yang mungkin terjadi
           // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
@@ -131,12 +135,10 @@ export default function InfoListPasien() {
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1.4 }}>
+    <>
+      <SafeAreaView style={GlobalStyles.utama}>
         <HeaderComponent title={"Informasi Data Pasien"} />
-      </View>
 
-      <View style={{ flex: 10 }}>
         {loading ? (
           <ActivityIndicator
             animating={true}
@@ -181,8 +183,7 @@ export default function InfoListPasien() {
             </View>
           </ScrollView>
         )}
-      </View>
-
+      </SafeAreaView>
       {btmTambah && (
         <BottomSheet
           setStatus={setBtmtambah}
@@ -195,6 +196,6 @@ export default function InfoListPasien() {
           pressKanan={() => navigation.navigate("Tambah Pasien Lama")}
         />
       )}
-    </SafeAreaView>
+    </>
   );
 }

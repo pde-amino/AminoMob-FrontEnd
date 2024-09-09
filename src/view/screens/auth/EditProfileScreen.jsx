@@ -8,7 +8,6 @@ import {
   Alert,
   Button,
   Platform,
-  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContex } from "../../../contex/AuthProvider";
@@ -18,6 +17,7 @@ import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -110,7 +110,7 @@ export default function EditProfileScreen() {
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
       ]}>
-      <View style={[{ marginTop: 10 }, styles.header]}>
+      <View style={[styles.header]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.headerText}>Batal</Text>
         </TouchableOpacity>

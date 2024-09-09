@@ -58,7 +58,7 @@ const ProfileScreen = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(auth);
+      // console.log(auth);
       await axios.delete(`${BASE_URL}/user/${auth.id}`, {
         headers: {
           "Content-Type": "application/json",
@@ -170,172 +170,169 @@ const ProfileScreen = () => {
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
       ]}>
-      <View style={{ height: hp(10) }}>
-        <HeaderComponent title="Profil" />
-      </View>
-      <View style={{ height: hp(90) }}>
-        {/* {loading ? (
+      <HeaderComponent title="Profil" />
+      {/* {loading ? (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
         ) : ( */}
-        <ScrollView
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
-        >
-          <View style={styles.containerAvatar}>
-            <Avatar.Image
-              size={80}
-              source={require("../../../../assets/avatar.png")}
-            />
-            {auth.nama ? (
-              <>
-                <Text style={GlobalStyles.h2}>{auth.nama}</Text>
-                <TouchableOpacity onPress={() => setDellAccount(true)}>
-                  <Icon source={"cog-outline"} color="gray" size={24} />
-                </TouchableOpacity>
-              </>
-            ) : (
-              <Text style={GlobalStyles.h2}>Hai, Anda belum Login</Text>
-            )}
-            {/* <TouchableOpacity
+      <ScrollView
+      // refreshControl={
+      //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      // }
+      >
+        <View style={styles.containerAvatar}>
+          <Avatar.Image
+            size={80}
+            source={require("../../../../assets/avatar.png")}
+          />
+          {auth.nama ? (
+            <>
+              <Text style={GlobalStyles.h2}>{auth.nama}</Text>
+              <TouchableOpacity onPress={() => setDellAccount(true)}>
+                <Icon source={"cog-outline"} color="gray" size={24} />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={GlobalStyles.h2}>Hai, Anda belum Login</Text>
+          )}
+          {/* <TouchableOpacity
               onPress={() => navigation.navigate("Edit Profil", auth)}>
               <Text>Tess</Text>
             </TouchableOpacity> */}
-          </View>
+        </View>
 
-          {auth ? (
-            <View style={{ gap: 12, padding: 20 }}>
-              <View>
-                <Text>Nomor Telepon</Text>
-                <Text style={GlobalStyles.h4}>{auth.hp}</Text>
-              </View>
-              {/* <View>
+        {auth ? (
+          <View style={{ gap: 12, padding: 20 }}>
+            <View>
+              <Text>Nomor Telepon</Text>
+              <Text style={GlobalStyles.h4}>{auth.hp}</Text>
+            </View>
+            {/* <View>
                 <Text>Tanggal Lahir</Text>
                 <Text style={GlobalStyles.h4}>{auth.tgl_lahir}</Text>
               </View> */}
+          </View>
+        ) : null}
+
+        <View style={{ gap: 12 }}>
+          <Divider />
+          {auth.level === "1" ? (
+            <View style={{ gap: 12 }}>
+              <TouchableOpacity
+                style={styles.containerMenu}
+                onPress={() => navigation.replace("Web View")}>
+                <Icon source="chat-alert" size={24} />
+                <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
+              </TouchableOpacity>
+              <Divider />
             </View>
           ) : null}
 
-          <View style={{ gap: 12 }}>
-            <Divider />
-            {auth.level === "1" ? (
+          {auth ? (
+            <>
               <View style={{ gap: 12 }}>
                 <TouchableOpacity
                   style={styles.containerMenu}
-                  onPress={() => navigation.replace("Web View")}>
-                  <Icon source="chat-alert" size={24} />
-                  <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
+                  onPress={() => navigation.replace("ChatAI")}>
+                  <Icon source="chat-processing-outline" size={24} />
+                  <Text style={GlobalStyles.textBold}>Chat Otomatis</Text>
                 </TouchableOpacity>
                 <Divider />
               </View>
-            ) : null}
 
-            {auth ? (
-              <>
-                <View style={{ gap: 12 }}>
-                  <TouchableOpacity
-                    style={styles.containerMenu}
-                    onPress={() => navigation.replace("ChatAI")}>
-                    <Icon source="chat-processing-outline" size={24} />
-                    <Text style={GlobalStyles.textBold}>Chat Otomatis</Text>
-                  </TouchableOpacity>
-                  <Divider />
-                </View>
-
-                <TouchableOpacity
-                  style={styles.containerMenu}
-                  onPress={() => setConfirmLogout(true)}>
-                  <Icon source={"logout"} color="#430D09" size={24} />
-                  <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
-                    Logout
-                  </Text>
-                </TouchableOpacity>
-              </>
-            ) : (
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => navigation.replace("Login Screen")}>
-                <Icon source={"login"} color="#0A78E2" size={24} />
-                <Text style={[GlobalStyles.textBold, { color: "#0A78E2" }]}>
-                  Login Sekarang
+                onPress={() => setConfirmLogout(true)}>
+                <Icon source={"logout"} color="#430D09" size={24} />
+                <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
+                  Logout
                 </Text>
               </TouchableOpacity>
-            )}
-
-            <Divider />
-          </View>
-
-          {confirmLogout && (
-            <ConfirmModal
-              visible={confirmLogout}
-              message={"Apakah anda yakin ingin keluar?"}
-              onCancel={() => setConfirmLogout(false)}
-              onConfirm={handleLogout}
-              confirmButtonText={"Ya"}
-              cancelButtonText={"Tidak"}
-            />
+            </>
+          ) : (
+            <TouchableOpacity
+              style={styles.containerMenu}
+              onPress={() => navigation.replace("Login Screen")}>
+              <Icon source={"login"} color="#0A78E2" size={24} />
+              <Text style={[GlobalStyles.textBold, { color: "#0A78E2" }]}>
+                Login Sekarang
+              </Text>
+            </TouchableOpacity>
           )}
-          {dellAccount && (
-            <Portal>
-              <Modal
-                visible={dellAccount}
-                onDismiss={() => setDellAccount(false)}
-                contentContainerStyle={containerStyle}>
-                <View>
-                  <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
-                    Pengaturan Akun
-                  </Text>
-                  <ButtonPrimary
-                    title={"Ubah Data"}
-                    onPress={() => {
-                      navigation.navigate("Edit Profil", auth),
-                        setDellAccount(false);
-                    }}
-                  />
-                  <ButtonSecondary
-                    title={"Hapus Akun"}
-                    onPress={() => HapusAkun()}
-                  />
-                </View>
-              </Modal>
-            </Portal>
 
-            // <ConfirmModal
-            //   visible={dellAccount}
-            //   message={"Pengaturan Akun"}
-            //   // submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
-            //   onCancel={() => setDellAccount(false)}
-            //   onConfirm={HapusAkun}
-            //   confirmButtonText={"Ya"}
-            //   cancelButtonText={"Tidak"}>
-            //   <View>
-            //     <ButtonPrimary title={"Atur Akun"} />
-            //     <ButtonSecondary title={"Hapus Akun"} />
-            //   </View>
-            // </ConfirmModal>
+          <Divider />
+        </View>
 
-            // <ConfirmModal
-            //   visible={dellAccount}
-            //   message={"Hapus Akun"}
-            //   submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
-            //   onCancel={() => setDellAccount(false)}
-            //   onConfirm={HapusAkun}
-            //   confirmButtonText={"Ya"}
-            //   cancelButtonText={"Tidak"}
-            // />
-          )}
-          <AlertFormComponent
-            title={"Masukan Password"}
-            placeholder={"Password"}
-            visible={isAlertVisible}
-            onClose={handleCloseAlert}
-            onSubmit={handleSubmit}
-            secure={true}
-            onChangeText={handlePasswordChange}
+        {confirmLogout && (
+          <ConfirmModal
+            visible={confirmLogout}
+            message={"Apakah anda yakin ingin keluar?"}
+            onCancel={() => setConfirmLogout(false)}
+            onConfirm={handleLogout}
+            confirmButtonText={"Ya"}
+            cancelButtonText={"Tidak"}
           />
-          {/* <AlertFormComponent
+        )}
+        {dellAccount && (
+          <Portal>
+            <Modal
+              visible={dellAccount}
+              onDismiss={() => setDellAccount(false)}
+              contentContainerStyle={containerStyle}>
+              <View>
+                <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
+                  Pengaturan Akun
+                </Text>
+                <ButtonPrimary
+                  title={"Ubah Data"}
+                  onPress={() => {
+                    navigation.navigate("Edit Profil", auth),
+                      setDellAccount(false);
+                  }}
+                />
+                <ButtonSecondary
+                  title={"Hapus Akun"}
+                  onPress={() => HapusAkun()}
+                />
+              </View>
+            </Modal>
+          </Portal>
+
+          // <ConfirmModal
+          //   visible={dellAccount}
+          //   message={"Pengaturan Akun"}
+          //   // submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
+          //   onCancel={() => setDellAccount(false)}
+          //   onConfirm={HapusAkun}
+          //   confirmButtonText={"Ya"}
+          //   cancelButtonText={"Tidak"}>
+          //   <View>
+          //     <ButtonPrimary title={"Atur Akun"} />
+          //     <ButtonSecondary title={"Hapus Akun"} />
+          //   </View>
+          // </ConfirmModal>
+
+          // <ConfirmModal
+          //   visible={dellAccount}
+          //   message={"Hapus Akun"}
+          //   submessage={`Apakah Anda ingin menghapus akun ${auth.hp}`}
+          //   onCancel={() => setDellAccount(false)}
+          //   onConfirm={HapusAkun}
+          //   confirmButtonText={"Ya"}
+          //   cancelButtonText={"Tidak"}
+          // />
+        )}
+        <AlertFormComponent
+          title={"Masukan Password"}
+          placeholder={"Password"}
+          visible={isAlertVisible}
+          onClose={handleCloseAlert}
+          onSubmit={handleSubmit}
+          secure={true}
+          onChangeText={handlePasswordChange}
+        />
+        {/* <AlertFormComponent
             title={"Masukan Password"}
             placeholder={"Password"}
             visible={manages}
@@ -343,9 +340,8 @@ const ProfileScreen = () => {
             onSubmit={""}
             secure={true}
           /> */}
-        </ScrollView>
-        {/* )} */}
-      </View>
+      </ScrollView>
+      {/* )} */}
     </SafeAreaView>
   );
 };

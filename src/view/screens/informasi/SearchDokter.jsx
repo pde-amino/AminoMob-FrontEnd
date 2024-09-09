@@ -1,4 +1,12 @@
-import { View, Text, FlatList, StyleSheet, RefreshControl } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
@@ -7,6 +15,7 @@ import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
+import { StatusBar } from "expo-status-bar";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -61,7 +70,11 @@ export default function SearchDokter() {
   };
 
   return (
-    <View style={GlobalStyles.utama}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <View>
         <HeaderComponent
           title="Daftar Dokter"
@@ -121,7 +134,7 @@ export default function SearchDokter() {
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

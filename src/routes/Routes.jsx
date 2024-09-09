@@ -72,7 +72,7 @@ export default function Routes() {
           setInitialRoute("Onboarding");
         } else {
           const token = await SecureStore.getItemAsync("userToken");
-          console.log(SecureStore.getItem());
+          // console.log(SecureStore.getItem());
           if (token) {
             setInitialRoute("HomeScreen");
           } else {

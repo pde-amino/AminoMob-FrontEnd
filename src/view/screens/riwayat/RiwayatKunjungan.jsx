@@ -69,11 +69,10 @@ export default function RiwayatKunjungan() {
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
           );
           navigation.replace("Login Screen");
+        } else if (error.response.status === 404) {
+          // Alert.alert("Perhatian", errorMessage);
+          return;
         } else {
-          Alert.alert(
-            "Perhatian",
-            "Sesi Login anda telah berakhir mohon lakukan login ulang"
-          );
           Alert.alert(
             "Perhatian",
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
@@ -199,53 +198,49 @@ export default function RiwayatKunjungan() {
     <SafeAreaView
       style={[
         GlobalStyles.utama,
-        { padding: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
       ]}>
-      <View style={{ flex: 1.4 }}>
-        <HeaderComponent title={"Riwayat Periksa"} />
-      </View>
-      <View style={{ flex: 10 }}>
-        {loading ? (
-          <ActivityIndicator animating={true} color={WARNA.pr2imary} />
-        ) : dataRiwayat ? (
-          <View>
-            <FlatList
-              style={{ width: "100%" }}
-              data={dataRiwayat}
-              renderItem={renderItem}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-            />
-          </View>
-        ) : (
-          <ScrollView
+      <HeaderComponent title={"Riwayat Periksa"} />
+      {loading ? (
+        <ActivityIndicator animating={true} color={WARNA.primary} />
+      ) : dataRiwayat ? (
+        <View>
+          <FlatList
+            style={{ width: "100%" }}
+            data={dataRiwayat}
+            renderItem={renderItem}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-            <View style={{ alignItems: "center", alignContent: "center" }}>
-              <Image
-                style={{
-                  width: "70%",
-                  resizeMode: "contain",
-                }}
-                source={require("../../../../assets/no-data.png")}
-              />
-              <Text
-                style={[
-                  GlobalStyles.h4,
-                  {
-                    fontWeight: "normal",
-                    maxWidth: "85%",
-                    textAlign: "center",
-                  },
-                ]}>
-                Belum ada riwayat periksa, silakan mendaftar
-              </Text>
-            </View>
-          </ScrollView>
-        )}
-      </View>
+            }
+          />
+        </View>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <View style={{ alignItems: "center", alignContent: "center" }}>
+            <Image
+              style={{
+                width: "70%",
+                resizeMode: "contain",
+              }}
+              source={require("../../../../assets/no-data.png")}
+            />
+            <Text
+              style={[
+                GlobalStyles.h4,
+                {
+                  fontWeight: "normal",
+                  maxWidth: "85%",
+                  textAlign: "center",
+                },
+              ]}>
+              Belum ada riwayat periksa, silakan mendaftar
+            </Text>
+          </View>
+        </ScrollView>
+      )}
 
       <Portal>
         <Dialog

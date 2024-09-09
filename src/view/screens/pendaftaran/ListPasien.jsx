@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,16 +10,18 @@ import {
   ScrollView,
   Image,
   Alert,
+  Platform,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import BottomSheet from "../../../components/BottomSheet";
 import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { ActivityIndicator, Icon } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>
@@ -76,6 +78,9 @@ export default function ListPasien() {
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
           );
           navigation.replace("Login Screen");
+        } else if (error.response.status === 404) {
+          // Alert.alert("Perhatian", errorMessage);
+          return;
         } else {
           // Menangani error lain yang mungkin terjadi
           // Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
@@ -106,10 +111,11 @@ export default function ListPasien() {
       setRefreshing(false);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   const renderItem = ({ item }) => {
     return (
@@ -129,64 +135,69 @@ export default function ListPasien() {
   };
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 1 }}>
+    <>
+      <SafeAreaView
+        style={[
+          GlobalStyles.utama,
+          {
+            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          },
+        ]}>
         <HeaderComponent
           title={"Daftar Pasien"}
           icon={"arrow-back"}
           onPress={() => navigation.goBack()}
         />
-      </View>
 
-      <View style={[GlobalStyles.Content, { flex: 8 }]}>
-        {loading ? (
-          <ActivityIndicator
-            animating={true}
-            color={WARNA.primary}
-            size={"large"}
-          />
-        ) : dataPasien ? (
-          <FlatList
-            style={{ width: "100%" }}
-            data={dataPasien}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.no_rkm_medis.toString()}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          />
-        ) : (
-          <ScrollView
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-            <View style={{ alignItems: "center", alignContent: "center" }}>
-              <Image
-                style={{
-                  width: "80%",
-                  resizeMode: "contain",
-                }}
-                source={require("../../../../assets/no-data.png")}
-              />
-              <Text
-                style={[
-                  GlobalStyles.h4,
-                  {
-                    fontWeight: "normal",
-                    maxWidth: "85%",
-                    textAlign: "center",
-                  },
-                ]}>
-                Belum ada data pasien, silakan tambah data atau refresh
-              </Text>
-            </View>
-          </ScrollView>
-        )}
-      </View>
-      <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
-        <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
-      </View>
-
+        <View style={[GlobalStyles.Content]}>
+          {loading ? (
+            <ActivityIndicator
+              animating={true}
+              color={WARNA.primary}
+              size={"large"}
+            />
+          ) : dataPasien ? (
+            <FlatList
+              style={{ width: "100%" }}
+              data={dataPasien}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.no_rkm_medis.toString()}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            />
+          ) : (
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
+              <View style={{ alignItems: "center", alignContent: "center" }}>
+                <Image
+                  style={{
+                    width: "80%",
+                    resizeMode: "contain",
+                  }}
+                  source={require("../../../../assets/no-data.png")}
+                />
+                <Text
+                  style={[
+                    GlobalStyles.h4,
+                    {
+                      fontWeight: "normal",
+                      maxWidth: "85%",
+                      textAlign: "center",
+                    },
+                  ]}>
+                  Belum ada data pasien, silakan tambah data atau refresh
+                </Text>
+              </View>
+            </ScrollView>
+          )}
+        </View>
+        <View style={[GlobalStyles.btnFullContainer, { margin: 20 }]}>
+          <ButtonPrimary title={"Tambahkan Data"} onPress={setBtmtambah} />
+        </View>
+      </SafeAreaView>
       {btmTambah && (
         <BottomSheet
           setStatus={setBtmtambah}
@@ -199,7 +210,7 @@ export default function ListPasien() {
           pressKanan={pasienLama}
         />
       )}
-    </SafeAreaView>
+    </>
   );
 }
 

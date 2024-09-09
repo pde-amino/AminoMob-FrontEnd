@@ -5,12 +5,12 @@ import ChangePasswordForm from "./ChangePasswordForm";
 
 const ScreenEditProfile = () => {
   const handleSaveProfile = (profileData) => {
-    console.log("Profile updated:", profileData);
+    // console.log("Profile updated:", profileData);
     // Lakukan proses penyimpanan data profil di sini
   };
 
   const handleChangePassword = (currentPassword, newPassword) => {
-    console.log("Password change request:", { currentPassword, newPassword });
+    // console.log("Password change request:", { currentPassword, newPassword });
     // Lakukan proses perubahan password di sini
   };
 

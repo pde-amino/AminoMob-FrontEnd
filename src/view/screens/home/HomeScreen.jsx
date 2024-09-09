@@ -10,7 +10,6 @@ import {
   Linking,
   Alert,
   StyleSheet,
-  StatusBar,
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -25,9 +24,11 @@ import CardButtonComponent from "../../../components/CardButtonComponent";
 import axios from "axios";
 import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
-import { Icon, TouchableRipple } from "react-native-paper";
+import { Icon, Portal, TouchableRipple } from "react-native-paper";
 import { BASE_ARTICLE } from "../../../contex/Config";
 import { SpeedDial } from "@rneui/themed";
+import { StatusBar } from "expo-status-bar";
+import FloatingButton from "../../../components/FloatingButton";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -146,7 +147,7 @@ const HomeScreen = () => {
 
   const ListHeaderComponent = () => (
     <View>
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center", paddingTop: 10 }}>
         <View style={GlobalStyles.headerHomeContainer}>
           <Image
             source={require("../../../../assets/logo-app.png")}
@@ -224,10 +225,10 @@ const HomeScreen = () => {
   );
 
   return (
-    <View
+    <SafeAreaView
       style={[
         GlobalStyles.utama,
-        { padding: Platform === "android" ? StatusBar.currentHeight : 0 },
+        { paddingTop: Platform === "android" ? StatusBar.currentHeight : 0 },
       ]}>
       {/* <StatusBar
         hidden={false}
@@ -270,13 +271,16 @@ const HomeScreen = () => {
           ListEmptyComponent={renderEmptyComponent}
         />
       </View>
+      {/* <Portal> */}
+      <FloatingButton />
+      {/* </Portal> */}
       {/* 
       <SpeedDial
         // overlayColor="#25D366"
         icon={{ name: "support-agent", color: "#fff" }}
         onOpen={() => Linking.openURL("https://wa.me/6289515636878")}
       ></SpeedDial> */}
-    </View>
+    </SafeAreaView>
   );
 };
 

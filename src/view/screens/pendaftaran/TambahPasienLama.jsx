@@ -25,6 +25,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import * as Network from "expo-network";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -85,12 +86,12 @@ export const TambahPasienLama = () => {
   const searchPass = async () => {
     try {
       await axios
-        .get(`${BASE_URL}/cariPas/${auth.user.id}/${noRm}/${dateOfBirth}`, {
+        .get(`${BASE_URL}/cariPas/${auth.id}/${noRm}/${dateOfBirth}`, {
           headers: {
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            Authorization: `Bearer ${auth.user.token}`,
+            Authorization: `Bearer ${auth.token}`,
           },
         })
         .then((response) => {
@@ -108,7 +109,7 @@ export const TambahPasienLama = () => {
     const ip = await Network.getIpAddressAsync();
     await axios
       .post(
-        `${BASE_URL}/tambahKerabat/${auth.user.id}`,
+        `${BASE_URL}/tambahKerabat/${auth.id}`,
         {
           no_rkm_medis: dataGet.no_rkm_medis,
           status_user: hubunganPasien,
@@ -120,7 +121,7 @@ export const TambahPasienLama = () => {
             "Content-Type": "application/json",
             "x-api-key":
               "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            Authorization: `Bearer ${auth.user.token}`,
+            Authorization: `Bearer ${auth.token}`,
           },
         }
       )
@@ -151,102 +152,109 @@ export const TambahPasienLama = () => {
   );
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <View style={styles.containerHeader}>
-        <HeaderComponent
-          title={"Daftarkan Pasien Lama"}
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-      <View style={styles.containerMid}>
-        <View style={{ gap: 8 }}>
-          <Text style={[GlobalStyles.h4, { maxWidth: "90%" }]}>
-            Untuk pengecekan data pasien, masukan nomor Rekam Medis dan tanggal
-            lahir milik pasien.
-          </Text>
-          <Text
-            style={[
-              GlobalStyles.textBiasa,
-              { maxWidth: "90%", textAlign: "justify" },
-            ]}
-          >
-            Bila lupa nomor RM, silakan hubungi Humas Amino dengan mengakses
-            menu Layanan Informasi RS dan Permintaan Informasi.
-          </Text>
-
-          <TextInputIconComponent
-            label={"No Rekam Medis*"}
-            placeholder={"Masukkan No RM yang sudah terdaftar"}
-            type={"username"}
-            value={noRm}
-            onChangeText={setNoRm}
+    <>
+      <SafeAreaView
+        style={[
+          GlobalStyles.Content,
+          {
+            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          },
+        ]}>
+        <View style={styles.containerHeader}>
+          <HeaderComponent
+            title={"Daftarkan Pasien Lama"}
+            icon={"arrow-back"}
+            onPress={() => navigation.goBack()}
           />
-
-          <View>
-            {showPicker && (
-              <DateTimePicker
-                mode="date"
-                onChange={berubah}
-                value={date}
-                minimumDate={new Date(1935, 12, 31)}
-                maximumDate={new Date()}
-              />
-            )}
-
-            {!showPicker && (
-              <Pressable onPress={toggleShowDate}>
-                <TextInput
-                  style={styles.tglPilihan}
-                  editable={false}
-                  placeholder={"Tanggal Lahir*"}
-                  value={dateOfBirth}
-                  onChangeText={setDateOfBirth}
-                />
-              </Pressable>
-            )}
-          </View>
-
-          <View style={styles.containerDrop}>
-            <Dropdown
+        </View>
+        <View style={styles.containerMid}>
+          <View style={{ gap: 8 }}>
+            <Text style={[GlobalStyles.h4, { maxWidth: "90%" }]}>
+              Untuk pengecekan data pasien, masukan nomor Rekam Medis dan
+              tanggal lahir milik pasien.
+            </Text>
+            <Text
               style={[
-                styles.dropdown,
-                isFocus1 && {
-                  borderColor: "green",
-                  backgroundColor: WARNA.white,
-                },
-              ]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              search={false}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={hubungan}
-              // search
-              maxHeight={300}
-              labelField="label"
-              // valueField="value"
-              placeholder={hubunganPasien}
-              searchPlaceholder="Search..."
-              value={hubunganPasien}
-              onFocus={() => setIsFocus1(true)}
-              onBlur={() => setIsFocus1(false)}
-              onChange={(item) => {
-                setHubungan(item.value);
-                setIsFocus1(false);
-              }}
+                GlobalStyles.textBiasa,
+                { maxWidth: "90%", textAlign: "justify" },
+              ]}>
+              Bila lupa nomor RM, silakan hubungi Humas Amino dengan mengakses
+              menu Layanan Informasi RS dan Permintaan Informasi.
+            </Text>
+
+            <TextInputIconComponent
+              label={"No Rekam Medis*"}
+              placeholder={"Masukkan No RM yang sudah terdaftar"}
+              type={"username"}
+              value={noRm}
+              onChangeText={setNoRm}
             />
+
+            <View>
+              {showPicker && (
+                <DateTimePicker
+                  mode="date"
+                  onChange={berubah}
+                  value={date}
+                  minimumDate={new Date(1935, 12, 31)}
+                  maximumDate={new Date()}
+                />
+              )}
+
+              {!showPicker && (
+                <Pressable onPress={toggleShowDate}>
+                  <TextInput
+                    style={styles.tglPilihan}
+                    editable={false}
+                    placeholder={"Tanggal Lahir*"}
+                    value={dateOfBirth}
+                    onChangeText={setDateOfBirth}
+                  />
+                </Pressable>
+              )}
+            </View>
+
+            <View style={styles.containerDrop}>
+              <Dropdown
+                style={[
+                  styles.dropdown,
+                  isFocus1 && {
+                    borderColor: "green",
+                    backgroundColor: WARNA.white,
+                  },
+                ]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                search={false}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={hubungan}
+                // search
+                maxHeight={300}
+                labelField="label"
+                // valueField="value"
+                placeholder={hubunganPasien}
+                searchPlaceholder="Search..."
+                value={hubunganPasien}
+                onFocus={() => setIsFocus1(true)}
+                onBlur={() => setIsFocus1(false)}
+                onChange={(item) => {
+                  setHubungan(item.value);
+                  setIsFocus1(false);
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={[GlobalStyles.btnFullContainer, styles.containerBot]}>
-        <ButtonPrimary
-          title="Cari"
-          onPress={searchPass}
-          disabled={dateOfBirth ? false : true}
-        />
-      </View>
+        <View style={[GlobalStyles.btnFullContainer, styles.containerBot]}>
+          <ButtonPrimary
+            title="Cari"
+            onPress={searchPass}
+            disabled={dateOfBirth ? false : true}
+          />
+        </View>
+      </SafeAreaView>
       {bs ? (
         <BottomSheet
           setStatus={setBs}
@@ -260,7 +268,7 @@ export const TambahPasienLama = () => {
           pressKanan={addKerabat}
         />
       ) : null}
-    </SafeAreaView>
+    </>
   );
 };
 

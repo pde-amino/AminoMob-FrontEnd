@@ -10,4 +10,4 @@ export const BASE_ARTICLE =
   "http://103.47.60.195:5923/cms_aminomobile/api/article";
 export const BASE_ARTICLE_ALL =
   "http://103.47.60.195:5923/cms_aminomobile/api/articles";
-export const CHAT_AI = "http://103.47.60.195:5925/";
+export const CHAT_AI = "http://192.168.5.3:3345/";

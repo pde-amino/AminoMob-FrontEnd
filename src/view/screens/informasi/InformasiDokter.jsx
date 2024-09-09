@@ -7,6 +7,9 @@ import {
   View,
   Text,
   RefreshControl,
+  SafeAreaView,
+  Platform,
+  ScrollView,
 } from "react-native";
 import { BASE_URL } from "../../../contex/Config";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -14,6 +17,7 @@ import EventSource from "react-native-event-source";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
 import HeaderComponent from "../../../components/HeaderComponent";
+import { StatusBar } from "expo-status-bar";
 
 const InformasiDokter = () => {
   const [dataPoli, setDataPoli] = useState([]);
@@ -72,32 +76,57 @@ const InformasiDokter = () => {
 
   if (error) {
     return (
-      <View style={GlobalStyles.Content}>
-        <Text>Error fetching data: {error.message}</Text>
-      </View>
+      <SafeAreaView
+        style={[
+          GlobalStyles.Content,
+          {
+            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          },
+        ]}>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <Text>Mohon ulangi beberapa saat lagi..</Text>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={GlobalStyles.Content}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
       <HeaderComponent
         title={"Daftar Poliklinik"}
         icon={"arrow-back"}
         onPress={() => navigation.goBack()}
       />
-      <SearchComponent
-        data={dataPoli}
-        onSearch={handleSearch}
-        placeholder={"Cari Poli"}
-        filterAttribute={"nm_poli"}
-      />
+      <View style={{ width: "100%", marginBottom: 20 }}>
+        <SearchComponent
+          data={dataPoli}
+          onSearch={handleSearch}
+          placeholder={"Cari Poli"}
+          filterAttribute={"nm_poli"}
+        />
+      </View>
       {loading ? (
         <View style={GlobalStyles.Content}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       ) : (
         <FlatList
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            alignItems: "center",
+          }}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -121,7 +150,7 @@ const InformasiDokter = () => {
           keyExtractor={(item) => item.kd_poli.toString()}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -20,13 +20,16 @@ export default function InformasiUmum() {
   const showAlert = () =>
     Alert.alert(
       "Informasi",
-      "Menu ini menyambungkan Anda langsung ke Whatsapp Humas Amino Hospital",
+      "Anda akan dihubungkan langsung ke layanan WhatsApp Humas Amino Hospital.",
       [
         {
-          text: "OK",
+          text: "Ikuti",
           onPress: () => {
             Linking.openURL("https://wa.me/6289515636878");
           },
+        },
+        {
+          text: "Ok",
         },
       ],
       {
@@ -66,9 +69,7 @@ export default function InformasiUmum() {
       style={[
         GlobalStyles.utama,
         {
-          padding: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-          alignItems: "center",
-          gap: 4,
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         },
       ]}>
       {/* <View style={{ flex: 1.4 }}> */}
@@ -80,7 +81,7 @@ export default function InformasiUmum() {
       {/* </View> */}
 
       <FlatList
-        // contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ alignItems: "center", gap: 4 }}
         // refreshControl={
         //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
         // }

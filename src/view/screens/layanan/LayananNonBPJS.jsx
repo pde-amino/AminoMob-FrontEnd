@@ -1,11 +1,19 @@
 import React, { useContext, useState } from "react";
-import { View, FlatList, SafeAreaView, Alert, Text } from "react-native";
+import {
+  View,
+  FlatList,
+  SafeAreaView,
+  Alert,
+  Text,
+  Platform,
+} from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function LayananNonBPJS() {
@@ -106,20 +114,23 @@ export default function LayananNonBPJS() {
   ];
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ flex: 2 }}>
-        <HeaderComponent
-          title={"Layanan Non BPJS"}
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
-      <View style={{ flex: 1, marginHorizontal: 20 }}>
+    <SafeAreaView
+      style={[
+        GlobalStyles.utama,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}>
+      <HeaderComponent
+        title={"Layanan Non BPJS"}
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
+      <View style={{ marginHorizontal: 20, marginTop: 20 }}>
         <Text style={GlobalStyles.textBiasa}>Daftarkan untuk :</Text>
         <Text style={GlobalStyles.h4}>{dataKerabat.nm_pasien}</Text>
       </View>
-      <View style={{ flex: 14, alignItems: "center" }}>
+      <View style={{ alignItems: "center" }}>
         <FlatList
+          style={{ marginVertical: 10 }}
           data={Menus}
           renderItem={({ item }) => (
             <CardButtonComponent

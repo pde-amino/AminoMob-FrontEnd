@@ -25,6 +25,7 @@ import ConfirmModal from "../../../components/ConfirmModal";
 import { AuthContex } from "../../../contex/AuthProvider";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import * as Network from "expo-network";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -484,162 +485,169 @@ Jam Sore (14:00:00 - 18:00:00)`);
   );
 
   return (
-    <SafeAreaView style={GlobalStyles.utama}>
-      <ConfirmModal
-        list={modalList}
-        listData={pilihan == "poli" ? datas : filtDokter}
-        visible={visMod}
-        message={messMod}
-        submessage={subMessMod}
-        onData={(item) => {
+    <>
+      <SafeAreaView
+        style={[
+          GlobalStyles.utama,
           {
-            if (pilihan == "poli") {
-              setValue2(item.label);
-              setKdPoli(item.value);
-              jadwalDok(item.value);
-            } else if (pilihan == "dokter") {
-              setDokter(item.label);
-              setKdDokter(item.value);
+            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          },
+        ]}>
+        <ConfirmModal
+          list={modalList}
+          listData={pilihan == "poli" ? datas : filtDokter}
+          visible={visMod}
+          message={messMod}
+          submessage={subMessMod}
+          onData={(item) => {
+            {
+              if (pilihan == "poli") {
+                setValue2(item.label);
+                setKdPoli(item.value);
+                jadwalDok(item.value);
+              } else if (pilihan == "dokter") {
+                setDokter(item.label);
+                setKdDokter(item.value);
+              }
+              // pilihan == "poli" ? setPoli(item) : setDokter(item);
             }
-            // pilihan == "poli" ? setPoli(item) : setDokter(item);
-          }
-          setVisMod(false);
-        }}
-        cancel={() => {
-          setVisMod(false);
-        }}
-        onCancel={() => {
-          setValue("Pagi");
-          setVisMod(false);
-        }}
-        onConfirm={() => {
-          setValue("Sore");
-          setVisMod(false);
-        }}
-        confirmButtonText={confMod}
-        cancelButtonText={cancMod}
-      />
+            setVisMod(false);
+          }}
+          cancel={() => {
+            setVisMod(false);
+          }}
+          onCancel={() => {
+            setValue("Pagi");
+            setVisMod(false);
+          }}
+          onConfirm={() => {
+            setValue("Sore");
+            setVisMod(false);
+          }}
+          confirmButtonText={confMod}
+          cancelButtonText={cancMod}
+        />
 
-      <HeaderComponent
-        title={"Pilih Poli"}
-        icon={"arrow-back"}
-        onPress={() => navigation.goBack()}
-      />
+        <HeaderComponent
+          title={"Pilih Poli"}
+          icon={"arrow-back"}
+          onPress={() => navigation.goBack()}
+        />
 
-      <View style={{ paddingHorizontal: 10 }}>
-        <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
-          <Text>Nama</Text>
-          <Text style={GlobalStyles.h3}>{dataPas.nm_pasien}</Text>
-        </View>
-        <View style={styles.list}>
-          <Text>Tanggal Periksa</Text>
-          <View style={styles.itemList}>
-            <Text style={GlobalStyles.h4}>
-              {hariPoli ? hariPoli : "Pilih Tanggal"}
-            </Text>
-            <Button title={"Pilih"} onPress={berubah} />
+        <View style={{ paddingHorizontal: 10 }}>
+          <View style={{ marginVertical: 10, marginHorizontal: 5 }}>
+            <Text>Nama</Text>
+            <Text style={GlobalStyles.h3}>{dataPas.nm_pasien}</Text>
           </View>
-        </View>
-        <View style={styles.list}>
-          <Text>Jam Periksa</Text>
-          <View style={styles.itemList}>
-            <Text style={GlobalStyles.h4}>{value}</Text>
-            <Button title={"Pilih"} onPress={pilihJamPeriksa} />
-          </View>
-        </View>
-
-        {kunjungan == "TerangBulan" ? (
-          <>
-            <View style={styles.list}>
-              <Text>Paket Terang</Text>
-              <View style={styles.itemList}>
-                <Text style={GlobalStyles.h4}>{value2}</Text>
-                <Button title={"Pilih"} onPress={poliTujuan} />
-              </View>
+          <View style={styles.list}>
+            <Text>Tanggal Periksa</Text>
+            <View style={styles.itemList}>
+              <Text style={GlobalStyles.h4}>
+                {hariPoli ? hariPoli : "Pilih Tanggal"}
+              </Text>
+              <Button title={"Pilih"} onPress={berubah} />
             </View>
-            <View style={styles.list}>
-              <Text>Nomor HP yang bisa dihubungi</Text>
-              {noHpError ? (
-                <Text style={{ color: "red" }}>{noHpError}</Text>
-              ) : null}
-              <TextInput
-                label="Nomor HP"
-                placeholder="Masukkan No HP Anda"
-                value={noHp}
-                type={"username"}
-                onChangeText={handleNoHp}
-              />
-              {/* <View style={styles.itemList}> */}
-              {/* <Text style={GlobalStyles.h4}>{value2}</Text> */}
-              {/* <Button title={"Pilih"} onPress={poliTujuan} />
+          </View>
+          <View style={styles.list}>
+            <Text>Jam Periksa</Text>
+            <View style={styles.itemList}>
+              <Text style={GlobalStyles.h4}>{value}</Text>
+              <Button title={"Pilih"} onPress={pilihJamPeriksa} />
+            </View>
+          </View>
+
+          {kunjungan == "TerangBulan" ? (
+            <>
+              <View style={styles.list}>
+                <Text>Paket Terang</Text>
+                <View style={styles.itemList}>
+                  <Text style={GlobalStyles.h4}>{value2}</Text>
+                  <Button title={"Pilih"} onPress={poliTujuan} />
+                </View>
+              </View>
+              <View style={styles.list}>
+                <Text>Nomor HP yang bisa dihubungi</Text>
+                {noHpError ? (
+                  <Text style={{ color: "red" }}>{noHpError}</Text>
+                ) : null}
+                <TextInput
+                  label="Nomor HP"
+                  placeholder="Masukkan No HP Anda"
+                  value={noHp}
+                  type={"username"}
+                  onChangeText={handleNoHp}
+                />
+                {/* <View style={styles.itemList}> */}
+                {/* <Text style={GlobalStyles.h4}>{value2}</Text> */}
+                {/* <Button title={"Pilih"} onPress={poliTujuan} />
             </View> */}
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={styles.list}>
-              <Text>Poliklinik Tujuan</Text>
-              <View style={styles.itemList}>
-                <Text style={GlobalStyles.h4}>{value2}</Text>
-                <Button
-                  disabled={value == "Pilih Jam Periksa" ? true : false}
-                  title={"Pilih"}
-                  onPress={poliTujuan}
-                />
               </View>
-            </View>
-            <View style={styles.list}>
-              <Text>Dokter Tujuan</Text>
-              <View style={styles.itemList}>
-                <Text style={GlobalStyles.h4}>{dokter}</Text>
-
-                <Button
-                  disabled={value2 == "Pilih Poliklinik" ? true : false}
-                  title={"Pilih"}
-                  onPress={pilihDokter}
-                />
+            </>
+          ) : (
+            <>
+              <View style={styles.list}>
+                <Text>Poliklinik Tujuan</Text>
+                <View style={styles.itemList}>
+                  <Text style={GlobalStyles.h4}>{value2}</Text>
+                  <Button
+                    disabled={value == "Pilih Jam Periksa" ? true : false}
+                    title={"Pilih"}
+                    onPress={poliTujuan}
+                  />
+                </View>
               </View>
-            </View>
-          </>
-        )}
-      </View>
+              <View style={styles.list}>
+                <Text>Dokter Tujuan</Text>
+                <View style={styles.itemList}>
+                  <Text style={GlobalStyles.h4}>{dokter}</Text>
 
-      <View style={GlobalStyles.Content}>
-        {showPicker && Platform.OS === "android" && (
-          <DateTimePicker
-            mode="date"
-            onChange={berubah}
-            value={date}
-            minimumDate={minimumDate}
-          />
-        )}
-      </View>
+                  <Button
+                    disabled={value2 == "Pilih Poliklinik" ? true : false}
+                    title={"Pilih"}
+                    onPress={pilihDokter}
+                  />
+                </View>
+              </View>
+            </>
+          )}
+        </View>
 
-      <View style={GlobalStyles.btnContainer}>
-        {kunjungan == "TerangBulan" ? (
-          <ButtonPrimary
-            title="Ajukan Booking"
-            onPress={handleRegister}
-            disabled={
-              value == "Pilih Jam Periksa" ||
-              value2 == "Pilih Poliklinik" ||
-              noHpError ||
-              noHp == ""
-            }
-          />
-        ) : (
-          <ButtonPrimary
-            title="Ajukan Booking"
-            onPress={handleRegister}
-            disabled={
-              value == "Pilih Jam Periksa" ||
-              value2 == "Pilih Poliklinik" ||
-              dokter == "Pilih Dokter"
-            }
-          />
-        )}
-      </View>
+        <View style={GlobalStyles.Content}>
+          {showPicker && Platform.OS === "android" && (
+            <DateTimePicker
+              mode="date"
+              onChange={berubah}
+              value={date}
+              minimumDate={minimumDate}
+            />
+          )}
+        </View>
 
+        <View style={GlobalStyles.btnContainer}>
+          {kunjungan == "TerangBulan" ? (
+            <ButtonPrimary
+              title="Ajukan Booking"
+              onPress={handleRegister}
+              disabled={
+                value == "Pilih Jam Periksa" ||
+                value2 == "Pilih Poliklinik" ||
+                noHpError ||
+                noHp == ""
+              }
+            />
+          ) : (
+            <ButtonPrimary
+              title="Ajukan Booking"
+              onPress={handleRegister}
+              disabled={
+                value == "Pilih Jam Periksa" ||
+                value2 == "Pilih Poliklinik" ||
+                dokter == "Pilih Dokter"
+              }
+            />
+          )}
+        </View>
+      </SafeAreaView>
       {buttomSheet ? (
         <BottomSheet
           setStatus={setButtomSheet}
@@ -653,7 +661,7 @@ Jam Sore (14:00:00 - 18:00:00)`);
           pressKanan={navHandle}
         />
       ) : null}
-    </SafeAreaView>
+    </>
   );
 };
 
