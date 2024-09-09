@@ -127,7 +127,7 @@ const LupaPassword = () => {
         userid: OTP_ID,
         password: OTP_PASS,
         msisdn: username,
-        message: `Kode OTP Anda untuk Amino Mobile adalah ${otp}. Jangan bagikan kode OTP Anda, OTP Berlaku 2 Menit.`,
+        message: `Kode OTP Amino Mobile Anda adalah ${otp}. Jangan bagikan kode OTP Anda pada siapapun, OTP Berlaku 2 Menit.`,
         sender: OTP_SENDER,
         division: OTP_DIVISION,
       },
@@ -282,7 +282,6 @@ const LupaPassword = () => {
               <ButtonPrimary
                 title="Kirim"
                 // disabled={!!usernameError || !!nikError}
-                // onPress={handleSubmit}
                 onPress={handleSubmit}
               />
             </>
@@ -312,7 +311,7 @@ const LupaPassword = () => {
                 value={otp}
                 onChangeText={setOtp}
                 keyboardType="numeric"
-                maxLength={6}
+                maxLength={4}
               />
               <ButtonPrimary title="Verifikasi" onPress={verifyOTP} />
             </View>
