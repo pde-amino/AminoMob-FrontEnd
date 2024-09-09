@@ -5,7 +5,6 @@ import {
   Text,
   RefreshControl,
   TouchableOpacity,
-  SafeAreaView,
   Image,
   Linking,
   Alert,
@@ -50,8 +49,14 @@ const HomeScreen = () => {
     Alert.alert(
       "Informasi",
       // "Saat ini Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      "Saat ini layanan pendaftaran Pasien BPJS Menggunakan Aplikasi Mobile JKN.",
-      [{ text: "Buka Mobile JKN", onPress: () => checkAndOpenApp() }],
+      "Saat ini layanan pendaftaran Pasien BPJS Menggunakan Aplikasi Mobile JKN. Buka MJKN?",
+      [
+        {
+          text: "Nanti",
+          style: "cancel",
+        },
+        { text: "Ya", onPress: () => checkAndOpenApp() },
+      ],
       {
         cancelable: true,
       }

@@ -92,7 +92,7 @@ const SignupScreen = () => {
         userid: OTP_ID,
         password: OTP_PASS,
         msisdn: noHP,
-        message: `Kode OTP Anda ${otp}. Jangan Bagikan Kode OTP Anda, OTP Berlaku 2 Menit.`,
+        message: `Kode OTP Anda untuk Amino Mobile adalah ${otp}. Jangan bagikan kode OTP Anda, OTP Berlaku 2 Menit.`,
         sender: OTP_SENDER,
         division: OTP_DIVISION,
       },
@@ -103,6 +103,7 @@ const SignupScreen = () => {
       }
     );
   };
+
   const simpanData = async () => {
     const ip = await Network.getIpAddressAsync();
     try {
@@ -126,21 +127,27 @@ const SignupScreen = () => {
           }
         )
         .then((response) => {
-          // if(response)
-          AsyncStorage.setItem("noHp", JSON.stringify(noHP));
-          const userData = {
-            response: response.data,
-            pasing: password,
-            nik: noKTP,
-          };
-          // console.log("Daftar", userData);
-          sendOTP((otp = response.data.otp));
-          navigation.navigate("OTPInputScreen", userData);
+          if (response.data.status === "true") {
+            AsyncStorage.setItem("noHp", JSON.stringify(noHP));
+            const userData = {
+              response: response.data,
+              pasing: password,
+              nik: noKTP,
+            };
+            // console.log("Daftar", userData);
+            sendOTP((otp = response.data.otp));
+            navigation.navigate("OTPInputScreen", userData);
+          } else if (response.data.status == "false") {
+            Alert.alert(
+              "Gagal Mendaftar",
+              "Sepertinya Nomor HP atau NIK sudah didaftarkan"
+            );
+          }
         });
     } catch (error) {
       Alert.alert(
         "Gagal Mendaftar",
-        "Sepertinya Nomor HP atau NIK sudah didaftarkan"
+        "Sepertinya Nomor HP atau NIK sudah didaftarkan, jika merasa belum silakan konfirmasi ke Humas Amino"
       );
     }
   };
@@ -154,17 +161,20 @@ const SignupScreen = () => {
       />
       <View style={GlobalStyles.Content}>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{
             justifyContent: "center",
             alignContent: "center",
-          }}>
+          }}
+        >
           <View style={{ alignItems: "center" }}>
             <Text
               style={[
                 GlobalStyles.h1,
                 { color: WARNA.primary, marginBottom: 40 },
-              ]}>
+              ]}
+            >
               Daftar Akun
             </Text>
           </View>
@@ -255,7 +265,8 @@ const SignupScreen = () => {
                 style={GlobalStyles.textLink}
                 onPress={() => {
                   navigation.navigate("Login Screen");
-                }}>
+                }}
+              >
                 Masuk disini
               </Text>
             </TouchableOpacity>

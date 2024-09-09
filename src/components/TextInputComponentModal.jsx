@@ -25,7 +25,7 @@ const validateInput = (input, type) => {
   return "";
 };
 
-const TextInputIconComponent = ({
+const TextInputComponentModal = ({
   disable,
   label = "",
   placeholder = "",
@@ -57,7 +57,6 @@ const TextInputIconComponent = ({
       <TextInput
         style={{
           backgroundColor: "white",
-          width: width * 0.9,
           fontSize: 14,
         }}
         mode="outlined"
@@ -94,4 +93,4 @@ const TextInputIconComponent = ({
   );
 };
 
-export default TextInputIconComponent;
+export default TextInputComponentModal;

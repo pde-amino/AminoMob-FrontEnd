@@ -1,1 +1,1 @@
-INI ADALAH PROJEK MOBILE APPS AMINO
+Amino Mobile Sudah Rilis!

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, BackHandler, Platform } from "react-native";
+import { View, BackHandler, Platform, StatusBar } from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 
@@ -28,6 +28,7 @@ const WebViewScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar barStyle={"dark-content"} />
       <WebView
         ref={webViewRef}
         source={{ uri: "http://103.47.60.195:5921/mobileLaporBoss/" }}

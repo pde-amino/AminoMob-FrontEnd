@@ -22,7 +22,6 @@ import CardColapse from "../../../components/CardColapse";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import { Image } from "react-native";
-import ButtonSecondary from "../../../components/ButtonSecondary";
 import ConfirmModal from "../../../components/ConfirmModal";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
@@ -63,7 +62,7 @@ export default function RiwayatKunjungan() {
         //   error.response.data.messages.error || "Unknown error";
 
         if (error.response.status === 401) {
-          // Alert.alert("Perhatian", errorMessage);
+          console.error("log1", error.response);
           Alert.alert(
             "Perhatian",
             "Sesi Login anda telah berakhir mohon lakukan login ulang"
@@ -86,6 +85,7 @@ export default function RiwayatKunjungan() {
         // Jika tidak ada respons dari server
         // console.log("No Response Received:", error.request);
         Alert.alert("Peringatan", "Silakan coba lagi nanti.");
+        console.error("log3", error.response);
       } else {
         // Error lainnya
         // console.log("Error Message:", error.message);
@@ -93,7 +93,8 @@ export default function RiwayatKunjungan() {
           "Peringatan",
           `Terdapat kesalahan data mohon lakukan login ulang`
         );
-        navigation.replace("Login Screen");
+        console.error("log4", error.response);
+        // navigation.replace("Login Screen");
       }
     } finally {
       setLoading(false);

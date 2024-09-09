@@ -45,6 +45,8 @@ import GetUserData from "../view/screens/auth/GetUserData";
 import ScreenEditProfile from "../view/screens/auth/ScreenEditProfile";
 import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
+import LupaPassword from "../view/screens/auth/LupaPassword";
+import TabHome from "../view/screens/Verifikasi/TabHome";
 
 const Stack = createNativeStackNavigator();
 
@@ -104,7 +106,8 @@ export default function Routes() {
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false, // Menyembunyikan header secara default
-        }}>
+        }}
+      >
         <Stack.Screen name="Home Screen" component={HomeTabs} />
         <Stack.Screen
           name="ChangePasswordScreen"
@@ -121,8 +124,10 @@ export default function Routes() {
         <Stack.Screen name="Web View" component={TestingWeb} />
         <Stack.Screen name="ChatAI" component={ChatAI} />
         <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="LupaPassword" component={LupaPassword} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Edit Profil" component={EditProfileScreen} />
+        <Stack.Screen name="Tab Home" component={TabHome} />
         {/* Pendaftaran */}
         <Stack.Screen name="OTPInputScreen" component={OTPInputScreen} />
         <Stack.Screen name="Tambah Pasien Baru" component={TambahPasien} />
