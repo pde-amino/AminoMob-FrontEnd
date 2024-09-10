@@ -102,7 +102,7 @@ const InformasiDokter = () => {
     <SafeAreaView
       style={[
         GlobalStyles.utama,
-        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+        // { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
       ]}>
       <HeaderComponent
         title={"Daftar Poliklinik"}

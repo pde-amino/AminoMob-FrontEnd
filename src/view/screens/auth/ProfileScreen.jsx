@@ -190,7 +190,7 @@ const ProfileScreen = () => {
             <>
               <Text style={GlobalStyles.h2}>{auth.nama}</Text>
               <TouchableOpacity onPress={() => setDellAccount(true)}>
-                <Icon source={"cog-outline"} color="gray" size={24} />
+                <Icon source={"cog-outline"} color="#565D5E" size={24} />
               </TouchableOpacity>
             </>
           ) : (
@@ -222,7 +222,7 @@ const ProfileScreen = () => {
               <TouchableOpacity
                 style={styles.containerMenu}
                 onPress={() => navigation.replace("Web View")}>
-                <Icon source="chat-alert" size={24} />
+                <Icon color="#000" source="chat-alert" size={24} />
                 <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
               </TouchableOpacity>
               <Divider />
@@ -231,16 +231,6 @@ const ProfileScreen = () => {
 
           {auth ? (
             <>
-              <View style={{ gap: 12 }}>
-                <TouchableOpacity
-                  style={styles.containerMenu}
-                  onPress={() => navigation.replace("ChatAI")}>
-                  <Icon source="chat-processing-outline" size={24} />
-                  <Text style={GlobalStyles.textBold}>Chat Otomatis</Text>
-                </TouchableOpacity>
-                <Divider />
-              </View>
-
               <TouchableOpacity
                 style={styles.containerMenu}
                 onPress={() => setConfirmLogout(true)}>

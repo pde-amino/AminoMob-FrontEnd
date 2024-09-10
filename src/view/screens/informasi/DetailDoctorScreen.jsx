@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Platform,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import React from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -16,7 +17,7 @@ import {
 } from "react-native-responsive-screen";
 import { AirbnbRating } from "@rneui/themed";
 import { Avatar } from "react-native-paper";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 
 const getSpecializationText = (doctorName) => {
   if (doctorName.includes("Sp.KJ")) {
@@ -70,15 +71,13 @@ export default function DetailDoctorScreen() {
     <SafeAreaView
       style={[
         GlobalStyles.utama,
-        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+        // { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
       ]}>
-      <View style={{ height: hp(8) }}>
-        <HeaderComponent
-          title="Detail Dokter"
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
+      <HeaderComponent
+        title="Detail Dokter"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
 
       <View style={styles.containerImage}>
         <Avatar.Image

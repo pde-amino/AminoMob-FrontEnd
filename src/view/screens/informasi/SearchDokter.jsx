@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Platform,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -15,7 +16,7 @@ import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -70,69 +71,61 @@ export default function SearchDokter() {
   };
 
   return (
-    <SafeAreaView
-      style={[
-        GlobalStyles.utama,
-        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
-      <View>
-        <HeaderComponent
-          title="Daftar Dokter"
-          icon={"arrow-back"}
-          onPress={() => navigation.goBack()}
-        />
-      </View>
+    <SafeAreaView>
+      <HeaderComponent
+        title="Daftar Dokter"
+        icon={"arrow-back"}
+        onPress={() => navigation.goBack()}
+      />
 
-      <View>
-        <SearchComponent
-          platform="android"
-          data={dataPoli}
-          onSearch={handleSearch}
-          placeholder="Cari Dokter"
-          filterAttribute="nm_dokter"
-        />
+      <SearchComponent
+        platform="android"
+        data={dataPoli}
+        onSearch={handleSearch}
+        placeholder="Cari Dokter"
+        filterAttribute="nm_dokter"
+      />
 
-        {/* {filteredData ? (
+      {/* {filteredData ? (
           <Text style={GlobalStyles.h3}>Daftar Dokter pada {nameClinic}</Text>
         ) : (
           <Text style={GlobalStyles.h3}>
             Daftar Dokter pada {nameClinic} Sepertinya doter sedang cuti
           </Text>
         )} */}
-        <View
-          style={{
-            alignItems: "center",
-          }}>
-          <FlatList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            data={filteredData}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
-            renderItem={({ item }) => (
-              <CardButtonNavComponent
-                title={item.nm_dokter}
-                description={item.nm_poli}
-                imgSource={{ uri: `${item.image}` }}
-                modal={true}
-                onPress={() =>
-                  navigation.navigate("Detail Dokter", { doctorData: item })
-                }
-                warna={WARNA.primary}
-              />
-            )}
-            ListEmptyComponent={
-              <Text style={[GlobalStyles.h4, styles.dokterKosong]}>
-                Tidak ada dokter untuk poli ini, silahkan langsung datang ke RS
-                Amino Gundohutomo
-              </Text>
-            }
-            contentContainerStyle={{
-              paddingBottom: 200,
-            }}
-          />
-        </View>
+      <View
+        style={{
+          alignItems: "center",
+        }}>
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={filteredData}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, index) => `${item.kd_dokter}-${index}`}
+          renderItem={({ item }) => (
+            <CardButtonNavComponent
+              title={item.nm_dokter}
+              description={item.nm_poli}
+              imgSource={{ uri: `${item.image}` }}
+              modal={true}
+              onPress={() =>
+                navigation.navigate("Detail Dokter", { doctorData: item })
+              }
+              warna={WARNA.primary}
+            />
+          )}
+          ListEmptyComponent={
+            <Text style={[GlobalStyles.h4, styles.dokterKosong]}>
+              Tidak ada dokter untuk poli ini, silahkan langsung datang ke RS
+              Amino Gundohutomo
+            </Text>
+          }
+          contentContainerStyle={{
+            paddingBottom: 200,
+          }}
+        />
       </View>
     </SafeAreaView>
   );

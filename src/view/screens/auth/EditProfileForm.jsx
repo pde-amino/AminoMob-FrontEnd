@@ -1,6 +1,13 @@
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { Button } from "react-native-paper";
 
 const EditProfileForm = ({ onSave }) => {

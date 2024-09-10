@@ -1,8 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, BackHandler, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  BackHandler,
+  Text,
+  Button,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+} from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 import { CHAT_AI } from "../../../contex/Config";
+import { StatusBar } from "expo-status-bar";
 
 const ChatAI = () => {
   const webViewRef = useRef(null);
@@ -35,7 +44,11 @@ const ChatAI = () => {
   // };
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }}>
       {error ? (
         // If an error occurs, show a friendly error message
         <View style={styles.errorContainer}>
@@ -57,7 +70,7 @@ const ChatAI = () => {
           onHttpError={() => setError(true)} // Handle HTTP errors
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

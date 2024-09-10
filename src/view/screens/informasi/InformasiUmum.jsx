@@ -65,13 +65,7 @@ export default function InformasiUmum() {
   ];
 
   return (
-    <SafeAreaView
-      style={[
-        GlobalStyles.utama,
-        {
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        },
-      ]}>
+    <>
       {/* <View style={{ flex: 1.4 }}> */}
       <HeaderComponent
         title="Informasi RS"
@@ -99,6 +93,6 @@ export default function InformasiUmum() {
         )}
         keyExtractor={(item) => item.kd_poli}
       />
-    </SafeAreaView>
+    </>
   );
 }
