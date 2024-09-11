@@ -40,7 +40,7 @@ export default function InformasiUmum() {
   const Menus = [
     {
       kd_poli: "1",
-      nm_poli: "Jadwal Dokter Poli",
+      nm_poli: "Jadwal Dokter Poliklinik",
       icon: "local-hospital",
       title: "Account",
       to: () => navigation.navigate("Informasi Dokter"),
@@ -52,16 +52,16 @@ export default function InformasiUmum() {
       icon: "hotel",
       title: "Information",
       to: () => navigation.navigate("InfoTT"),
-      color: "green",
+      color: "cornflowerblue",
     },
-    {
-      kd_poli: "3",
-      nm_poli: "Permintaan Informasi",
-      icon: "support-agent",
-      title: "Information",
-      to: () => showAlert(),
-      color: "green",
-    },
+    // {
+    //   kd_poli: "3",
+    //   nm_poli: "Permintaan Informasi",
+    //   icon: "support-agent",
+    //   title: "Information",
+    //   to: () => showAlert(),
+    //   color: "green",
+    // },
   ];
 
   return (
@@ -75,7 +75,7 @@ export default function InformasiUmum() {
       {/* </View> */}
 
       <FlatList
-        contentContainerStyle={{ alignItems: "center", gap: 4 }}
+        contentContainerStyle={{ marginTop: 4, alignItems: "center", gap: 4 }}
         // refreshControl={
         //   <RefreshControl refreshing={isLoading} onRefresh={fetchData} />
         // }

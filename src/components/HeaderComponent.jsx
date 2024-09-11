@@ -33,7 +33,7 @@ export default function HeaderComponent({ title, icon, onPress }) {
         backgroundColor={WARNA.primary}
         leftComponent={
           <TouchableOpacity onPress={onPress}>
-            <Icon name={icon} color="darkslategray" />
+            <Icon name={icon} color="#fff" />
           </TouchableOpacity>
         }
         centerComponent={{ text: title, style: styles.heading }}
