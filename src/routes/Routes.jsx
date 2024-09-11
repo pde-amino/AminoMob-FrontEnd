@@ -46,6 +46,7 @@ import ScreenEditProfile from "../view/screens/auth/ScreenEditProfile";
 import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
+import FloatingButton from "../components/FloatingButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -220,6 +221,7 @@ export default function Routes() {
         <Stack.Screen name="Booking Screen" component={BookingScreen} />
         <Stack.Screen name="Search Poli" component={SearchDokter} />
       </Stack.Navigator>
+      <FloatingButton />
     </NavigationContainer>
   );
 }
