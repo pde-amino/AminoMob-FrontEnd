@@ -155,7 +155,12 @@ const HomeScreen = () => {
 
   const ListHeaderComponent = () => (
     <View>
-      <View style={{ alignItems: "center" }}>
+      <View
+        style={{
+          alignItems: "center",
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }}
+      >
         <View style={GlobalStyles.headerHomeContainer}>
           <Image
             source={require("../../../../assets/logo-app.png")}
@@ -193,7 +198,8 @@ const HomeScreen = () => {
         style={{
           paddingLeft: 20,
           marginTop: 20,
-        }}>
+        }}
+      >
         <Text style={GlobalStyles.textBiasa}>
           Maaf, belum ada artikel tersedia
         </Text>
@@ -233,13 +239,7 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView
-      style={[
-        GlobalStyles.utama,
-        {
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        },
-      ]}>
+    <SafeAreaView style={GlobalStyles.utama}>
       <StatusBar
         hidden={false}
         barStyle="light-content"
@@ -253,7 +253,8 @@ const HomeScreen = () => {
           flex: 1,
         }}
         source={require("../../../../assets/BG2.png")}
-        resizeMode="cover">
+        resizeMode="cover"
+      >
         {/* <View style={styles.containerSVG}>
         <Svg height={hp(45)} width={wp(100)} viewBox="0 0 1440 320">
           <Path
