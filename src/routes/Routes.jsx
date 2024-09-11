@@ -221,7 +221,7 @@ export default function Routes() {
         <Stack.Screen name="Booking Screen" component={BookingScreen} />
         <Stack.Screen name="Search Poli" component={SearchDokter} />
       </Stack.Navigator>
-      <FloatingButton />
+      {/* <FloatingButton /> */}
     </NavigationContainer>
   );
 }
