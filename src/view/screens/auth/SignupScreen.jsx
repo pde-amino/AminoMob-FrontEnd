@@ -250,11 +250,18 @@ const SignupScreen = () => {
                     {
                       text: "Cek Lagi",
                     },
-                    { text: "Sudah", onPress: simpanData },
+                    { text: "OK", onPress: simpanData },
                   ]
                 );
               }}
-              disabled={!!passwordError || !!confPasswordError || !checked}
+              disabled={
+                !nmLengkap ||
+                !noKTP ||
+                !noHP ||
+                !!passwordError ||
+                !!confPasswordError ||
+                !checked
+              }
             />
           </View>
 
