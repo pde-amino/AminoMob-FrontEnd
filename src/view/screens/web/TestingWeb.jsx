@@ -57,9 +57,9 @@ const WebViewScreen = () => {
   };
 
   useEffect(() => {
-    if (Platform.OS === "android") {
-      requestCameraAndStoragePermission();
-    }
+    // if (Platform.OS === "android") {
+    //   requestCameraAndStoragePermission();
+    // }
     const onBackPress = () => {
       if (canGoBack) {
         webViewRef.current.goBack();
