@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     padding: 4,
-    gap: 2,
+    gap: 10,
+    maxWidth: "65%",
     // backgroundColor: "purple",
   },
   img: {

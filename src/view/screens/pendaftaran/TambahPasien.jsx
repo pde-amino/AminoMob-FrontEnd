@@ -187,7 +187,7 @@ export const TambahPasien = () => {
     const ip = await Network.getIpAddressAsync();
     try {
       const response = await axios.post(
-        `${BASE_URL}insertPas/${auth.id}`,
+        `${BASE_URL}/insertPas/${auth.id}`,
         {
           no_rkm_medis: "",
           nm_pasien: nmLengkap,
@@ -261,8 +261,8 @@ export const TambahPasien = () => {
         }
       } else if (error.request) {
         Alert.alert(
-          "Error request",
-          "No response received from the server. Please try again later."
+          "Error Request",
+          "Server sedang dalam perbaikan. Mohon coba lagi nanti."
         );
       } else {
         Alert.alert("Error", `Error: ${error.message}`);
@@ -274,7 +274,7 @@ export const TambahPasien = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.utama}>
-      <View style={{ height: hp(10) }}>
+      <View style={{ height: hp(8) }}>
         <HeaderComponent
           title={"Pendaftaran Pasien Baru"}
           icon={"arrow-back"}
@@ -282,7 +282,7 @@ export const TambahPasien = () => {
         />
       </View>
 
-      <View style={{ flex: 1, marginTop: 10 }}>
+      <View style={{ flex: 1, marginTop: 8 }}>
         <ScrollView>
           <View style={{ gap: 8, alignItems: "center" }}>
             <View>
