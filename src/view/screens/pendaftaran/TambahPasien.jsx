@@ -187,7 +187,7 @@ export const TambahPasien = () => {
     const ip = await Network.getIpAddressAsync();
     try {
       const response = await axios.post(
-        `${BASE_URL}/insertPas/${auth.id}`,
+        `${BASE_URL}insertPas/${auth.id}`,
         {
           no_rkm_medis: "",
           nm_pasien: nmLengkap,
@@ -240,26 +240,35 @@ export const TambahPasien = () => {
     } catch (error) {
       // Tangani kesalahan yang terjadi selama permintaan POST
       if (error.response) {
-        // Server merespon dengan status code yang di luar rentang 2xx
-
-        Alert.alert(
-          "Error",
-          `Error: ${error.response.data || "Something went wrong"}`
-        );
+        if (error.response.status === 400) {
+          Alert.alert(
+            "Data Sudah Ada",
+            "Pasien sudah terdaftar di database Amino Hospital, silakan menggunakan menu Pendaftaran Pasien Lama",
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.replace("Tambah Pasien Lama");
+                },
+              },
+            ]
+          );
+        } else {
+          Alert.alert(
+            "Error response",
+            `Error: ${error.response.data || "Something went wrong"}`
+          );
+        }
       } else if (error.request) {
-        // Permintaan telah dibuat tetapi tidak ada respons yang diterima
-
         Alert.alert(
-          "Error",
+          "Error request",
           "No response received from the server. Please try again later."
         );
       } else {
-        // Kesalahan dalam mengatur permintaan
-
         Alert.alert("Error", `Error: ${error.message}`);
       }
     } finally {
-      navigation.navigate("Home Screen");
+      // navigation.navigate("Home Screen");
     }
   };
 
@@ -276,11 +285,7 @@ export const TambahPasien = () => {
       <View style={{ flex: 1, marginTop: 10 }}>
         <ScrollView>
           <View style={{ gap: 8, alignItems: "center" }}>
-            <View
-              style={{
-                alignContent: "flex-start",
-                marginLeft: 20,
-              }}>
+            <View>
               <Text style={GlobalStyles.h4}>Isi semua data</Text>
             </View>
 
@@ -335,6 +340,7 @@ export const TambahPasien = () => {
               type={"nomor"}
               value={noHP}
               onChangeText={setnoHP}
+              inputMode="numeric"
             />
 
             <TextInputIconComponent
@@ -343,6 +349,8 @@ export const TambahPasien = () => {
               type={"ktp"}
               value={noKTP}
               onChangeText={setnoKTP}
+              inputMode="numeric"
+              eqwe
             />
 
             <View style={styles.containerDrop}>
@@ -435,7 +443,8 @@ export const TambahPasien = () => {
               {!showPicker && (
                 <Pressable
                   style={{ width: wp(100), alignItems: "center" }}
-                  onPress={toggleShowDate}>
+                  onPress={toggleShowDate}
+                >
                   <TextInput
                     style={styles.tglPilihan}
                     editable={false}

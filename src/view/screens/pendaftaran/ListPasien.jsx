@@ -142,7 +142,8 @@ export default function ListPasien() {
           {
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           },
-        ]}>
+        ]}
+      >
         <HeaderComponent
           title={"Daftar Pasien"}
           icon={"arrow-back"}
@@ -170,7 +171,8 @@ export default function ListPasien() {
             <ScrollView
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }>
+              }
+            >
               <View style={{ alignItems: "center", alignContent: "center" }}>
                 <Image
                   style={{
@@ -187,7 +189,8 @@ export default function ListPasien() {
                       maxWidth: "85%",
                       textAlign: "center",
                     },
-                  ]}>
+                  ]}
+                >
                   Belum ada data pasien, silakan tambah data atau refresh
                 </Text>
               </View>
@@ -202,10 +205,10 @@ export default function ListPasien() {
         <BottomSheet
           setStatus={setBtmtambah}
           ukuranModal={{ width: "100%", height: "20%" }}
-          judul="Pernah Periksa Sebelumnya?"
-          subjudul="Pasien yang sudah pernah periksa di Amino Hospital dan mempunyai nomor RM pilih Sudah"
+          judul="Sudah Pernah Periksa Sebelumnya?"
+          subjudul="Pasien yang sudah pernah periksa di Amino Hospital dan mempunyai nomor Rekam Medis pilih Sudah"
           buttonKiri="Belum"
-          buttonKanan="Sudah"
+          buttonKanan="Sudah punya RM"
           pressKiri={pasienBaru}
           pressKanan={pasienLama}
         />

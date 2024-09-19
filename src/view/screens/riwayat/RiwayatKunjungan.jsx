@@ -57,10 +57,6 @@ export default function RiwayatKunjungan() {
       // setDataRiwayat(data);
     } catch (error) {
       if (error.response) {
-        // Menangani error yang dikembalikan oleh server
-        // const errorMessage =
-        //   error.response.data.messages.error || "Unknown error";
-
         if (error.response.status === 401) {
           console.error("log1", error.response);
           Alert.alert(
@@ -153,7 +149,8 @@ export default function RiwayatKunjungan() {
             <ButtonPrimary title="Lihat QR Code" onPress={onPress} />
             <TouchableOpacity
               onPress={onPressBatal}
-              style={styles.containerButton}>
+              style={styles.containerButton}
+            >
               <Text style={[GlobalStyles.h4, { color: "#CA0101" }]}>
                 Batalkan
               </Text>
@@ -200,7 +197,8 @@ export default function RiwayatKunjungan() {
       style={[
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <HeaderComponent title={"Riwayat Periksa"} />
       {loading ? (
         <ActivityIndicator animating={true} color={WARNA.primary} />
@@ -219,7 +217,8 @@ export default function RiwayatKunjungan() {
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
+          }
+        >
           <View style={{ alignItems: "center", alignContent: "center" }}>
             <Image
               style={{
@@ -236,7 +235,8 @@ export default function RiwayatKunjungan() {
                   maxWidth: "85%",
                   textAlign: "center",
                 },
-              ]}>
+              ]}
+            >
               Belum ada riwayat periksa, silakan mendaftar
             </Text>
           </View>
@@ -252,9 +252,11 @@ export default function RiwayatKunjungan() {
             width: "90%",
             height: "45%",
             backgroundColor: "white",
-          }}>
+          }}
+        >
           <Dialog.Title
-            style={GlobalStyles.h2}>{`QR ${selectedKodeBooking}`}</Dialog.Title>
+            style={GlobalStyles.h2}
+          >{`QR ${selectedKodeBooking}`}</Dialog.Title>
           <Dialog.Content style={styles.dialogContentContainer}>
             <GenerateQRCode size={200} value={selectedKodeBooking} />
           </Dialog.Content>
