@@ -7,8 +7,6 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import GlobalStyles from "../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
