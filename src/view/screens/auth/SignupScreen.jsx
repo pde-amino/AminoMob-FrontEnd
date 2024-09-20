@@ -59,6 +59,9 @@ const SignupScreen = () => {
   const [confPasswordError, setConfPasswordError] = useState("");
   const [noHP, setHP] = useState("");
   const [noKTP, setKTP] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [ktpError, setKtpError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
   const [nmLengkap, setNama] = useState("");
   const [checked, setChecked] = useState(false);
 
@@ -152,6 +155,17 @@ const SignupScreen = () => {
     }
   };
 
+  const isFormInvalid =
+    !nmLengkap ||
+    !noKTP ||
+    !noHP ||
+    !!passwordError ||
+    !!confPasswordError ||
+    nameError ||
+    ktpError ||
+    phoneError ||
+    !checked;
+
   return (
     <SafeAreaView style={GlobalStyles.utama}>
       <StatusBar
@@ -185,6 +199,7 @@ const SignupScreen = () => {
               type={"nama"}
               value={nmLengkap}
               onChangeText={setNama}
+              onErrorChange={setNameError}
             />
             <TextInputIconComponent
               label={"No KTP"}
@@ -192,6 +207,7 @@ const SignupScreen = () => {
               value={noKTP}
               inputMode={"numeric"}
               onChangeText={setKTP}
+              onErrorChange={setKtpError}
             />
             <TextInputIconComponent
               label={"No Handphone"}
@@ -200,6 +216,7 @@ const SignupScreen = () => {
               inputMode={"numeric"}
               value={noHP}
               onChangeText={setHP}
+              onErrorChange={setPhoneError}
             />
 
             <TextInputIconComponent
@@ -254,14 +271,7 @@ const SignupScreen = () => {
                   ]
                 );
               }}
-              disabled={
-                !nmLengkap ||
-                !noKTP ||
-                !noHP ||
-                !!passwordError ||
-                !!confPasswordError ||
-                !checked
-              }
+              disabled={isFormInvalid}
             />
           </View>
 

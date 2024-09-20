@@ -140,6 +140,7 @@ export default GlobalStyles = StyleSheet.create({
   //CEKBOX
   cekBox: {
     flexDirection: "row-reverse",
+    marginHorizontal: -20,
   },
 
   //BUTTON

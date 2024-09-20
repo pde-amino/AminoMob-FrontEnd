@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  View,
-  BackHandler,
-  Platform,
-  StatusBar,
-  Button,
-  PermissionsAndroid,
-} from "react-native";
+import { View, BackHandler, StatusBar, PermissionsAndroid } from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 
@@ -81,9 +74,12 @@ const WebViewScreen = () => {
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
       <WebView
+        originWhitelist={["http://103.47.60.195:5921"]}
         ref={webViewRef}
         source={{ uri: "http://103.47.60.195:5921/mobileLaporBoss/" }}
         onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
+        // javaScriptEnabled={false}
+        cacheEnabled={false}
       />
     </View>
   );

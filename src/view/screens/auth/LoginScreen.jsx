@@ -7,6 +7,7 @@ import {
   Alert,
   ActivityIndicator,
   StatusBar,
+  Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -18,8 +19,8 @@ import GlobalStyles from "../../../style/GlobalStyles";
 import { BASE_URL } from "../../../contex/Config";
 import * as Network from "expo-network";
 import * as SecureStore from "expo-secure-store";
-import NetInfo from "@react-native-community/netinfo";
-import GetIPButton from "../../../components/GetIpButton";
+// import NetInfo from "@react-native-community/netinfo";
+// import GetIPButton from "../../../components/GetIpButton";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -220,6 +221,7 @@ const LoginScreen = () => {
               password={true}
               value={password}
               onChangeText={handlePasswordChange}
+              onSubmitEditing={handleSubmit}
             />
 
             <View
