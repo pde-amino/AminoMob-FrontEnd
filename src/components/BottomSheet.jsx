@@ -68,9 +68,12 @@ const BottomSheet = ({
     <Pressable onPress={closeModal} style={styles.backdrop}>
       <Pressable style={ukuranModal}>
         <Animated.View
-          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}>
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>{judul}</Text>
-          <Text style={{ fontSize: 14, color: "grey", marginTop: 6 }}>
+          style={[styles.bottomSheet, { transform: [{ translateY: slide }] }]}
+        >
+          <Text style={GlobalStyles.h2}>{judul}</Text>
+          <Text
+            style={(GlobalStyles.textBiasa, { marginTop: 10, lineHeight: 20 })}
+          >
             {subjudul}
           </Text>
           {list ? (
@@ -106,7 +109,8 @@ const BottomSheet = ({
                 flexDirection: "row",
                 justifyContent: "center",
                 gap: 8,
-              }}>
+              }}
+            >
               <TouchableOpacity style={styles.btnKiri} onPress={pressKiri}>
                 <Text style={[GlobalStyles.h4, { color: WARNA.primary }]}>
                   {buttonKiri}

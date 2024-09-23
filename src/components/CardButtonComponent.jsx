@@ -7,8 +7,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import GlobalStyles from "../style/GlobalStyles";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 
@@ -29,8 +28,17 @@ const CardButtonComponent = ({
           <Image style={styles.img} resizeMode={"cover"} source={imgSource} />
 
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description}>{description}</Text>
+            <Text
+              style={[
+                GlobalStyles.h2,
+                { color: WARNA.white, fontWeight: "bold" },
+              ]}
+            >
+              {title}
+            </Text>
+            <Text style={[GlobalStyles.textBiasa, { color: WARNA.white }]}>
+              {description}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -63,17 +71,9 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     padding: 4,
-    gap: 2,
+    gap: 10,
+    maxWidth: "65%",
     // backgroundColor: "purple",
-  },
-  title: {
-    fontSize: 18,
-    color: WARNA.white,
-    fontWeight: "bold",
-  },
-  description: {
-    fontSize: 12,
-    color: WARNA.white,
   },
   img: {
     height: 100,

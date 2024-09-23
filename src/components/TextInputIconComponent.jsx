@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Dimensions, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+  Keyboard,
+} from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import GlobalStyles from "../style/GlobalStyles";
 
@@ -20,7 +26,7 @@ const validateInput = (input, type) => {
     }
     return input.length < 11 ? "Jumlah nomor HP harus lebih dari 11 digit" : "";
   } else if (type === "ktp") {
-    return input.length === 16 ? "" : "Jumlah NIK harus sesuai";
+    return input.length === 16 ? "" : "Pastikan jumlah NIK sesuai";
   }
   return "";
 };
@@ -34,6 +40,8 @@ const TextInputIconComponent = ({
   password = false,
   value = "",
   inputMode = "text",
+  onSubmitEditing,
+  onErrorChange,
 }) => {
   const [text, setText] = useState(value);
   const [error, setError] = useState("");
@@ -43,8 +51,22 @@ const TextInputIconComponent = ({
     setText(input);
     const validationError = validateInput(input, type);
     setError(validationError);
+
+    if (onErrorChange) {
+      onErrorChange(!!validationError);
+    }
+
     if (onChangeText) {
       onChangeText(input);
+    }
+  };
+
+  const handleKeyPress = ({ nativeEvent }) => {
+    if (nativeEvent.key === "Done") {
+      if (onSubmitEditing) {
+        onSubmitEditing(); // Memanggil onSubmitEditing jika Enter ditekan
+        Keyboard.dismiss(); // Menyembunyikan keyboard
+      }
     }
   };
 
@@ -75,6 +97,9 @@ const TextInputIconComponent = ({
         secureTextEntry={secureTextEntry}
         inputMode={inputMode}
         disabled={disable}
+        returnKeyType="done"
+        onKeyPress={handleKeyPress}
+        onSubmitEditing={onSubmitEditing}
       />
       {password ? (
         <TouchableOpacity style={{ margin: 5 }} onPress={toggleSecureTextEntry}>

@@ -1,13 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  View,
-  BackHandler,
-  Text,
-  Button,
-  StyleSheet,
-  SafeAreaView,
-  Platform,
-} from "react-native";
+import { View, BackHandler, StatusBar, PermissionsAndroid } from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 import { CHAT_AI, LAPOR_AMINO } from "../../../contex/Config";
@@ -18,8 +10,52 @@ const WebViewScreen = () => {
   const [canGoBack, setCanGoBack] = useState(false);
   const [error, setError] = useState(false);
   const navigation = useNavigation();
+  const [cameraPermission, setCameraPermission] = useState(false);
+  const [storagePermission, setStoragePermission] = useState(false);
+
+  const requestCameraAndStoragePermission = async () => {
+    try {
+      // Meminta izin kamera
+      const cameraGranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Camera Permission",
+          message: "We need access to your camera to take photos",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+
+      // Meminta izin penyimpanan
+      const storageGranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        {
+          title: "Storage Permission",
+          message: "We need access to your media storage to select images",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+
+      if (
+        cameraGranted === PermissionsAndroid.RESULTS.GRANTED &&
+        storageGranted === PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        Alert.alert("Camera and Storage permissions granted");
+      } else {
+        Alert.alert("Permissions denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   useEffect(() => {
+    // if (Platform.OS === "android") {
+    //   requestCameraAndStoragePermission();
+    // }
     const onBackPress = () => {
       if (canGoBack) {
         webViewRef.current.goBack();
@@ -47,44 +83,17 @@ const WebViewScreen = () => {
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}>
-      {error ? (
-        // If an error occurs, show a friendly error message
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            Oops! Halaman ini sedang dalam pemeliharaan.
-          </Text>
-          <Text style={styles.errorText}>Coba lagi nanti.</Text>
-          {/* <Button title="Coba Lagi" onPress={reloadWebView} /> */}
-        </View>
-      ) : (
-        // Show WebView if there's no error
-        // <WebView
-        //   ref={webViewRef}
-        //   source={{ uri: "http://103.47.60.195:5921/mobileLaporBoss/" }}
-        //   onNavigationStateChange={(navState) =>
-        //     setCanGoBack(navState.canGoBack)
-        //   }
-        //   onError={() => setError(true)} // Handle general network errors
-        //   onHttpError={() => setError(true)} // Handle HTTP errors
-        // />
-
-        <WebView
-          ref={webViewRef}
-          source={{ uri: LAPOR_AMINO }}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          onNavigationStateChange={(navState) =>
-            setCanGoBack(navState.canGoBack)
-          }
-          userAgent={customUserAgent} // Custom user agent to disguise the request
-        />
-      )}
-    </SafeAreaView>
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle={"dark-content"} />
+      <WebView
+        originWhitelist={["http://103.47.60.195:5921"]}
+        ref={webViewRef}
+        source={{ uri: "http://103.47.60.195:5921/mobileLaporBoss/" }}
+        onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
+        // javaScriptEnabled={false}
+        cacheEnabled={false}
+      />
+    </View>
   );
 };
 

@@ -110,6 +110,7 @@ export default GlobalStyles = StyleSheet.create({
   textBiasa: {
     fontSize: hp(1.6),
     color: "#3E3E3E",
+    lineHeight: 16,
   },
   textBold: {
     fontSize: hp(1.6),
@@ -139,6 +140,7 @@ export default GlobalStyles = StyleSheet.create({
   //CEKBOX
   cekBox: {
     flexDirection: "row-reverse",
+    marginHorizontal: -20,
   },
 
   //BUTTON
