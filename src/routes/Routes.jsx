@@ -47,6 +47,7 @@ import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
 import FloatingButton from "../components/FloatingButton";
+import AIScreen from "../view/screens/layanan/AIScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -122,6 +123,7 @@ export default function Routes() {
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
         <Stack.Screen name="ChatAI" component={ChatAI} />
+        <Stack.Screen name="AI" component={AIScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="LupaPassword" component={LupaPassword} />
         <Stack.Screen name="Profile" component={ProfileScreen} />

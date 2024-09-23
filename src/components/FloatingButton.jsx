@@ -21,7 +21,7 @@ const FloatingButton = () => {
           open={open}
           visible
           fabStyle={{ backgroundColor: "#06b8ac" }}
-          icon={open ? "close-circle-outline" : "chat-processing"}
+          icon={open ? "close-circle-outline" : "face-agent"}
           actions={[
             {
               icon: "face-agent",
@@ -57,7 +57,7 @@ const FloatingButton = () => {
               color: "#06b8ac",
             },
             {
-              icon: "message-text",
+              icon: "chat-processing-outline",
               label: "Chat AI Otomatis",
               labelStyle: { color: "#243b39", letterSpacing: 1 },
               containerStyle: {
@@ -66,6 +66,17 @@ const FloatingButton = () => {
               style: { backgroundColor: "#fff" },
               color: "#06b8ac",
               onPress: () => navigation.replace("ChatAI"),
+            },
+            {
+              icon: "chat-processing-outline",
+              label: "AI",
+              labelStyle: { color: "#243b39", letterSpacing: 1 },
+              containerStyle: {
+                backgroundColor: "#fff",
+              },
+              style: { backgroundColor: "#fff" },
+              color: "#06b8ac",
+              onPress: () => navigation.replace("AI"),
             },
           ]}
           onStateChange={onStateChange}
