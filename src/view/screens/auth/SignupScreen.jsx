@@ -212,7 +212,7 @@ const SignupScreen = () => {
             <TextInputIconComponent
               label={"No Handphone"}
               type={"nomor"}
-              placeholder="Pastikan nomor dapat dihubungi"
+              placeholder="Cth : 08xxxxxxxxxx"
               inputMode={"numeric"}
               value={noHP}
               onChangeText={setHP}

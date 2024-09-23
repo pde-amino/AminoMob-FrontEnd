@@ -492,7 +492,8 @@ Jam Sore (14:00:00 - 18:00:00)`);
           {
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           },
-        ]}>
+        ]}
+      >
         <ConfirmModal
           list={modalList}
           listData={pilihan == "poli" ? datas : filtDokter}
