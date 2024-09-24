@@ -93,7 +93,7 @@ export default function EditProfileScreen() {
     } catch (error) {
       const errorMessage =
         error.response?.data?.messages?.error || "Unknown error";
-      Alert.alert("Error", `Terjadi kesalahan: ${errorMessage}`);
+      Alert.alert("Error", `Terjadi kesalahan`);
     }
   };
 
@@ -110,7 +110,8 @@ export default function EditProfileScreen() {
       style={[
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <View style={[styles.header]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.headerText}>Batal</Text>
@@ -174,7 +175,8 @@ export default function EditProfileScreen() {
 
       <TouchableOpacity
         style={styles.changePasswordContainer}
-        onPress={() => navigation.navigate("ChangePasswordScreen")}>
+        onPress={() => navigation.navigate("ChangePasswordScreen")}
+      >
         <Text style={styles.changePasswordText}>Ubah Kata Sandi</Text>
       </TouchableOpacity>
     </SafeAreaView>

@@ -48,11 +48,22 @@ const HomeScreen = () => {
     setRefreshing(false);
   };
 
+  const checkAndOpenApp = async () => {
+    const packageName = "app.bpjs.mobile";
+    const appLink = `intent://${packageName}#Intent;scheme=package;end`;
+    const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
+
+    try {
+      await Linking.openURL(appLink);
+    } catch (error) {
+      Linking.openURL(playStoreLink);
+    }
+  };
+
   const alertMJKN = () => {
     Alert.alert(
       "Informasi",
-      // "Saat ini Layanan BPJS hanya bisa menggunakan aplikasi Mobile JKN",
-      "Saat ini layanan pendaftaran Pasien BPJS Menggunakan Aplikasi Mobile JKN. Buka MJKN?",
+      "Saat ini layanan pendaftaran Pasien BPJS hanya melalui Aplikasi Mobile JKN. Buka MJKN?",
       [
         {
           text: "Nanti",
@@ -64,18 +75,6 @@ const HomeScreen = () => {
         cancelable: true,
       }
     );
-  };
-
-  const checkAndOpenApp = async () => {
-    const packageName = "app.bpjs.mobile";
-    const appLink = `intent://${packageName}#Intent;scheme=package;end`;
-    const playStoreLink = `https://play.google.com/store/apps/details?id=${packageName}`;
-
-    try {
-      await Linking.openURL(appLink);
-    } catch (error) {
-      Linking.openURL(playStoreLink);
-    }
   };
 
   const Menus = [

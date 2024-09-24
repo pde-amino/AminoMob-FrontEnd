@@ -78,7 +78,8 @@ export default function HomeTabs() {
           elevation: 2,
           padding: 10,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },

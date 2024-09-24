@@ -101,79 +101,30 @@ const LoginScreen = () => {
           setAuth(userData);
           setLoading(false);
           navigation.replace("Home Screen");
-        })
-        .catch((error) => {
-          setLoading(false);
-
-          // Jika status 429 (Too Many Requests)
-          if (error.response && error.response.status === 429) {
-            Alert.alert("Peringatan", "Anda telah melebihi batas percobaan.");
-          } else if (error.response && error.response.status === 401) {
-            // Jika error status 401 (Unauthorized)
-
-            // console.log(error.response.data.messages.error);
-            if (error.response.data.messages.error === "User belum aktif") {
-              Alert.alert(
-                "Upss!",
-                "Status User Anda Belum Aktif, Mohon Ulangi Pendaftaran setelah Jam 12 Malam. Pastikan Anda memasukan kode OTP yang dikirim melalui SMS untuk mengaktifkan Akun.",
-                [
-                  {
-                    text: "Mengerti",
-                  },
-                  // {
-                  //   text: "Masukan Kode Otp",
-                  //   onPress: () =>
-                  //     navigation.navigate("OTPInputScreen"),
-                  // },
-                ],
-                {
-                  cancelable: true,
-                }
-              );
-            } else if (
-              error.response.data.messages.error === "Pengguna tidak ditemukan"
-            ) {
-              Alert.alert("Upss!", "Pengguna tidak ditemukan");
-            } else if (
-              error.response.data.messages.error === "Kata Sandi salah"
-            ) {
-              Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
-            } else {
-              Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
-            }
-
-            // Alert.alert(
-            //   "Maaf",
-            //   `${
-            //     error.response
-            //       ? "Kata Sandi atau Nomor salah"
-            //       : error.message
-            //   }`
-            // );
-          } else {
-            // Error umum lainnya
-            Alert.alert("Upss!", "Kata Sandi atau Nomor salah");
-          }
-
-          // console.log(
-          //   "Error Login:",
-          //   error.response ? error.response.data : error.message
-          // );
         });
     } catch (error) {
-      try {
-        if (error == "AxiosError: Request failed with status code 500") {
-          Alert.alert(
-            "Upss!",
-            "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
-          );
+      console.error("ini error di catch", error.response.status);
+
+      if (error.response && error.response.status === 401) {
+        if (error.response.data.messages.error === "Kata sandi tidak cocok") {
           setLoading(false);
+          Alert.alert("Maaf", "Kata sandi salah");
         } else {
-          Alert.alert("Ups!", "No HP atau password Anda salah");
           setLoading(false);
+          Alert.alert("Ups!", "No HP atau password Anda salah");
         }
-      } catch (error) {
-        Alert.alert("Maaf", "Sepertinya password atau nomor HP anda salah");
+      } else if (error.response && error.response.status === 429) {
+        setLoading(false);
+        Alert.alert(
+          "Ups!",
+          "Anda telah melebihi batas percobaan. Silakan coba lagi setelah 10 menit"
+        );
+      } else if (error.response && error.response.status === 500) {
+        setLoading(false);
+        Alert.alert(
+          "Maaf",
+          "Server sedang dalam pemeliharaan, coba lagi setelah beberapa saat"
+        );
       }
     }
   };
