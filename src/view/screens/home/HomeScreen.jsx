@@ -291,14 +291,6 @@ const HomeScreen = () => {
           ListEmptyComponent={renderEmptyComponent}
         />
       </View>
-      {/* <Portal> */}
-      {/* </Portal> */}
-      {/* 
-      <SpeedDial
-      // overlayColor="#25D366"
-      icon={{ name: "support-agent", color: "#fff" }}
-      onOpen={() => Linking.openURL("https://wa.me/6289515636878")}
-      ></SpeedDial> */}
       {/* </ImageBackground> */}
     </SafeAreaView>
   );

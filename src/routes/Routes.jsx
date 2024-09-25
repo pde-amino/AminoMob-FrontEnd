@@ -47,6 +47,7 @@ import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
 import FloatingButton from "../components/FloatingButton";
+import CobaPlatform from "../view/screens/pendaftaran/CobaPlatform";
 
 const Stack = createNativeStackNavigator();
 
@@ -114,6 +115,7 @@ export default function Routes() {
           component={ChangePasswordForm}
         />
         <Stack.Screen name="Edit Profiles" component={ScreenEditProfile} />
+        <Stack.Screen name="Platforms" component={CobaPlatform} />
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Favorites" component={FavoriteScreen} />
