@@ -47,11 +47,8 @@ import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
 import FloatingButton from "../components/FloatingButton";
-<<<<<<< HEAD
 import CobaPlatform from "../view/screens/pendaftaran/CobaPlatform";
-=======
 import AIScreen from "../view/screens/layanan/AIScreen";
->>>>>>> 8a5f31b1967aec4eb1050de99241d9ac1eb923b1
 
 const Stack = createNativeStackNavigator();
 
