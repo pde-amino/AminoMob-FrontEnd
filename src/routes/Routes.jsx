@@ -47,7 +47,11 @@ import ChangePasswordForm from "../view/screens/auth/ChangePasswordForm";
 import ChatAI from "../view/screens/web/ChatAI";
 import LupaPassword from "../view/screens/auth/LupaPassword";
 import FloatingButton from "../components/FloatingButton";
+<<<<<<< HEAD
 import CobaPlatform from "../view/screens/pendaftaran/CobaPlatform";
+=======
+import AIScreen from "../view/screens/layanan/AIScreen";
+>>>>>>> 8a5f31b1967aec4eb1050de99241d9ac1eb923b1
 
 const Stack = createNativeStackNavigator();
 
@@ -125,6 +129,7 @@ export default function Routes() {
         <Stack.Screen name="DoctorScreen" component={DoctorScreen} />
         <Stack.Screen name="Web View" component={TestingWeb} />
         <Stack.Screen name="ChatAI" component={ChatAI} />
+        <Stack.Screen name="AI" component={AIScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="LupaPassword" component={LupaPassword} />
         <Stack.Screen name="Profile" component={ProfileScreen} />

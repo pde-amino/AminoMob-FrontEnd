@@ -122,7 +122,15 @@ export default function InfoListPasien() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!auth) {
+      Alert.alert(
+        "Perhatian",
+        "Anda belum Login, Silahkan Login terlebih dahulu."
+      );
+      navigation.replace("Login Screen");
+    } else {
+      fetchData();
+    }
   }, []);
 
   const renderItem = ({ item }) => {

@@ -124,7 +124,15 @@ export default function RiwayatKunjungan() {
   };
 
   useEffect(() => {
-    ambilDataRiwayat();
+    if (!auth) {
+      Alert.alert(
+        "Perhatian",
+        "Anda belum Login, Silahkan Login terlebih dahulu."
+      );
+      navigation.replace("Login Screen");
+    } else {
+      ambilDataRiwayat();
+    }
   }, []);
 
   const Item = ({ item, onPress, onPressBatal }) => (

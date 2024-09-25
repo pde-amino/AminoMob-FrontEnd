@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, BackHandler, StatusBar, PermissionsAndroid } from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
+import { CHAT_AI, LAPOR_AMINO } from "../../../contex/Config";
+import { StatusBar } from "expo-status-bar";
 
 const WebViewScreen = () => {
   const webViewRef = useRef(null);
   const [canGoBack, setCanGoBack] = useState(false);
+  const [error, setError] = useState(false);
   const navigation = useNavigation();
   const [cameraPermission, setCameraPermission] = useState(false);
   const [storagePermission, setStoragePermission] = useState(false);
@@ -70,6 +73,15 @@ const WebViewScreen = () => {
     };
   }, [canGoBack]);
 
+  // Function to reload the WebView
+  // const reloadWebView = () => {
+  //   setError(false); // Reset error state
+  //   webViewRef.current.reload(); // Reload WebView
+  // };
+
+  const customUserAgent =
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle={"dark-content"} />
@@ -84,5 +96,19 @@ const WebViewScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+});
 
 export default WebViewScreen;
