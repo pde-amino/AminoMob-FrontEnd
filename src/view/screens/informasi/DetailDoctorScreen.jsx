@@ -68,11 +68,7 @@ export default function DetailDoctorScreen() {
   const data = route.params.doctorData;
 
   return (
-    <SafeAreaView
-      style={[
-        GlobalStyles.utama,
-        // { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+    <SafeAreaView style={[GlobalStyles.utama]}>
       <HeaderComponent
         title="Detail Dokter"
         icon={"arrow-back"}
@@ -84,7 +80,7 @@ export default function DetailDoctorScreen() {
           source={{ uri: data.image }}
           size={180}
           style={{
-            backgroundColor: WARNA.primary,
+            backgroundColor: "#559EE3",
           }}
         />
       </View>
@@ -94,24 +90,27 @@ export default function DetailDoctorScreen() {
           style={{
             alignItems: "center",
             paddingVertical: 20,
-          }}>
+          }}
+        >
           <Text
-            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}>
+            style={[GlobalStyles.h2, { textAlign: "center", maxWidth: "80%" }]}
+          >
             {data.nm_dokter}
           </Text>
           <Text
             style={[
               GlobalStyles.h3,
               { textAlign: "center", maxWidth: "80%", fontWeight: "normal" },
-            ]}>
+            ]}
+          >
             {getSpecializationText(data.nm_dokter)}
           </Text>
-          <AirbnbRating
+          {/* <AirbnbRating
             showRating={false}
             size={20}
             defaultRating={5}
             isDisabled={true}
-          />
+          /> */}
         </View>
       </View>
 
@@ -121,8 +120,9 @@ export default function DetailDoctorScreen() {
         </Text>
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
-          Pagi
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
+          Pagi 07:00-13.00
         </Text>
         <FlatList
           style={{ width: "100%", paddingLeft: 15 }}
@@ -144,8 +144,9 @@ export default function DetailDoctorScreen() {
         />
 
         <Text
-          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}>
-          Sore
+          style={[GlobalStyles.h4, { paddingHorizontal: 20, marginBottom: 8 }]}
+        >
+          Sore 14:00-18:00
         </Text>
         <FlatList
           style={{ width: "100%", paddingLeft: 15 }}

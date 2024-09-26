@@ -34,24 +34,24 @@ const { width } = Dimensions.get("window");
 const SignupScreen = () => {
   const navigation = useNavigation();
   const [showPicker, setShowPicker] = useState(false);
-  const toggleShowDate = () => {
-    setShowPicker(!showPicker);
-  };
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const berubah = ({ type }, selectedDate) => {
-    if (type == "set") {
-      const currentDate = selectedDate;
-      setDate(currentDate);
+  // const toggleShowDate = () => {
+  //   setShowPicker(!showPicker);
+  // };
+  // const [dateOfBirth, setDateOfBirth] = useState("");
+  // const berubah = ({ type }, selectedDate) => {
+  //   if (type == "set") {
+  //     const currentDate = selectedDate;
+  //     setDate(currentDate);
 
-      if (Platform.OS === "android") {
-        toggleShowDate();
-        setDateOfBirth(currentDate.toISOString().split("T")[0]);
-      }
-    } else {
-      toggleShowDate();
-    }
-  };
-  const [date, setDate] = useState(new Date());
+  //     if (Platform.OS === "android") {
+  //       toggleShowDate();
+  //       setDateOfBirth(currentDate.toISOString().split("T")[0]);
+  //     }
+  //   } else {
+  //     toggleShowDate();
+  //   }
+  // };
+  // const [date, setDate] = useState(new Date());
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfPassword] = useState("");

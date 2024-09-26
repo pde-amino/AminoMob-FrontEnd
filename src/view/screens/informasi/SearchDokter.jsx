@@ -71,7 +71,7 @@ export default function SearchDokter() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={GlobalStyles.utama}>
       <HeaderComponent
         title="Daftar Dokter"
         icon={"arrow-back"}
@@ -96,7 +96,8 @@ export default function SearchDokter() {
       <View
         style={{
           alignItems: "center",
-        }}>
+        }}
+      >
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

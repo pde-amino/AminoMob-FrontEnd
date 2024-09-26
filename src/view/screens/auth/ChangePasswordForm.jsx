@@ -49,7 +49,7 @@ const ChangePasswordForm = ({ onChangePassword }) => {
           // navigation.replace("Home Screen");
           navigation.goBack();
 
-          Alert.alert("Success", "Kata Sandi berhasil diubah");
+          Alert.alert("Sukses", "Kata Sandi berhasil diubah");
 
           await axios.get(`${BASE_URL}/cariId/${auth.id}`, {
             headers: {
@@ -97,7 +97,8 @@ const ChangePasswordForm = ({ onChangePassword }) => {
       style={[
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <View style={[styles.header]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.headerText}>Batal</Text>
@@ -134,7 +135,8 @@ const ChangePasswordForm = ({ onChangePassword }) => {
         <Button
           mode="contained"
           onPress={handleChangePassword}
-          style={styles.button}>
+          style={styles.button}
+        >
           Ubah Kata Sandi
         </Button>
         {/* <TouchableOpacity

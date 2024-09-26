@@ -8,7 +8,6 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import { Button } from "react-native-paper";
 import GenerateQRCode from "../../../contex/GenerateQRCode";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -140,7 +139,8 @@ const BookingScreen = () => {
                   marginVertical: 12,
                   padding: 20,
                   gap: 24,
-                }}>
+                }}
+              >
                 <GenerateQRCode value={transactionData.kdBook} size={150} />
                 <Text style={GlobalStyles.h2}>{transactionData.kdBook}</Text>
               </View>

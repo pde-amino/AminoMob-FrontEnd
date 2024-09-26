@@ -89,7 +89,7 @@ const LupaPassword = () => {
         }
       );
 
-      console.log("handleSubmit", response.data);
+      // console.log("handleSubmit", response.data);
 
       if (response.data.status === true) {
         setIdUser(response.data.id);
@@ -99,18 +99,18 @@ const LupaPassword = () => {
         setmodalOTP(true);
       } else {
         setLoading(false);
-        console.log(response.data.status);
+        // console.log(response.data.status);
       }
     } catch (error) {
       if (error == "AxiosError: Request failed with status code 500") {
-        console.error(error);
+        // console.error(error);
         Alert.alert(
           "Upss!",
-          "Sepertinya Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
+          "Kami sedang melakukan pemeliharaan sistem, mohon ulangi beberapa saat lagi"
         );
         setLoading(false);
       } else {
-        console.error(error);
+        // console.error(error);
         Alert.alert(
           "Ups!",
           "No HP atau NIK Anda belum terdaftar, silakan daftar terlebih dahulu"
@@ -127,7 +127,7 @@ const LupaPassword = () => {
         userid: OTP_ID,
         password: OTP_PASS,
         msisdn: username,
-        message: `Kode OTP Amino Mobile Anda adalah ${otp}. Jangan bagikan kode OTP Anda pada siapapun, OTP Berlaku 2 Menit.`,
+        message: `OTP Amino Mobile Ganti Password Anda adalah ${otp}. Jangan bagikan kode OTP Anda pada siapapun, OTP berlaku 2 Menit.`,
         sender: OTP_SENDER,
         division: OTP_DIVISION,
       },
@@ -167,11 +167,11 @@ const LupaPassword = () => {
       if (responseVerify.data.status === true) {
         setmodalOTP(false);
         Alert.alert("Success", "Kode OTP valid");
-        console.log("verifyOTP", responseVerify.data);
+        // console.log("verifyOTP", responseVerify.data);
         setmodalPass(true);
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       Alert.alert("Error", "Gagal menyimpan data pengguna. Silakan coba lagi.");
     }
   };
@@ -205,24 +205,12 @@ const LupaPassword = () => {
     }
   };
 
-  // const submitCoba = () => {
-  //   setmodalOTP(true);
-  //   console.log("no hp", username);
-  //   console.log("no nik", nik);
-  // };
-
-  // const submitOTP = () => {
-  //   setmodalOTP(false);
-  //   setmodalPass(true);
-  // };
-
   const maskedUsername = (username) => {
     if (username.length < 7) {
       // Jika kurang dari 7 karakter, kembalikan username apa adanya
       return username;
     }
 
-    // Ambil 3 karakter pertama dan 4 karakter terakhir, sembunyikan sisanya
     const firstPart = username.slice(0, 3);
     const lastPart = username.slice(-4);
     const hiddenPart = "*".repeat(username.length - 7); // Sembunyikan sisanya dengan *
