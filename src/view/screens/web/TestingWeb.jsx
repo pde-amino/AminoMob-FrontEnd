@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, BackHandler, StatusBar, PermissionsAndroid } from "react-native";
+import {
+  View,
+  BackHandler,
+  StatusBar,
+  PermissionsAndroid,
+  StyleSheet,
+} from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 import { CHAT_AI, LAPOR_AMINO } from "../../../contex/Config";
-import { StatusBar } from "expo-status-bar";
 
 const WebViewScreen = () => {
   const webViewRef = useRef(null);

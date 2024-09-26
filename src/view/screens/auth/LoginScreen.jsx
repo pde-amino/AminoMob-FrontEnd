@@ -30,6 +30,8 @@ const LoginScreen = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [loginDisable, setLoginDisable] = useState(false);
 
   const navigation = useNavigation();
   const { auth, setAuth } = useContext(AuthContex);
@@ -50,6 +52,27 @@ const LoginScreen = () => {
     } else {
       setPasswordError("");
     }
+  };
+
+  const handleTooManyRequests = () => {
+    setLoading(false);
+    Alert.alert(
+      "Peringatan!",
+      "Anda melebihi batas percobaan, coba kembali dalam 10 menit"
+    );
+    setLoginDisable(true);
+    let countdown = 600;
+    setTimer(countdown);
+
+    const interval = setInterval(() => {
+      countdown -= 1;
+      setTimer(countdown);
+
+      if (countdown <= 0) {
+        clearInterval(interval);
+        setLoginDisable(false);
+      }
+    }, 1000);
   };
 
   const handleSubmit = async () => {
@@ -114,11 +137,7 @@ const LoginScreen = () => {
           Alert.alert("Ups!", "No HP atau password Anda salah");
         }
       } else if (error.response && error.response.status === 429) {
-        setLoading(false);
-        Alert.alert(
-          "Ups!",
-          "Anda telah melebihi batas percobaan. Silakan coba lagi setelah 10 menit"
-        );
+        handleTooManyRequests();
       } else if (error.response && error.response.status === 500) {
         setLoading(false);
         Alert.alert(
@@ -184,7 +203,7 @@ const LoginScreen = () => {
               <TouchableOpacity
                 onPress={() => navigation.navigate("LupaPassword")}
               >
-                <Text style={GlobalStyles.textLink}>Lupa kata sandi</Text>
+                <Text style={GlobalStyles.textLink}>Lupa password</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -194,8 +213,10 @@ const LoginScreen = () => {
           ) : (
             <>
               <ButtonPrimary
-                title="Masuk"
-                disabled={!!usernameError || !!passwordError}
+                title={
+                  loginDisable ? `Coba lagi dalam ${timer} detik` : "Masuk"
+                }
+                disabled={loginDisable || !!usernameError || !!passwordError}
                 onPress={handleSubmit}
               />
               {/* <GetIPButton /> */}

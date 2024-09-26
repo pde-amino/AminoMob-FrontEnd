@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   disabledButton: {
+    backgroundColor: "#c2c2c2",
     opacity: 1,
   },
 });
