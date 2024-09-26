@@ -15,7 +15,13 @@ import {
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 // const WARNA = { primary: "#B3B8BC", white: "#fff" };
 
-export default function HeaderComponent({ title, icon, onPress }) {
+export default function HeaderComponent({
+  title,
+  icon,
+  onPress,
+  rightOnPress,
+  rightIcon,
+}) {
   // const HEADER_HEIGHT =
   //   Platform.OS === "android" ? hp(8) + StatusBar.currentHeight : hp(9);
 
@@ -34,6 +40,11 @@ export default function HeaderComponent({ title, icon, onPress }) {
         leftComponent={
           <TouchableOpacity onPress={onPress}>
             <Icon name={icon} color="#fff" />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <TouchableOpacity onPress={rightOnPress}>
+            <Icon name={rightIcon} color="#fff" />
           </TouchableOpacity>
         }
         centerComponent={{ text: title, style: styles.heading }}

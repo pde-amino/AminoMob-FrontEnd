@@ -56,7 +56,7 @@ const ArticleKesehatan = ({ route = { params: { item: {} } } }) => {
         onPress={() => navigation.goBack()}
       />
       <ScrollView style={styles.container}>
-        <Image source={{ uri: item.image_url }} style={styles.image} />
+        <Image source={{ uri: item.image }} style={styles.image} />
 
         <Text style={[GlobalStyles.h1, { marginBottom: 8 }]}>{item.title}</Text>
         <Text style={[GlobalStyles.h4, { fontWeight: "normal" }]}>

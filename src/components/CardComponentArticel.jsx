@@ -6,14 +6,20 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import GlobalStyles from "../style/GlobalStyles";
 
-const CardComponentArticel = ({ imgSource, title, description, data }) => {
+const CardComponentArticel = ({
+  imgSource,
+  title,
+  description,
+  shortDesc,
+  data,
+}) => {
   const [readMore, setReadMore] = useState(false);
   const navigation = useNavigation();
 
   return (
     <TouchableRipple onPress={() => navigation.navigate("Article", data)}>
       <Card style={styles.card}>
-        <Image source={{ uri: data.item.image_url }} style={styles.image} />
+        <Image source={imgSource} style={styles.image} />
         <View style={styles.content}>
           <Text numberOfLines={2} ellipsizeMode="tail" style={GlobalStyles.h4}>
             {title}
@@ -21,9 +27,8 @@ const CardComponentArticel = ({ imgSource, title, description, data }) => {
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
-            style={GlobalStyles.textBiasa}
-          >
-            {data.item.shortDesc}
+            style={GlobalStyles.textBiasa}>
+            {shortDesc}
           </Text>
         </View>
       </Card>
