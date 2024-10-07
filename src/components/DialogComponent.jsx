@@ -1,4 +1,3 @@
-// import { StyleSheet } from "react-native";
 import { Dialog, Portal } from "react-native-paper";
 import React, { useState } from "react";
 import { View, Text, Modal, Button, StyleSheet } from "react-native";
@@ -31,7 +30,8 @@ const SimpleDialog = () => {
       <Modal
         transparent={true}
         visible={isVisible}
-        onRequestClose={closeDialog}>
+        onRequestClose={closeDialog}
+      >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>
