@@ -77,17 +77,21 @@ export default function HomeTabs() {
           borderTopWidth: 1,
           elevation: 2,
           padding: 10,
+          backgroundColor: "#FBFCFE",
         },
-      }}
-    >
+      }}>
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
+          tabBarActiveTintColor: "#2D9CDB",
+          tabBarInactiveTintColor: "#828282",
+          tabBarActiveTintColor: "#2D9CDB",
+          tabBarInactiveTintColor: "#828282",
           tabBarIcon: ({ focused }) => (
             <Icon
               source={focused ? "home" : "home-outline"}
               size={28}
-              color="grey"
+              color={focused ? "#2D9CDB" : "#4A4A4A"}
             />
           ),
         }}
@@ -98,11 +102,13 @@ export default function HomeTabs() {
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
+          tabBarActiveTintColor: "#2D9CDB",
+          tabBarInactiveTintColor: "#828282",
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               source={focused ? "book" : "book-outline"}
               size={24}
-              color="grey"
+              color={focused ? "#2D9CDB" : "#4A4A4A"}
             />
           ),
         }}
@@ -112,11 +118,13 @@ export default function HomeTabs() {
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
+          tabBarActiveTintColor: "#2D9CDB",
+          tabBarInactiveTintColor: "#828282",
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               source={focused ? "text-box" : "text-box-outline"}
               size={24}
-              color="grey"
+              color={focused ? "#2D9CDB" : "#4A4A4A"}
             />
           ),
         }}
@@ -126,11 +134,13 @@ export default function HomeTabs() {
       <Tabs.Screen
         options={{
           tabBarLabelStyle: { fontSize: 12 },
+          tabBarActiveTintColor: "#2D9CDB",
+          tabBarInactiveTintColor: "#828282",
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               source={focused ? "account" : "account-outline"}
               size={28}
-              color="grey"
+              color={focused ? "#2D9CDB" : "#4A4A4A"}
             />
           ),
         }}

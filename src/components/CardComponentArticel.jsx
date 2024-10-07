@@ -18,7 +18,7 @@ const CardComponentArticel = ({
 
   return (
     <TouchableRipple onPress={() => navigation.navigate("Article", data)}>
-      <Card style={styles.card}>
+      <Card style={[styles.card, { backgroundColor: "#F0FbFF" }]}>
         <Image source={imgSource} style={styles.image} />
         <View style={styles.content}>
           <Text numberOfLines={2} ellipsizeMode="tail" style={GlobalStyles.h4}>
