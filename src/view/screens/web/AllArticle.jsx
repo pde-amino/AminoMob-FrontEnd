@@ -16,7 +16,7 @@ import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { useNavigation } from "@react-navigation/native";
-import { BASE_ARTICLE_ALL } from "../../../contex/Config";
+import { BASE_ARTICLE } from "../../../contex/Config";
 
 const Item = ({ item, onPress }) => (
   <TouchableRipple style={{ backgroundColor: "red" }}>
@@ -43,7 +43,7 @@ const AllArticle = () => {
 
   const fetchArticles = async () => {
     try {
-      const response = await axios.get(BASE_ARTICLE_ALL);
+      const response = await axios.get(BASE_ARTICLE);
       setArticles(response.data);
       setLoading(false);
     } catch (error) {
@@ -64,9 +64,10 @@ const AllArticle = () => {
 
   const renderArticleItem = ({ item }) => (
     <CardComponentArticel
-      imgSource={{ uri: item.image_url }}
+      imgSource={{ uri: item.image }}
       title={item.title}
       description={item.content}
+      shortDesc={item.shortDesc}
       data={{ item }}
     />
   );
