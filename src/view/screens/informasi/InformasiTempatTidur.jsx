@@ -7,6 +7,7 @@ import {
   FlatList,
   SafeAreaView,
   Platform,
+  StatusBar,
 } from "react-native";
 import axios from "axios";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -18,8 +19,6 @@ import CardListComponent from "../../../components/CardListComponent";
 import SearchComponent from "../../../components/SearchComponent";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-
 const InformasiTempatTidur = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +54,8 @@ const InformasiTempatTidur = () => {
       style={[
         // GlobalStyles.Content,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <HeaderComponent
         title="Informasi Tempat Tidur"
         icon={"arrow-back"}

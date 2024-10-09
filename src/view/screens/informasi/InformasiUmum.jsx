@@ -6,13 +6,13 @@ import {
   Linking,
   Alert,
   Platform,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MenuItemComponent from "../../../components/MenuItemComponent";
 import GlobalStyles from "../../../style/GlobalStyles";
-import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "../../../components/HeaderComponent";
-import { StatusBar } from "expo-status-bar";
 
 export default function InformasiUmum() {
   const navigation = useNavigation();

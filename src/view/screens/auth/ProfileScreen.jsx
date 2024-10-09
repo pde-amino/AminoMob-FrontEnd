@@ -11,6 +11,7 @@ import {
   FlatList,
   Button,
   Platform,
+  StatusBar,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Avatar, Divider, Icon, Modal, Portal } from "react-native-paper";
@@ -32,7 +33,6 @@ import {
 import AlertFormComponent from "../../../components/AlertFormComponent";
 import ModalComponent from "../../../components/ModalComponent";
 import CardButtonComponent from "../../../components/CardButtonComponent";
-import { StatusBar } from "expo-status-bar";
 
 const ProfileScreen = () => {
   const { logout, auth } = useContext(AuthContex);
@@ -169,7 +169,8 @@ const ProfileScreen = () => {
       style={[
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}>
+      ]}
+    >
       <HeaderComponent title="Profil" />
       {/* {loading ? (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -221,7 +222,8 @@ const ProfileScreen = () => {
             <View style={{ gap: 12 }}>
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => navigation.replace("Web View")}>
+                onPress={() => navigation.replace("Web View")}
+              >
                 <Icon color="#000" source="chat-alert" size={24} />
                 <Text style={GlobalStyles.textBold}>Lapor Amino</Text>
               </TouchableOpacity>
@@ -233,7 +235,8 @@ const ProfileScreen = () => {
             <>
               <TouchableOpacity
                 style={styles.containerMenu}
-                onPress={() => setConfirmLogout(true)}>
+                onPress={() => setConfirmLogout(true)}
+              >
                 <Icon source={"logout"} color="#430D09" size={24} />
                 <Text style={[GlobalStyles.textBold, { color: "#430D09" }]}>
                   Logout
@@ -243,7 +246,8 @@ const ProfileScreen = () => {
           ) : (
             <TouchableOpacity
               style={styles.containerMenu}
-              onPress={() => navigation.replace("Login Screen")}>
+              onPress={() => navigation.replace("Login Screen")}
+            >
               <Icon source={"login"} color="#0A78E2" size={24} />
               <Text style={[GlobalStyles.textBold, { color: "#0A78E2" }]}>
                 Login Sekarang
@@ -269,7 +273,8 @@ const ProfileScreen = () => {
             <Modal
               visible={dellAccount}
               onDismiss={() => setDellAccount(false)}
-              contentContainerStyle={containerStyle}>
+              contentContainerStyle={containerStyle}
+            >
               <View>
                 <Text style={{ marginBottom: 20, fontWeight: "bold" }}>
                   Pengaturan Akun

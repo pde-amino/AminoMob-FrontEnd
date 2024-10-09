@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../../style/GlobalStyles";
 import { BASE_URL } from "../../../contex/Config";
 import * as Network from "expo-network";
+import DeviceInfo from "react-native-device-info";
 import * as SecureStore from "expo-secure-store";
 // import NetInfo from "@react-native-community/netinfo";
 // import GetIPButton from "../../../components/GetIpButton";
@@ -87,46 +88,52 @@ const LoginScreen = () => {
     try {
       await AsyncStorage.removeItem("userInfo");
       setLoading(true);
-      const ip = await Network.getIpAddressAsync(
-        Network.NetworkStateType.CELLULAR
-      );
+      let ip;
+      try {
+        ip = await Network.getIpAddressAsync(Network.NetworkStateType.CELLULAR);
+      } catch (error) {
+        console.log("Gagal mendapatkan IP:", error);
+        ip = "Unknown";
+      }
 
-      const response = await axios
-        .post(
-          `${BASE_URL}/login`,
-          {
-            user: username,
-            password: password,
-            ip: ip,
+      const ip2 = await DeviceInfo.getIpAddress();
+
+      const response = await axios.post(
+        `${BASE_URL}/login`,
+        {
+          user: username,
+          password: password,
+          ip: ip || ip2,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key":
+              "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key":
-                "8466f6edaf4cbd71b365bb5dba94f176f5e3b6f88cf28361b935dedcf3a34c98",
-            },
-          }
-        )
-        .then(async (response) => {
-          const userInfo = response.data;
+        }
+      );
+      // .then(async (response) => {
+      const userInfo = response.data;
 
-          const userData = {
-            id: userInfo.user.id,
-            status: userInfo.user.status,
-            token: userInfo.user.token,
-            nama: userInfo.user.nama,
-            hp: userInfo.user.hp,
-            level: userInfo.user.level,
-          };
+      const userData = {
+        id: userInfo.user.id,
+        status: userInfo.user.status,
+        token: userInfo.user.token,
+        nama: userInfo.user.nama,
+        hp: userInfo.user.hp,
+        level: userInfo.user.level,
+      };
 
-          storeToken(userData);
-          await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-          setAuth(userData);
-          setLoading(false);
-          navigation.replace("Home Screen");
-        });
+      storeToken(userData);
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setAuth(userData);
+      setLoading(false);
+      navigation.replace("Home Screen");
+      // }
+      // )
     } catch (error) {
-      console.error("ini error di catch", error.response.status);
+      // console.error("ini error di catch", error.response.status);
 
       if (error.response && error.response.status === 401) {
         if (error.response.data.messages.error === "Kata sandi tidak cocok") {

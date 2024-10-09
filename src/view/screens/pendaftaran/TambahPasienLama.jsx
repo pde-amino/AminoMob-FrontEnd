@@ -8,6 +8,7 @@ import {
   Platform,
   Text,
   Alert,
+  StatusBar,
 } from "react-native";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import ButtonPrimary from "../../../components/ButtonPrimary";
@@ -25,7 +26,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import * as Network from "expo-network";
-import { StatusBar } from "expo-status-bar";
 
 const WARNA = {
   primary: "#0A78E2",

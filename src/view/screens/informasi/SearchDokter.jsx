@@ -16,7 +16,6 @@ import { BASE_URL } from "../../../contex/Config";
 import CardButtonNavComponent from "../../../components/CardButtonNavComponent";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
-// import { StatusBar } from "expo-status-bar";
 
 export default function SearchDokter() {
   const WARNA = { primary: "#0A78E2", white: "#fff" };

@@ -17,7 +17,6 @@ import {
 } from "react-native-responsive-screen";
 import { AirbnbRating } from "@rneui/themed";
 import { Avatar } from "react-native-paper";
-// import { StatusBar } from "expo-status-bar";
 
 const getSpecializationText = (doctorName) => {
   if (doctorName.includes("Sp.KJ")) {

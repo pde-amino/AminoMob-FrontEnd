@@ -7,11 +7,11 @@ import {
   StyleSheet,
   SafeAreaView,
   Platform,
+  StatusBar,
 } from "react-native";
 import { WebView } from "react-native-webview";
 import { useNavigation } from "@react-navigation/native";
 import { CHAT_AI } from "../../../contex/Config";
-import { StatusBar } from "expo-status-bar";
 
 const ChatAI = () => {
   const webViewRef = useRef(null);
@@ -48,7 +48,8 @@ const ChatAI = () => {
       style={{
         flex: 1,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}>
+      }}
+    >
       {error ? (
         // If an error occurs, show a friendly error message
         <View style={styles.errorContainer}>

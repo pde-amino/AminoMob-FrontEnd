@@ -50,6 +50,7 @@ const AIScreen = () => {
   const responseAI = (i) => {
     <Text>{i}</Text>;
   };
+
   const addMessage = () => {
     if (!input.trim()) return;
     const userMessage = {

@@ -10,6 +10,7 @@ import {
   Text,
   Alert,
   Button,
+  StatusBar,
 } from "react-native";
 import ButtonPrimary from "../../../components/ButtonPrimary";
 import GlobalStyles from "../../../style/GlobalStyles";
@@ -25,7 +26,7 @@ import ConfirmModal from "../../../components/ConfirmModal";
 import { AuthContex } from "../../../contex/AuthProvider";
 import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import * as Network from "expo-network";
-import { StatusBar } from "expo-status-bar";
+import NotifService from "../../../../NotifService";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -225,6 +226,15 @@ export const PilihPoli = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
+  const notif = new NotifService(
+    (token) => {
+      console.log("Device token:", token);
+    },
+    (notification) => {
+      console.log("Notification received:", notification);
+    }
+  );
+
   const postData = async () => {
     let url, payload;
     const ip = await Network.getIpAddressAsync();
@@ -258,6 +268,13 @@ export const PilihPoli = () => {
           }
         )
         .then((response) => {
+          const title = "Terima Kasih";
+          const message = `Anda berhasil booking untuk ${
+            dataPas.nm_pasien
+          } pada tanggal ${date.toISOString().split("T")[0]} dengan ${dokter}.`;
+
+          // Tampilkan notifikasi lokal dengan pesan custom
+          notif.localNotif(title, message);
           navigation.replace("Booking Screen", response.data);
         })
         .catch((response) => {
@@ -611,6 +628,12 @@ Jam Sore (14:00:00 - 18:00:00)`);
               </View>
             </>
           )}
+          <View style={{ marginTop: 20, marginLeft: 5 }}>
+            <Text style={GlobalStyles.textBiasa}>
+              * Perhatian, pendaftaran melalui Amino Mobile hanya untuk pasien
+              Non BPJS. Silakan menggunakan MJKN untuk pasien BPJS
+            </Text>
+          </View>
         </View>
 
         <View style={GlobalStyles.Content}>
@@ -738,7 +761,6 @@ const styles = StyleSheet.create({
   list: {
     margin: 5,
     paddingBottom: 4,
-    // borderWidth: 1,
     borderBottomWidth: 2,
   },
   itemList: {

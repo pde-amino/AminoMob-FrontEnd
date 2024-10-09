@@ -268,7 +268,7 @@ export const TambahPasien = () => {
         Alert.alert("Error", `Error: ${error.message}`);
       }
     } finally {
-      // navigation.navigate("Home Screen");
+      navigation.navigate("Home Screen");
     }
   };
 
@@ -697,7 +697,7 @@ export const TambahPasien = () => {
               />
             </View>
           </View>
-          <View style={{ marginBottom: 20 }}>
+          <View style={{ margin: 20 }}>
             <Checkbox.Item
               style={GlobalStyles.cekBox}
               color={WARNA.primary}
@@ -708,15 +708,14 @@ export const TambahPasien = () => {
                 setChecked(!checked);
               }}
             />
-            <View style={GlobalStyles.btnFullContainer}>
-              <ButtonPrimary
-                title="Simpan"
-                onPress={postPasienBaru}
-                disabled={
-                  !checked || !hubunganPasien || !nmLengkap || !noKTP || !noHP
-                }
-              />
-            </View>
+
+            <ButtonPrimary
+              title="Simpan"
+              onPress={postPasienBaru}
+              disabled={
+                !checked || !hubunganPasien || !nmLengkap || !noKTP || !noHP
+              }
+            />
           </View>
         </ScrollView>
       </View>
