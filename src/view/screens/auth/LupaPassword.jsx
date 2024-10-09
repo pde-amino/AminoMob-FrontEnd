@@ -283,7 +283,7 @@ const LupaPassword = () => {
             contentContainerStyle={styles.modalView}
             dismissable={false}
           >
-            <Text style={GlobalStyles.h2}>Verifikasi Kode OTP</Text>
+            <Text style={GlobalStyles.h2}>Masukkan OTP</Text>
             <View style={styles.modalContent}>
               <View style={{ alignItems: "center", marginBottom: 15 }}>
                 <Text style={GlobalStyles.textBiasa}>
@@ -351,6 +351,12 @@ const LupaPassword = () => {
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
   modalView: {
     margin: 20,
     backgroundColor: "white",

@@ -11,7 +11,6 @@ import {
   Image,
   Alert,
   Platform,
-  StatusBar,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -22,6 +21,7 @@ import { BASE_URL } from "../../../contex/Config";
 import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { ActivityIndicator, Icon } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>

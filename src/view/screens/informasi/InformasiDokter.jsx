@@ -10,7 +10,6 @@ import {
   SafeAreaView,
   Platform,
   ScrollView,
-  StatusBar,
 } from "react-native";
 import { BASE_URL } from "../../../contex/Config";
 import MenuItemComponent from "../../../components/MenuItemComponent";
@@ -18,6 +17,7 @@ import EventSource from "react-native-event-source";
 import GlobalStyles from "../../../style/GlobalStyles";
 import SearchComponent from "../../../components/SearchComponent";
 import HeaderComponent from "../../../components/HeaderComponent";
+import { StatusBar } from "expo-status-bar";
 
 const InformasiDokter = () => {
   const [dataPoli, setDataPoli] = useState([]);
@@ -82,8 +82,7 @@ const InformasiDokter = () => {
           {
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           },
-        ]}
-      >
+        ]}>
         <ScrollView
           contentContainerStyle={{
             flex: 1,
@@ -92,8 +91,7 @@ const InformasiDokter = () => {
           }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+          }>
           <Text>Mohon ulangi beberapa saat lagi..</Text>
         </ScrollView>
       </SafeAreaView>
@@ -105,8 +103,7 @@ const InformasiDokter = () => {
       style={[
         GlobalStyles.utama,
         // { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}
-    >
+      ]}>
       <HeaderComponent
         title={"Daftar Poliklinik"}
         icon={"arrow-back"}

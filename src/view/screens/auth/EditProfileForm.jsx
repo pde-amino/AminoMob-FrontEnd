@@ -1,3 +1,4 @@
+// import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   View,
@@ -24,8 +25,7 @@ const EditProfileForm = ({ onSave }) => {
       style={[
         styles.container,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}
-    >
+      ]}>
       <Text style={styles.label}>Name</Text>
       <TextInput
         style={styles.input}

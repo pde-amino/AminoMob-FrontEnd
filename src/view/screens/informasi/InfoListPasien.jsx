@@ -8,8 +8,6 @@ import {
   ScrollView,
   Image,
   Alert,
-  Platform,
-  StatusBar,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import HeaderComponent from "../../../components/HeaderComponent";
@@ -146,14 +144,7 @@ export default function InfoListPasien() {
 
   return (
     <>
-      <SafeAreaView
-        style={[
-          GlobalStyles.utama,
-          {
-            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-          },
-        ]}
-      >
+      <SafeAreaView style={GlobalStyles.utama}>
         <HeaderComponent title={"Informasi Data Pasien"} />
 
         {loading ? (
@@ -176,8 +167,7 @@ export default function InfoListPasien() {
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-          >
+            }>
             <View style={{ alignItems: "center", alignContent: "center" }}>
               <Image
                 style={{
@@ -194,8 +184,7 @@ export default function InfoListPasien() {
                     maxWidth: "85%",
                     textAlign: "center",
                   },
-                ]}
-              >
+                ]}>
                 Belum ada data pasien, silakan tambah data lewat menu layanan di
                 Home atau refresh
               </Text>

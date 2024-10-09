@@ -18,6 +18,7 @@ import TextInputIconComponent from "../../../components/TextInputIconComponent";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import DateTimePicker from "@react-native-community/datetimepicker";
+// import { StatusBar } from "expo-status-bar";
 
 const WARNA = {
   primary: "#0A78E2",
@@ -51,7 +52,7 @@ export default function EditProfileScreen() {
         setName(response.data.user.nama);
         setTglLahir(response.data.user.tgl_lahir);
       } catch (error) {
-        // console.error("Failed to fetch data:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
     fetchData();

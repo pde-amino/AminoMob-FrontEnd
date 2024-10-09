@@ -15,6 +15,7 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import axios from "axios";
 import { BASE_URL } from "../../../contex/Config";
 import { useNavigation } from "@react-navigation/native";
+// import { StatusBar } from "expo-status-bar";
 
 const ChangePasswordForm = ({ onChangePassword }) => {
   const navigation = useNavigation();
@@ -64,7 +65,7 @@ const ChangePasswordForm = ({ onChangePassword }) => {
             nama: userGet.data.user.nama,
             tgl_lahir: userGet.data.user.tgl_lahir,
           }));
-          // console.log(response);
+          console.log(response);
         })
         .catch((error) => {
           if (error.response) {

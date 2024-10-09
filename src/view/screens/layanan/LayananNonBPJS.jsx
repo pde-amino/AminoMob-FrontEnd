@@ -6,7 +6,6 @@ import {
   Alert,
   Text,
   Platform,
-  StatusBar,
 } from "react-native";
 import GlobalStyles from "../../../style/GlobalStyles";
 import CardButtonComponent from "../../../components/CardButtonComponent";
@@ -14,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import HeaderComponent from "../../../components/HeaderComponent";
 import { AuthContex } from "../../../contex/AuthProvider";
 import { BASE_URL } from "../../../contex/Config";
+import { StatusBar } from "expo-status-bar";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
 export default function LayananNonBPJS() {
@@ -118,8 +118,7 @@ export default function LayananNonBPJS() {
       style={[
         GlobalStyles.utama,
         { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
-      ]}
-    >
+      ]}>
       <HeaderComponent
         title={"Layanan Non BPJS"}
         icon={"arrow-back"}

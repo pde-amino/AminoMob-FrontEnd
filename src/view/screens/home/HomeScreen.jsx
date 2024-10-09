@@ -28,7 +28,8 @@ import { AuthContex } from "../../../contex/AuthProvider";
 import CardComponentArticel from "../../../components/CardComponentArticel";
 import { Icon, Portal, TouchableRipple } from "react-native-paper";
 import { BASE_ARTICLE } from "../../../contex/Config";
-import DeviceInfo from "react-native-device-info";
+import { SpeedDial } from "@rneui/themed";
+// import { StatusBar } from "expo-status-bar";
 import FloatingButton from "../../../components/FloatingButton";
 
 const WARNA = { primary: "#0A78E2", white: "#fff" };
@@ -122,17 +123,17 @@ const HomeScreen = () => {
     }
   };
 
-  // const getDataUser = async () => {
-  //   const user = await GetUserData();
+  const getDataUser = async () => {
+    const user = await GetUserData();
 
-  //   if (user) {
-  //     // Lakukan sesuatu dengan data pengguna
-  //     // console.log("User ID:", user.id);
-  //   } else {
-  //     // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
-  //     navigation.replace("Login Screen");
-  //   }
-  // };
+    if (user) {
+      // Lakukan sesuatu dengan data pengguna
+      // console.log("User ID:", user.id);
+    } else {
+      // Lakukan navigasi ke LoginScreen atau tindakan lain jika pengguna tidak ditemukan
+      navigation.replace("Login Screen");
+    }
+  };
 
   useEffect(() => {
     fetchArticles();
@@ -290,18 +291,7 @@ const HomeScreen = () => {
           ListEmptyComponent={renderEmptyComponent}
         />
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Coba Notif")}>
-        <Text>Klik ke halaman notif</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() =>
-          DeviceInfo.getIpAddress().then((ip) => {
-            console.log("ini ip: ", ip);
-          })
-        }
-      >
-        <Text>Klik untuk IP</Text>
-      </TouchableOpacity>
+      {/* </ImageBackground> */}
     </SafeAreaView>
   );
 };

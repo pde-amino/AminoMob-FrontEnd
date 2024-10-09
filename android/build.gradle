@@ -8,16 +8,12 @@ buildscript {
         targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '34')
         kotlinVersion = findProperty('android.kotlinVersion') ?: '1.9.23'
         ndkVersion = "26.1.10909125"
-        
-        googlePlayServicesVersion = "+" // default: "+"
-        firebaseMessagingVersion = "21.1.0" // default: "21.1.0"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.google.gms:google-services:4.4.2")
         classpath('com.android.tools.build:gradle')
         classpath('com.facebook.react:react-native-gradle-plugin')
         classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
